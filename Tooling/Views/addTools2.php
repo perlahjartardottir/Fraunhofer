@@ -208,7 +208,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
                 </div>
                 <div class='col-xs-3 form-group'>
                   <label for="coatingIDInsert">Coating</label>
-                  <select id='coating_sel_insert' onchange='generatePrice()' onfocus='generatePrice()' class='form-control'>
+                  <select id='coating_sel_insert' onchange='generatePriceInsert()' class='form-control'>
                     <option value="">Select coating type:</option>
                     <?php
                       $sql = "SELECT coating_ID, coating_type
@@ -229,7 +229,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
                 <div class='col-xs-3 form-group'>
                   <label for="IC">IC: </label>
                   <!-- TODO : calculate prices using this value -->
-                  <select id="diameterInsert" name="IC" class='form-control'>
+                  <select id="diameterInsert" name="IC" onchange='generatePriceInsert()' class='form-control'>
                     <option value="0">N/A</option>
                     <option value="1/8">1/8</option>
                     <option value="3/16">3/16</option>
@@ -271,7 +271,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
               </div>
               <div class='col-xs-3 form-group'>
                 <label for="coatingIDInsert">Coating</label>
-                <select id='coating_sel_odd' onchange='generatePrice()' onfocus='generatePrice()' class='form-control'>
+                <select id='coating_sel_odd' class='form-control'>
                   <option value="">Select coating type:</option>
                   <?php
                     $sql = "SELECT coating_ID, coating_type
@@ -320,7 +320,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
               </div>
               <div class='col-xs-3 form-group'>
                 <label for="coatingIDTop">Coating</label>
-                <select id='coating_sel_top' onchange='generatePrice()' onfocus='generatePrice()' class='form-control'>
+                <select id='coating_sel_top' onchange='generatePriceTopNotch()' class='form-control'>
                   <option value="">Select coating type:</option>
                   <?php
                     $sql = "SELECT coating_ID, coating_type
@@ -341,7 +341,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
               <div class='col-xs-3 form-group'>
                 <label for="insert_size">Insert size: </label>
                 <!-- TODO : calculate prices using this value -->
-                <select id="insert_size" name="IC" class='form-control'>
+                <select id="insert_size" name="IC" class='form-control' onchange='generatePriceTopNotch()'>
                   <option value="">N/A</option>
                   <option value="1">1</option>
                   <option value="2">2</option>

@@ -6,11 +6,12 @@ include '../connection.php';
 session_start();
 
 // Get the results from the filter options
-$input 		 = mysqli_real_escape_string($link, $_POST['tool_ID']);
+$input 		 	 = mysqli_real_escape_string($link, $_POST['tool_ID']);
 $first_date  = mysqli_real_escape_string($link, $_POST['first_date']);
 $last_date   = mysqli_real_escape_string($link, $_POST['last_date']);
 $top_runs 	 = mysqli_real_escape_string($link, $_POST['top_runs']);
-$limit 		 = "LIMIT 100";
+$order_by    = mysqli_real_escape_string($link, $_POST['order_by']);
+$limit 			 = "LIMIT 100";
 
 // Only view the top 100 results so the query result doesn't take as much time
 // If the "show all result" checkbox is checked, we show all the results
@@ -44,7 +45,10 @@ if(!empty($last_date)){
 
 // group by the tool id's so all the tool id's
 // are grouped together and don't show duplicate id's
-$sql .= "GROUP BY l.tool_ID ".$limit.";";
+$sql .= "GROUP BY l.tool_ID ";
+if(!empty($order_by)){
+	$sql .= "ORDER BY ".$order_by." ".$limit.";";
+}
 $result = mysqli_query($link, $sql);
 // next query is to get total amount of rows without LIMIT 100
 $countRowsSql = "SELECT FOUND_ROWS();";
@@ -61,10 +65,10 @@ if(!$result){echo mysqli_error($link);}
 <span>Showing <?php echo $num_rows; ?> out of <?php echo $countRows[0];?> rows. </span>
 <table id='' class='table table-striped table-bordered'>
 	<tr>
-		<th class="sort_button">Tool ID</th>
-		<th class="sort_button"># of POs</th>
-		<th class="sort_button">Last price</th>
-		<th class="sort_button">Last receiving date</th>
+		<th>Tool ID</th>
+		<th># of POs</th>
+		<th>Last price</th>
+		<th>Last receiving date</th>
 	<tr>
 
 <?php
@@ -93,12 +97,12 @@ while($row = mysqli_fetch_array($result)){
 					  AND l.tool_ID = '$row[0]';";
 	$poResult = mysqli_query($link, $poSql);
 
-	echo "<tr id=''>".
-			"<td><a href='#' data-toggle='modal' data-target='#".$counter."'>".$row[0]."</td>".
-			"<td>".$row[1]."</td>".
-			"<td>".$lRow[0]."</td>".
-			"<td>".$lRow[1]."</td>".
-		  "</tr>";
+	echo "<tr>".
+				"<td><a href='#' data-toggle='modal' data-target='#".$counter."'>".$row[0]."</td>". // tool_ID
+				"<td>".$row[1]."</td>". // # of POs
+				"<td>".$lRow[0]."</td>". // Last Price
+				"<td>".$lRow[1]."</td>". // Last Receiving date
+		   "</tr>";
 
 	echo "<div class='modal fade' id='".$counter."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
 			  <div class='modal-dialog'>

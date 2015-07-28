@@ -52,6 +52,14 @@ while($row = mysqli_fetch_array($secResult)){
           <label>To:</label>
           <input type="date" name="datelast" id="search_box_date_last" onchange='tool_suggestions()' class='form-control'/>
         </div>
+        <div class='col-md-12 form-group'>
+        <label>Order by: </label>
+        <br>
+          <select id='order_by_select' onchange='tool_suggestions()' class='form-control'>
+            <option value='l.tool_ID ASC'>Tool ID</option>
+            <option value='COUNT(DISTINCT p.po_ID) DESC'># of POs</option>
+          </select>
+      </div>
         <div class='col-md-12'>
           <label>Show all results:
             <input type='checkbox' id='top_runs' onchange='tool_suggestions()'/>

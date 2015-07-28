@@ -45,8 +45,8 @@ $customer_ID = mysqli_real_escape_string($link, $_POST['customer_ID']);
 $first_date  = mysqli_real_escape_string($link, $_POST['first_date']);
 $last_date   = mysqli_real_escape_string($link, $_POST['last_date']);
 $order_by    = mysqli_real_escape_string($link, $_POST['order_by']);
-$top_100 	 = mysqli_real_escape_string($link, $_POST['top_100']);
-$limit 		 = "LIMIT 100";
+$top_100   	 = mysqli_real_escape_string($link, $_POST['top_100']);
+$limit 		   = "LIMIT 100";
 
 // Only view the top 100 results so the query result doesn't take as much time
 // If the "show all result" checkbox is checked, we show all the results

@@ -34,6 +34,8 @@ while ($row = mysqli_fetch_array($secResult)) {
         <h2>Price tables</h2>
         <p>If a customer is not on this list that means he has no prices in his price table.</br>
            You can add prices to all customers below</p>
+           <p>A price that does not have a 'Diameter' is usually a 'Top notch' tool.</p>
+           <p>A price that does not have 'Length' is usually a 'Insert' Tool.</p>
         <div class='btn-group'>
           <?php
           while ($customerRow = mysqli_fetch_array($customerResult)) {

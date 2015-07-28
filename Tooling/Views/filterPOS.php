@@ -56,17 +56,15 @@ while($row = mysqli_fetch_array($secResult)){
           <select id='customer_select' onchange='suggestions()' class='form-control'>
             <option value="">All customers: </option>
             <?php
-            $sql = "SELECT customer_ID, customer_name
-                    FROM customer;";
-            $result = mysqli_query($link, $sql);
-            if (!$result)
-            {
-              die("Database query failed: " . mysqli_error($link));
-            }
-            while($row = mysqli_fetch_array($result))
-            {
-              echo '<option value="'.$row['customer_ID'].'">'.$row['customer_name'].'</option>';
-            }
+              $sql = "SELECT customer_ID, customer_name
+                      FROM customer;";
+              $result = mysqli_query($link, $sql);
+              if (!$result){
+                die("Database query failed: " . mysqli_error($link));
+              }
+              while($row = mysqli_fetch_array($result)){
+                echo '<option value="'.$row['customer_ID'].'">'.$row['customer_name'].'</option>';
+              }
             ?>
           </select>
         </div>

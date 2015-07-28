@@ -12,8 +12,8 @@ $machine_ID  = mysqli_real_escape_string($link, $_POST['machine_ID']);
 $coating_ID  = mysqli_real_escape_string($link, $_POST['coating_ID']);
 $ah_pulses   = mysqli_real_escape_string($link, $_POST['ah_pulses']);
 $top_runs 	 = mysqli_real_escape_string($link, $_POST['top_runs']);
-$limit 		 = "LIMIT 100";
-
+$order_by    = mysqli_real_escape_string($link, $_POST['order_by']);
+$limit 		 	 = "LIMIT 100";
 // Only view the top runs results so the query result doesn't take as much time
 // If the "show all result" checkbox is checked, we show all the results
 // by having no limit on the sql query
@@ -31,6 +31,7 @@ $sql = "SELECT SQL_CALC_FOUND_ROWS r.run_ID, run_number, run_date, run_comment, 
 				WHERE 1
 				AND r.run_ID = lir.run_ID
 				AND lir.lineitem_ID = l.lineitem_ID ";
+// footer of table SQL
 $averageSql = "SELECT ROUND(SUM(lir.number_of_items_in_run * l.price) / COUNT(DISTINCT(r.run_ID)), 2), ROUND(SUM(lir.number_of_items_in_run * l.price)/SUM(lir.number_of_items_in_run), 2), ROUND(SUM(lir.number_of_items_in_run) / COUNT(DISTINCT(r.run_ID)),2)
 						   FROM run r, lineitem_run lir, lineitem l
 						   WHERE 1
@@ -63,7 +64,10 @@ if(!empty($coating_ID)){
 	$averageSql .= "AND r.coating_ID = '$coating_ID' ";
 }
 $sql .= "GROUP BY r.run_ID ";
-$sql .= "ORDER BY r.run_date DESC ".$limit.";";
+
+if(!empty($order_by)){
+	$sql .= "ORDER BY ".$order_by." DESC ".$limit.";";
+}
 $result = mysqli_query($link, $sql);
 // next query is to get total amount of rows without LIMIT 100
 $countRowsSql = "SELECT FOUND_ROWS();";
@@ -76,8 +80,6 @@ $averageResult = mysqli_query($link, $averageSql);
 
 $num_rows = mysqli_num_rows($result);
 if(!$result){echo mysqli_error($link);}
-if(!$result){echo mysqli_error($link);}
-
 ?>
 <div id='output'>
 	<span>Showing <?php echo $num_rows; ?> out of <?php echo $countRows[0];?> rows. </span>
@@ -101,9 +103,8 @@ if(!$result){echo mysqli_error($link);}
 *	The Modals are displayed when the user clicks the run
 */
 while($row = mysqli_fetch_array($result)){
-	/*
-		This sql is to find the POS linked to the runs found
-	*/
+
+	//This sql is to find the POS linked to the runs found. These show up if you click the run number
 	$poSql = "SELECT l.po_ID, p.po_number, c.customer_name, lir.number_of_items_in_run, l.diameter, l.length, l.tool_ID
 					  FROM run r, lineitem l, lineitem_run lir, pos p, customer c
 					  WHERE r.run_ID = '$row[0]'
@@ -114,14 +115,14 @@ while($row = mysqli_fetch_array($result)){
 	$poResult = mysqli_query($link, $poSql);
 
 	echo "<tr class=''>".
-			"<td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</td>".
-			"<td>".$row[2]."</td>".
-			"<td>".$row[3]."</td>".
-			"<td>".$row[4]."</td>".
-			"<td>".$row[5]."</td>".
-			"<td>$".$row[6]."</td>".
-			"<td>$".$row[7]."</td>".
-		  "</tr>";
+				"<td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</td>". //run number
+				"<td>".$row[2]."</td>". // run date
+				"<td>".$row[3]."</td>". // run comment
+				"<td>".$row[4]."</td>". // Ah/pulses
+				"<td>".$row[5]."</td>". // # of tools in run
+				"<td>$".$row[6]."</td>". // Total $ in run
+				"<td>$".$row[7]."</td>". // Avg tool cost in run
+			"</tr>";
 
 	echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
 			  <div class='modal-dialog'>

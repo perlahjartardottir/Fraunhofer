@@ -238,7 +238,56 @@ function generatePrice() {
     }
   });
 }
-
+function generatePriceTopNotch() {
+  var coating_dropdown = document.getElementById("coating_sel_top");
+  var coating_ID = coating_dropdown.options[coating_dropdown.selectedIndex].text;
+  var e = document.getElementById("insert_size");
+  var length = e.options[e.selectedIndex].text;
+  $.ajax({
+    url: "../SelectPHP/generatePrice.php",
+    type: "POST",
+    data: {
+      length: length
+    },
+    success: function(data, status, xhr) {
+      if (coating_ID === "DLC") {
+        data = data * 2;
+      }
+      if ($('#dblEnd').is(":checked")){
+        data = data * 2;
+      }
+      // output the data recieved from the php file into the price field.
+      data = parseFloat(data);
+      data = data.toFixed(2);
+      document.getElementById('priceTop').value = data;
+    }
+  });
+}
+function generatePriceInsert() {
+  var coating_dropdown = document.getElementById("coating_sel_insert");
+  var coating_ID = coating_dropdown.options[coating_dropdown.selectedIndex].text;
+  var e = document.getElementById("diameterInsert");
+  var diameter = e.options[e.selectedIndex].text;
+  $.ajax({
+    url: "../SelectPHP/generatePrice.php",
+    type: "POST",
+    data: {
+      diameter: diameter
+    },
+    success: function(data, status, xhr) {
+      if (coating_ID === "DLC") {
+        data = data * 2;
+      }
+      if ($('#dblEnd').is(":checked")){
+        data = data * 2;
+      }
+      // output the data recieved from the php file into the price field.
+      data = parseFloat(data);
+      data = data.toFixed(2);
+      document.getElementById('priceInsert').value = data;
+    }
+  });
+}
 function displayHelper() {
   $.ajax({
     url: "../SelectPHP/displayHelper.php",
@@ -392,11 +441,13 @@ function addToolOdd() {
         $('#toolID').val('');
         $('#lineItem').val(lineItem);
         $('#quantity').val('');
+        // refresh the table with the newly inserted line
         showPOTools();
       }
     });
   }
 }
+
 
 function addToolTop() {
   // Remove all existing error messages
@@ -909,7 +960,7 @@ function authenticate() {
   var userID = $('#userID').val();
   var password = $('#password').val();
   $.ajax({
-    url: "../../Login/logincheck.php",
+    url: "../Login/logincheck.php",
     type: "POST",
     data: {
       userID: userID,
@@ -929,7 +980,7 @@ function authenticate() {
       if (data.indexOf("error") > -1) {
         alert("Please enter the right information.");
       } else {
-        window.location = "../menu.php";
+        window.location = "../selection.php";
       }
     }
   });
@@ -937,13 +988,13 @@ function authenticate() {
 
 function logout() {
   $.ajax({
-    url: "../../Login/logout.php",
+    url: "../Login/logout.php",
     type: "POST"
   }).done(function() {
     // redirect the user to the login page
     // this is done so you loose access to the site you are at
     // when you log out.
-    window.location = "../../Login/login.php";
+    window.location = "../Login/login.php";
   });
 }
 

@@ -41,14 +41,16 @@ function setSessionIDSearch(po_ID){
 function run_suggestions(){
     $('#output').html();
     $('#output').html('<center style="margin-top:200px;"><img src="../images/ajax-loader.gif"></center>');
-    var run_number = $('#search_box_run').val();
-    var machine_sel = document.getElementById("machine_select");
-    var machine_ID = machine_sel.options[machine_sel.selectedIndex].value;
-    var coating_sel = document.getElementById("coating_select");
-    var coating_ID = coating_sel.options[coating_sel.selectedIndex].value;
-    var first_date = $('#search_box_date_first').val();
-    var last_date = $('#search_box_date_last').val();
-    var ah_pulses = $('#search_box_ah').val();
+    var run_number      = $('#search_box_run').val();
+    var machine_sel     = document.getElementById("machine_select");
+    var machine_ID      = machine_sel.options[machine_sel.selectedIndex].value;
+    var coating_sel     = document.getElementById("coating_select");
+    var coating_ID      = coating_sel.options[coating_sel.selectedIndex].value;
+    var first_date      = $('#search_box_date_first').val();
+    var last_date       = $('#search_box_date_last').val();
+    var ah_pulses       = $('#search_box_ah').val();
+    var order_by_select = document.getElementById("order_by_select");
+    var order_by        = order_by_select.options[order_by_select.selectedIndex].value;
     var top_runs;
 
     if($('#top_runs').is(':checked')){
@@ -64,9 +66,9 @@ function run_suggestions(){
                 ah_pulses  : ah_pulses,
                 top_runs     : top_runs,
                 first_date : first_date,
+                order_by    : order_by,
                 last_date  : last_date},
-     success: function(data,status, xhr)
-     {
+     success: function(data,status, xhr){
         $( "#output" ).html(data);
      }
     });
@@ -75,9 +77,11 @@ function run_suggestions(){
 function tool_suggestions(){
     $('#output').html();
     $('#output').html('<center style="margin-top:200px;"><img src="../images/ajax-loader.gif"></center>');
-    var tool_ID = $('#tool_ID').val();
-    var first_date = $('#search_box_date_first').val();
-    var last_date = $('#search_box_date_last').val();
+    var tool_ID         = $('#tool_ID').val();
+    var first_date      = $('#search_box_date_first').val();
+    var last_date       = $('#search_box_date_last').val();
+    var order_by_select = document.getElementById("order_by_select");
+    var order_by        = order_by_select.options[order_by_select.selectedIndex].value;
     var top_runs;
 
     if($('#top_runs').is(':checked')){
@@ -87,10 +91,11 @@ function tool_suggestions(){
         url: "../SearchPHP/tool_search_suggestions.php",
         type: "POST",
         data: {
-            tool_ID: tool_ID,
-            top_runs     : top_runs,
-            first_date : first_date,
-            last_date  : last_date},
+            tool_ID   : tool_ID,
+            top_runs  : top_runs,
+            first_date: first_date,
+            order_by  : order_by,
+            last_date : last_date},
         success: function(data, status, xhr){
             $("#output").html(data);
         }

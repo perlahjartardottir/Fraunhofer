@@ -69,12 +69,10 @@ while($row = mysqli_fetch_array($secResult)){
               $sql = "SELECT machine_ID, machine_acronym
                       FROM machine;";
               $result = mysqli_query($link, $sql);
-              if (!$result)
-              {
+              if (!$result){
                 die("Database query failed: " . mysqli_error($link));
               }
-              while($row = mysqli_fetch_array($result))
-              {
+              while($row = mysqli_fetch_array($result)){
                 echo '<option value="'.$row['machine_ID'].'">'.$row['machine_acronym'].'</option>';
               }
             ?>
@@ -100,6 +98,18 @@ while($row = mysqli_fetch_array($secResult)){
             ?>
           </select>
         </div>
+        <div class='col-md-12 form-group'>
+        <label>Order by: </label>
+        <br>
+          <select id='order_by_select' onchange='run_suggestions()' class='form-control'>
+            <option value='run_date'>Run date</option>
+            <option value='run_number'>Run number</option>
+            <option value='ah_pulses'>AH/Pulses</option>
+            <option value='SUM(lir.number_of_items_in_run)'>Tools in run</option>
+            <option value='SUM(lir.number_of_items_in_run * l.price) / COUNT(DISTINCT(r.run_ID))'>Total $ in run</option>
+            <option value='SUM(lir.number_of_items_in_run * l.price)/SUM(lir.number_of_items_in_run)'>Average tool $ in run</option>
+          </select>
+      </div>
         <div class='col-md-12'>
           <label>Show all results:
             <input type='checkbox' id='top_runs' onchange='run_suggestions()'/>
