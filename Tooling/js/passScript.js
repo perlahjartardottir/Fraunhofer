@@ -929,7 +929,7 @@ function authenticate() {
       if (data.indexOf("error") > -1) {
         alert("Please enter the right information.");
       } else {
-        window.location = "../fraunhofer.php";
+        window.location = "../menu.php";
       }
     }
   });
