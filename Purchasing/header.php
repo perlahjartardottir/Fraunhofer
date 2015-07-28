@@ -8,7 +8,7 @@
   <div class="container">
     <div class="navbar-header">
       <div class='navbar-brand'>
-        <a href='../purchasing.php'>Home</a>
+        <a href='../views/purchasing.php'>Home</a>
         <span class='username'><strong><?php echo $_SESSION["username"];?></strong></span>
       </div>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
