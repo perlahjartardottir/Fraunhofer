@@ -1,0 +1,107 @@
+.hidden{
+    display: none;
+}
+.bottomrow{
+    background-color: #E1E1E0;
+}
+.headerinfo{
+    margin-bottom:10px;    
+}
+#aboveTable{
+    margin: 2px;
+    margin-bottom:20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 2px solid black;
+    padding: 5px;
+    font-size: medium;
+}
+hr {
+    border: 1px solid black;
+    width: 97%;
+}
+#tableDiv{
+    padding-bottom:30px;
+}
+.table_input{
+    width:4em;
+    background: transparent;
+    text-align: right;
+}
+#bottomDiv{
+    margin-bottom: 15px;
+}
+.comments{
+    font-size: medium;
+}
+#bigSlash{
+    font-size: x-large;
+}
+#addShippingDate{
+    margin-bottom: 10px;
+}
+@media print {
+.centering{
+    text-align: center;
+}
+
+.bottomrow{
+    background-color: #E1E1E0 !important;
+     -webkit-print-color-adjust: exact; 
+}
+.headerinfo{
+    margin-bottom:10px;    
+}
+#tableDiv{
+    padding-bottom: 30px;
+}
+
+hr{
+    border: 1px solid black;
+    width: 95%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+body{
+    font-size: x-small;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    padding:0px;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 0px;
+    font-size: x-small;
+}
+ul, img {
+  page-break-inside: avoid;
+}
+.commentHide{
+    display:none;
+}
+.packingTable{
+     font-size: small;
+}
+#aboveTable{
+    margin: 2px;
+    margin-bottom:20px;
+}
+textarea { 
+    border: none; 
+    resize:none;
+}
+.table_input{
+    border: 0px;
+    width:4em;
+    background: transparent;
+    text-align: right;
+}
+}

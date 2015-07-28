@@ -1,0 +1,12 @@
+.sidebar{
+	float: left;
+	margin-top: 71px;
+	margin-left: 80px;
+}
+
+.sidebarItem{
+	background-color: #009474;
+}
+a.list-group-item {
+  color: white;
+}

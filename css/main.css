@@ -1,0 +1,16 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 5px;
+    font-size: small;
+}
+
+.tablist{
+	margin-bottom: 10px;
+}
+
+th {text-align: left;}

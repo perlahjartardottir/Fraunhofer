@@ -1,0 +1,38 @@
+.wrapper {
+  background: white;
+  margin: auto;
+  padding: 1em;
+  width: 100%;
+}
+h1 {
+  text-align: center;
+}
+ul.tabs {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul.tabs li {
+  border-bottom: none;
+  float: left;
+  margin: 0 1.25em 0 0;
+  padding: .25em .5em;
+}
+ul.tabs li a {
+  color: gray;
+  font-weight: bold;
+  text-decoration: none;
+}
+ul.tabs li.active {
+  border-top: groove;
+}
+ul.tabs li a {
+  color: black;
+}
+.clr {
+  clear: both;
+}
+article {
+  border-top: gray solid 1px;
+  padding: 0 1em;
+}
