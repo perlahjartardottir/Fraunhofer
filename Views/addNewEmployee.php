@@ -20,7 +20,7 @@ while($row = mysqli_fetch_array($secResult)){
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body>
-  <?php include '../../header.php'; ?>
+  <?php include '../header.php'; ?>
   <div class='container'>
     <div id='invalidEmployee'></div>
     <div class='row well well-lg'>

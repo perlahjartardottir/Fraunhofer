@@ -980,7 +980,7 @@ function authenticate() {
       if (data.indexOf("error") > -1) {
         alert("Please enter the right information.");
       } else {
-        window.location = "../selection.php";
+        window.location = "../menu.php";
       }
     }
   });
@@ -988,13 +988,13 @@ function authenticate() {
 
 function logout() {
   $.ajax({
-    url: "../Login/logout.php",
+    url: "../../Login/logout.php",
     type: "POST"
   }).done(function() {
     // redirect the user to the login page
     // this is done so you loose access to the site you are at
     // when you log out.
-    window.location = "../Login/login.php";
+    window.location = "../../Login/login.php";
   });
 }
 
@@ -1031,7 +1031,6 @@ function deleteEmployee() {
       }
     });
   }
-
 }
 
 function setSessionIDAfterAddingPO(po_ID) {

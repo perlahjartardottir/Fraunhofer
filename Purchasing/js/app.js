@@ -9,3 +9,28 @@ function logout() {
     window.location = "../../Login/login.php";
   });
 }
+
+function supplierSuggestions() {
+  $('#output').html();
+  var supplier_name = $('#supplier_name').val();
+  $.ajax({
+    url: '../SearchPHP/supplier_search_suggestions.php',
+    type: 'POST',
+    data: {supplier_name : supplier_name},
+    success: function(data, status, xhr) {
+      $("#output").html(data);
+    }
+  });
+}
+function purchaseSuggestions() {
+  $('#output').html();
+  var order_name = $('#order_name').val();
+  $.ajax({
+    url: '../SearchPHP/purchase_search_suggestions.php',
+    type: 'POST',
+    data: {order_name : order_name},
+    success: function(data, status, xhr) {
+      $("#output").html(data);
+    }
+  });
+}

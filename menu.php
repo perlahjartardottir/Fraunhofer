@@ -19,9 +19,9 @@
   <title>Login Fraunhofer CCD</title>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="/css/signin.css" rel="stylesheet">
 </head>
 <body>
+  <?php include 'header.php'; ?>
   <div class="container">
     <div class="btn-group-vertical col-md-12" role="group" aria-label="...">
         <a href='Tooling/Views/selection.php' class='btn btn-primary btn-lg'>Tooling</a>
@@ -30,13 +30,13 @@
     </div>
   </div>
   <div class="container">
-    <div class='btn-group col-md-4' style="position: absolute; bottom: 10px; right:25px">
+    <div class='btn-group col-md-4 pull-right' style="position: absolute; bottom: 10px; right:25px">
       <?php
         if($user_sec_lvl >= 3){
-          echo "<a href='Tooling/Views/addNewEmployee.php' class='btn btn-primary'>Add new employee</a>";
+          echo "<a href='Views/addNewEmployee.php' class='btn btn-primary'>Add new employee</a>";
         }
       ?>
-      <a href='Tooling/Views/viewAllEmployees.php' class='btn btn-primary'>View all employees</a>
+      <a href='/Views/viewAllEmployees.php' class='btn btn-primary'>View all employees</a>
     </div>
   </div>
 </body>

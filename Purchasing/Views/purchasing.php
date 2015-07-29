@@ -1,10 +1,9 @@
-<!-- In this view we only display some parts if the security level is high enough -->
 <!-- This is the front page -->
 <!DOCTYPE html>
 <html>
 <head>
   <?php
-  include 'connection.php';
+  include '../../connection.php';
   session_start();
   // find the current user
   $user = $_SESSION["username"];
@@ -25,7 +24,61 @@
 <body>
   <?php include '../header.php'; ?>
   <div class="container">
-    <h1> Here we will have the purchasing view </h1>
+    <div class="row well well-lg">
+      <div class='col-md-12'>
+        <div class='col-md-3'>
+          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='supplierList.php'">Supplier list</button>
+        </div>
+        <div class='col-md-3'>
+          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='request.php'">Request for PO</button>
+        </div>
+        <div class='col-md-3'>
+          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='processOrder.php'">Process order</button>
+        </div>
+        <div class='col-md-3'>
+          <button type='button' class='btn btn-primary col-md-8' onclick="location.href='purchaseOverview.php'">Overview</button>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-4'>
+      <h4>Requested</h4>
+      <table class='table table-responsive'>
+        <thead>
+          <tr>
+            <th>Purchase Order</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class='col-md-4'>
+      <h4>In progress</h4>
+      <table class='table table-responsive'>
+        <thead>
+          <tr>
+            <th>Purchase Order</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class='col-md-4'>
+      <h4>Delivered</h4>
+      <table class='table table-responsive'>
+        <thead>
+          <tr>
+            <th>Purchase Order</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 </html>

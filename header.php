@@ -2,16 +2,13 @@
 <!-- This file includes all the .css and .js needed  -->
 <!-- It also displays the top of the page and the user who is logged in -->
 <link href='/css/header.css' rel='stylesheet'>
-<link href='/css/bootstrap.min.css' rel='stylesheet'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src='../js/app.js'></script>
-<script src='../js/bootstrap.js'></script>
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header">
       <div class='navbar-brand'>
-        <a href='../../menu.php'>Menu</a>
-        <a href='../views/purchasing.php' style="margin-left:7px;">Home</a>
+        <a href='../menu.php'>Home</a>
         <span class='username'><strong><?php echo $_SESSION["username"];?></strong></span>
       </div>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
