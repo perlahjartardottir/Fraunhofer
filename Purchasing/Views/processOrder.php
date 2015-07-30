@@ -66,6 +66,8 @@ session_start();
         </tbody>
       </table>
     </div>
+    
+    <!-- js/app.js and the function activeRequest(element) -->
     <div id='output' class='col-md-6 col-md-offset-1'>
     </div>
   </div>

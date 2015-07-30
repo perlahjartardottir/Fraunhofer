@@ -9,13 +9,14 @@
   $user = $_SESSION["username"];
 
   // find his level of security
-  $secsql = "SELECT security_level
+  $secsql = "SELECT security_level, employee_ID
              FROM employee
              WHERE employee_name = '$user'";
   $secResult = mysqli_query($link, $secsql);
 
   while($row = mysqli_fetch_array($secResult)){
     $user_sec_lvl = $row[0];
+    $employee_ID  = $row[1];
   }
   // query to find how many active requests there are
   $activeRequestsSql = "SELECT COUNT(request_ID)
@@ -26,6 +27,12 @@
   if(!$activeRequestsResult){
     echo mysqli_error($link);
   }
+
+  $requestSql = "SELECT request_ID, request_date
+                 FROM order_request
+                 WHERE employee_ID = '$employee_ID'
+                 AND active = 1;";
+  $requestResult = mysqli_query($link, $requestSql);
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
@@ -56,11 +63,20 @@
       <table class='table table-responsive'>
         <thead>
           <tr>
-            <th>Purchase Order</th>
+            <th>Request_ID</th>
             <th>Date</th>
           </tr>
         </thead>
         <tbody>
+          <?php
+          while($requestRow = mysqli_fetch_array($requestResult)){
+            echo"
+              <tr>
+                <td>".$requestRow[0]."</td>
+                <td>".$requestRow[1]."</td>
+              </tr>";
+          }
+          ?>
         </tbody>
       </table>
     </div>
