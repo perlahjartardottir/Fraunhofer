@@ -1,6 +1,11 @@
 <?php
 include '../../connection.php';
 session_start();
+
+// SQL query for the employee list
+$employeeSql = "SELECT employee_name
+                FROM employee;";
+$employeeResult = mysqli_query($link, $employeeSql);
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -13,7 +18,13 @@ session_start();
         <h4>Purchase order</h4>
         <p class='col-md-6 form-group'>
           <label>Employee: </label>
-          <input type="text" class='form-control'>
+          <select class='form-control'>
+            <?
+            while($row = mysqli_fetch_array($employeeResult)){
+              echo"<option value='".$row[0]."'>".$row[0]."</option>";
+            }
+            ?>
+          </select>
         </p>
         <p class='col-md-6 form-group'>
           <label>Supplier: </label>
