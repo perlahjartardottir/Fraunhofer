@@ -8,7 +8,7 @@
     if(!$activeRequestsResult){
       echo mysqli_error($link);
     }
-    echo "<button type='button' class='btn btn-primary col-md-8' onclick='location.href="."processOrder.php"."'>
+    echo "<button type='button' class='btn btn-primary col-md-8' onclick='location.href=\"processOrder.php\"'>
               Process order <span class='badge'>".$activeRequests[0]."</span>
             </button>";
  ?>
