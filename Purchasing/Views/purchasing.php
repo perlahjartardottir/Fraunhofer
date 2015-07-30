@@ -48,7 +48,7 @@
         <div class='col-md-3'>
           <button type="button" class='btn btn-primary col-md-8' onclick="location.href='request.php'">Request for PO</button>
         </div>
-        <div class='col-md-3'>
+        <div class='col-md-3' id='process_order'>
           <button type="button" class='btn btn-primary col-md-8' onclick="location.href='processOrder.php'">
             Process order <span class='badge'><?php echo $activeRequests[0]; ?></span>
           </button>
@@ -130,5 +130,21 @@
       </table>
     </div>
   </div>
+  <script>
+  $(document).ready(function(){
+    setInterval(test, 100000);
+      function test(){
+        $.ajax({
+          url: "../UpdatePHP/update_request_count.php",
+          type: "POST",
+          data: {
+          },
+          success: function(data, status, xhr) {
+            $('#process_order').html(data);
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
