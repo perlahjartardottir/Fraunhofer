@@ -61,13 +61,21 @@
           while($requestRow = mysqli_fetch_array($requestResult)){
             echo"
               <tr>
-                <td>".$requestRow[0]."</td>
+                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$requestRow[0]."</a></td>
                 <td>".$requestRow[1]."</td>
               </tr>";
           }
           ?>
         </tbody>
       </table>
+      <?php
+      while($requestRow = mysqli_fetch_array($requestResult)){
+          echo"
+            <div class='modal fade' id='".$requestRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
+              <div class='modal-dialog'>
+                <div class
+      }
+      ?>
     </div>
     <div class='col-md-4'>
       <h4>In progress</h4>
