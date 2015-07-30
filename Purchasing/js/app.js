@@ -37,7 +37,6 @@ function purchaseSuggestions() {
 
 function orderRequest(){
   var request_supplier = $('#request_supplier').val();
-  var request_quantity = $('#request_quantity').val();
   var approved_by_employee = $('#approved_by_employee').val();
   var request_description = $('#request_description').val();
   var employee_ID = $('#employee_ID').val();
@@ -46,7 +45,6 @@ function orderRequest(){
     type: 'POST',
     data: {
       request_supplier : request_supplier,
-      request_quantity : request_quantity,
       approved_by_employee : approved_by_employee,
       request_description : request_description,
       employee_ID : employee_ID

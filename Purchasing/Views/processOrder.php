@@ -20,16 +20,8 @@ session_start();
           <input type="text" class='form-control'>
         </p>
         <p class='col-md-6 form-group'>
-          <label>Quantity: </label>
-          <input type="text" class='form-control'>
-        </p>
-        <p class='col-md-6 form-group'>
           <label>Approved by: </label>
           <input type="text" class='form-control'>
-        </p>
-        <p class='col-md-6 form-group'>
-          <label>Description: </label>
-          <textarea class='form-control'></textarea>
         </p>
         <input class='form-control btn btn-primary' type="button" value="Order" onclick='order()'>
       </form>
@@ -45,7 +37,7 @@ session_start();
         </thead>
         <tbody>
           <?php
-          $sql = "SELECT request_ID, employee_ID, request_date
+          $sql = "SELECT request_ID, employee_ID, request_date, request_description
                   FROM order_request
                   WHERE active = 1;";
           $result = mysqli_query($link, $sql);
@@ -66,7 +58,7 @@ session_start();
         </tbody>
       </table>
     </div>
-    
+
     <!-- js/app.js and the function activeRequest(element) -->
     <div id='output' class='col-md-6 col-md-offset-1'>
     </div>

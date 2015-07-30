@@ -29,10 +29,6 @@ while($row = mysqli_fetch_array($secResult)){
           <input type="text" id='request_supplier' class='form-control'>
         </p>
         <p class='col-md-6 form-group'>
-          <label>Quantity: </label>
-          <input type="text" id='request_quantity' class='form-control'>
-        </p>
-        <p class='col-md-6 form-group'>
           <label>Approved by: </label>
           <input type="text" id='approved_by_employee' class='form-control'>
         </p>
