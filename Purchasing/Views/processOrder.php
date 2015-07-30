@@ -22,7 +22,7 @@
         </p>
         <p class='col-md-6 form-group'>
           <label>Approved by: </label>
-          <input type="date" class='form-control'>
+          <input type="text" class='form-control'>
         </p>
         <p class='col-md-6 form-group'>
           <label>Description: </label>
