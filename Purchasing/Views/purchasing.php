@@ -134,7 +134,6 @@
   $(document).ready(function(){
     setInterval(test, 2000);
       function test(){
-        console.log("test");
         $.ajax({
           url: "../UpdatePHP/update_request_count.php",
           type: "POST",
