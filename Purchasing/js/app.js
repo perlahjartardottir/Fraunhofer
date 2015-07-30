@@ -41,7 +41,6 @@ function orderRequest(){
   var approved_by_employee = $('#approved_by_employee').val();
   var request_description = $('#request_description').val();
   var employee_ID = $('#employee_ID').val();
-  console.log(employee_ID);
   $.ajax({
     url: '../InsertPHP/addNewRequest.php',
     type: 'POST',
@@ -53,7 +52,22 @@ function orderRequest(){
       employee_ID : employee_ID
     },
     success: function(data, status, xhr){
-      //window.location.reload();
+      window.location.reload();
+    }
+  });
+}
+function activeRequest(element){
+  var request_ID = $(element).parent().find('#request_ID').text();
+  var employee_name = $(element).parent().find('#employee_name').text();
+  $.ajax({
+    url: '../SearchPHP/showRequest.php',
+    type: 'POST',
+    data: {
+      request_ID    : request_ID,
+      employee_name : employee_name
+    },
+    success: function(data, status, xhr){
+      $("#output").html(data);
     }
   });
 }

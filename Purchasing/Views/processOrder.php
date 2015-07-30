@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php
+include '../../connection.php';
+session_start();
+?>
 <head>
   <title>Fraunhofer CCD</title>
 </head>
@@ -30,6 +33,40 @@
         </p>
         <input class='form-control btn btn-primary' type="button" value="Order" onclick='order()'>
       </form>
+    </div>
+    <div class='row well well-lg col-md-5'>
+      <table class='table table-responsive' id='activeRequestTable'>
+        <thead>
+          <tr>
+            <th>Requests</th>
+            <th>Employee</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $sql = "SELECT request_ID, employee_ID, request_date
+                  FROM order_request
+                  WHERE active = 1;";
+          $result = mysqli_query($link, $sql);
+
+          while($row = mysqli_fetch_array($result)){
+            $employeeSql = "SELECT employee_name
+                            FROM employee
+                            WHERE employee_ID = '$row[1]'";
+            $employeeResult = mysqli_query($link, $employeeSql);
+            $employee = mysqli_fetch_array($employeeResult);
+            echo "<tr>
+                    <td onclick='activeRequest(this)' id='request_ID'><a href='#' onclick='return false;'>".$row[0]."</a></td>
+                    <td id='employee_name'>".$employee[0]."</td>
+                    <td>".$row[2]."</td>
+                  </tr>";
+          }
+          ?>
+        </tbody>
+      </table>
+    </div>
+    <div id='output' class='col-md-6 col-md-offset-1'>
     </div>
   </div>
 </body>
