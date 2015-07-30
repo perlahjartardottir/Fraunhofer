@@ -132,7 +132,7 @@
   </div>
   <script>
   $(document).ready(function(){
-    setInterval(test, 20000);
+    setInterval(test, 2000);
       function test(){
         console.log("test");
         $.ajax({
