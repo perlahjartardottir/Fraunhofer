@@ -63,17 +63,21 @@
       <table class='table table-responsive'>
         <thead>
           <tr>
-            <th>Request_ID</th>
+            <th>Request</th>
             <th>Date</th>
           </tr>
         </thead>
         <tbody>
           <?php
           while($requestRow = mysqli_fetch_array($requestResult)){
+
+            // this variable shows the first 15 characters of the description
+            $description = substr($requestRow[4], 0, 15);
+
             echo"
               <tr>
-                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$requestRow[0]."</td>
-                <td>".$requestRow[1]."</td>
+                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$description."... </td>
+                <td>".$requestRow[1]."<button style='float:right;' class='btn btn-danger btn-xs' onclick='delRequest(".$requestRow[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
               </tr>";
             echo"
               <div class='modal fade' id='".$requestRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
@@ -89,7 +93,7 @@
                       <p>Description: ".$requestRow[4]."</p>
                     </div>
                     <div class='modal-footer'>
-                      <button type='button' class='btn btn-primary'>Close</button>
+                      <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
                     </div>
                   </div>
                 </div>

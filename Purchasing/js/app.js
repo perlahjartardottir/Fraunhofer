@@ -71,3 +71,19 @@ function activeRequest(element){
     }
   });
 }
+
+function delRequest(request_ID){
+  var r = confirm("Are you sure you want to delete this request? \nThis has not yet been ordered");
+  if(r === true){
+    $.ajax({
+      url: '../DeletePHP/deleteRequest.php',
+      type: 'POST',
+      data:{
+        request_ID : request_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
+}
