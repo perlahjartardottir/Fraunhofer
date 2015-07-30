@@ -36,8 +36,8 @@ $employeeResult = mysqli_query($link, $employeeSql);
               }
               ?>
             </datalist>
-        </p>
-        <p class='col-md-6 form-group'>
+        </div>
+        <div class='col-md-6 form-group'>
           <label>Supplier: </label>
           <input type="text" class='form-control' id='supplier_name'>
         </div>
