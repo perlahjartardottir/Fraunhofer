@@ -18,13 +18,15 @@ $employeeResult = mysqli_query($link, $employeeSql);
         <h4>Purchase order</h4>
         <p class='col-md-6 form-group'>
           <label>Employee: </label>
-          <select class='form-control'>
-            <?
-            while($row = mysqli_fetch_array($employeeResult)){
-              echo"<option value='".$row[0]."'>".$row[0]."</option>";
-            }
-            ?>
-          </select>
+          <br>
+            <input list="employees" name="employees" class='col-md-12 form-control'>
+            <datalist id="employees">
+              <?
+              while($row = mysqli_fetch_array($employeeResult)){
+                echo"<option value='".$row[0]."'></option>";
+              }
+              ?>
+            </datalist>
         </p>
         <p class='col-md-6 form-group'>
           <label>Supplier: </label>
