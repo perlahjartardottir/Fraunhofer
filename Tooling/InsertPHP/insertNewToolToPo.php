@@ -25,11 +25,23 @@ if($doubleEnd == 'on'){
 // only top notch tools have the 'insert_size' variable
 if(!empty($insert_size)){
 	$tool_ID .= " TPN-".$insert_size;
+	if($insert_size == 1 || $insert_size == 2){
+		$est_run_number = $quantity * 0.33;
+		$est_run_number = $est_run_number / 159;
+		var_dump($est_run_number);
+	}
+	if($insert_size == 3){
+		$est_run_number = $quantity * 0.4;
+		$est_run_number = $est_run_number / 159;
+	}
+	if($insert_size == 4 || $insert_size == 5 || $insert_size == 6){
+		$est_run_number = $quantity * 0.5;
+		$est_run_number = $est_run_number / 159;
+	}
 }
 
 // this calculates the est_run_time depending on size and quantity
-$est_run_number = 0;
-if(!empty($length))
+if(!empty($length)) // round tools
 {
 	if($diameter == "1/8" ){
 		$est_run_number = $quantity * 0.33;
@@ -56,6 +68,7 @@ if(!empty($length))
 		$est_run_number = $est_run_number / 159;
 	}
 }
+
 
 $sql = "INSERT INTO lineitem(line_on_po, po_ID, quantity, tool_ID, diameter, length, double_end, price, coating_ID, est_run_number) VALUES('$line_item', '$po_ID', '$quantity', '$tool_ID', '$diameter', '$length', '$doubleEnd', '$price', '$coating_ID', '$est_run_number')";
 
