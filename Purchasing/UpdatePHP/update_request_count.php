@@ -8,7 +8,13 @@
     if(!$activeRequestsResult){
       echo mysqli_error($link);
     }
+    if($activeRequests[0] > 0){
     echo "<button type='button' class='btn btn-primary col-md-8' onclick='location.href=\"processOrder.php\"'>
               Process order <span class='badge'>".$activeRequests[0]."</span>
             </button>";
+    } else{
+      echo "<button type='button' class='btn btn-primary col-md-8' onclick='location.href=\"processOrder.php\"'>
+                Process order
+            </button>";
+    }
  ?>

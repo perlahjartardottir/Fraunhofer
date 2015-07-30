@@ -50,7 +50,12 @@
         </div>
         <div class='col-md-3' id='process_order'>
           <button type="button" class='btn btn-primary col-md-8' onclick="location.href='processOrder.php'">
-            Process order <span class='badge'><?php echo $activeRequests[0]; ?></span>
+            Process order
+            <?php
+              if($activeRequests[0] > 0){
+                  echo "<span class='badge'>".$activeRequests[0]."</span>";
+              }
+             ?>
           </button>
         </div>
         <div class='col-md-3'>
