@@ -9,11 +9,23 @@ include '../../connection.php';
         <th>Phone</th>
         <th>Email</th>
         <th>Rating</th>
-        <th>Notes</th>
       </tr>
     </thead>
     <tbody>
-      
+      <?php
+      $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email
+              FROM supplier;";
+      $result = mysqli_query($link, $sql);
+      while($row = mysqli_fetch_array($result)){
+        echo"
+          <tr>
+            <td>".$row[1]."</td>
+            <td>".$row[2]."</td>
+            <td>".$row[3]."</td>
+            <td>N/A</td>
+          </tr>";
+      }
+      ?>
     </tbody>
   </table>
 </div>
