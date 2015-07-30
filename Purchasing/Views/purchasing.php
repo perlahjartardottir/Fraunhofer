@@ -28,7 +28,7 @@
     echo mysqli_error($link);
   }
 
-  $requestSql = "SELECT request_ID, request_date
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description
                  FROM order_request
                  WHERE employee_ID = '$employee_ID'
                  AND active = 1;";
@@ -50,7 +50,7 @@
         </div>
         <div class='col-md-3'>
           <button type="button" class='btn btn-primary col-md-8' onclick="location.href='processOrder.php'">
-            Process order <span class='badge'>".$activeRequests[0]."</span>
+            Process order <span class='badge'><?php echo $activeRequests[0]; ?></span>
           </button>
         </div>
         <div class='col-md-3'>
@@ -72,21 +72,32 @@
           while($requestRow = mysqli_fetch_array($requestResult)){
             echo"
               <tr>
-                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$requestRow[0]."</a></td>
+                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$requestRow[0]."</td>
                 <td>".$requestRow[1]."</td>
               </tr>";
+            echo"
+              <div class='modal fade' id='".$requestRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
+                <div class='modal-dialog'>
+                  <div class='modal-content col-md-12'>
+                    <div class='modal-header'>
+                      <h4>Request: ".$requestRow[0]."</h4>
+                    </div>
+                    <div class='modal-body col-md-12'>
+                      <p>Date: ".$requestRow[1]."</p>
+                      <p>Supplier: ".$requestRow[2]."</p>
+                      <p>Approved by: ".$requestRow[3]."</p>
+                      <p>Description: ".$requestRow[4]."</p>
+                    </div>
+                    <div class='modal-footer'>
+                      <button type='button' class='btn btn-primary'>Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>";
           }
           ?>
         </tbody>
       </table>
-      <?php
-      while($requestRow = mysqli_fetch_array($requestResult)){
-          echo"
-            <div class='modal fade' id='".$requestRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
-              <div class='modal-dialog'>
-                <div class
-      }
-      ?>
     </div>
     <div class='col-md-4'>
       <h4>In progress</h4>
