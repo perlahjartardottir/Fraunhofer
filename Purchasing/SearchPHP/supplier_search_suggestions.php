@@ -1,3 +1,6 @@
+<?php
+include '../../connection.php';
+?>
 <div id='output'>
   <table class='table table-responsive'>
     <thead>
@@ -10,6 +13,7 @@
       </tr>
     </thead>
     <tbody>
+      
     </tbody>
   </table>
 </div>

@@ -1,3 +1,4 @@
+<?php include '../../connection.php'; ?>
 <div id='output'>
   <table class='table table-responsive'>
     <thead>
@@ -9,6 +10,20 @@
       </tr>
     </thead>
     <tbody>
+      <?php
+      $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection
+              FROM purchase_order;";
+      $result = mysqli_query($link, $sql);
+      while($row = mysqli_fetch_array($result)){
+        echo"
+          <tr>
+            <td><a href='addOrderItem.php'>".$row[0]."</a></td>
+            <td>".$row[1]."</td>
+            <td>".$row[2]."</td>
+            <td>".$row[3]."</td>
+          </tr>";
+      }
+      ?>
     </tbody>
   </table>
 </div>

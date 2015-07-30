@@ -27,7 +27,6 @@ $employeeResult = mysqli_query($link, $employeeSql);
         <h4>Purchase order</h4>
         <div class='col-md-6 form-group'>
           <label>Employee: </label>
-          <br>
             <input list="employees" name="employees" class='col-md-12 form-control'>
             <datalist id="employees">
               <?
