@@ -1,6 +1,14 @@
 <?php
 include '../../connection.php';
 session_start();
+$user = $_SESSION["username"];
+// SQL query to find the employee who is making the order
+$curEmployeeSql = "SELECT employee_ID
+                   FROM employee
+                   WHERE employee_name = '$user'";
+$curEmployeeResult = mysqli_query($link, $curEmployeeSql);
+$employee_ID = mysqli_fetch_array($curEmployeeResult);
+
 
 // SQL query for the employee list
 $employeeSql = "SELECT employee_name
@@ -12,29 +20,30 @@ $employeeResult = mysqli_query($link, $employeeSql);
 </head>
 <body>
   <?php include '../header.php'; ?>
+  <?php echo"<input type='hidden' id='employee_ID' value='".$employee_ID[0]."'>"; ?>
   <div class='container'>
     <div class='row well well-lg'>
       <form>
         <h4>Purchase order</h4>
-        <p class='col-md-6 form-group'>
+        <div class='col-md-6 form-group'>
           <label>Employee: </label>
-          <select class='form-control'>
+          <select class='form-control' id='employee_name'>
             <?
             while($row = mysqli_fetch_array($employeeResult)){
               echo"<option value='".$row[0]."'>".$row[0]."</option>";
             }
             ?>
           </select>
-        </p>
-        <p class='col-md-6 form-group'>
+        </div>
+        <div class='col-md-6 form-group'>
           <label>Supplier: </label>
-          <input type="text" class='form-control'>
-        </p>
-        <p class='col-md-6 form-group'>
+          <input type="text" class='form-control' id='supplier_name'>
+        </div>
+        <div class='col-md-6 form-group'>
           <label>Approved by: </label>
-          <input type="text" class='form-control'>
-        </p>
-        <input class='form-control btn btn-primary' type="button" value="Order" onclick='order()'>
+          <input type="text" class='form-control' id='approved_by'>
+        </div>
+        <input class='form-control btn btn-primary' type="button" value="Order" onclick='createPurchaseOrder()'>
       </form>
     </div>
     <div class='row well well-lg col-md-5'>

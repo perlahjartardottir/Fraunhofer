@@ -85,3 +85,23 @@ function delRequest(request_ID){
     });
   }
 }
+
+function createPurchaseOrder(){
+  var employee_name = $('#employee_name').val();
+  var employee_ID = $('#employee_ID').val();
+  var supplier_name = $('#supplier_name').val();
+  var approved_by = $('#approved_by').val();
+  $.ajax({
+    url: '../InsertPHP/addNewPurchaseOrder.php',
+    type: 'POST',
+    data:{
+      employee_name : employee_name,
+      employee_ID   : employee_ID,
+      supplier_name : supplier_name,
+      approved_by   : approved_by
+    },
+    success: function(data, status, xhr){
+      console.log(data);
+    }
+  });
+}
