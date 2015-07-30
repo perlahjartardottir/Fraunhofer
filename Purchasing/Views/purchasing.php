@@ -17,6 +17,15 @@
   while($row = mysqli_fetch_array($secResult)){
     $user_sec_lvl = $row[0];
   }
+  // query to find how many active requests there are
+  $activeRequestsSql = "SELECT COUNT(request_ID)
+                        FROM order_request
+                        WHERE active = 1;";
+  $activeRequestsResult = mysqli_query($link, $activeRequestsSql);
+  $activeRequests = mysqli_fetch_array($activeRequestsResult);
+  if(!$activeRequestsResult){
+    echo mysqli_error($link);
+  }
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
@@ -33,7 +42,9 @@
           <button type="button" class='btn btn-primary col-md-8' onclick="location.href='request.php'">Request for PO</button>
         </div>
         <div class='col-md-3'>
-          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='processOrder.php'">Process order</button>
+          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='processOrder.php'">
+            Process order <span class='badge'>".$activeRequests[0]."</span>
+          </button>
         </div>
         <div class='col-md-3'>
           <button type='button' class='btn btn-primary col-md-8' onclick="location.href='purchaseOverview.php'">Overview</button>
