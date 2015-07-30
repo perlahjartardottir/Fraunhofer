@@ -238,56 +238,7 @@ function generatePrice() {
     }
   });
 }
-function generatePriceTopNotch() {
-  var coating_dropdown = document.getElementById("coating_sel_top");
-  var coating_ID = coating_dropdown.options[coating_dropdown.selectedIndex].text;
-  var e = document.getElementById("insert_size");
-  var length = e.options[e.selectedIndex].text;
-  $.ajax({
-    url: "../SelectPHP/generatePrice.php",
-    type: "POST",
-    data: {
-      length: length
-    },
-    success: function(data, status, xhr) {
-      if (coating_ID === "DLC") {
-        data = data * 2;
-      }
-      if ($('#dblEnd').is(":checked")){
-        data = data * 2;
-      }
-      // output the data recieved from the php file into the price field.
-      data = parseFloat(data);
-      data = data.toFixed(2);
-      document.getElementById('priceTop').value = data;
-    }
-  });
-}
-function generatePriceInsert() {
-  var coating_dropdown = document.getElementById("coating_sel_insert");
-  var coating_ID = coating_dropdown.options[coating_dropdown.selectedIndex].text;
-  var e = document.getElementById("diameterInsert");
-  var diameter = e.options[e.selectedIndex].text;
-  $.ajax({
-    url: "../SelectPHP/generatePrice.php",
-    type: "POST",
-    data: {
-      diameter: diameter
-    },
-    success: function(data, status, xhr) {
-      if (coating_ID === "DLC") {
-        data = data * 2;
-      }
-      if ($('#dblEnd').is(":checked")){
-        data = data * 2;
-      }
-      // output the data recieved from the php file into the price field.
-      data = parseFloat(data);
-      data = data.toFixed(2);
-      document.getElementById('priceInsert').value = data;
-    }
-  });
-}
+
 function displayHelper() {
   $.ajax({
     url: "../SelectPHP/displayHelper.php",
@@ -441,13 +392,11 @@ function addToolOdd() {
         $('#toolID').val('');
         $('#lineItem').val(lineItem);
         $('#quantity').val('');
-        // refresh the table with the newly inserted line
         showPOTools();
       }
     });
   }
 }
-
 
 function addToolTop() {
   // Remove all existing error messages
@@ -556,7 +505,7 @@ function addEmployee() {
     $("#invalidEmployee").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>You must confirm the password</div>");
     return 0;
   } else if (!eEmail || !ePhoneNumber) {
-    $("#invalidEmployee").html("<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>There is missing information about this employee</br>you can add this info in the View All Employees page.</div>");
+    $("#invalidEmployee").html("<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>There is missing information about this employee</br>you can add this info in the iew All Employees page.</div>");
   }
   $.ajax({
     url: "../InsertPHP/insertNewEmployee.php",
@@ -960,7 +909,7 @@ function authenticate() {
   var userID = $('#userID').val();
   var password = $('#password').val();
   $.ajax({
-    url: "../Login/logincheck.php",
+    url: "../../Login/logincheck.php",
     type: "POST",
     data: {
       userID: userID,
@@ -980,7 +929,7 @@ function authenticate() {
       if (data.indexOf("error") > -1) {
         alert("Please enter the right information.");
       } else {
-        window.location = "../selection.php";
+        window.location = "../fraunhofer.php";
       }
     }
   });
@@ -988,13 +937,13 @@ function authenticate() {
 
 function logout() {
   $.ajax({
-    url: "../Login/logout.php",
+    url: "../../Login/logout.php",
     type: "POST"
   }).done(function() {
     // redirect the user to the login page
     // this is done so you loose access to the site you are at
     // when you log out.
-    window.location = "../Login/login.php";
+    window.location = "../../Login/login.php";
   });
 }
 
@@ -1488,17 +1437,16 @@ function deletePOScan(po_ID) {
     });
   }
 }
-
 function tools_left() {
   var line_on_po = $('#lineItem').val();
   $.ajax({
     url: "../SelectPHP/tools_left.php",
     type: "POST",
-    data: {
+     data: {
       line_on_po: line_on_po,
     },
     success: function(data, status, xhr) {
-      document.getElementById('number_of_tools').value = data;
+     document.getElementById('number_of_tools').value = data;
     }
   });
 }
