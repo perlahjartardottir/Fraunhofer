@@ -197,6 +197,9 @@ if($user_sec_lvl < 2){
     <div class='col-xs-4 form-group'>
       <label for="number_of_tools">Number of tools: </label>
       <input type="number" name="number_of_tools" id="number_of_tools" class='form-control'>
+      <button type='button' class='btn btn-sm btn-success' style='margin-top:-56px; margin-left:221px;'type"button" name"display_tools_left" id="display_tools_left" onclick="tools_left()">
+        All remaining tools
+      </button>
     </div>
     <div class='col-xs-4 form-group'>
       <label for="runNumber">Run number: </label>
