@@ -49,15 +49,17 @@ $order_ID = $_SESSION["order_ID"];
           <label>Description: </label>
           <textarea id='description' class='form-control'></textarea>
         </div>
-        <button type='button' class='btn btn-primary col-md-2' style='float:right;'>Add</button>
+        <button type='button' class='btn btn-primary col-md-2' onclick='addOrderItem()' style='float:right;'>Add</button>
       </form>
     </div>
+    <div id='orderItems'</div>
   </div>
   <script>
   //show the info for the PO chosen when you enter the page or refresh it
       $(document).ready(function() {
           var order_ID = <?php echo $order_ID; ?>;
           showPOInfo(order_ID);
+          showOrderItems(order_ID);
       });
       //if the user enters the view with a PO not on the dropdownlist
       // check if the value is in the list already

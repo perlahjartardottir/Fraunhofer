@@ -85,6 +85,21 @@ function delRequest(request_ID){
     });
   }
 }
+function delOrderItem(order_item_ID){
+  var r = confirm("Are you sure you want to delete this line item?");
+  if(r === true){
+    $.ajax({
+      url: '../DeletePHP/deleteOrderItem.php',
+      type: 'POST',
+      data:{
+        order_item_ID : order_item_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
+}
 
 function createPurchaseOrder(){
 
@@ -115,6 +130,25 @@ function createPurchaseOrder(){
     }
   });
 }
+function addOrderItem(){
+  var quantity = $('#quantity').val();
+  var part_number = $('#part_number').val();
+  var unit_price = $('#unit_price').val();
+  var description = $('#description').val();
+  $.ajax({
+    url: '../InsertPHP/addNewOrderItem.php',
+    type: 'POST',
+    data:{
+      quantity      : quantity,
+      part_number   : part_number,
+      unit_price    : unit_price,
+      description   : description
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+    }
+  });
+}
 function showPOInfo(order_ID) {
   $.ajax({
     url: "../SelectPHP/POInfoForOrderItem.php",
@@ -137,6 +171,18 @@ function showPOInfoAndRefreshImage(order_ID) {
     success: function(data, status, xhr) {
       $("#poinfo").html(data);
       window.location.reload(true);
+    }
+  });
+}
+function showOrderItems(order_ID){
+  $.ajax({
+    url: "../SelectPHP/showOrderItems.php",
+    type: "POST",
+    data: {
+      order_ID: order_ID
+    },
+    success: function(data, status, xhr) {
+      $("#orderItems").html(data);
     }
   });
 }
