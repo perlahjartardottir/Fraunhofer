@@ -28,7 +28,7 @@
       </form>
     </div>
 
-    <!-- SearchPHP/supplier_search_suggestions.php -->
+    <!-- SearchPHP/purchase_search_suggestions.php -->
     <div class="col-md-8 col-md-offset-1">
       <div id='output' class='table table-responsive'>
       </div>

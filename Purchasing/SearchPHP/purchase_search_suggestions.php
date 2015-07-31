@@ -17,7 +17,7 @@
       while($row = mysqli_fetch_array($result)){
         echo"
           <tr>
-            <td><a href='addOrderItem.php'>".$row[0]."</a></td>
+            <td onclick='POInfo(".$row[0].")'><a href='#'>".$row[0]."</a></td>
             <td>".$row[1]."</td>
             <td>".$row[2]."</td>
             <td>".$row[3]."</td>

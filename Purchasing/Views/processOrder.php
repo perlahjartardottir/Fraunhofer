@@ -27,7 +27,7 @@ $employeeResult = mysqli_query($link, $employeeSql);
         <h4>Purchase order</h4>
         <div class='col-md-6 form-group'>
           <label>Employee: </label>
-            <input list="employees" name="employees" class='col-md-12 form-control'>
+            <input type='text' list="employees" name="employeeList" id='employeeList' value='' class='col-md-12 form-control'>
             <datalist id="employees">
               <?
               while($row = mysqli_fetch_array($employeeResult)){

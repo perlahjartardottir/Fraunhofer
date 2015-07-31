@@ -1,5 +1,6 @@
 <?php
 include '../../connection.php';
+session_start();
 
 $employee_name = mysqli_real_escape_string($link, $_POST['employee_name']);
 $employee_ID   = mysqli_real_escape_string($link, $_POST['employee_ID']);
@@ -24,7 +25,10 @@ $supplier_ID = $row[0];
 $sql = "INSERT INTO purchase_order (supplier_ID, employee_ID, order_for_who, approved_by, order_date)
         VALUES ('$supplier_ID', '$employee_ID', '$order_for_who', '$approved_by', CURDATE());";
 $result = mysqli_query($link, $sql);
+
 if(!$result){
 	echo("Something went wrong : ".mysqli_error($link));
 }
+// mysqli_insert_id fetches the last inserted row
+$_SESSION["order_ID"] = mysqli_insert_id($link);
 ?>
