@@ -2,7 +2,9 @@
 include '../../connection.php';
 session_start();
 $sql = "SELECT order_ID
-        FROM purchase_order;";
+        FROM purchase_order
+        ORDER BY order_date DESC
+        LIMIT 12;";
 $result = mysqli_query($link, $sql);
 ?>
 <head>
@@ -13,9 +15,10 @@ $result = mysqli_query($link, $sql);
   <div class='container'>
     <div class='row well well-lg'>
       <form>
-        <div class='form-group col-md-3'>
+        <div class='form-group'>
           <label>Purchase order: </label>
-          <select class='form-control'>
+          <select class='form-control' onchange='showToolsAndRefreshImage(this.value)' id='purchaseOrder' style='width:auto;'>
+            <option value''>Select a PO#: </option>
             <?
             while($row = mysqli_fetch_array($result)){
               var_dump($row[0]);
@@ -23,6 +26,7 @@ $result = mysqli_query($link, $sql);
             }
             ?>
           </select>
+          <br><div id="poinfo"><b>PO info will be listed here</b></div>
         </div>
       </form>
     </div>

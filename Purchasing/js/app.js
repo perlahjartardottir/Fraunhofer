@@ -105,3 +105,16 @@ function createPurchaseOrder(){
     }
   });
 }
+function showToolsAndRefreshImage(order_ID) {
+  console.log(order_ID);
+  $.ajax({
+    url: "../SelectPHP/POInfoForOrderItem.php",
+    type: "POST",
+    data: {
+      order_ID: order_ID
+    },
+    success: function(data, status, xhr) {
+      $("#poinfo").html(data);
+    }
+  });
+}
