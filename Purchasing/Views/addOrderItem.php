@@ -14,7 +14,6 @@ $order_ID = $_SESSION["order_ID"];
 <body>
   <?php include '../header.php'; ?>
   <div class='container'>
-    <?php var_dump($order_ID); ?>
     <div class='row well well-lg'>
       <form>
         <div class='form-group'>
@@ -23,7 +22,6 @@ $order_ID = $_SESSION["order_ID"];
             <option value''>Select a PO#: </option>
             <?
             while($row = mysqli_fetch_array($result)){
-              var_dump($row[0]);
               echo"<option value='".$row[0]."'>".$row[0]."</option>";
             }
             ?>
@@ -63,19 +61,19 @@ $order_ID = $_SESSION["order_ID"];
       });
       //if the user enters the view with a PO not on the dropdownlist
       // check if the value is in the list already
-      // var exists = false;
-      // $('#posel option').each(function(){
-      //     if (this.value == '<?php echo $po_ID; ?>') {
-      //         exists = true;
-      //     }
-      // });
-      // // if the list doesnt contain our PO we add it to the dropdown
-      // if(!exists){
-      //     $('#posel').append($('<option>', {
-      //         value: <?php echo $po_ID; ?>,
-      //         text: '<?php echo $po_number[0]; ?>'
-      //     }));
-      // }
+      var exists = false;
+      $('#purchaseOrder option').each(function(){
+          if (this.value == '<?php echo $order_ID; ?>') {
+              exists = true;
+          }
+      });
+      // if the list doesnt contain our PO we add it to the dropdown
+      if(!exists){
+          $('#purchaseOrder').append($('<option>', {
+              value: <?php echo $order_ID; ?>,
+              text: '<?php echo $order_ID; ?>'
+          }));
+      }
       //make the dropdown list show the currently chosen PO
       $('#purchaseOrder').val("<?php echo $order_ID;?>");
     </script>
