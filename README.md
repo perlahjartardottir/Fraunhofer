@@ -1,7 +1,8 @@
 [Fraunhofer product tracking system](http://eysteinn.local:8888/Login/login.php)
 ==================================
 
-<img src="images/fraunhoferlogo.jpg" alt="Fraunhofer Logo" width='300px' align='right' style='padding-left:15px;'/>
+<img src="images for markdown/fraunhoferlogo.jpg" alt="Fraunhofer Logo" width='300px' align='right' style='padding-left:15px;'/>
+href="images for markdown/Starting MySql guide/test_database.png"
 
 This file is a guide for anyone who means to make changes to the website for the Fraunhofer product tracking system, big or small.
 
@@ -40,6 +41,7 @@ Table of contents
 	- [MySQL setup guide](#mysql-guide)
 	- [MAMP setup guide](#mamp-guide)
 	- [Searching for POs, runs or tools](#search-guide)
+	- [Change prices for customer](#price-guide)
 	- [A new PO. From adding to shipping.](#add-po-guide)
 
 Install
@@ -226,6 +228,10 @@ Here are a few examples where this can be useful.
 - ```k21506___2``` will show all runs in K2 in June 2015 that were the second run of the day.
 - ```_________1``` will show first run of the day for all machines.
 - ```%drill%``` will show all tools that contain the string ```drill``` in their tool ID
+
+<a name='price-guide'>Change prices for customer</a>
+-----------------------------------------------------
+This is a text
 
 <a name='add-po-guide'>A new PO. From adding to shipping.</a>
 ================
