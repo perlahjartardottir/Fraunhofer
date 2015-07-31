@@ -106,7 +106,6 @@ function createPurchaseOrder(){
   });
 }
 function showToolsAndRefreshImage(order_ID) {
-  console.log(order_ID);
   $.ajax({
     url: "../SelectPHP/POInfoForOrderItem.php",
     type: "POST",
