@@ -111,11 +111,11 @@ function createPurchaseOrder(){
       approved_by   : approved_by
     },
     success: function(data, status, xhr){
-      window.location = "../Views/addOrderItem.php";
+      window.location = "../views/addOrderItem.php";
     }
   });
 }
-function showToolsAndRefreshImage(order_ID) {
+function showPOInfo(order_ID) {
   $.ajax({
     url: "../SelectPHP/POInfoForOrderItem.php",
     type: "POST",
@@ -124,6 +124,33 @@ function showToolsAndRefreshImage(order_ID) {
     },
     success: function(data, status, xhr) {
       $("#poinfo").html(data);
+    }
+  });
+}
+function showPOInfoAndRefreshImage(order_ID) {
+  $.ajax({
+    url: "../SelectPHP/POInfoForOrderItem.php",
+    type: "POST",
+    data: {
+      order_ID: order_ID
+    },
+    success: function(data, status, xhr) {
+      $("#poinfo").html(data);
+      window.location.reload(true);
+    }
+  });
+}
+
+// This function preserves the session order_ID
+function POInfo(order_ID){
+  $.ajax({
+    url: '../SelectPHP/POInfo.php',
+    type: "POST",
+    data:{
+      order_ID: order_ID
+    },
+    success: function(data, status, xhr) {
+      window.location = "../Views/addOrderItem.php";
     }
   });
 }
