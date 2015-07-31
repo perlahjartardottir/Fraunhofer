@@ -42,7 +42,8 @@ Table of contents
 	- [MAMP setup guide](#mamp-guide)
 	- [Searching for POs, runs or tools](#search-guide)
 	- [Change prices for customer](#price-guide)
-	- [A new PO. From adding to shipping.](#add-po-guide)
+	- [A new PO. From adding to shipping](#add-po-guide)
+	- [Add a discount to a PO/tool](#discount-guide)
 
 Install
 =======
@@ -230,8 +231,42 @@ Here are a few examples where this can be useful.
 - ```%drill%``` will show all tools that contain the string ```drill``` in their tool ID
 
 <a name='price-guide'>Change prices for customer</a>
------------------------------------------------------
-This is a text
+====================================================
+The price tables can be found by clicking the ```Home``` button.
+
+From there click ```General Information -> Price Tables```.
+
+Here you can click the customer name to see a price table for every customer that has at least one price linked to them.
+
+Change specific tool price, round tool.
+---------------------------
+<img src="images for markdown/gif_guides/price_change/price_change_normal.gif" alt="Change price" width='400px' align='right'/>
+
+- Select a customer and tool-size
+- If a price appears you can edit it and click ```Update price``` to store it.
+- If no price appears as ```Current price``` you will add it when pressing ```Update price```.
+
+<br><br><br><br><br><br><br><br>
+
+Change specific tool price, non round tools
+---------------------------
+<img src="images for markdown/gif_guides/price_change/price_change_odd.gif" alt="Change price" width='400px' align='right'/>
+
+- Tools like Top-notch tools that do not have a diameter show up if you do not change the default setting of the diameter field.
+- Same goes for tools that have a diameter/IC but no length.
+
+<br><br><br><br><br><br><br><br>
+
+Change all prices for a customer
+---------------------------
+<img src="images for markdown/gif_guides/price_change/price_change_all.gif" alt="Change price" width='400px' align='right'/>
+
+- Select a customer and a multipler.
+- Note that this is a multiplier not a percentage change.
+- To increase the price by 2% you would use 1.02 as a multiplier.
+- The multiplier always uses the current price table so multiplying by 1 will give you the right current price.
+
+<br><br><br><br><br><br><br><br>
 
 <a name='add-po-guide'>A new PO. From adding to shipping.</a>
 ================
@@ -321,3 +356,27 @@ Shipping the PO
 - Make sure all information is correct. You can change the tools in shipment if it is wrong for some reason.
 - Add a comment and a shipping date and click ```Save```
 - <strong>The customer we are sending this shipment too will see this comment.</strong>
+
+<br><br><br><br><br><br>
+
+<a name='discount-guide'>Add a discount to a PO/tool</a>
+=================================
+The following videos show how to apply a discount to a PO/tool.
+
+Finding the right PO
+--------------------
+<img src="images for markdown/gif_guides/discount/discount_navigate.gif" alt="Discount navigate" width='400px' align='right'/>
+
+- Go to the PO search view to find your PO.
+- Click your PO and choose ```Edit -> Edit PO```.
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+Applying the discount
+--------------------
+<img src="images for markdown/gif_guides/discount/discount_apply.gif" alt="Discount apply" width='400px' align='right'/>
+
+- Click the tool you want to apply the discount to.
+- Enter how many tools have the discount and the amount per tool.
+- After you click ```Apply discount``` refresh the page. 
+<br><br><br><br><br><br>
