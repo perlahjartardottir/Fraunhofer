@@ -21,7 +21,7 @@ include '../connection.php';
 // the po_ID the user picked from the dropdown list
 $q = $_SESSION["po_ID"];
 // finds the right info from that po_ID
-$sql = "SELECT p.po_number, p.receiving_date, c.customer_name,  p.shipping_date, p.shipping_info, p.initial_inspection 
+$sql = "SELECT p.po_number, p.receiving_date, c.customer_name,  p.shipping_date, p.shipping_info, p.initial_inspection
         FROM pos p, customer c
         WHERE p.customer_ID = c.customer_ID
         AND po_ID = '$q'";
@@ -29,7 +29,7 @@ $result = mysqli_query($link, $sql);
 
 // finds all the line items for that PO
 $tsql = "SELECT l.line_on_po, l.quantity, l.tool_ID, IF(l.coating_ID IS NULL, 'empty', c.coating_type), l.diameter, l.length, IF(l.double_end = 0, 'NO', 'YES') ,ROUND(l.price, 2), SUM(ROUND(l.price * l.quantity, 2)), ROUND(l.est_run_number, 2)
-         FROM lineitem l 
+         FROM lineitem l
          LEFT JOIN coating c
            ON l.coating_ID = c.coating_ID
          WHERE l.po_ID = '$q'
@@ -58,7 +58,7 @@ while($row = mysqli_fetch_array($result)) {
 echo "<table>";
 echo    "<tr>
             <td>Line#</td>
-            <td>Quantity</td>  
+            <td>Quantity</td>
             <td>ToolID</td>
             <td>Coating</td>
             <td>dia / IC</td>
@@ -83,7 +83,7 @@ while($row = mysqli_fetch_array($tresult)) {
           "</tr>";
 }
 // Finds the price of all the tools on that po
-$totalPricesql = "SELECT SUM(ROUND(l.price * l.quantity, 2)), SUM(ROUND(l.est_run_number, 2)) 
+$totalPricesql = "SELECT SUM(ROUND(l.price * l.quantity, 2)), SUM(ROUND(l.est_run_number, 2))
                   FROM lineitem l, pos p
                   WHERE p.po_ID = '$q'
                   AND l.po_ID = p.po_ID";
@@ -152,7 +152,7 @@ if(mysqli_num_rows($discountSqlResult) > 0){
 
 
 $finalPrice = $totalSum - $totalDiscount;
-echo "<h4>Final price: ".$finalPrice."</h4>";
+echo "<h4>Final price: $".money_format('%i', $finalPrice)."</h4>";
 }
 mysqli_close($link);
 ?>

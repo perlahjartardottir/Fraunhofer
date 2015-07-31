@@ -34,9 +34,17 @@
                  AND active = 1;";
   $requestResult = mysqli_query($link, $requestSql);
   ?>
-  <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
+<?php
+    if($activeRequests[0] > 0){
+      echo "<title id='title'>New request</title>";
+    } else{
+      echo "<title id='title'>Purchasing</title>";
+    }
+ ?>
+
+<title id='title'>Fraunhofer CCD</title>
 <body>
   <?php include '../header.php'; ?>
   <div class="container">
@@ -136,20 +144,39 @@
     </div>
   </div>
   <script>
-  $(document).ready(function(){
-    setInterval(test, 2000);
+    $(document).ready(function(){
+      setInterval(test, 10000);
       function test(){
-        $.ajax({
-          url: "../UpdatePHP/update_request_count.php",
-          type: "POST",
-          data: {
-          },
-          success: function(data, status, xhr) {
-            $('#process_order').html(data);
-          }
-        });
-      }
-    });
+          $.ajax({
+            url: "../UpdatePHP/update_request_count.php",
+            type: "POST",
+            data: {
+            },
+            success: function(data, status, xhr) {
+              $('#process_order').html(data);
+            }
+          });
+        }
+        setInterval(function(){
+          var title = document.title;
+              $.ajax({
+                url: "../UpdatePHP/update_title_text.php",
+                type: "POST",
+                data: {
+                },
+                success: function(data, status, xhr) {
+                  //document.title = (data);
+                  if(data == "Purchasing"){
+                    document.title = "Purchasing";
+                    return;
+                  } else {
+                    document.title = (title == "New request" ? data : "New request");
+                  }
+                }
+              });
+      }, 1000);
+  });
+
   </script>
 </body>
 </html>
