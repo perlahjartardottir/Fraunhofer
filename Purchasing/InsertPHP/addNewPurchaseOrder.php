@@ -21,6 +21,9 @@ $supplierResult = mysqli_query($link, $supplierSql);
 $row = mysqli_fetch_array($supplierResult);
 $supplier_ID = $row[0];
 
+var_dump($order_for_who);
+
+
 $sql = "INSERT INTO purchase_order (supplier_ID, employee_ID, order_for_who, approved_by, order_date)
         VALUES ('$supplier_ID', '$employee_ID', '$order_for_who', '$approved_by', CURDATE());";
 $result = mysqli_query($link, $sql);

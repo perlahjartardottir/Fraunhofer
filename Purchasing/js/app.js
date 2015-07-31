@@ -87,7 +87,17 @@ function delRequest(request_ID){
 }
 
 function createPurchaseOrder(){
-  var employee_name = $('#employee_name').val();
+
+  // function to find the correct value from the datalist
+  var employee_name = $("input[name='employeeList']").on('input', function(e){
+    var $input = $(this),
+        val = $input.val(),
+        list = $input.attr('list'),
+        match = $('#'+list + ' option').filter(function() {
+           return ($(this).val() === val);
+       });
+  });
+  employee_name = employee_name.val();
   var employee_ID = $('#employee_ID').val();
   var supplier_name = $('#supplier_name').val();
   var approved_by = $('#approved_by').val();
