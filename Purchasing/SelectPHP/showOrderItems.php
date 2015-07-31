@@ -11,7 +11,7 @@ if(mysqli_num_rows($result) == 0){
 }
 ?>
 <div class='row well well-lg'>
-  <table class='table table-responsive' style='width:90%;'>
+  <table class='table table-responsive' style='width:92%;'>
     <thead>
       <tr>
         <th>Pos. No.</th>
