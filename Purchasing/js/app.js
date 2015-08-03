@@ -55,8 +55,13 @@ function orderRequest(){
   });
 }
 function activeRequest(element){
+  if(!element){
+    $("#output").html("");
+    return;
+  }
   var request_ID = $(element).parent().find('#request_ID').text();
   var employee_name = $(element).parent().find('#employee_name').text();
+
   $.ajax({
     url: '../SearchPHP/showRequest.php',
     type: 'POST',
@@ -116,6 +121,8 @@ function createPurchaseOrder(){
   var employee_ID = $('#employee_ID').val();
   var supplier_name = $('#supplier_name').val();
   var approved_by = $('#approved_by').val();
+  var request_ID = $('#activeRequest').text();
+
   $.ajax({
     url: '../InsertPHP/addNewPurchaseOrder.php',
     type: 'POST',
@@ -123,6 +130,7 @@ function createPurchaseOrder(){
       employee_name : employee_name,
       employee_ID   : employee_ID,
       supplier_name : supplier_name,
+      request_ID : request_ID,
       approved_by   : approved_by
     },
     success: function(data, status, xhr){

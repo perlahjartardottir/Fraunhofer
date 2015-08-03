@@ -1,0 +1,33 @@
+.pleaseNote{
+  font-size: 12px;
+}
+.pleaseNoteBold{
+  font-size: 11px;
+}
+@media print{
+  .row{
+    display: none;
+  }
+  .second-column{
+    font-size: 10px;
+  }
+  #signature{
+    border-top: dotted 1px;
+    width: 60%;
+    margin-top: -10px;
+    margin-left: 70px;
+  }
+  #underline{
+    border-bottom: 1px dotted #000;
+    text-decoration: none;
+  }
+  .pleaseNote{
+    font-size: 8px;
+  }
+  .pleaseNoteBold{
+    font-size: 8px;
+  }
+  table, td, th {
+    font-size: x-small;
+  }
+}

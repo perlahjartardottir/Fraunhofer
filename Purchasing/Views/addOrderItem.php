@@ -7,6 +7,12 @@ $sql = "SELECT order_ID
         LIMIT 10;";
 $result = mysqli_query($link, $sql);
 $order_ID = $_SESSION["order_ID"];
+$getRequestSql = "SELECT request_ID
+                  FROM purchase_order
+                  WHERE order_ID = '$order_ID';";
+$getRequestResult = mysqli_query($link, $getRequestSql);
+$row = mysqli_fetch_array($getRequestResult);
+$request_ID = $row[0];
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -16,7 +22,7 @@ $order_ID = $_SESSION["order_ID"];
   <div class='container'>
     <div class='row well well-lg'>
       <form>
-        <div class='form-group'>
+        <div class='form-group col-md-6'>
           <label>Purchase order: </label>
           <select class='form-control' onchange='showPOInfoAndRefreshImage(this.value)' id='purchaseOrder' style='width:auto;'>
             <option value=''>Select a PO#: </option>
@@ -27,6 +33,19 @@ $order_ID = $_SESSION["order_ID"];
             ?>
           </select>
           <br><div id="poinfo"><b>PO info will be listed here</b></div>
+        </div>
+        <div class='form-group col-md-6'>
+          <?php
+          $requestSql = "SELECT request_description
+                         FROM order_request
+                         WHERE request_ID = '$request_ID';";
+          $requestResult = mysqli_query($link, $requestSql);
+          $requestRow = mysqli_fetch_array($requestResult);
+          if($requestRow > 0){
+            echo"<h5>Request ID: ".$request_ID."</h5>
+                 <p><b>Description:</b> ".$requestRow[0]."</p>";
+          }
+          ?>
         </div>
       </form>
     </div>
@@ -52,6 +71,7 @@ $order_ID = $_SESSION["order_ID"];
         <button type='button' class='btn btn-primary col-md-2' onclick='addOrderItem()' style='float:right;'>Add</button>
       </form>
     </div>
+    <!-- SelectPHP/showOrderItems -->
     <div id='orderItems'</div>
   </div>
   <script>

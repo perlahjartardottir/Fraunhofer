@@ -14,7 +14,7 @@ if(mysqli_num_rows($result) == 0){
   <table class='table table-responsive' style='width:92%;'>
     <thead>
       <tr>
-        <th>Pos. No.</th>
+        <th>Pos. #</th>
         <th>Quantity</th>
         <th>Part #</th>
         <th>Description</th>
@@ -32,8 +32,8 @@ if(mysqli_num_rows($result) == 0){
               <td>".$row[0]."</td>
               <td>".$row[1]."</td>
               <td>".$row[3]."</td>
-              <td>".$row[2]."</td>
-              <td>".$total."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
+              <td>$".$row[2]."</td>
+              <td>$".$total."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
             </tr>";
         $counter = $counter + 1;
       } ?>
