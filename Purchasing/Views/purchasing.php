@@ -175,13 +175,11 @@
                 }
               });
       }, 1000);
-      /*
       $("body").mouseover(function(){
         console.log("mouseover");
         document.title = "Purchasing";
         clearInterval(title_function);
       });
-      */
   });
   </script>
 </body>
