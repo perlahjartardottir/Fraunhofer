@@ -65,7 +65,8 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           echo"
             <p>Request ID: ".$request_ID."</p>
             <p>Request date: ".$requestRow[0]."</p>
-            <p>Request description: ".$requestRow[1]."</p>";
+            <p>Request description: ".$requestRow[1]."</p>
+            <button type='button' class='btn btn-danger'>Finish request</button>";
         }
         ?>
       </div>
