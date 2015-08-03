@@ -77,12 +77,10 @@ while($row = mysqli_fetch_array($result)){
 <head>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
-  <link href='../css/print.css' rel='stylesheet'>
-
-
 </head>
 <body>
   <?php include '../header.php'; ?>
+  <link href='../css/print.css' rel='stylesheet'>
   <div class='container'>
     <div class='col-xs-12 commentHide'>
       <div class='row well well-lg'>

@@ -157,7 +157,7 @@
             }
           });
         }
-        setInterval(function(){
+        var title_function = setInterval(function(){
           var title = document.title;
               $.ajax({
                 url: "../UpdatePHP/update_title_text.php",
@@ -168,15 +168,21 @@
                   //document.title = (data);
                   if(data == "Purchasing"){
                     document.title = "Purchasing";
-                    return;
+                    clearInterval(title_function);
                   } else {
                     document.title = (title == "New request" ? data : "New request");
                   }
                 }
               });
       }, 1000);
+      /*
+      $("body").mouseover(function(){
+        console.log("mouseover");
+        document.title = "Purchasing";
+        clearInterval(title_function);
+      });
+      */
   });
-
   </script>
 </body>
 </html>
