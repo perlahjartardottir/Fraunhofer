@@ -16,7 +16,7 @@ echo"
 <div id='output'>
   <div class='row well well-lg'>
     <form>
-      <h4> Request_ID: ".$row[0]."</h4>
+      <h4> Request ID: <span id='activeRequest' value='".$row[0]."'>".$row[0]."</span></h4>
       <p> Employee: ".$employee_name."</p>
       <p> Date: ".$row[3]."</p>
       <p> Supplier: ".$row[6]."</p>

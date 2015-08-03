@@ -14,6 +14,12 @@ while($row = mysqli_fetch_array($orderResult)){
   $supplier_ID = $row[0];
 }
 
+// Query for all the order items who are on this purchase order
+$orderItemSql = "SELECT quantity, part_number, description, unit_price
+                 FROM order_item
+                 WHERE order_ID = '$order_ID';";
+$orderItemResult = mysqli_query($link, $orderItemSql);
+
 $supplierSql = "SELECT supplier_name, supplier_address, supplier_phone, supplier_email
                 FROM supplier
                 WHERE supplier_ID = '$supplier_ID';";
@@ -24,6 +30,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
 <html>
 <head>
   <title>Fraunhofer CCD</title>
+  <link href='../css/print.css' rel='stylesheet'>
 </head>
 <body>
   <?php include '../header.php'; ?>
@@ -50,22 +57,23 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <img src="../images/fraunhoferlogo.jpg" alt="Fraunhofer Logo" style="float:right; width:220px; height:auto; margin-top:10px;"/>
     </div>
     <div class='col-xs-8'>
-      <h4>Purchase Order</h4>
-      <span class='col-xs-12'><strong>To supplier: </strong></span>
+      <h3>Purchase Order</h3>
+      <span class='col-xs-12'><strong>To: </strong></span>
       <span class='col-xs-12'><strong><?php echo $supplierRow[0]; ?></strong></span>
       <span class='col-xs-12'><?php echo $supplierRow[1]; ?></span>
       <span class='col-xs-12'>Phone: <?php echo $supplierRow[2]; ?></span>
       <p class='col-xs-12'>Email: <?php echo $supplierRow[3]; ?></p>
-      <span class='col-xs-12'><strong>Purchase Order Number: <?php echo $order_ID; ?></strong></span>
-      <p class='col-xs-12'><i>Please refer to the purchase order number on all invoices</i></p>
-      <p class='col-xs-12'>Date: </p> <!--SPYRJA HVADA DATE UM HER ER RAETT -->
+      <span class='col-xs-12' style='margin-left: 15px; border:1px solid black; width:auto; background-color: #127705;'><strong>Purchase Order Number: <?php echo $order_ID; ?></strong></span>
+      <p class='col-xs-12 pleaseNote'><i>Please refer to the purchase order number on all invoices</i></p>
+      <p class='col-xs-12'>Date: <span id='underline'><?php echo date("M. d, Y"); ?></span></p>
+
     </div>
-    <div class='col-xs-4'>
+    <div class='col-xs-4 second-column'>
       <span class='col-xs-12'><strong>Shipping & Billing:</strong></span>
       <span class='col-xs-12'>Fraunhofer USA CCD</span>
       <span class='col-xs-12'>1449 Engineering Research Court</span>
       <p class='col-xs-12'>East Lansing, MI 48824</p>
-      <p class='col-xs-12'><i>Please send invoices to the above address or email to kklimczak@fraunhofer.org</i></p>
+      <p class='col-xs-12 pleaseNoteBold'><i><b>Please send invoices to the above address or email to kklimczak@fraunhofer.org</b></i></p>
       <span class='col-xs-12'><strong>Technical Contact:</strong></span>
       <span class='col-xs-12'><strong>Kathryn Klimczak</strong></span>
       <span class='col-xs-12'>+1 517-432-8709  (phone)</span>
@@ -76,21 +84,52 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <span class='col-xs-12'>+1 734-738-0556</span>
       <span class='col-xs-12'>bfohrman@fraunhofer.org</span>
     </div>
-    <div class='col-md-12' style='margin-top:20px;'>
+    <div class='col-xs-12' style='margin-top:20px;'>
       <table class='table table-responsive'>
         <thead>
           <tr>
-            <th>Pos. No.</th>
+            <th class='col-xs-1'>Pos. #</th>
             <th>Quantity.</th>
             <th>Part #</th>
             <th>Description</th>
-            <th>USD Unit</th>
-            <th>USD Total</th>
+            <th class='col-xs-2'>USD Unit</th>
+            <th class='col-xs-2'>USD Total</th>
           </tr>
         </thead>
         <tbody>
+          <?php
+          $counter = 1;
+          $totalOrderPrice = 0;
+          while($row = mysqli_fetch_array($orderItemResult)){
+            $total = $row[0] * $row[3];
+            echo"<tr>
+                  <td>".$counter."</td>
+                  <td>".$row[0]."</td>
+                  <td>".$row[1]."</td>
+                  <td>".$row[2]."</td>
+                  <td>$".$row[3]."</td>
+                  <td>$".$total."</td>
+                </tr>";
+            $counter = $counter + 1;
+            $totalOrderPrice = $totalOrderPrice + $total;
+          }
+          ?>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>Total Order Price:</th>
+            <th><u style='border-bottom: 1px solid black'>$<?php echo $totalOrderPrice; ?></u></th>
+          </tr>
         </tbody>
       </table>
+    </div>
+    <div class='col-xs-12'>
+      <div class='col-xs-4 pleaseNote' style='float:right'><i>Please note Fraunhofer USA is Tax Exempt</i></div>
+    </div>
+    <div class='col-xs-4'>
+      <p> Signature: <hr id='signature'></p>
     </div>
   </div>
   <script>

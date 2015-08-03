@@ -48,6 +48,7 @@ $employeeResult = mysqli_query($link, $employeeSql);
       </form>
     </div>
     <div class='row well well-lg col-md-5'>
+      <h4>Select request for the PO</h4>
       <table class='table table-responsive' id='activeRequestTable'>
         <thead>
           <tr>
@@ -57,6 +58,11 @@ $employeeResult = mysqli_query($link, $employeeSql);
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td onclick='activeRequest()'><a href='#'>No request</a></td>
+            <td></td>
+            <td></td>
+          </tr>
           <?php
           $sql = "SELECT request_ID, employee_ID, request_date, request_description
                   FROM order_request
