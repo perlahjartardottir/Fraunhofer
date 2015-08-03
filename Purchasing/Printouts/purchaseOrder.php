@@ -6,12 +6,13 @@ session_start();
 $user = $_SESSION["username"];
 $order_ID = $_SESSION["order_ID"];
 
-$orderSql = "SELECT supplier_ID
+$orderSql = "SELECT supplier_ID, request_ID
              FROM purchase_order
              WHERE order_ID = '$order_ID';";
 $orderResult = mysqli_query($link, $orderSql);
 while($row = mysqli_fetch_array($orderResult)){
   $supplier_ID = $row[0];
+  $request_ID = $row[1];
 }
 
 // Query for all the order items who are on this purchase order
@@ -52,6 +53,23 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           ?>
         </select>
       </form>
+      <p></p>
+      <div>
+        <?php
+        $requestSql = "SELECT request_date, request_description
+                       FROM order_request
+                       WHERE request_ID = '$request_ID';";
+        $requestResult = mysqli_query($link, $requestSql);
+        $requestRow = mysqli_fetch_array($requestResult);
+        if(mysqli_num_rows($requestResult) > 0){
+          echo"
+            <p>Request ID: ".$request_ID."</p>
+            <p>Request date: ".$requestRow[0]."</p>
+            <p>Request description: ".$requestRow[1]."</p>
+            <button type='button' class='btn btn-danger'>Finish request</button>";
+        }
+        ?>
+      </div>
     </div>
     <div class='col-xs-12'>
       <img src="../images/fraunhoferlogo.jpg" alt="Fraunhofer Logo" style="float:right; width:220px; height:auto; margin-top:10px;"/>
