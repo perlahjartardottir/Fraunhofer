@@ -56,7 +56,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <p></p>
       <div>
         <?php
-        $requestSql = "SELECT request_date, request_description
+        $requestSql = "SELECT request_date, request_description, active
                        FROM order_request
                        WHERE request_ID = '$request_ID';";
         $requestResult = mysqli_query($link, $requestSql);
@@ -65,8 +65,10 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           echo"
             <p>Request ID: ".$request_ID."</p>
             <p>Request date: ".$requestRow[0]."</p>
-            <p>Request description: ".$requestRow[1]."</p>
-            <button type='button' class='btn btn-danger'>Finish request</button>";
+            <p>Request description: ".$requestRow[1]."</p>";
+            if($requestRow[2] == 1){
+              echo"<button type='button' class='btn btn-danger' onclick='finishRequest(".$request_ID.")'>Finish request</button>";
+            }
         }
         ?>
       </div>
@@ -125,8 +127,8 @@ $supplierRow = mysqli_fetch_array($supplierResult);
                   <td>".$row[0]."</td>
                   <td>".$row[1]."</td>
                   <td>".$row[2]."</td>
-                  <td>$".$row[3]."</td>
-                  <td>$".$total."</td>
+                  <td>$".number_format((float)$row[3], 2, '.', '')."</td>
+                  <td>$".number_format((float)$total, 2, '.', '')."</td>
                 </tr>";
             $counter = $counter + 1;
             $totalOrderPrice = $totalOrderPrice + $total;
@@ -138,7 +140,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
             <td></td>
             <td></td>
             <th>Total Order Price:</th>
-            <th><u style='border-bottom: 1px solid black'>$<?php echo $totalOrderPrice; ?></u></th>
+            <th><u style='border-bottom: 1px solid black'>$<?php echo number_format((float)$totalOrderPrice, 2, '.', ''); ?></u></th>
           </tr>
         </tbody>
       </table>

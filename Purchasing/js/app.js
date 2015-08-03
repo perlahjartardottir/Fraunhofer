@@ -208,3 +208,20 @@ function POInfo(order_ID){
     }
   });
 }
+
+// This function makes the request inactive
+function finishRequest(request_ID){
+  var r = confirm("Are you sure you are finished with this request?");
+  if(r === true){
+    $.ajax({
+      url: '../UpdatePHP/finishRequest.php',
+      type: 'POST',
+      data:{
+        request_ID : request_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
+}
