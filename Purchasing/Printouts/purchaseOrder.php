@@ -14,6 +14,12 @@ while($row = mysqli_fetch_array($orderResult)){
   $supplier_ID = $row[0];
 }
 
+// Query for all the order items who are on this purchase order
+$orderItemSql = "SELECT quantity, part_number, description, unit_price
+                 FROM order_item
+                 WHERE order_ID = '$order_ID';";
+$orderItemResult = mysqli_query($link, $orderItemSql);
+
 $supplierSql = "SELECT supplier_name, supplier_address, supplier_phone, supplier_email
                 FROM supplier
                 WHERE supplier_ID = '$supplier_ID';";
@@ -56,7 +62,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <span class='col-xs-12'><?php echo $supplierRow[1]; ?></span>
       <span class='col-xs-12'>Phone: <?php echo $supplierRow[2]; ?></span>
       <p class='col-xs-12'>Email: <?php echo $supplierRow[3]; ?></p>
-      <span class='col-xs-12'><strong>Purchase Order Number: <?php echo $order_ID; ?></strong></span>
+      <span class='col-xs-12' style='border:1px solid black; width:auto; background-color: #127705;'><strong>Purchase Order Number: <?php echo $order_ID; ?></strong></span>
       <p class='col-xs-12'><i>Please refer to the purchase order number on all invoices</i></p>
       <p class='col-xs-12'>Date: </p> <!--SPYRJA HVADA DATE UM HER ER RAETT -->
     </div>
@@ -89,8 +95,32 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           </tr>
         </thead>
         <tbody>
+          <?php
+          $counter = 1;
+          $totalOrderPrice = 0;
+          while($row = mysqli_fetch_array($orderItemResult)){
+            $total = $row[0] * $row[3];
+            echo"<tr>
+                  <td>".$counter."</td>
+                  <td>".$row[0]."</td>
+                  <td>".$row[1]."</td>
+                  <td>".$row[2]."</td>
+                  <td>$".$row[3]."</td>
+                  <td>$".$total."</td>
+                </tr>";
+            $counter = $counter + 1;
+            $totalOrderPrice = $totalOrderPrice + $total;
+          }
+          ?>
         </tbody>
       </table>
+    </div>
+    <p style='float:right;'><strong>Total Order Price: <u style='border-bottom: 1px solid #000'>$<?php echo $totalOrderPrice; ?></u></strong></p>
+    <div class='col-md-12'>
+      <div class='col-md-4' style='float:right'><i>Please note Fraunhofer USA is Tax Exempt</i></div>
+    </div>
+    <div class='col-md-4'>
+      <p style='margin-bottom: -20px;'> Signature: <hr style='border-top: dotted 1px;' width='50%'></p>
     </div>
   </div>
   <script>
