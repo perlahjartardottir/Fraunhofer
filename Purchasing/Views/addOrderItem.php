@@ -4,7 +4,7 @@ session_start();
 $sql = "SELECT order_ID
         FROM purchase_order
         ORDER BY order_ID DESC
-        LIMIT 12;";
+        LIMIT 10;";
 $result = mysqli_query($link, $sql);
 $order_ID = $_SESSION["order_ID"];
 ?>
@@ -19,7 +19,7 @@ $order_ID = $_SESSION["order_ID"];
         <div class='form-group'>
           <label>Purchase order: </label>
           <select class='form-control' onchange='showPOInfoAndRefreshImage(this.value)' id='purchaseOrder' style='width:auto;'>
-            <option value''>Select a PO#: </option>
+            <option value=''>Select a PO#: </option>
             <?
             while($row = mysqli_fetch_array($result)){
               echo"<option value='".$row[0]."'>".$row[0]."</option>";

@@ -39,4 +39,5 @@ if(mysqli_num_rows($result) == 0){
       } ?>
     </tbody>
   </table>
+  <a href='../Printouts/purchaseOrder.php' class='btn btn-primary col-md-2' style='float:right;'>Printout</a>
 </div>
