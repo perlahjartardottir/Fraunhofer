@@ -8,9 +8,13 @@
     window.onload = function() {
       supplierSuggestions();
     };
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
+    //dismiss popover when click on body
+    $('body').on('click', function (e) {
+    if ($(e.target).data('toggle') !== 'popover'
+        && $(e.target).parents('.popover.in').length === 0) {
+        $('[data-toggle="popover"]').popover('hide');
+    }
+});
   </script>
   <div class='container'>
     <div class='row well well-lg col-md-3'>
