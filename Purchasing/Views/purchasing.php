@@ -168,18 +168,12 @@
                   //document.title = (data);
                   if(data == "Purchasing"){
                     document.title = "Purchasing";
-                    clearInterval(title_function);
                   } else {
                     document.title = (title == "New request" ? data : "New request");
                   }
                 }
               });
       }, 1000);
-      $("body").mouseover(function(){
-        console.log("mouseover");
-        document.title = "Purchasing";
-        clearInterval(title_function);
-      });
   });
   </script>
 </body>
