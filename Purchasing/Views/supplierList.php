@@ -8,6 +8,9 @@
     window.onload = function() {
       supplierSuggestions();
     };
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
   </script>
   <div class='container'>
     <div class='row well well-lg col-md-3'>

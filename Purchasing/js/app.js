@@ -134,6 +134,7 @@ function createPurchaseOrder(){
       approved_by   : approved_by
     },
     success: function(data, status, xhr){
+      //console.log(data);
       window.location = "../views/addOrderItem.php";
     }
   });
