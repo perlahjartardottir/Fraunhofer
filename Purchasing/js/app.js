@@ -194,6 +194,31 @@ function showOrderItems(order_ID){
     }
   });
 }
+function addNewSupplier(){
+  var supplier_name    = $('#supplier_name').val();
+  var supplier_address = $('#supplier_address').val();
+  var supplier_phone   = $('#supplier_phone').val();
+  var supplier_fax     = $('#supplier_fax').val();
+  var supplier_email   = $('#supplier_email').val();
+  var supplier_contact = $('#supplier_contact').val();
+  var supplier_website = $('#supplier_website').val();
+  $.ajax({
+    url: "../InsertPHP/addNewSupplier.php",
+    type: "POST",
+    data: {
+      supplier_name    : supplier_name,
+      supplier_address : supplier_address,
+      supplier_phone   : supplier_phone,
+      supplier_fax     : supplier_fax,
+      supplier_email   : supplier_email,
+      supplier_contact : supplier_contact,
+      supplier_website : supplier_website
+    },
+    success: function(data, status, xhr) {
+      window.location = '../Views/supplierList.php';
+    }
+  });
+}
 
 // This function preserves the session order_ID
 function POInfo(order_ID){

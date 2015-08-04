@@ -18,12 +18,7 @@
           <input type="text" id='supplier_name'/>
         </div>
         <div class='col-md-12 form-group'>
-          <label>Receiving date from:</label>
-          <input type="date"/>
-        </div>
-        <div class='col-md-12 form-group'>
-          <label>Receiving date to:</label>
-          <input type="date"/>
+          <a href='../Views/addSupplier.php' type='button' class='form-group btn btn-primary'>Add new supplier</a>
         </div>
       </form>
     </div>
