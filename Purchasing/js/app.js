@@ -117,12 +117,21 @@ function createPurchaseOrder(){
            return ($(this).val() === val);
        });
   });
+
+  // function to find the correct value from the datalist
+  var supplier_name = $("input[name='supplierList']").on('input', function(e){
+    var $input = $(this),
+        val = $input.val(),
+        list = $input.attr('list'),
+        match = $('#'+list + ' option').filter(function() {
+           return ($(this).val() === val);
+       });
+  });
   employee_name = employee_name.val();
+  supplier_name = supplier_name.val();
   var employee_ID = $('#employee_ID').val();
-  var supplier_name = $('#supplier_name').val();
   var approved_by = $('#approved_by').val();
   var request_ID = $('#activeRequest').text();
-
   $.ajax({
     url: '../InsertPHP/addNewPurchaseOrder.php',
     type: 'POST',
@@ -192,6 +201,31 @@ function showOrderItems(order_ID){
     },
     success: function(data, status, xhr) {
       $("#orderItems").html(data);
+    }
+  });
+}
+function addNewSupplier(){
+  var supplier_name    = $('#supplier_name').val();
+  var supplier_address = $('#supplier_address').val();
+  var supplier_phone   = $('#supplier_phone').val();
+  var supplier_fax     = $('#supplier_fax').val();
+  var supplier_email   = $('#supplier_email').val();
+  var supplier_contact = $('#supplier_contact').val();
+  var supplier_website = $('#supplier_website').val();
+  $.ajax({
+    url: "../InsertPHP/addNewSupplier.php",
+    type: "POST",
+    data: {
+      supplier_name    : supplier_name,
+      supplier_address : supplier_address,
+      supplier_phone   : supplier_phone,
+      supplier_fax     : supplier_fax,
+      supplier_email   : supplier_email,
+      supplier_contact : supplier_contact,
+      supplier_website : supplier_website
+    },
+    success: function(data, status, xhr) {
+      window.location = '../Views/supplierList.php';
     }
   });
 }
