@@ -14,6 +14,11 @@ $employee_ID = mysqli_fetch_array($curEmployeeResult);
 $employeeSql = "SELECT employee_name
                 FROM employee;";
 $employeeResult = mysqli_query($link, $employeeSql);
+
+// Query for supplier list
+$supplierSql = "SELECT supplier_name
+                FROM supplier;";
+$supplierResult = mysqli_query($link, $supplierSql);
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -38,7 +43,14 @@ $employeeResult = mysqli_query($link, $employeeSql);
         </div>
         <div class='col-md-6 form-group'>
           <label>Supplier: </label>
-          <input type="text" class='form-control' id='supplier_name'>
+            <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
+            <datalist id="suppliers">
+              <?
+              while($row = mysqli_fetch_array($supplierResult)){
+                echo"<option value='".$row[0]."'></option>";
+              }
+              ?>
+            </datalist>
         </div>
         <div class='col-md-6 form-group'>
           <label>Approved by: </label>

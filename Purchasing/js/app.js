@@ -117,12 +117,21 @@ function createPurchaseOrder(){
            return ($(this).val() === val);
        });
   });
+
+  // function to find the correct value from the datalist
+  var supplier_name = $("input[name='supplierList']").on('input', function(e){
+    var $input = $(this),
+        val = $input.val(),
+        list = $input.attr('list'),
+        match = $('#'+list + ' option').filter(function() {
+           return ($(this).val() === val);
+       });
+  });
   employee_name = employee_name.val();
+  supplier_name = supplier_name.val();
   var employee_ID = $('#employee_ID').val();
-  var supplier_name = $('#supplier_name').val();
   var approved_by = $('#approved_by').val();
   var request_ID = $('#activeRequest').text();
-
   $.ajax({
     url: '../InsertPHP/addNewPurchaseOrder.php',
     type: 'POST',

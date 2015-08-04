@@ -18,7 +18,7 @@
           <input type="text" id='supplier_name'/>
         </div>
         <div class='col-md-12 form-group'>
-          <a href='../Views/addSupplier.php' type='button' class='form-group btn btn-primary'>Add new supplier</a>
+          <a href='../Views/addSupplier.php' type='button' class='form-group btn btn-primary'>Add a new supplier</a>
         </div>
       </form>
     </div>
