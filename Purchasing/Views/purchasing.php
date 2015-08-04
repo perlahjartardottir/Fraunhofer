@@ -90,7 +90,19 @@
             echo"
               <tr>
                 <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$description."... </td>
-                <td>".$requestRow[1]."<button style='float:right;' class='btn btn-danger btn-xs' onclick='delRequest(".$requestRow[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
+                <td>".$requestRow[1];
+
+                // Query to find requests that don't belong to a purchase order
+                // If it doesn't belong to a purchase order, then you can delete it
+                $emptyRequestSql = "SELECT request_ID
+                        FROM purchase_order
+                        WHERE request_ID = '$requestRow[0]';";
+                $emptyRequestResult = mysqli_query($link, $emptyRequestSql);
+                $emptyRequestRow = mysqli_fetch_array($emptyRequestResult);
+                if($emptyRequestRow[0] != $requestRow[0]){
+                  echo"<button style='float:right;' class='btn btn-danger btn-xs' onclick='delRequest(".$requestRow[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
+                }
+                echo"</td>
               </tr>";
             echo"
               <div class='modal fade' id='".$requestRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
