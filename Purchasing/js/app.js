@@ -269,6 +269,21 @@ function packageReceived(order_ID){
     }
   });
 }
+function setFinalInspectionNote(order_ID){
+  var order_final_inspection = $('#order_final_inspection').val();
+  $.ajax({
+    url: '../UpdatePHP/setFinalInspectionNote.php',
+    type: "POST",
+    data:{
+      order_ID : order_ID,
+      order_final_inspection : order_final_inspection
+    },
+    success: function(data, status, xhr) {
+      window.location.reload();
+      //console.log(data);
+    }
+  });
+}
 
 // This function makes the request inactive
 function finishRequest(request_ID){
