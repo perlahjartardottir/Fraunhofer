@@ -23,7 +23,7 @@
         <h4>Enter info to search for a supplier</h4>
         <div class='col-md-12 form-group'>
           <label>Supplier name: </label>
-          <input type="text" id='supplier_name' onkeyup='searchSupplier()'/>
+          <input type="text" id='supplier_name' onkeyup='supplierSuggestions()'/>
         </div>
         <div class='col-md-12 form-group'>
           <a href='../Views/addSupplier.php' type='button' class='form-group btn btn-primary'>Add a new supplier</a>

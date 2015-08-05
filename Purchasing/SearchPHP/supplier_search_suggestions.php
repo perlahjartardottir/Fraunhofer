@@ -56,7 +56,7 @@ $supplier_name .= "%";
              echo $averageRating[0]."<i class='fa fa-diamond' aria-hidden='true'></i>";
              echo "</button></td></tr>";
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
-          			   <div class='modal-dialog modal-lg'>
+          			   <div class='modal-dialog'>
           			      <div class='modal-content'>
           			         <div class='modal-header'>
           			            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
