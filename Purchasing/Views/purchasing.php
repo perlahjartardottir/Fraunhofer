@@ -33,11 +33,16 @@
                  WHERE employee_ID = '$employee_ID'
                  AND active = 1;";
   $requestResult = mysqli_query($link, $requestSql);
+
+  // Query to find all purchase orders that the current employee
+  // has requested and have not yet been received
   $inProgressSql = "SELECT order_ID, order_date
                     FROM purchase_order
                     WHERE request_ID IN (SELECT request_ID
                                          FROM order_request
-                                         WHERE employee_ID = '$employee_ID');";
+                                         WHERE employee_ID = '$employee_ID')
+                    AND order_for_who = '$employee_ID'
+                    AND order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
   ?>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
