@@ -167,6 +167,8 @@
             <div class='modal-content'>
               <div class='modal-header'>
                 <h4>Purchase order: ".$inProgressRow[0]."</h4>
+              </div>
+              <div class='modal-body'>
                 <table class='table table-responsive'>
                   <thead>
                     <tr>
@@ -205,8 +207,6 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
-              <div class='modal-body'>
                 <p>Order date: ".$inProgressRow[1]."</p>
               </div>
               <div class='modal-footer'>
