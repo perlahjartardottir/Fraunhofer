@@ -260,3 +260,16 @@ function finishRequest(request_ID){
     });
   }
 }
+function searchSupplier(){
+  var supplier_name = $('#supplier_name').val();
+  $.ajax({
+    url: '../SearchPHP/supplier_search_suggestions.php',
+    type: 'POST',
+    data:{
+      supplier_name : supplier_name
+    },
+    success: function(data, status, xhr){
+      $('#output').html(data);
+    }
+  });
+}
