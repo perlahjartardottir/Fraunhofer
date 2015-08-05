@@ -44,6 +44,19 @@
                     AND order_for_who = '$employee_ID'
                     AND order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
+
+  // Query to find all purchase orders that have been delivered
+  // to the current employee
+  // but have not yet received a final inspection comment
+  $deliveredSql = "SELECT order_ID, order_date
+                    FROM purchase_order
+                    WHERE request_ID IN (SELECT request_ID
+                                         FROM order_request
+                                         WHERE employee_ID = '$employee_ID')
+                    AND order_for_who = '$employee_ID'
+                    AND order_receive_date IS NOT NULL
+                    AND order_final_inspection IS NULL;";
+  $deliveredResult = mysqli_query($link, $deliveredSql);
   ?>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
@@ -233,8 +246,83 @@
           </tr>
         </thead>
         <tbody>
+          <?php
+          while($deliveredRow = mysqli_fetch_array($deliveredResult)){
+              echo"<tr>
+                    <td><a href='#' data-toggle='modal' data-target='#".$deliveredRow[0]."'>".$deliveredRow[0]."</a></td>
+                    <td>".$deliveredRow[1]."</td>
+                   </tr>";
+          }
+          ?>
         </tbody>
       </table>
+      <?php
+      $deliveredResult = mysqli_query($link, $deliveredSql);
+      while($deliveredRow = mysqli_fetch_array($deliveredResult)){
+        $orderItemSql = "SELECT quantity, part_number, description, unit_price
+                         FROM order_item
+                         WHERE order_ID = '$deliveredRow[0]';";
+        $orderItemResult = mysqli_query($link, $orderItemSql);
+        echo"
+        <div class='modal fade' id='".$deliveredRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$deliveredRow[0]."' aria-hidden='true'>
+          <div class='modal-dialog'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h4>Purchase order: ".$deliveredRow[0]."</h4>
+              </div>
+              <div class='modal-body'>
+                <table class='table table-responsive'>
+                  <thead>
+                    <tr>
+                      <th>Pos. #</th>
+                      <th>Quantity</th>
+                      <th>Part #</th>
+                      <th>Description</th>
+                      <th>USD Unit</th>
+                      <th>USD Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>";
+                    $counter = 1;
+                    $totalOrderPrice = 0;
+                    while($orderItemRow = mysqli_fetch_array($orderItemResult)){
+                      $total = $orderItemRow[0] * $orderItemRow[3];
+                      $totalOrderPrice = $totalOrderPrice + $total;
+                      echo"
+                        <tr>
+                          <td>".$counter."</td>
+                          <td>".$orderItemRow[0]."</td>
+                          <td>".$orderItemRow[1]."</td>
+                          <td>".$orderItemRow[2]."</td>
+                          <td>$".number_format((float)$orderItemRow[3], 2, '.', '')."</td>
+                          <td>$".number_format((float)$total, 2, '.', '')."</td>";
+                          $counter = $counter + 1;
+                    }
+                  echo"
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <th>Total Order Price:</th>
+                      <th><u style='border-bottom: 1px solid black'>$".number_format((float)$totalOrderPrice, 2, '.', '')."</u></th>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>Order date: ".$deliveredRow[1]."</p>
+                <form>
+                  <textarea class='form-control' id='order_final_inspection'></textarea>
+                  <button type='button' style='margin-top:5px;' onclick='setFinalInspectionNote(".$deliveredRow[0].")' class='btn btn-primary'>Set final inspection note</button>
+                </form>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>";
+      }
+      ?>
     </div>
   </div>
   <script>
