@@ -49,12 +49,12 @@ $poSql = "SELECT DATE_FORMAT(shipping_date, '".$date_format."'), count(p.po_ID),
 // we don't count the same lineitem twice.
 // If the item doesn't have a discount, then the table will show 0 instead of NULL
 $lineitemSql = "SELECT IF(SUM(p.amount) IS NULL, 0, SUM(p.amount)), IF(SUM(p.total) IS NULL, 0, SUM(ROUND(p.total, 2))), SUM(l.quantity)
-				FROM lineitem AS l
-  					LEFT JOIN (SELECT lineitem_ID, discount_ID, SUM(number_of_tools) AS amount, SUM(discount * number_of_tools) AS total
-         					   FROM discount
-         					   GROUP BY lineitem_ID) AS p
-    				ON l.lineitem_ID = p.lineitem_ID, pos
-				WHERE pos.po_ID = l.po_ID ";
+								FROM lineitem AS l
+				  					LEFT JOIN (SELECT lineitem_ID, discount_ID, SUM(number_of_tools) AS amount, SUM(discount * number_of_tools) AS total
+				         					   FROM discount
+				         					   GROUP BY lineitem_ID) AS p
+				    				ON l.lineitem_ID = p.lineitem_ID, pos
+								WHERE pos.po_ID = l.po_ID ";
 if($customer != 'customer'){
 	if(!empty($customer)){
 		$poSql .= "AND p.customer_ID = '$customer' ";
