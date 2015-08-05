@@ -5,6 +5,7 @@ include '../../connection.php';
 // script to activate popovers
    $(document).ready(function () {
      $(function () {
+       console.log("swag");
        $("[data-toggle=popover]").popover();
      })
    });
@@ -42,6 +43,7 @@ include '../../connection.php';
               <td>".$row[3]."</td>
               <td>".$row[4]."</td>
               <td><button
+                    style='border:none;'
                     type='button'
                     class='btn btn-default'
                     data-container='body'
@@ -50,7 +52,8 @@ include '../../connection.php';
                     data-html='true'
                     data-content='Avg timeliness: ".$averageRating[1]."<br/> Avg price: ".$averageRating[2]."<br/> Avg quality: ".$averageRating[3]."'>";
               for ($i=0; $i < $averageRating[0] ; $i++) {
-                echo "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+                //echo "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+                echo "<i class='fa fa-diamond' aria-hidden='true'></i>";
               }
              echo "</button></td></tr>";
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
