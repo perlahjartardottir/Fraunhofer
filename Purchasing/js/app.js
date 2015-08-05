@@ -270,7 +270,8 @@ function packageReceived(order_ID){
   });
 }
 function setFinalInspectionNote(order_ID){
-  var order_final_inspection = $('#order_final_inspection').val();
+  $('textarea').select(); //select text inside
+  var order_final_inspection = window.getSelection().toString();
   $.ajax({
     url: '../UpdatePHP/setFinalInspectionNote.php',
     type: "POST",
