@@ -1,5 +1,7 @@
 <?php
 include '../../connection.php';
+$supplier_name = mysqli_real_escape_string($link, $_POST['supplier_name']);
+$supplier_name .= "%";
 ?>
 <script>
 // script to activate popovers
@@ -23,7 +25,8 @@ include '../../connection.php';
     <tbody>
       <?php
       $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email, supplier_address, supplier_fax, supplier_contact, supplier_website
-              FROM supplier;";
+              FROM supplier
+              WHERE supplier_name LIKE '$supplier_name';";
       $result = mysqli_query($link, $sql);
       while($row = mysqli_fetch_array($result)){
         // SQL to get each customers rating
