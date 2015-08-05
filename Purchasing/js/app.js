@@ -243,6 +243,32 @@ function POInfo(order_ID){
     }
   });
 }
+// This function preserves the session order_ID
+function printoutInfo(order_ID){
+  $.ajax({
+    url: '../SelectPHP/POInfo.php',
+    type: "POST",
+    data:{
+      order_ID: order_ID
+    },
+    success: function(data, status, xhr) {
+      window.location = "../Printouts/purchaseOrder.php";
+    }
+  });
+}
+
+function packageReceived(order_ID){
+  $.ajax({
+    url: '../UpdatePHP/packageReceived.php',
+    type: "POST",
+    data:{
+      order_ID: order_ID
+    },
+    success: function(data, status, xhr) {
+      window.location.reload();
+    }
+  });
+}
 
 // This function makes the request inactive
 function finishRequest(request_ID){

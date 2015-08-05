@@ -80,11 +80,11 @@
               </tbody>
             </table>
             <span>Order date: ".$row[1]."</span>
-            <button type='button' style='float:right;' class='btn btn-primary'>Package received</button>
+            <button type='button' style='float:right;' class='btn btn-primary' onclick='packageReceived(".$row[0].")'>Package received</button>
           </div>
           <div class='modal-footer' style='margin-top:10px'>
-            <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left;'>Printout<a>
-            <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left; margin-left:5px'>Edit PO</a>
+            <button type='button' onclick='printoutInfo(".$row[0].")' class='btn btn-primary' style='float:left;'>Printout</button>
+            <button type='button' onclick='POInfo(".$row[0].")' class='btn btn-primary' style='float:left; margin-left:5px'>Edit PO</button>
             <button type='button' class='btn' data-dismiss='modal'>Close</button>
           </div>
         </div>
