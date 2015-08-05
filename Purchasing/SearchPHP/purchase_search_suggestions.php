@@ -6,7 +6,7 @@
         <th>Purchase number</th>
         <th>Order date</th>
         <th>Receiving date</th>
-        <th>Comment</th>
+        <th>Final inspection</th>
       </tr>
     </thead>
     <tbody>
