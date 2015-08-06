@@ -25,10 +25,19 @@ function supplierSuggestions() {
 function purchaseSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();
+  var first_date = $('#first_date').val();
+  var last_date = $('#last_date').val();
+  var notReceived;
+  if($('#notReceived').is(':checked')){
+        notReceived   = $('#notReceived').val();
+    }
   $.ajax({
     url: '../SearchPHP/purchase_search_suggestions.php',
     type: 'POST',
-    data: {order_name : order_name},
+    data: {order_name : order_name,
+           first_date : first_date,
+           last_date  : last_date,
+           notReceived: notReceived},
     success: function(data, status, xhr) {
       $("#output").html(data);
     }

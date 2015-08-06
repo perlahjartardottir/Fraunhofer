@@ -15,15 +15,20 @@
         <h4>Enter info to search for a purchase order</h4>
         <div class='col-md-12 form-group'>
           <label>Purchase number: </label>
-          <input type="text" id='order_name'/>
+          <input type="text" id='order_name' onkeyup='purchaseSuggestions()' class='form-control'/>
         </div>
         <div class='col-md-12 form-group'>
-          <label>Receiving date from:</label>
-          <input type="date"/>
+          <label>Order date from:</label>
+          <input type="date" id='first_date' class='form-control' onchange='purchaseSuggestions()'/>
         </div>
         <div class='col-md-12 form-group'>
-          <label>Receiving date to:</label>
-          <input type="date"/>
+          <label>Order date to:</label>
+          <input type="date" id='last_date' class='form-control' onchange='purchaseSuggestions()'/>
+        </div>
+        <div class='col-md-12 form-inline'>
+          <label>Not received:
+            <input type='checkbox' id='notReceived' onchange='purchaseSuggestions()'/>
+          </label>
         </div>
       </form>
     </div>

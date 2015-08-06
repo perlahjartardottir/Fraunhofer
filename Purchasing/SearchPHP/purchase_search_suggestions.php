@@ -1,4 +1,11 @@
-<?php include '../../connection.php'; ?>
+<?php
+include '../../connection.php';
+$notReceived = mysqli_real_escape_string($link, $_POST['notReceived']);
+$order_name  = mysqli_real_escape_string($link, $_POST['order_name']);
+$first_date  = mysqli_real_escape_string($link, $_POST['first_date']);
+$last_date   = mysqli_real_escape_string($link, $_POST['last_date']);
+$order_name .= '%';
+?>
 <div id='output'>
   <table class='table table-responsive'>
     <thead>
@@ -6,13 +13,23 @@
         <th>Purchase number</th>
         <th>Order date</th>
         <th>Receiving date</th>
-        <th>Comment</th>
+        <th class='col-md-3'>Comment</th>
       </tr>
     </thead>
     <tbody>
       <?php
       $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection
-              FROM purchase_order;";
+              FROM purchase_order
+              WHERE order_ID LIKE '$order_name' ";
+      if($notReceived == 'on'){
+      	$sql .= "AND order_receive_date IS NULL ";
+      }
+      if(!empty($first_date)){
+      	$sql .= "AND order_date >= '$first_date' ";
+      }
+      if(!empty($last_date)){
+      	$sql .= "AND order_date <= '$last_date' ";
+      }
       $result = mysqli_query($link, $sql);
       while($row = mysqli_fetch_array($result)){
         echo"
@@ -80,7 +97,7 @@
               </tbody>
             </table>
             <span>Order date: ".$row[1]."</span>
-            <button type='button' style='float:right;' class='btn btn-primary' onclick='packageReceived(".$row[0].")'>Package received</button>
+              <button type='button' style='float:right;' class='btn btn-primary' onclick='packageReceived(".$row[0].")'>Package received</button>
           </div>
           <div class='modal-footer' style='margin-top:10px'>
             <button type='button' onclick='printoutInfo(".$row[0].")' class='btn btn-primary' style='float:left;'>Printout</button>
