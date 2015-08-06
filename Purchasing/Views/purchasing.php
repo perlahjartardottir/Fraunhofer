@@ -312,6 +312,47 @@
                 <p>Order date: ".$deliveredRow[1]."</p>
                 <form>
                   <textarea class='form-control' id='order_final_inspection'></textarea>
+                  <h4>Rating: </h4>
+                  <table class='table table-responsive col-md-12'>
+                    <thead>
+                      <tr>
+                        <th>Timeliness</th>
+                        <th>Quality</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class='col-md-4'>
+                          <select id='rating_timeliness' class='form-control'>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </td>
+                        <td class='col-md-4'>
+                          <select id='rating_quality' class='form-control'>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </td>
+                        <td class='col-md-4'>
+                          <select id='rating_price' class='form-control'>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                   <button type='button' style='margin-top:5px;' onclick='setFinalInspectionNote(".$deliveredRow[0].")' class='btn btn-primary'>Set final inspection note</button>
                 </form>
               </div>

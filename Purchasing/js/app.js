@@ -278,8 +278,13 @@ function packageReceived(order_ID){
     }
   });
 }
-
 function setFinalInspectionNote(order_ID){
+  var e = document.getElementById("rating_timeliness");
+  var rating_timeliness = e.options[e.selectedIndex].value;
+  e = document.getElementById("rating_quality");
+  var rating_quality = e.options[e.selectedIndex].value;
+  e = document.getElementById("rating_price");
+  var rating_price = e.options[e.selectedIndex].value;
   $('textarea').select(); //select text inside
   var order_final_inspection = window.getSelection().toString();
   $.ajax({
@@ -287,7 +292,10 @@ function setFinalInspectionNote(order_ID){
     type: "POST",
     data:{
       order_ID : order_ID,
-      order_final_inspection : order_final_inspection
+      order_final_inspection : order_final_inspection,
+      rating_timeliness : rating_timeliness,
+      rating_price : rating_price,
+      rating_quality : rating_quality
     },
     success: function(data, status, xhr) {
       window.location.reload();
@@ -310,17 +318,4 @@ function finishRequest(request_ID){
       }
     });
   }
-}
-function searchSupplier(){
-  var supplier_name = $('#supplier_name').val();
-  $.ajax({
-    url: '../SearchPHP/supplier_search_suggestions.php',
-    type: 'POST',
-    data:{
-      supplier_name : supplier_name
-    },
-    success: function(data, status, xhr){
-      $('#output').html(data);
-    }
-  });
 }

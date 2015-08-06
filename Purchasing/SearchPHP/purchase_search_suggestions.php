@@ -13,7 +13,7 @@ $order_name .= '%';
         <th>Purchase number</th>
         <th>Order date</th>
         <th>Receiving date</th>
-        <th class='col-md-3'>Comment</th>
+        <th class='col-md-3'>Final inspection</th>
       </tr>
     </thead>
     <tbody>
