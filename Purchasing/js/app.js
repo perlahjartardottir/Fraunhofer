@@ -26,10 +26,10 @@ function purchaseSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();
   var first_date = $('#first_date').val();
-  var last_date = $('#last_date').val();
+  var last_date  = $('#last_date').val();
   var notReceived;
   if($('#notReceived').is(':checked')){
-        notReceived   = $('#notReceived').val();
+        notReceived = $('#notReceived').val();
     }
   $.ajax({
     url: '../SearchPHP/purchase_search_suggestions.php',
@@ -45,18 +45,18 @@ function purchaseSuggestions() {
 }
 
 function orderRequest(){
-  var request_supplier = $('#request_supplier').val();
+  var request_supplier     = $('#request_supplier').val();
   var approved_by_employee = $('#approved_by_employee').val();
-  var request_description = $('#request_description').val();
-  var employee_ID = $('#employee_ID').val();
+  var request_description  = $('#request_description').val();
+  var employee_ID          = $('#employee_ID').val();
   $.ajax({
     url: '../InsertPHP/addNewRequest.php',
     type: 'POST',
     data: {
-      request_supplier : request_supplier,
+      request_supplier     : request_supplier,
       approved_by_employee : approved_by_employee,
-      request_description : request_description,
-      employee_ID : employee_ID
+      request_description  : request_description,
+      employee_ID          : employee_ID
     },
     success: function(data, status, xhr){
       window.location.reload();
@@ -68,7 +68,7 @@ function activeRequest(element){
     $("#output").html("");
     return;
   }
-  var request_ID = $(element).parent().find('#request_ID').text();
+  var request_ID    = $(element).parent().find('#request_ID').text();
   var employee_name = $(element).parent().find('#employee_name').text();
 
   $.ajax({
@@ -136,11 +136,11 @@ function createPurchaseOrder(){
            return ($(this).val() === val);
        });
   });
-  employee_name = employee_name.val();
-  supplier_name = supplier_name.val();
+  employee_name   = employee_name.val();
+  supplier_name   = supplier_name.val();
   var employee_ID = $('#employee_ID').val();
   var approved_by = $('#approved_by').val();
-  var request_ID = $('#activeRequest').text();
+  var request_ID  = $('#activeRequest').text();
   $.ajax({
     url: '../InsertPHP/addNewPurchaseOrder.php',
     type: 'POST',
@@ -148,7 +148,7 @@ function createPurchaseOrder(){
       employee_name : employee_name,
       employee_ID   : employee_ID,
       supplier_name : supplier_name,
-      request_ID : request_ID,
+      request_ID    : request_ID,
       approved_by   : approved_by
     },
     success: function(data, status, xhr){
@@ -158,18 +158,18 @@ function createPurchaseOrder(){
   });
 }
 function addOrderItem(){
-  var quantity = $('#quantity').val();
+  var quantity    = $('#quantity').val();
   var part_number = $('#part_number').val();
-  var unit_price = $('#unit_price').val();
+  var unit_price  = $('#unit_price').val();
   var description = $('#description').val();
   $.ajax({
     url: '../InsertPHP/addNewOrderItem.php',
     type: 'POST',
     data:{
-      quantity      : quantity,
-      part_number   : part_number,
-      unit_price    : unit_price,
-      description   : description
+      quantity    : quantity,
+      part_number : part_number,
+      unit_price  : unit_price,
+      description : description
     },
     success: function(data, status, xhr){
       window.location.reload();
@@ -279,23 +279,23 @@ function packageReceived(order_ID){
   });
 }
 function setFinalInspectionNote(order_ID){
-  var e = document.getElementById("rating_timeliness");
+  var e                 = document.getElementById("rating_timeliness");
   var rating_timeliness = e.options[e.selectedIndex].value;
-  e = document.getElementById("rating_quality");
-  var rating_quality = e.options[e.selectedIndex].value;
-  e = document.getElementById("rating_price");
-  var rating_price = e.options[e.selectedIndex].value;
+  e                     = document.getElementById("rating_quality");
+  var rating_quality    = e.options[e.selectedIndex].value;
+  e                     = document.getElementById("rating_price");
+  var rating_price      = e.options[e.selectedIndex].value;
   $('textarea').select(); //select text inside
   var order_final_inspection = window.getSelection().toString();
   $.ajax({
     url: '../UpdatePHP/setFinalInspectionNote.php',
     type: "POST",
     data:{
-      order_ID : order_ID,
+      order_ID               : order_ID,
       order_final_inspection : order_final_inspection,
-      rating_timeliness : rating_timeliness,
-      rating_price : rating_price,
-      rating_quality : rating_quality
+      rating_timeliness      : rating_timeliness,
+      rating_price           : rating_price,
+      rating_quality         : rating_quality
     },
     success: function(data, status, xhr) {
       window.location.reload();

@@ -6,9 +6,12 @@ $supplier_name .= "%";
 <script>
 // script to activate popovers
    $(document).ready(function () {
-     $(function () {
-       $("[data-toggle=popover]").popover();
-     })
+     // close open popovers when you open new one.
+     $('.btn').popover();
+
+     $('.btn').on('click', function (e) {
+         $('.btn').not(this).popover('hide');
+     });
    });
 </script>
 <div id='output'>
@@ -47,7 +50,7 @@ $supplier_name .= "%";
               <td><button
                     style='border:none;'
                     type='button'
-                    class='btn btn-default'
+                    class='btn btn-default popp'
                     data-container='body'
                     data-toggle='popover'
                     data-placement='right'
