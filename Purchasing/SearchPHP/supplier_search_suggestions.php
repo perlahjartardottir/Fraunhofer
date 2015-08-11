@@ -45,7 +45,7 @@ $supplier_name .= "%";
         echo"<tr>
               <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</td>
               <td>".$row[2]."</td>
-              <td>".$row[3]."</td>
+              <td><a href='mailto:someone@example.com'>".$row[3]."</a></td>
               <td><a href='http://maps.google.com/?q=".$row[4]."' target='_blank'>".$row[4]."</a></td>
               <td><button
                     style='border:none;'

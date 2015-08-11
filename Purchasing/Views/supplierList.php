@@ -8,15 +8,8 @@
     window.onload = function() {
       supplierSuggestions();
     };
-    // close open popovers when you open new one.
-    $('.btn').popover();
-
-    $('.btn').on('click', function (e) {
-        $('.btn').not(this).popover('hide');
-    });
     //dismiss popover when click on body
     $('body').on('click', function (e) {
-      console.log("test2");
     if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
         $('[data-toggle="popover"]').popover('hide');
     }
