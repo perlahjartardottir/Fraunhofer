@@ -10,8 +10,7 @@
     };
     //dismiss popover when click on body
     $('body').on('click', function (e) {
-    if ($(e.target).data('toggle') !== 'popover'
-        && $(e.target).parents('.popover.in').length === 0) {
+    if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
         $('[data-toggle="popover"]').popover('hide');
     }
 });
