@@ -2,7 +2,6 @@
 ==================================
 
 <img src="images for markdown/fraunhoferlogo.jpg" alt="Fraunhofer Logo" width='300px' align='right' style='padding-left:15px;'/>
-href="images for markdown/Starting MySql guide/test_database.png"
 
 This file is a guide for anyone who means to make changes to the website for the Fraunhofer product tracking system, big or small.
 
@@ -378,5 +377,5 @@ Applying the discount
 
 - Click the tool you want to apply the discount to.
 - Enter how many tools have the discount and the amount per tool.
-- After you click ```Apply discount``` refresh the page. 
+- After you click ```Apply discount``` refresh the page.
 <br><br><br><br><br><br>
