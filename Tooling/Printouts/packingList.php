@@ -241,7 +241,7 @@ while($row = mysqli_fetch_array($result)){
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-default" onclick='addShipDateToPO(document.getElementById("packing_list_comment").value, document.getElementById("addShippingDate").value)'>Confirm POO</button>
-        <a href='/views/generateTrackSheet.php' class='btn btn-primary' role='button' type='button'>Track sheet</a>
+        <a href='../views/generateTrackSheet.php' class='btn btn-primary' role='button' type='button'>Track sheet</a>
       </div>
     </div>
   </div>
