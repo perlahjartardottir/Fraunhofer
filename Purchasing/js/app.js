@@ -9,6 +9,13 @@ function logout() {
     window.location = "../../Login/login.php";
   });
 }
+function setSessionIDSearch(order_ID){
+    $.ajax({
+        url : "../UpdatePHP/setSessionID.php",
+        type: "POST",
+        data : {order_ID : order_ID},
+    });
+}
 
 function supplierSuggestions() {
   $('#output').html();
@@ -221,6 +228,10 @@ function addNewSupplier(){
   var supplier_email   = $('#supplier_email').val();
   var supplier_contact = $('#supplier_contact').val();
   var supplier_website = $('#supplier_website').val();
+  var supplier_login   = $('#supplier_login').val();
+  var supplier_password = $('#supplier_password').val();
+  var supplier_accountNr = $('#supplier_accountNr').val();
+  var supplier_notes = $('#supplier_notes').val();
   $.ajax({
     url: "../InsertPHP/addNewSupplier.php",
     type: "POST",
@@ -231,7 +242,11 @@ function addNewSupplier(){
       supplier_fax     : supplier_fax,
       supplier_email   : supplier_email,
       supplier_contact : supplier_contact,
-      supplier_website : supplier_website
+      supplier_login   : supplier_login,
+      supplier_password : supplier_password,
+      supplier_accountNr : supplier_accountNr,
+      supplier_website : supplier_website,
+      supplier_notes : supplier_notes
     },
     success: function(data, status, xhr) {
       window.location = '../Views/supplierList.php';
@@ -262,6 +277,38 @@ function printoutInfo(order_ID){
     },
     success: function(data, status, xhr) {
       window.location = "../Printouts/purchaseOrder.php";
+    }
+  });
+}
+// Function for editing the supplier
+function editSupplier(element){
+  var supplier_name = $(element).parent().prev().find("#supplier_name").val();
+  var supplier_phone = $(element).parent().prev().find("#supplier_phone").val();
+  var supplier_fax = $(element).parent().prev().find("#supplier_fax").val();
+  var supplier_email = $(element).parent().prev().find("#supplier_email").val();
+  var supplier_address = $(element).parent().prev().find("#supplier_address").val();
+  var supplier_contact = $(element).parent().prev().find("#supplier_contact").val();
+  var supplier_accountNr = $(element).parent().prev().find("#supplier_accountNr").val();
+  var supplier_website = $(element).parent().prev().find("#supplier_website").text();
+  var supplier_login = $(element).parent().prev().find("#supplier_login").val();
+  var supplier_password = $(element).parent().prev().find("#supplier_password").val();
+  var supplier_notes = $(element).parent().prev().find("#supplier_notes").val();
+
+  $.ajax({
+    url: '../UpdatePHP/editSupplier.php',
+    type: "POST",
+    data:{
+      supplier_phone: supplier_phone,
+      supplier_name: supplier_name,
+      supplier_fax: supplier_fax,
+      supplier_email: supplier_email,
+      supplier_address: supplier_address,
+      supplier_contact: supplier_contact,
+      supplier_accountNr: supplier_accountNr,
+      supplier_website: supplier_website,
+      supplier_login: supplier_login,
+      supplier_password: supplier_password,
+      supplier_notes: supplier_notes
     }
   });
 }

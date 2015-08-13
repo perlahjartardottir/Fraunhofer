@@ -30,7 +30,7 @@
       <div class='col-md-12'>
         <!-- Every security level can see the tooling overview button -->
         <div class='col-md-3'>
-            <button type='button' class='btn btn-primary' onclick="location.href='../Views/overview.php'">Tooling overview</button>
+            <button type='button' class='btn btn-primary col-md-8' onclick="location.href='../Views/overview.php'">Search</button>
         </div>
         <?php
         if($user_sec_lvl >= 2){

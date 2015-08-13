@@ -27,7 +27,7 @@ $supplier_name .= "%";
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email, supplier_address, supplier_fax, supplier_contact, supplier_website
+      $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email, supplier_address, supplier_fax, supplier_contact, supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes
               FROM supplier
               WHERE supplier_name LIKE '$supplier_name';";
       $result = mysqli_query($link, $sql);
@@ -56,33 +56,43 @@ $supplier_name .= "%";
                     data-placement='right'
                     data-html='true'
                     data-content='Avg timeliness: ".$averageRating[1]."<br/> Avg price: ".$averageRating[2]."<br/> Avg quality: ".$averageRating[3]."'>";
-             echo $averageRating[0]."<i class='fa fa-diamond' aria-hidden='true'></i>";
+             echo $averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i>";
              echo "</button></td></tr>";
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
           			   <div class='modal-dialog'>
           			      <div class='modal-content'>
           			         <div class='modal-header'>
           			            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-          			            <h4 class='modal-title' id='myModalLabel'>".$row[1]."</h4>
+          			            <h4 class='modal-title' id='myModalLabel'>".$row[1]." - Information</h4>
           			         </div>
           			         <div class='modal-body'>
-          			            <h3>Supplier information</h3>
-                              <div>
-                                <p><strong>Phone</strong> : "  .$row[2]."</p>
-                                <p><strong>Fax</strong> : "    .$row[5]."</p>
-                                <p><strong>Email</strong> : "  .$row[3]."</p>
-                                <p><strong>Address</strong> : ".$row[4]."</p>
-                                <p><strong>Contact</strong> : ".$row[6]."</p>
-                                <p><strong>Website</strong> : <a href='".$row[7]."' target='_blank'>".$row[7]."</a></p>
+                            <div class='row'>
+                              <div class='col-md-6'>
+                                <input type='hidden' id='supplier_name' value='".$row[1]."'>
+                                <p><strong>Phone</strong>: <input type='text' id='supplier_phone' value='".$row[2]."'></p>
+                                <p><strong>Fax</strong>: <input type='text' id='supplier_fax' value='".$row[5]."'></p>
+                                <p><strong>Email</strong>: <input type='text' id='supplier_email' value='".$row[3]."'></p>
+                                <p><strong>Address</strong>: <input type='text' id='supplier_address' value='".$row[4]."'></p>
+                                <p><strong>Contact</strong>: <input type='text' id='supplier_contact' value='".$row[6]."'></p>
+                                <p><strong>Account Nr</strong>: <input type='text' id='supplier_accountNr' value='".$row[10]."'></p>
                               </div>
-                              <div>
-                                <p><strong>Average lean time:</strong> ".$averageRating[4]."</p>
-                                <p><strong>Number of active POS:</strong> ".$averageRating[5]."</p>
-                                <p><strong>Overall orders:</strong> ".$averageRating[6]."</p>
+                              <div class='col-md-6'>
+                                <p><strong>Website</strong>: <a href='http://".$row[7]."' target='_blank'><span id='supplier_website'>".$row[7]."</span></a></p>
+                                <p><strong>Login</strong>: <input type='text' id='supplier_login' value='".$row[8]."'></p>
+                                <p><strong>Password</strong>: <input type='text' value='".$row[9]."' id='supplier_password'></p>
                               </div>
+                              <div class='col-md-6' style='margin-top:20px;'>
+                                <p><strong>Average lead time:</strong> <span id='averageLeadTime'>".$averageRating[4]."</span></p>
+                                <p><strong>Number of active POS:</strong> <span id='numberOfActivePOs'>".$averageRating[5]."</span></p>
+                                <p><strong>Overall orders:</strong> <span id='overallOrders'>".$averageRating[6]."</span></p>
+                              </div>
+                              <div class='col-md-12'><label>Notes: </label></br><textarea rows='3' cols='50' id='supplier_notes'>".$row[11]."</textarea>
+                            </div>
                          </div>
           			        <div class='modal-footer'>
-          			           <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                          <p style='float:left'><strong>Rating</strong>: ".$averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i></p>
+                          <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='editSupplier(this)'>Edit Supplier</button>
+          			          <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
           			        </div>
           			      </div>
           			   </div>

@@ -95,6 +95,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Here is the requested table ------------------------>
     <div class='col-md-4'>
       <h4>Requested</h4>
       <table class='table table-responsive'>
@@ -152,6 +154,8 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Here we have the In Progress table ---------------------------->
     <div class='col-md-4'>
       <h4>In progress</h4>
       <table class='table table-responsive'>
@@ -165,7 +169,7 @@
           <?php
           while($inProgressRow = mysqli_fetch_array($inProgressResult)){
               echo"<tr>
-                    <td><a href='#' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[0]."</a></td>
+                    <td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[0]."</a></td>
                     <td>".$inProgressRow[1]."</td>
                    </tr>";
           }
@@ -228,6 +232,7 @@
                 <p>Order date: ".$inProgressRow[1]."</p>
               </div>
               <div class='modal-footer'>
+                <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>
                 <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
               </div>
             </div>
@@ -236,6 +241,8 @@
       }
       ?>
     </div>
+
+    <!-- Here we have the Delivered table -------------------------------->
     <div class='col-md-4'>
       <h4>Delivered</h4>
       <table class='table table-responsive'>
