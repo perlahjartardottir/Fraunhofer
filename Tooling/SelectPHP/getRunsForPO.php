@@ -8,7 +8,7 @@ echo "<table style='width:97%;'><tr>".
         "<td>Run ID</td>".
         "<td>Coating type</td>".
         "<td>AH/Pulses</td>".
-        "<td>Run number</td>".                
+        "<td>Run number</td>".
         "<td>Comments</td>".
      "</tr>";
 // select all the info about the run we need
@@ -39,7 +39,7 @@ while($row = mysqli_fetch_array($result)){
     if($row[4] == 6){ $row[4] = f;}
     if($row[4] == 7){ $row[4] = g;}
     echo "<tr><td><a href='#' data-toggle='modal' data-target='#".$row[1]."'>".$row[1]."</td>".
-         "<td>".$row[2]."</td>". 
+         "<td>".$row[2]."</td>".
          "<td>".$row[3]."</td>".
          "<td>".$row[4]."</td>".
          "<td>".$row[5]."<button style='float:right; margin-right:-50px' class='btn btn-danger' onclick='delRun(".$row[1].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>".
@@ -69,7 +69,7 @@ while($row = mysqli_fetch_array($result)){
                   <div class='modal-body col-md-12'>
                     <h4>Edit run information</h4>
                     <p></p>
-                    
+
                     <div class='col-md-12'>
                       <label>Run# on this PO: (a,b,c...) </label>
                       <input type='text' id='input_run_number' value='".$row[4]."'>
@@ -88,13 +88,13 @@ while($row = mysqli_fetch_array($result)){
                           $counter = $counter + 1;
                         }
                       echo "
-                      </select>                    
+                      </select>
                     </div>
                     <div class='col-md-12'>
                       <label for='coatingID'>Coating</label>
                       <select id='input_coatingID'>";
-                          $coatSql = "SELECT coating_ID, coating_type 
-                                      FROM coating 
+                          $coatSql = "SELECT coating_ID, coating_type
+                                      FROM coating
                                       ORDER BY coating_type ASC";
                           $coatResult = mysqli_query($link, $coatSql);
                           if (!$coatResult){
@@ -113,7 +113,7 @@ while($row = mysqli_fetch_array($result)){
                     <div class='col-md-6'>
                       <label>Machine</label>
                       <select id='input_machineID'>";
-                        $machineSql = "SELECT machine_ID, machine_acronym 
+                        $machineSql = "SELECT machine_ID, machine_acronym
                                        FROM machine";
                         $machineResult = mysqli_query($link, $machineSql);
                         if (!$machineResult) {
@@ -140,7 +140,7 @@ while($row = mysqli_fetch_array($result)){
                     </div>
                     <div class='col-md-12'>
                       <label>Add or edit run comment:</label><br>
-                      <textarea name='runcomment' class='new_comment'>".$row[5]."</textarea>
+                      <textarea name='runcomment' id='new_comment'>".$row[5]."</textarea>
                     </div>
                   </div>
                   <div class='modal-footer'>
@@ -151,19 +151,4 @@ while($row = mysqli_fetch_array($result)){
               </div>
            </div>";
 }
-?>  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+?>
