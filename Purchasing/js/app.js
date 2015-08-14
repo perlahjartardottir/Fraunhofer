@@ -282,35 +282,41 @@ function printoutInfo(order_ID){
 }
 // Function for editing the supplier
 function editSupplier(element){
-  var supplier_name = $(element).parent().prev().find("#supplier_name").val();
-  var supplier_phone = $(element).parent().prev().find("#supplier_phone").val();
-  var supplier_fax = $(element).parent().prev().find("#supplier_fax").val();
-  var supplier_email = $(element).parent().prev().find("#supplier_email").val();
-  var supplier_address = $(element).parent().prev().find("#supplier_address").val();
-  var supplier_contact = $(element).parent().prev().find("#supplier_contact").val();
-  var supplier_accountNr = $(element).parent().prev().find("#supplier_accountNr").val();
-  var supplier_website = $(element).parent().prev().find("#supplier_website").text();
-  var supplier_login = $(element).parent().prev().find("#supplier_login").val();
-  var supplier_password = $(element).parent().prev().find("#supplier_password").val();
-  var supplier_notes = $(element).parent().prev().find("#supplier_notes").val();
+  var r = confirm("Are you sure you want to edit this supplier?");
+  if (r === true){
+    var supplier_name = $(element).parent().prev().find("#supplier_name").val();
+    var supplier_phone = $(element).parent().prev().find("#supplier_phone").val();
+    var supplier_fax = $(element).parent().prev().find("#supplier_fax").val();
+    var supplier_email = $(element).parent().prev().find("#supplier_email").val();
+    var supplier_address = $(element).parent().prev().find("#supplier_address").val();
+    var supplier_contact = $(element).parent().prev().find("#supplier_contact").val();
+    var supplier_accountNr = $(element).parent().prev().find("#supplier_accountNr").val();
+    var supplier_website = $(element).parent().prev().find("#supplier_website").text();
+    var supplier_login = $(element).parent().prev().find("#supplier_login").val();
+    var supplier_password = $(element).parent().prev().find("#supplier_password").val();
+    var supplier_notes = $(element).parent().prev().find("#supplier_notes").val();
 
-  $.ajax({
-    url: '../UpdatePHP/editSupplier.php',
-    type: "POST",
-    data:{
-      supplier_phone: supplier_phone,
-      supplier_name: supplier_name,
-      supplier_fax: supplier_fax,
-      supplier_email: supplier_email,
-      supplier_address: supplier_address,
-      supplier_contact: supplier_contact,
-      supplier_accountNr: supplier_accountNr,
-      supplier_website: supplier_website,
-      supplier_login: supplier_login,
-      supplier_password: supplier_password,
-      supplier_notes: supplier_notes
-    }
-  });
+    $.ajax({
+      url: '../UpdatePHP/editSupplier.php',
+      type: "POST",
+      data:{
+        supplier_phone: supplier_phone,
+        supplier_name: supplier_name,
+        supplier_fax: supplier_fax,
+        supplier_email: supplier_email,
+        supplier_address: supplier_address,
+        supplier_contact: supplier_contact,
+        supplier_accountNr: supplier_accountNr,
+        supplier_website: supplier_website,
+        supplier_login: supplier_login,
+        supplier_password: supplier_password,
+        supplier_notes: supplier_notes
+      },
+      success: function(data, status, xhr) {
+        window.location.reload();
+      }
+    });
+  }
 }
 
 function packageReceived(order_ID){

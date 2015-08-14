@@ -19,7 +19,7 @@ $supplier_name .= "%";
     <thead>
       <tr>
         <th>Supplier name</th>
-        <th>Phone</th>
+        <th class='col-md-2'>Phone</th>
         <th>Email</th>
         <th>Address</th>
         <th>Rating</th>

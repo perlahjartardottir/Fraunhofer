@@ -14,7 +14,7 @@ $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 echo"
 <div id='output'>
-  <div class='row well well-lg'>
+  <div class='row well well-lg col-md-5 col-md-offset-1'>
     <form>
       <h4> Request ID: <span id='activeRequest' value='".$row[0]."'>".$row[0]."</span></h4>
       <p> Employee: ".$employee_name."</p>

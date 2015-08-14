@@ -59,7 +59,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
         <input class='form-control btn btn-primary' type="button" value="Order" onclick='createPurchaseOrder()'>
       </form>
     </div>
-    <div class='row well well-lg col-md-5'>
+    <div class='row well well-lg col-md-6'>
       <h4>Select request for the PO</h4>
       <table class='table table-responsive' id='activeRequestTable'>
         <thead>
@@ -90,7 +90,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
             echo "<tr>
                     <td onclick='activeRequest(this)' id='request_ID'><a href='#' onclick='return false;'>".$row[0]."</a></td>
                     <td id='employee_name'>".$employee[0]."</td>
-                    <td>".$row[2]."</td>
+                    <td>".$row[2]."<button style='float:right;' class='btn btn-danger btn-xs' onclick='finishRequest(".$row[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
                   </tr>";
           }
           ?>
@@ -99,7 +99,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
     </div>
 
     <!-- js/app.js and the function activeRequest(element) -->
-    <div id='output' class='col-md-6 col-md-offset-1'>
+    <div id='output'>
     </div>
   </div>
 </body>
