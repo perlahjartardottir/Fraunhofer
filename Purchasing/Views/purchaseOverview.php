@@ -18,6 +18,14 @@
           <input type="text" id='order_name' onkeyup='purchaseSuggestions()' class='form-control'/>
         </div>
         <div class='col-md-12 form-group'>
+          <label>Department: </label>
+          <select class='form-control' id='department' onchange='purchaseSuggestions()'>
+            <option selected value=''>All departments</option>
+            <option value='PVD'>PVD</option>
+            <option value='CVD'>CVD</option>
+          </select>
+        </div>
+        <div class='col-md-12 form-group'>
           <label>Order date from:</label>
           <input type="date" id='first_date' class='form-control' onchange='purchaseSuggestions()'/>
         </div>

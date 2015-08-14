@@ -2,6 +2,12 @@
 include '../../connection.php';
 $supplier_name = mysqli_real_escape_string($link, $_POST['supplier_name']);
 $supplier_name .= "%";
+$supplier_phone = mysqli_real_escape_string($link, $_POST['supplier_phone']);
+$supplier_phone .= "%";
+$supplier_email = mysqli_real_escape_string($link, $_POST['supplier_email']);
+$supplier_email .= "%";
+$supplier_address = mysqli_real_escape_string($link, $_POST['supplier_address']);
+$supplier_address .= "%";
 ?>
 <script>
 // script to activate popovers
@@ -29,7 +35,10 @@ $supplier_name .= "%";
       <?php
       $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email, supplier_address, supplier_fax, supplier_contact, supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes
               FROM supplier
-              WHERE supplier_name LIKE '$supplier_name';";
+              WHERE supplier_name LIKE '$supplier_name'
+              AND supplier_phone LIKE '$supplier_phone'
+              AND supplier_email LIKE '$supplier_email'
+              AND supplier_address LIKE '$supplier_address';";
       $result = mysqli_query($link, $sql);
       while($row = mysqli_fetch_array($result)){
         // SQL to get each customers rating

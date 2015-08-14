@@ -318,8 +318,9 @@
                 </table>
                 <p>Order date: ".$deliveredRow[1]."</p>
                 <form>
+                  <h4>Inspection note:</h4>
                   <textarea class='form-control' id='order_final_inspection'></textarea>
-                  <h4>Rating: </h4>
+                  <h4 style='margin-top: 20px; margin-bottom:-5px'>Rating: </h4>
                   <table class='table table-responsive col-md-12'>
                     <thead>
                       <tr>

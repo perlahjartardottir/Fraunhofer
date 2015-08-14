@@ -20,10 +20,17 @@ function setSessionIDSearch(order_ID){
 function supplierSuggestions() {
   $('#output').html();
   var supplier_name = $('#supplier_name').val();
+  var supplier_phone = $('#supplier_phone').val();
+  var supplier_email = $('#supplier_email').val();
+  var supplier_address = $('#supplier_address').val();
   $.ajax({
     url: '../SearchPHP/supplier_search_suggestions.php',
     type: 'POST',
-    data: {supplier_name : supplier_name},
+    data: {supplier_name : supplier_name,
+           supplier_phone: supplier_phone,
+           supplier_email: supplier_email,
+           supplier_address: supplier_address
+    },
     success: function(data, status, xhr) {
       $("#output").html(data);
     }
@@ -32,16 +39,19 @@ function supplierSuggestions() {
 function purchaseSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();
+  var department = $('#department').val();
   var first_date = $('#first_date').val();
   var last_date  = $('#last_date').val();
   var notReceived;
   if($('#notReceived').is(':checked')){
-        notReceived = $('#notReceived').val();
-    }
+    notReceived = $('#notReceived').val();
+  }
+
   $.ajax({
     url: '../SearchPHP/purchase_search_suggestions.php',
     type: 'POST',
     data: {order_name : order_name,
+           department : department,
            first_date : first_date,
            last_date  : last_date,
            notReceived: notReceived},
@@ -123,7 +133,6 @@ function delOrderItem(order_item_ID){
 }
 
 function createPurchaseOrder(){
-
   // function to find the correct value from the datalist
   var employee_name = $("input[name='employeeList']").on('input', function(e){
     var $input = $(this),
@@ -148,6 +157,8 @@ function createPurchaseOrder(){
   var employee_ID = $('#employee_ID').val();
   var approved_by = $('#approved_by').val();
   var request_ID  = $('#activeRequest').text();
+  var department  = $('#department').val();
+
   $.ajax({
     url: '../InsertPHP/addNewPurchaseOrder.php',
     type: 'POST',
@@ -156,6 +167,7 @@ function createPurchaseOrder(){
       employee_ID   : employee_ID,
       supplier_name : supplier_name,
       request_ID    : request_ID,
+      department    : department,
       approved_by   : approved_by
     },
     success: function(data, status, xhr){

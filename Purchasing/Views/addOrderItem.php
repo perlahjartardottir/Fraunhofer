@@ -32,7 +32,10 @@ $request_ID = $row[0];
             }
             ?>
           </select>
+
+          <!-- SelectPHP/POInfoForOrderItem ------------------------->
           <br><div id="poinfo"><b>PO info will be listed here</b></div>
+
         </div>
         <div class='form-group col-md-6'>
           <?php
