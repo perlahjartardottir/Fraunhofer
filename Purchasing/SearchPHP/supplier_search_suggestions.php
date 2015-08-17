@@ -77,30 +77,30 @@ $supplier_address .= "%";
           			         <div class='modal-body'>
                             <div class='row'>
                               <div class='col-md-6'>
-                                <input type='hidden' id='supplier_name' value='".$row[1]."'>
-                                <p><strong>Phone</strong>: <input type='text' id='supplier_phone' value='".$row[2]."'></p>
-                                <p><strong>Fax</strong>: <input type='text' id='supplier_fax' value='".$row[5]."'></p>
-                                <p><strong>Email</strong>: <input type='text' id='supplier_email' value='".$row[3]."'></p>
-                                <p><strong>Address</strong>: <input type='text' id='supplier_address' value='".$row[4]."'></p>
-                                <p><strong>Contact</strong>: <input type='text' id='supplier_contact' value='".$row[6]."'></p>
-                                <p><strong>Account Nr</strong>: <input type='text' id='supplier_accountNr' value='".$row[10]."'></p>
+                                <input type='hidden' id='supplier_ID' value='".$row[0]."'>
+                                <p><strong>Phone: </strong><span id='supplier_phone'>".$row[2]."</span></p>
+                                <p><strong>Fax: </strong><span id='supplier_fax'>".$row[5]."</span></p>
+                                <p><strong>Email: </strong><span id='supplier_email'>".$row[3]."</span></p>
+                                <p><strong>Address: </strong><span id='supplier_address'>".$row[4]."</span></p>
+                                <p><strong>Contact: </strong><span id='supplier_contact'>".$row[6]."</span></p>
+                                <p><strong>Account Nr: </strong><span id='supplier_accountNr'>".$row[10]."</span></p>
                               </div>
                               <div class='col-md-6'>
-                                <p><strong>Website</strong>: <a href='http://".$row[7]."' target='_blank'><span id='supplier_website'>".$row[7]."</span></a></p>
-                                <p><strong>Login</strong>: <input type='text' id='supplier_login' value='".$row[8]."'></p>
-                                <p><strong>Password</strong>: <input type='text' value='".$row[9]."' id='supplier_password'></p>
-                              </div>
-                              <div class='col-md-6' style='margin-top:20px;'>
-                                <p><strong>Average lead time:</strong> <span id='averageLeadTime'>".$averageRating[4]."</span></p>
-                                <p><strong>Number of active POS:</strong> <span id='numberOfActivePOs'>".$averageRating[5]."</span></p>
-                                <p><strong>Overall orders:</strong> <span id='overallOrders'>".$averageRating[6]."</span></p>
-                              </div>
-                              <div class='col-md-12'><label>Notes: </label></br><textarea rows='3' cols='50' id='supplier_notes'>".$row[11]."</textarea>
+                                <p><strong>Website: </strong><a href='http://".$row[7]."' target='_blank'><span id='supplier_website'>".$row[7]."</span></a></p>
+                                <p><strong>Login: </strong><span id='supplier_login'>".$row[8]."</span></p>
+                                <p><strong>Passwrd: </strong><span id='supplier_password'>".$row[9]."</span></p>
                             </div>
+                            <div class='col-md-6' style='margin-top:20px'>
+                              <p><strong>Average lead time: </strong><span id='averageLeadTime'>".$averageRating[4]."</span></p>
+                              <p><strong>Number of active POs: </strong><span id='numberOfActivePOs'>".$averageRating[5]."</span></p>
+                              <p><strong>Overall orders: </strong><span id='overallOrders'>".$averageRating[6]."</span></p>
+                            </div>
+                            <div class='col-md-12'><label>Notes: </label><p id='supplier_notes'>".$row[11]."</p>
                          </div>
+                        </div>
           			        <div class='modal-footer'>
                           <p style='float:left'><strong>Rating</strong>: ".$averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i></p>
-                          <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='editSupplier(this)'>Edit Supplier</button>
+                          <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='setSupplierID(this)'>Edit Supplier</button>
           			          <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
           			        </div>
           			      </div>

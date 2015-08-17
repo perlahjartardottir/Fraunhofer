@@ -133,7 +133,8 @@ $department_ID = $row[0];
             <span>Order date: ".$row[1]."</span>";
             if(empty($row[2])){
               echo"
-                <button type='button' style='float:right;' class='btn btn-primary' onclick='packageReceived(".$row[0].")'>Package received</button>";
+                <button type='button' style='float:right;' class='btn btn-primary' onclick='packageReceived(".$row[0].", this)'>Package received</button>
+                <input type='date' id='receiveDate' style='float:right; margin-right:5px;'>";
             }
             echo"
           </div>

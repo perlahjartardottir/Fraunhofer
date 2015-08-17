@@ -38,11 +38,11 @@
   // has requested and have not yet been received
   $inProgressSql = "SELECT order_ID, order_date
                     FROM purchase_order
-                    WHERE request_ID IN (SELECT request_ID
+                    WHERE order_receive_date IS NULL
+                    AND (request_ID IN (SELECT request_ID
                                          FROM order_request
                                          WHERE employee_ID = '$employee_ID')
-                    AND order_for_who = '$employee_ID'
-                    AND order_receive_date IS NULL;";
+                    OR order_for_who = '$employee_ID');";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find all purchase orders that have been delivered
@@ -50,10 +50,10 @@
   // but have not yet received a final inspection comment
   $deliveredSql = "SELECT order_ID, order_date
                     FROM purchase_order
-                    WHERE request_ID IN (SELECT request_ID
+                    WHERE (request_ID IN (SELECT request_ID
                                          FROM order_request
                                          WHERE employee_ID = '$employee_ID')
-                    AND order_for_who = '$employee_ID'
+                    OR order_for_who = '$employee_ID')
                     AND order_receive_date IS NOT NULL
                     AND order_final_inspection IS NULL;";
   $deliveredResult = mysqli_query($link, $deliveredSql);
