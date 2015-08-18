@@ -22,7 +22,6 @@ if($user_sec_lvl < 2){
 <head>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
-  <link href='../css/main.css' rel='stylesheet'>
 </head>
 <input type="hidden" id="refresh" value="no">
 <body>

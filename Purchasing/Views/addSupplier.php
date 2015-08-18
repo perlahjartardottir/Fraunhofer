@@ -8,6 +8,7 @@ session_start();
 <body>
   <?php include '../header.php'; ?>
   <div class='container'>
+    <div id='invalidSupplier'></div>
     <div class='row well well-lg'>
       <form>
         <h3>Add a new supplier</h3>

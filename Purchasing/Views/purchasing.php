@@ -275,6 +275,7 @@
           <div class='modal-dialog'>
             <div class='modal-content'>
               <div class='modal-header'>
+                <div id='invalidOrderFinalInspection'></div>
                 <h4>Purchase order: ".$deliveredRow[0]."</h4>
               </div>
               <div class='modal-body'>
@@ -337,7 +338,7 @@
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
-                            <option>5</option>
+                            <option selected>5</option>
                           </select>
                         </td>
                         <td class='col-md-4'>
@@ -346,7 +347,7 @@
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
-                            <option>5</option>
+                            <option selected>5</option>
                           </select>
                         </td>
                         <td class='col-md-4'>
@@ -355,7 +356,7 @@
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
-                            <option>5</option>
+                            <option selected>5</option>
                           </select>
                         </td>
                       </tr>

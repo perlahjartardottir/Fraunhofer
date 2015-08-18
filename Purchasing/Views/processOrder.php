@@ -27,6 +27,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
   <?php include '../header.php'; ?>
   <?php echo"<input type='hidden' id='employee_ID' value='".$employee_ID[0]."'>"; ?>
   <div class='container'>
+    <div id='invalidPO'></div>
     <div class='row well well-lg'>
       <form>
         <h4>Purchase order</h4>
@@ -55,14 +56,6 @@ $supplierResult = mysqli_query($link, $supplierSql);
         <div class='col-md-6 form-group'>
           <label>Approved by: </label>
           <input type="text" class='form-control' id='approved_by'>
-        </div>
-        <div class='col-md-6 form-group'>
-          <label>Department: </label>
-          <select class='form-control' id='department'>
-            <option selected value=''>All departments</option>
-            <option value='PVD'>PVD</option>
-            <option value='CVD'>CVD</option>
-          </select>
         </div>
         <input class='form-control btn btn-primary' type="button" value="Order" onclick='createPurchaseOrder()'>
       </form>

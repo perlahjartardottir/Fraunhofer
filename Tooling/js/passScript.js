@@ -1368,8 +1368,8 @@ function changeMachine() {
 }
 
 function updateRunComment(run_ID, element) {
-  document.getElementById("new_comment").select(); //select text inside
-  var comment = document.getSelection().toString();
+  $('textarea').select(); //select text inside
+  var comment = window.getSelection().toString();
 
   // Using element which is 'this' modal
   // parent() is modal-footer

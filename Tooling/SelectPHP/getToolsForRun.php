@@ -23,12 +23,12 @@ if (!$result) {
 // variable to set the ID for the modals and the link to the modals.
 $linecounter = 0;
 
-echo"<table style='width:96%;'><tr>".
-    "<td>Line Item #</td>".
-    "<td>Number of Tools</td>".
-    "<td>Run number</td>".
-    "<td>Final Comment</td>".
-    "</tr>";
+echo"<table style='width:96%;' class='table table-responsive'><theader><tr>".
+    "<th>Line Item #</th>".
+    "<th>Number of Tools</th>".
+    "<th>Run number</th>".
+    "<th>Final Comment</th>".
+    "</tr></theader><tbody>";
 
 while($row = mysqli_fetch_array($result)) {
    echo "<tr>".
@@ -39,7 +39,7 @@ while($row = mysqli_fetch_array($result)) {
         "</tr>";
         $linecounter = $linecounter + 1;
 }
-echo "</table>";
+echo "</tbody></table>";
 // reset linecounter so the buttons are linked to the right modals.
 $linecounter = 0;
 $result = mysqli_query($link, $sql);

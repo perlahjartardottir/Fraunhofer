@@ -46,6 +46,10 @@ function purchaseSuggestions() {
   if($('#notReceived').is(':checked')){
     notReceived = $('#notReceived').val();
   }
+  var noFinalInspection;
+  if($('#noFinalInspection').is(':checked')){
+    noFinalInspection = $('#noFinalInspection').val();
+  }
 
   $.ajax({
     url: '../SearchPHP/purchase_search_suggestions.php',
@@ -54,6 +58,7 @@ function purchaseSuggestions() {
            department : department,
            first_date : first_date,
            last_date  : last_date,
+           noFinalInspection  : noFinalInspection,
            notReceived: notReceived},
     success: function(data, status, xhr) {
       $("#output").html(data);
@@ -66,19 +71,23 @@ function orderRequest(){
   var approved_by_employee = $('#approved_by_employee').val();
   var request_description  = $('#request_description').val();
   var employee_ID          = $('#employee_ID').val();
-  $.ajax({
-    url: '../InsertPHP/addNewRequest.php',
-    type: 'POST',
-    data: {
-      request_supplier     : request_supplier,
-      approved_by_employee : approved_by_employee,
-      request_description  : request_description,
-      employee_ID          : employee_ID
-    },
-    success: function(data, status, xhr){
-      window.location.reload();
-    }
-  });
+  if(request_description === ""){
+    $("#invalidRequest").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Description</div>");
+  } else{
+    $.ajax({
+      url: '../InsertPHP/addNewRequest.php',
+      type: 'POST',
+      data: {
+        request_supplier     : request_supplier,
+        approved_by_employee : approved_by_employee,
+        request_description  : request_description,
+        employee_ID          : employee_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
 }
 function activeRequest(element){
   if(!element){
@@ -157,30 +166,35 @@ function createPurchaseOrder(){
   var employee_ID = $('#employee_ID').val();
   var approved_by = $('#approved_by').val();
   var request_ID  = $('#activeRequest').text();
-  var department  = $('#department').val();
 
-  $.ajax({
-    url: '../InsertPHP/addNewPurchaseOrder.php',
-    type: 'POST',
-    data:{
-      employee_name : employee_name,
-      employee_ID   : employee_ID,
-      supplier_name : supplier_name,
-      request_ID    : request_ID,
-      department    : department,
-      approved_by   : approved_by
-    },
-    success: function(data, status, xhr){
-      //console.log(data);
-      window.location = "../views/addOrderItem.php";
-    }
-  });
+  if(!employee_name){
+    $("#invalidPO").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Employee</div>");
+  } else if (!supplier_name){
+    $("#invalidPO").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier</div>");
+  } else{
+    $.ajax({
+      url: '../InsertPHP/addNewPurchaseOrder.php',
+      type: 'POST',
+      data:{
+        employee_name : employee_name,
+        employee_ID   : employee_ID,
+        supplier_name : supplier_name,
+        request_ID    : request_ID,
+        approved_by   : approved_by
+      },
+      success: function(data, status, xhr){
+
+        window.location = "../views/addOrderItem.php";
+      }
+    });
+  }
 }
 function addOrderItem(){
   var quantity    = $('#quantity').val();
   var part_number = $('#part_number').val();
   var unit_price  = $('#unit_price').val();
   var description = $('#description').val();
+  var department  = $('#department').val();
   $.ajax({
     url: '../InsertPHP/addNewOrderItem.php',
     type: 'POST',
@@ -188,10 +202,12 @@ function addOrderItem(){
       quantity    : quantity,
       part_number : part_number,
       unit_price  : unit_price,
+      department  : department,
       description : description
     },
     success: function(data, status, xhr){
       window.location.reload();
+      //console.log(data);
     }
   });
 }
@@ -244,26 +260,30 @@ function addNewSupplier(){
   var supplier_password = $('#supplier_password').val();
   var supplier_accountNr = $('#supplier_accountNr').val();
   var supplier_notes = $('#supplier_notes').val();
-  $.ajax({
-    url: "../InsertPHP/addNewSupplier.php",
-    type: "POST",
-    data: {
-      supplier_name    : supplier_name,
-      supplier_address : supplier_address,
-      supplier_phone   : supplier_phone,
-      supplier_fax     : supplier_fax,
-      supplier_email   : supplier_email,
-      supplier_contact : supplier_contact,
-      supplier_login   : supplier_login,
-      supplier_password : supplier_password,
-      supplier_accountNr : supplier_accountNr,
-      supplier_website : supplier_website,
-      supplier_notes : supplier_notes
-    },
-    success: function(data, status, xhr) {
-      window.location = '../Views/supplierList.php';
-    }
-  });
+  if(!supplier_name){
+    $("#invalidSupplier").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier name</div>");
+  } else{
+    $.ajax({
+      url: "../InsertPHP/addNewSupplier.php",
+      type: "POST",
+      data: {
+        supplier_name    : supplier_name,
+        supplier_address : supplier_address,
+        supplier_phone   : supplier_phone,
+        supplier_fax     : supplier_fax,
+        supplier_email   : supplier_email,
+        supplier_contact : supplier_contact,
+        supplier_login   : supplier_login,
+        supplier_password : supplier_password,
+        supplier_accountNr : supplier_accountNr,
+        supplier_website : supplier_website,
+        supplier_notes : supplier_notes
+      },
+      success: function(data, status, xhr) {
+        window.location = '../Views/supplierList.php';
+      }
+    });
+  }
 }
 
 // This function preserves the session order_ID
@@ -368,20 +388,25 @@ function setFinalInspectionNote(order_ID){
   var rating_price      = e.options[e.selectedIndex].value;
   $('textarea').select(); //select text inside
   var order_final_inspection = window.getSelection().toString();
-  $.ajax({
-    url: '../UpdatePHP/setFinalInspectionNote.php',
-    type: "POST",
-    data:{
-      order_ID               : order_ID,
-      order_final_inspection : order_final_inspection,
-      rating_timeliness      : rating_timeliness,
-      rating_price           : rating_price,
-      rating_quality         : rating_quality
-    },
-    success: function(data, status, xhr) {
-      window.location.reload();
-    }
-  });
+
+  if(order_final_inspection === ""){
+    $("#invalidOrderFinalInspection").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing final inspection note</div>");
+  } else{
+    $.ajax({
+      url: '../UpdatePHP/setFinalInspectionNote.php',
+      type: "POST",
+      data:{
+        order_ID               : order_ID,
+        order_final_inspection : order_final_inspection,
+        rating_timeliness      : rating_timeliness,
+        rating_price           : rating_price,
+        rating_quality         : rating_quality
+      },
+      success: function(data, status, xhr) {
+        window.location.reload();
+      }
+    });
+  }
 }
 
 // This function makes the request inactive

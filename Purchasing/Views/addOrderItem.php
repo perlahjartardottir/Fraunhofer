@@ -68,10 +68,20 @@ $request_ID = $row[0];
           <input type='text' id='unit_price' class='form-control'>
         </div>
         <div class='form-group col-md-6'>
+          <label>Department: </label>
+          <select id='department' class='form-control'>
+            <option value=''>All departments</option>
+            <option value='PVD'>PVD</option>
+            <option value='CVD'>CVD</option>
+          </select>
+        </div>
+        <div class='form-group col-md-6'>
           <label>Description: </label>
           <textarea id='description' class='form-control'></textarea>
         </div>
-        <button type='button' class='btn btn-primary col-md-2' onclick='addOrderItem()' style='float:right;'>Add</button>
+        <div class='form-group col-md-12'>
+          <button type='button' class='btn btn-primary col-md-2' onclick='addOrderItem()' style='float:right;'>Add</button>
+        </div>
       </form>
     </div>
     <!-- SelectPHP/showOrderItems -->

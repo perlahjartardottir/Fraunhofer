@@ -21,6 +21,7 @@ while($row = mysqli_fetch_array($secResult)){
   <?php include '../header.php'; ?>
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <div class='container'>
+    <div id='invalidRequest'></div>
     <div class='row well well-lg'>
       <form>
         <h4>Make a request for a purchase order</h4>

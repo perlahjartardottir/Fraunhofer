@@ -1,6 +1,7 @@
 <?php
 include '../../connection.php';
 $notReceived = mysqli_real_escape_string($link, $_POST['notReceived']);
+$noFinalInspection = mysqli_real_escape_string($link, $_POST['noFinalInspection']);
 $order_name  = mysqli_real_escape_string($link, $_POST['order_name']);
 $department  = mysqli_real_escape_string($link, $_POST['department']);
 $first_date  = mysqli_real_escape_string($link, $_POST['first_date']);
@@ -35,6 +36,9 @@ $department_ID = $row[0];
               WHERE order_ID LIKE '$order_name' ";
       if($notReceived == 'on'){
       	$sql .= "AND order_receive_date IS NULL ";
+      }
+      if($noFinalInspection == 'on'){
+      	$sql .= "AND order_final_inspection IS NULL ";
       }
       if(!empty($first_date)){
       	$sql .= "AND order_date >= '$first_date' ";

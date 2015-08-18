@@ -4,13 +4,13 @@ session_start();
 $po_ID = $_SESSION['po_ID'];
 
 // display the table
-echo "<table style='width:97%;'><tr>".
-        "<td>Run ID</td>".
-        "<td>Coating type</td>".
-        "<td>AH/Pulses</td>".
-        "<td>Run number</td>".
-        "<td>Comments</td>".
-     "</tr>";
+echo "<table style='width:97%;' class='table table-responsive'><theader><tr>".
+        "<th>Run ID</th>".
+        "<th>Coating type</th>".
+        "<th>AH/Pulses</th>".
+        "<th>Run number</th>".
+        "<th>Comments</th>".
+     "</tr></theader><tbody>";
 // select all the info about the run we need
 $sql = "SELECT r.run_ID, r.run_number, c.coating_type, r.ah_pulses, posr.run_number_on_po, r.run_comment, r.run_date, r.machine_ID, r.coating_ID, m.machine_acronym
         FROM run r, pos_run posr, coating c, machine m
@@ -45,7 +45,7 @@ while($row = mysqli_fetch_array($result)){
          "<td>".$row[5]."<button style='float:right; margin-right:-50px' class='btn btn-danger' onclick='delRun(".$row[1].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>".
          "</tr>";
 }
-echo "</table>";
+echo "</tbody></table>";
 $result = mysqli_query($link, $sql);
 while($row = mysqli_fetch_array($result)){
     $substr = substr($row[1], -1);
@@ -69,7 +69,6 @@ while($row = mysqli_fetch_array($result)){
                   <div class='modal-body col-md-12'>
                     <h4>Edit run information</h4>
                     <p></p>
-
                     <div class='col-md-12'>
                       <label>Run# on this PO: (a,b,c...) </label>
                       <input type='text' id='input_run_number' value='".$row[4]."'>
