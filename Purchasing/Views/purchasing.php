@@ -36,14 +36,14 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
   // have been received
-  $deliveredSql = "SELECT order_ID, order_date
+  $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection
                     FROM purchase_order
                     WHERE order_receive_date IS NOT NULL
                     ORDER BY order_receive_date DESC
@@ -163,7 +163,7 @@
         <thead>
           <tr>
             <th>Purchase Order</th>
-            <th>Date</th>
+            <th>Order Date</th>
           </tr>
         </thead>
         <tbody>
@@ -251,15 +251,15 @@
         <thead>
           <tr>
             <th>Purchase Order</th>
-            <th>Date</th>
+            <th>Receiving Date</th>
           </tr>
         </thead>
         <tbody>
           <?php
           while($deliveredRow = mysqli_fetch_array($deliveredResult)){
               echo"<tr>
-                    <td><a href='#' data-toggle='modal' data-target='#".$deliveredRow[0]."'>".$deliveredRow[0]."</a></td>
-                    <td>".$deliveredRow[1]."</td>
+                    <td><a href='#' data-toggle='modal' onclick='setSessionIDSearch(".$deliveredRow[0].")' data-target='#".$deliveredRow[0]."'>".$deliveredRow[0]."</a></td>
+                    <td>".$deliveredRow[2]."</td>
                    </tr>";
           }
           ?>
@@ -319,55 +319,12 @@
                     </tr>
                   </tbody>
                 </table>
-                <p>Order date: ".$deliveredRow[1]."</p>
-                <form>
-                  <h4>Inspection note:</h4>
-                  <textarea class='form-control' id='order_final_inspection'></textarea>
-                  <h4 style='margin-top: 20px; margin-bottom:-5px'>Rating: </h4>
-                  <table class='table table-responsive col-md-12'>
-                    <thead>
-                      <tr>
-                        <th>Timeliness</th>
-                        <th>Quality</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class='col-md-4'>
-                          <select id='rating_timeliness' class='form-control'>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option selected>5</option>
-                          </select>
-                        </td>
-                        <td class='col-md-4'>
-                          <select id='rating_quality' class='form-control'>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option selected>5</option>
-                          </select>
-                        </td>
-                        <td class='col-md-4'>
-                          <select id='rating_price' class='form-control'>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option selected>5</option>
-                          </select>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <button type='button' style='margin-top:5px;' onclick='setFinalInspectionNote(".$deliveredRow[0].")' class='btn btn-primary'>Set final inspection note</button>
-                </form>
+                <p><strong>Order date: </strong>".$deliveredRow[1]."</p>
+                <p><strong>Comment: </strong>".$deliveredRow[3]."</p>
               </div>
               <div class='modal-footer'>
+                <a href='../Views/purchaseOrderReceived.php' class='btn btn-primary' style='float:left'>Edit received info</a>
+                <button type='button' onclick='printoutInfo(".$deliveredRow[0].")' class='btn btn-primary' style='float:left;'>Printout</button>
                 <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
               </div>
             </div>

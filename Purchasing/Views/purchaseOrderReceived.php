@@ -10,7 +10,7 @@ $sql = "SELECT order_item_ID, quantity, part_number, description, final_inspecti
 $result = mysqli_query($link, $sql);
 
 //Query to find the supplier
-$supplierSql = "SELECT supplier_ID
+$supplierSql = "SELECT supplier_ID, order_final_inspection
                 FROM purchase_order
                 WHERE order_ID = '$order_ID';";
 $supplierResult = mysqli_query($link, $supplierSql);
@@ -107,8 +107,30 @@ $supplierNameRow = mysqli_fetch_array($supplierNameResult);
             </tr>
           </tbody>
         </table>
+        <h4>Comment</h4>
+        <div class='col-md-6'>
+          <textarea class='form-control' id='order_final_inspection' rows='4' cols='50' style='width:auto;'><?php echo $supplierRow[1]; ?></textarea>
+        </div>
+        <div class='col-md-4'>
+          <form action="../InsertPHP/addimage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(356000)">
+            <label>Select image to upload:</label>
+            <!-- hidden type which is used to redirect to the correct view -->
+            <input type='hidden' value='new' id='redirect' name='redirect'>
+            <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
+            <p></p>
+            <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
+            <button class='btn btn-primary'>View all files</button>
+          </form>
+        </div>
+        <div class='col-md-2'>
+          <label>Click to enlarge</label>
+          <input type='image' src="../Scan/getImage.php" width="100" height="100" onerror="this.src='../images/noimage.jpg'" onclick="window.open('../Printouts/scanprintout.php')" />
+        </div>
+        <div class='col-md-12' style='margin-top:10px;'>
+          <button class='btn btn-primary' style='float:right;' onclick='packageReceived(<?php echo $order_ID;?>, this)'>Package Received</button>
+          <input type='date' id='receiveDate' class='form-control' style='float:right; margin-right:5px; width:auto;'>
+        </div>
       </form>
-      <button class='btn btn-primary' style='float:right;'>Package Received</button>
     </div>
   </div>
 </body>

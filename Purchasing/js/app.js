@@ -390,48 +390,32 @@ function editSupplier(){
   }
 }
 
+// Set the rating and receiving date of the purchase order
 function packageReceived(order_ID, element){
   var receiveDate = $(element).parent().find("#receiveDate").val();
-  $.ajax({
-    url: '../UpdatePHP/packageReceived.php',
-    type: "POST",
-    data:{
-      order_ID: order_ID,
-      receiveDate: receiveDate
-    },
-    success: function(data, status, xhr) {
-      window.location.reload();
-    }
-  });
-}
-function setFinalInspectionNote(order_ID){
   var e                 = document.getElementById("rating_timeliness");
   var rating_timeliness = e.options[e.selectedIndex].value;
   e                     = document.getElementById("rating_quality");
   var rating_quality    = e.options[e.selectedIndex].value;
   e                     = document.getElementById("rating_price");
   var rating_price      = e.options[e.selectedIndex].value;
-  $('textarea').select(); //select text inside
-  var order_final_inspection = window.getSelection().toString();
+  var order_final_inspection = $('#order_final_inspection').val();
 
-  if(order_final_inspection === ""){
-    $("#invalidOrderFinalInspection").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing final inspection note</div>");
-  } else{
-    $.ajax({
-      url: '../UpdatePHP/setFinalInspectionNote.php',
-      type: "POST",
-      data:{
-        order_ID               : order_ID,
-        order_final_inspection : order_final_inspection,
-        rating_timeliness      : rating_timeliness,
-        rating_price           : rating_price,
-        rating_quality         : rating_quality
-      },
-      success: function(data, status, xhr) {
-        window.location.reload();
-      }
-    });
-  }
+  $.ajax({
+    url: '../UpdatePHP/packageReceived.php',
+    type: "POST",
+    data:{
+      order_ID          : order_ID,
+      receiveDate       : receiveDate,
+      order_final_inspection : order_final_inspection,
+      rating_timeliness : rating_timeliness,
+      rating_price      : rating_price,
+      rating_quality    : rating_quality
+    },
+    success: function(data, status, xhr) {
+      window.location = "../Views/purchasing.php";
+    }
+  });
 }
 
 // This function makes the request inactive
@@ -452,7 +436,8 @@ function finishRequest(request_ID){
 }
 
 // This function confirms the final inspection notes for every order item in this purchase order
-function confirmFinalInspection(){
+function confirmFinalInspection(order_ID){
+
   var final_inspection;
   var order_item_ID;
   var ok;
@@ -476,9 +461,10 @@ function confirmFinalInspection(){
         url: '../UpdatePHP/setFinalInspectionNote.php',
         type: 'POST',
         data:{
-          order_item_ID : order_item_ID,
-          final_inspection : final_inspection,
-          ok : ok
+          order_item_ID     : order_item_ID,
+          order_ID          : order_ID,
+          final_inspection  : final_inspection,
+          ok                : ok
         }
       });
     }
