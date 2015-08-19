@@ -3,19 +3,11 @@ include '../../connection.php';
 $notReceived = mysqli_real_escape_string($link, $_POST['notReceived']);
 $noFinalInspection = mysqli_real_escape_string($link, $_POST['noFinalInspection']);
 $order_name  = mysqli_real_escape_string($link, $_POST['order_name']);
-$department  = mysqli_real_escape_string($link, $_POST['department']);
 $first_date  = mysqli_real_escape_string($link, $_POST['first_date']);
 $last_date   = mysqli_real_escape_string($link, $_POST['last_date']);
-$final_price   = mysqli_real_escape_string($link, $_POST['final_price']);
+
 $order_name .= '%';
 $totalFinalPrice = 0; // A variable that shows the complete price of all the PO's
-// Query to find the department ID
-$departmentSql = "SELECT department_ID
-                  FROM department
-                  WHERE department_name = '$department';";
-$departmentResult = mysqli_query($link, $departmentSql);
-$row = mysqli_fetch_array($departmentResult);
-$department_ID = $row[0];
 
 ?>
 <div id='output'>
@@ -46,9 +38,7 @@ $department_ID = $row[0];
       if(!empty($last_date)){
       	$sql .= "AND order_date <= '$last_date' ";
       }
-      if(!empty($department_ID)){
-      	$sql .= "AND department_ID = '$department_ID' ";
-      }
+      $sql .= "ORDER BY order_ID DESC;";
       $result = mysqli_query($link, $sql);
       while($row = mysqli_fetch_array($result)){
         $finalPrice = 0;
@@ -59,7 +49,6 @@ $department_ID = $row[0];
         $orderItemResult = mysqli_query($link, $orderItemSql);
         while($orderItemRow = mysqli_fetch_array($orderItemResult)){
           $finalPrice += $orderItemRow[0] * $orderItemRow[1];
-          $totalFinalPrice += $finalPrice;
         }
         echo"
           <tr>
@@ -67,8 +56,9 @@ $department_ID = $row[0];
             <td>".$row[1]."</td>
             <td>".$row[2]."</td>
             <td>".$row[3]."</td>
-            <td>$".$finalPrice."</td>
+            <td>$".number_format((float)$finalPrice, 2, '.', '')."</td>
           </tr>";
+          $totalFinalPrice += $finalPrice;
       }
       echo"
         <tr>

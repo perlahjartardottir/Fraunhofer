@@ -28,34 +28,26 @@
     echo mysqli_error($link);
   }
 
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description
+  // Query to find all active requests
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID
                  FROM order_request
-                 WHERE employee_ID = '$employee_ID'
-                 AND active = 1;";
+                 WHERE active = 1;";
   $requestResult = mysqli_query($link, $requestSql);
 
-  // Query to find all purchase orders that the current employee
-  // has requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date
+  // Query to find all purchase orders that have been
+  // requested and have not yet been received
+  $inProgressSql = "SELECT order_ID, order_date, request_ID
                     FROM purchase_order
-                    WHERE order_receive_date IS NULL
-                    AND (request_ID IN (SELECT request_ID
-                                         FROM order_request
-                                         WHERE employee_ID = '$employee_ID')
-                    OR order_for_who = '$employee_ID');";
+                    WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
-  // Query to find all purchase orders that have been delivered
-  // to the current employee
-  // but have not yet received a final inspection comment
+  // Query to find 10 most recent purchase orders that
+  // have been received
   $deliveredSql = "SELECT order_ID, order_date
                     FROM purchase_order
-                    WHERE (request_ID IN (SELECT request_ID
-                                         FROM order_request
-                                         WHERE employee_ID = '$employee_ID')
-                    OR order_for_who = '$employee_ID')
-                    AND order_receive_date IS NOT NULL
-                    AND order_final_inspection IS NULL;";
+                    WHERE order_receive_date IS NOT NULL
+                    ORDER BY order_receive_date DESC
+                    LIMIT 10;";
   $deliveredResult = mysqli_query($link, $deliveredSql);
   ?>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
@@ -96,7 +88,7 @@
       </div>
     </div>
 
-    <!-- Here is the requested table ------------------------>
+    <!-- Here is the requested table ------------------------------------------------>
     <div class='col-md-4'>
       <h4>Requested</h4>
       <table class='table table-responsive'>
@@ -112,6 +104,14 @@
 
             // this variable shows the first 15 characters of the description
             $description = substr($requestRow[4], 0, 15);
+
+            // Query to find name of the employee who issued the request
+            $employeeRequestSql = "SELECT employee_name
+                                   FROM employee
+                                   WHERE employee_ID = '$requestRow[5]';";
+            $employeeRequestResult = mysqli_query($link, $employeeRequestSql);
+            $employeeRequestRow = mysqli_fetch_array($employeeRequestResult);
+            $employee_name = $employeeRequestRow[0];
 
             echo"
               <tr>
@@ -138,6 +138,7 @@
                       <h4>Request: ".$requestRow[0]."</h4>
                     </div>
                     <div class='modal-body col-md-12'>
+                      <p>Requested by: ".$employee_name."</p>
                       <p>Date: ".$requestRow[1]."</p>
                       <p>Supplier: ".$requestRow[2]."</p>
                       <p>Approved by: ".$requestRow[3]."</p>
@@ -233,6 +234,7 @@
               </div>
               <div class='modal-footer'>
                 <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>
+                <a href='../Views/purchaseOrderReceived.php' class='btn btn-primary' style='float:left'>Received</a>
                 <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
               </div>
             </div>

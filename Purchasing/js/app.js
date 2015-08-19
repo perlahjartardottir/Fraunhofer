@@ -39,7 +39,6 @@ function supplierSuggestions() {
 function purchaseSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();
-  var department = $('#department').val();
   var first_date = $('#first_date').val();
   var last_date  = $('#last_date').val();
   var notReceived;
@@ -55,11 +54,37 @@ function purchaseSuggestions() {
     url: '../SearchPHP/purchase_search_suggestions.php',
     type: 'POST',
     data: {order_name : order_name,
-           department : department,
            first_date : first_date,
            last_date  : last_date,
            noFinalInspection  : noFinalInspection,
            notReceived: notReceived},
+    success: function(data, status, xhr) {
+      $("#output").html(data);
+    }
+  });
+}
+function orderItemSuggestions() {
+  $('#output').html();
+  var part_number = $('#part_number').val();
+  var description = $('#description').val();
+  var department = $('#department').val();
+  var first_date = $('#first_date').val();
+  var last_date  = $('#last_date').val();
+
+  var noFinalInspection;
+  if($('#noFinalInspection').is(':checked')){
+    noFinalInspection = $('#noFinalInspection').val();
+  }
+
+  $.ajax({
+    url: '../SearchPHP/order_item_suggestions.php',
+    type: 'POST',
+    data: {part_number : part_number,
+           description : description,
+           department : department,
+           first_date : first_date,
+           last_date  : last_date,
+           noFinalInspection  : noFinalInspection},
     success: function(data, status, xhr) {
       $("#output").html(data);
     }
@@ -424,4 +449,65 @@ function finishRequest(request_ID){
       }
     });
   }
+}
+
+// This function confirms the final inspection notes for every order item in this purchase order
+function confirmFinalInspection(){
+  var final_inspection;
+  var order_item_ID;
+  var ok;
+
+  //Find how many rows we have in the table
+  var cells = $('#finalInspectionTable > tbody > tr');
+  var length = cells.length;
+
+  //A function that goes through every row and finds final_inspection for each row
+  $('#finalInspectionTable > tbody > tr').each(function(i) {
+    if(i < length - 1){
+      final_inspection = $(this).find('#final_inspection').val();
+      order_item_ID    = $(this).find('#order_item_ID').val();
+      ok               = $(this).find('#ok');
+      if(ok.is(':checked')){
+        ok = $('#ok').val();
+      }else{
+        ok = "";
+      }
+      $.ajax({
+        url: '../UpdatePHP/setFinalInspectionNote.php',
+        type: 'POST',
+        data:{
+          order_item_ID : order_item_ID,
+          final_inspection : final_inspection,
+          ok : ok
+        }
+      });
+    }
+  });
+  window.location.reload();
+}
+
+// Update the final inspection for the order item
+function updateFinalInspection(final_inspection, order_item_ID, element){
+
+  // I need to use element and parent to get the correct table row
+  // $('#ok') would always fetch the top row which is not what we want
+  var ok = $(element).parent().find('#ok');
+
+  if(ok.is(':checked')){
+    ok = $('#ok').val();
+  }else{
+    ok = "";
+  }
+  $.ajax({
+    url: '../UpdatePHP/setFinalInspectionNote.php',
+    type: 'POST',
+    data:{
+      order_item_ID : order_item_ID,
+      final_inspection : final_inspection,
+      ok : ok
+    },
+    success: function(data, status, xhr) {
+      window.location.reload();
+    }
+  });
 }
