@@ -111,22 +111,24 @@ $supplierNameRow = mysqli_fetch_array($supplierNameResult);
         <div class='col-md-6'>
           <textarea class='form-control' id='order_final_inspection' rows='4' cols='50' style='width:auto;'><?php echo $supplierRow[1]; ?></textarea>
         </div>
-        <div class='col-md-4'>
-          <form action="../InsertPHP/addimage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(356000)">
-            <label>Select image to upload:</label>
-            <!-- hidden type which is used to redirect to the correct view -->
-            <input type='hidden' value='new' id='redirect' name='redirect'>
-            <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
-            <p></p>
-            <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
-            <button class='btn btn-primary'>View all files</button>
-          </form>
-        </div>
-        <div class='col-md-2'>
-          <label>Click to enlarge</label>
-          <input type='image' src="../Scan/getImage.php" width="100" height="100" onerror="this.src='../images/noimage.jpg'" onclick="window.open('../Printouts/scanprintout.php')" />
-        </div>
-        <div class='col-md-12' style='margin-top:10px;'>
+      </form>
+      <div class='col-md-4'>
+        <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(356000)">
+          <label>Select image to upload:</label>
+          <!-- hidden type which is used to redirect to the correct view -->
+          <input type='hidden' value='new' id='redirect' name='redirect'>
+          <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
+          <p></p>
+          <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
+          <a href='viewAllImages.php' class='btn btn-primary'>View all files</a>
+        </form>
+      </div>
+      <div class='col-md-2'>
+        <label>Click to enlarge</label>
+        <input type='image' src="../Scan/getImage.php" width="100" height="100" onerror="this.src='../images/noimage.jpg'" onclick="window.open('../Printouts/scanprintout.php')" />
+      </div>
+      <form>
+        <div class='col-md-12' style='margin-top:30px;'>
           <button class='btn btn-primary' style='float:right;' onclick='packageReceived(<?php echo $order_ID;?>, this)'>Package Received</button>
           <input type='date' id='receiveDate' class='form-control' style='float:right; margin-right:5px; width:auto;'>
         </div>
@@ -142,4 +144,21 @@ $('.allOk').click(function() {
       $('div input').prop('checked', false);
   }
 });
+
+// if this function returns false the file is not added
+function checkSize(max_img_size) {
+  console.log("yoyo");
+  var input = document.getElementById("fileToUpload");
+  if (input.files && input.files.length == 1) {
+    if (input.files[0].size > max_img_size) {
+      alert("The file size must be less than " + (max_img_size / 1024) + "KB");
+      return false;
+    }
+  } else {
+    alert("No image chosen.");
+    return false;
+  }
+
+  return true;
+}
 </script>

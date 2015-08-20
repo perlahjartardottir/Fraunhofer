@@ -390,6 +390,23 @@ function editSupplier(){
   }
 }
 
+// Delete Purchase Scan
+function deletePurchaseScan(scan_ID){
+  var r = confirm("Are you sure you want to delete this scan?");
+  if(r === true){
+    $.ajax({
+      url: '../DeletePHP/deleteScan.php',
+      type: "POST",
+      data:{
+        scan_ID : scan_ID
+      },
+      success: function(data, status, xhr) {
+        window.location.reload();
+      }
+    });
+  }
+}
+
 // Set the rating and receiving date of the purchase order
 function packageReceived(order_ID, element){
   var receiveDate = $(element).parent().find("#receiveDate").val();
