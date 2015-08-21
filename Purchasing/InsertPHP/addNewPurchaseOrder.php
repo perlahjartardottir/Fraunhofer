@@ -36,4 +36,14 @@ if(!$result){
 }
 // mysqli_insert_id fetches the last inserted row
 $_SESSION["order_ID"] = mysqli_insert_id($link);
+$order_ID = $_SESSION["order_ID"];
+
+$orderNameSql = "UPDATE purchase_order
+                 SET order_name = 'CCD-".$order_ID."'
+                 WHERE order_ID = '$order_ID';";
+$orderNameResult = mysqli_query($link, $orderNameSql);
+
+if(!$orderNameResult){
+	echo("Something went wrong : ".mysqli_error($link));
+}
 ?>

@@ -33,8 +33,8 @@ if(mysqli_num_rows($result) == 0){
               <td>".$row[0]."</td>
               <td>".$row[1]."</td>
               <td>".$row[3]."</td>
-              <td>$".$row[2]."</td>
-              <td>$".$total."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
+              <td>$".number_format((float)$row[2], 2, '.', '')."</td>
+              <td>$".number_format((float)$total, 2, '.', '')."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
             </tr>";
         $counter = $counter + 1;
         $totalOrderPrice = $totalOrderPrice + $total;

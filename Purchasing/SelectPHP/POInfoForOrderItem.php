@@ -7,7 +7,7 @@ $order_ID = mysqli_real_escape_string($link, $_POST['order_ID']);
 $_SESSION["order_ID"] = $order_ID;
 
 // Get all information for the PO
-$sql = "SELECT order_ID, employee_ID, order_for_who, supplier_ID, approved_by, order_date
+$sql = "SELECT order_ID, employee_ID, order_for_who, supplier_ID, approved_by, order_date, order_name
 		FROM purchase_order
 		WHERE order_ID = '$order_ID';";
 $result = mysqli_query($link, $sql);
@@ -40,6 +40,6 @@ echo "<p>".'For employee: '.$orderForWho[0]."</p>";
 echo "<p>".'Supplier: '.$supplier[0]."</p>";
 echo "<p>".'Approved by: '.$row[4]."</p>";
 echo "<p>".'Order date: '.$row[5]."</p>";
-
+echo "<p>Order Number: <input type='text' id='order_name' value='".$row[6]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editOrderNumber()'>Edit Order Number</button></p>";
 mysqli_close($link);
 ?>

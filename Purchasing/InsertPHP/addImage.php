@@ -26,5 +26,7 @@ mysqli_close($link);
 // we were adding a tool or editing PO
 if($redirect == 'new'){
 	header('Location: ../Views/purchaseOrderReceived.php');
+} else if($redirect == 'allScans'){
+	header('Location: ../Views/viewAllImages.php');
 }
 ?>

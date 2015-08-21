@@ -36,14 +36,14 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
   // have been received
-  $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection
+  $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name
                     FROM purchase_order
                     WHERE order_receive_date IS NOT NULL
                     ORDER BY order_receive_date DESC
@@ -170,7 +170,7 @@
           <?php
           while($inProgressRow = mysqli_fetch_array($inProgressResult)){
               echo"<tr>
-                    <td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[0]."</a></td>
+                    <td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
                     <td>".$inProgressRow[1]."</td>
                    </tr>";
           }
@@ -234,7 +234,9 @@
               </div>
               <div class='modal-footer'>
                 <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>
-                <a href='../Views/purchaseOrderReceived.php' class='btn btn-primary' style='float:left'>Received</a>
+                <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>
+                <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
+                <a href='../Views/purchaseOrderReceived.php' class='btn btn-primary'>Received</a>
                 <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
               </div>
             </div>
@@ -258,7 +260,7 @@
           <?php
           while($deliveredRow = mysqli_fetch_array($deliveredResult)){
               echo"<tr>
-                    <td><a href='#' data-toggle='modal' onclick='setSessionIDSearch(".$deliveredRow[0].")' data-target='#".$deliveredRow[0]."'>".$deliveredRow[0]."</a></td>
+                    <td><a href='#' data-toggle='modal' onclick='setSessionIDSearch(".$deliveredRow[0].")' data-target='#".$deliveredRow[0]."'>".$deliveredRow[4]."</a></td>
                     <td>".$deliveredRow[2]."</td>
                    </tr>";
           }
@@ -325,6 +327,7 @@
               <div class='modal-footer'>
                 <a href='../Views/purchaseOrderReceived.php' class='btn btn-primary' style='float:left'>Edit received info</a>
                 <button type='button' onclick='printoutInfo(".$deliveredRow[0].")' class='btn btn-primary' style='float:left;'>Printout</button>
+                <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
                 <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
               </div>
             </div>

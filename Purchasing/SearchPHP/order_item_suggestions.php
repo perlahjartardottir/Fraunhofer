@@ -40,12 +40,18 @@ $department_ID = $row[0];
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT order_item_ID, part_number, description, quantity, unit_price, department_ID
-              FROM order_item
-              WHERE part_number LIKE '$part_number'
-              AND description LIKE '$description' ";
+      $sql = "SELECT oi.order_item_ID, oi.part_number, oi.description, oi.quantity, oi.unit_price, oi.department_ID
+              FROM order_item oi
+              WHERE oi.part_number LIKE '$part_number'
+              AND oi.description LIKE '$description' ";
       if(!empty($department_ID)){
-      	$sql .= "AND department_ID = '$department_ID' ";
+      	$sql .= "AND oi.department_ID = '$department_ID' ";
+      }
+      if(!empty($first_date)){
+      	$sql .= "AND (SELECT po.order_date FROM purchase_order po WHERE po.order_ID = oi.order_ID) >= '$first_date' ";
+      }
+      if(!empty($last_date)){
+      	$sql .= "AND (SELECT po.order_date FROM purchase_order po WHERE po.order_ID = oi.order_ID) <= '$last_date' ";
       }
       $sql .= "ORDER BY order_item_ID DESC;";
       $result = mysqli_query($link, $sql);

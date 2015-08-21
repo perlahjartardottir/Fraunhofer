@@ -23,9 +23,9 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection
+      $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name
               FROM purchase_order
-              WHERE order_ID LIKE '$order_name' ";
+              WHERE order_name LIKE '$order_name' ";
       if($notReceived == 'on'){
       	$sql .= "AND order_receive_date IS NULL ";
       }
@@ -52,7 +52,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
         }
         echo"
           <tr>
-            <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[0]."</a></td>
+            <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[4]."</a></td>
             <td>".$row[1]."</td>
             <td>".$row[2]."</td>
             <td>".$row[3]."</td>

@@ -145,20 +145,4 @@ $('.allOk').click(function() {
   }
 });
 
-// if this function returns false the file is not added
-function checkSize(max_img_size) {
-  console.log("yoyo");
-  var input = document.getElementById("fileToUpload");
-  if (input.files && input.files.length == 1) {
-    if (input.files[0].size > max_img_size) {
-      alert("The file size must be less than " + (max_img_size / 1024) + "KB");
-      return false;
-    }
-  } else {
-    alert("No image chosen.");
-    return false;
-  }
-
-  return true;
-}
 </script>

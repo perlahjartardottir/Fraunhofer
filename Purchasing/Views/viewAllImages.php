@@ -66,7 +66,22 @@ $orderResult = mysqli_query($link, $orderSql);
           </tbody>
         </table>
       </div>
-      <a href='purchaseOrderReceived.php' class='btn btn-primary' style='float:right; margin-top:15px;'>Back to purchase order</a> 
+      <div class='col-md-12'>
+        <div class='col-md-6'>
+          <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(356000)">
+            <div class='col-md-6'>
+              <label>Select image to upload:</label>
+              <!-- hidden type which is used to redirect to the correct view -->
+              <input type='hidden' value='allScans' id='redirect' name='redirect'>
+              <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
+            </div>
+            <div class='col-md-6'>
+              <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
+            </div>
+          </form>
+        </div>
+        <a href='purchaseOrderReceived.php' class='btn btn-primary' style='float:right; margin-top:15px;'>Back to purchase order</a>
+      </div>
     </div>
   </div>
 </body>

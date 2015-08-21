@@ -6,13 +6,14 @@ session_start();
 $user = $_SESSION["username"];
 $order_ID = $_SESSION["order_ID"];
 
-$orderSql = "SELECT supplier_ID, request_ID
+$orderSql = "SELECT supplier_ID, request_ID, order_name
              FROM purchase_order
              WHERE order_ID = '$order_ID';";
 $orderResult = mysqli_query($link, $orderSql);
 while($row = mysqli_fetch_array($orderResult)){
   $supplier_ID = $row[0];
   $request_ID = $row[1];
+  $order_name = $row[2];
 }
 
 // Query for all the order items who are on this purchase order
@@ -83,7 +84,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <span class='col-xs-12'><?php echo $supplierRow[1]; ?></span>
       <span class='col-xs-12'>Phone: <?php echo $supplierRow[2]; ?></span>
       <p class='col-xs-12'>Email: <?php echo $supplierRow[3]; ?></p>
-      <span class='col-xs-12' style='margin-left: 15px; border:1px solid black; width:auto; background-color: #127705;'><strong>Purchase Order Number: <?php echo $order_ID; ?></strong></span>
+      <span class='col-xs-12' style='margin-left: 15px; border:1px solid black; width:auto; background-color: #127705;'><strong>Purchase Order Number: <?php echo $order_name; ?></strong></span>
       <p class='col-xs-12 pleaseNote'><i>Please refer to the purchase order number on all invoices</i></p>
       <p class='col-xs-12'>Date: <span id='underline'><?php echo date("M. d, Y"); ?></span></p>
 
