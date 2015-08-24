@@ -68,11 +68,12 @@ $supplierRow = mysqli_fetch_array($supplierResult);
             <p>Request date: ".$requestRow[0]."</p>
             <p>Request description: ".$requestRow[1]."</p>";
             if($requestRow[2] == 1){
-              echo"<button type='button' class='btn btn-danger' onclick='finishRequest(".$request_ID.")'>Finish request</button>";
+              echo"<button type='button' class='btn btn-danger' style='margin-bottom:5px;' onclick='finishRequest(".$request_ID.")'>Finish request</button>";
             }
         }
         ?>
       </div>
+      <button class='btn btn-primary' onclick='window.print()'>Print</button>
     </div>
     <div class='col-xs-12'>
       <img src="../images/fraunhoferlogo.jpg" alt="Fraunhofer Logo" style="float:right; width:220px; height:auto; margin-top:10px;"/>

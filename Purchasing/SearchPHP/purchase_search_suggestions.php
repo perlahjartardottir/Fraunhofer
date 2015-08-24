@@ -17,7 +17,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
         <th>Purchase number</th>
         <th>Order date</th>
         <th>Receiving date</th>
-        <th class='col-md-3'>Final inspection</th>
+        <th class='col-md-3'>Comment</th>
         <th>Final Price</th>
       </tr>
     </thead>
@@ -52,7 +52,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
         }
         echo"
           <tr>
-            <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[4]."</a></td>
+            <td><a href='#' onclick='setSessionIDSearch(".$row[0].")' data-toggle='modal' data-target='#".$row[0]."'>".$row[4]."</a></td>
             <td>".$row[1]."</td>
             <td>".$row[2]."</td>
             <td>".$row[3]."</td>
@@ -133,8 +133,17 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
             echo"
           </div>
           <div class='modal-footer' style='margin-top:10px'>
-            <button type='button' onclick='printoutInfo(".$row[0].")' class='btn btn-primary' style='float:left;'>Printout</button>
-            <button type='button' onclick='POInfo(".$row[0].")' class='btn btn-primary' style='float:left; margin-left:5px'>Edit PO</button>
+            <div class='btn-group' style='float:left;'>
+                <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                  Edit <span class='caret'></span>
+                </button>
+                <ul class='dropdown-menu' role='menu'>
+                  <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
+                  <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
+                </ul>
+            </div>
+            <button type='button' onclick='printoutInfo(".$row[0].")' class='btn btn-primary' style='float:left; margin-left:5px'>Printout</button>
+            <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
             <button type='button' style='float:right;' class='btn' data-dismiss='modal'>Close</button>
           </div>
         </div>

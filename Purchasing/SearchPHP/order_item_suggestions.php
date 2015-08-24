@@ -40,7 +40,7 @@ $department_ID = $row[0];
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT oi.order_item_ID, oi.part_number, oi.description, oi.quantity, oi.unit_price, oi.department_ID
+      $sql = "SELECT oi.order_item_ID, oi.part_number, oi.description, oi.quantity, oi.unit_price, oi.department_ID, oi.order_ID
               FROM order_item oi
               WHERE oi.part_number LIKE '$part_number'
               AND oi.description LIKE '$description' ";
@@ -68,7 +68,7 @@ $department_ID = $row[0];
         }
         echo"
           <tr>
-            <td>".$row[1]."</td>
+            <td><a href='#' onclick='setSessionIDSearch(".$row[6].")' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</td>
             <td>".$row[2]."</td>
             <td>".$row[3]."</td>
             <td>$".number_format((float)$row[4], 2, '.', '')."</td>
@@ -86,3 +86,84 @@ $department_ID = $row[0];
       ?>
     </tbody>
   </table>
+  <?php
+  $result = mysqli_query($link, $sql);
+  while($row = mysqli_fetch_array($result)){
+    // Find the purchase order number
+    $orderNumberSql = "SELECT order_name
+                       FROM purchase_order
+                       WHERE order_ID = '$row[6]';";
+    $orderNumberResult = mysqli_query($link, $orderNumberSql);
+    $orderNumber = mysqli_fetch_array($orderNumberResult);
+
+    // Information for each order item for that purchase order
+    $orderItemSql = "SELECT quantity, part_number, description, unit_price
+                     FROM order_item
+                     WHERE order_ID = '$row[6]';";
+    $orderItemResult = mysqli_query($link, $orderItemSql);
+    echo"
+    <div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[1]."' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4>Purchase order: ".$orderNumber[0]."</h4>
+          </div>
+          <div class='modal-body'>
+          <table class='table table-responsive'>
+            <thead>
+              <tr>
+                <th>Pos. #</th>
+                <th>Quantity</th>
+                <th>Part #</th>
+                <th>Description</th>
+                <th>USD Unit</th>
+                <th>USD Total</th>
+              </tr>
+            </thead>
+            <tbody>";
+              $counter = 1;
+              $totalOrderPrice = 0;
+              while($orderItemRow = mysqli_fetch_array($orderItemResult)){
+                $total = $orderItemRow[0] * $orderItemRow[3];
+                $totalOrderPrice = $totalOrderPrice + $total;
+                echo"
+                  <tr>
+                    <td>".$counter."</td>
+                    <td>".$orderItemRow[0]."</td>
+                    <td>".$orderItemRow[1]."</td>
+                    <td>".$orderItemRow[2]."</td>
+                    <td>$".number_format((float)$orderItemRow[3], 2, '.', '')."</td>
+                    <td>$".number_format((float)$total, 2, '.', '')."</td>";
+                    $counter = $counter + 1;
+              }
+            echo"
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>Total Order Price:</th>
+                <th><u style='border-bottom: 1px solid black'>$".number_format((float)$totalOrderPrice, 2, '.', '')."</u></th>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <div class='modal-footer'>
+            <div class='btn-group' style='float:left;'>
+                <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                  Edit <span class='caret'></span>
+                </button>
+                <ul class='dropdown-menu' role='menu'>
+                  <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
+                  <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
+                </ul>
+            </div>
+            <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left; margin-left:5px;'>Printout</a>
+            <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
+            <button type='button' style='float:right;' class='btn' data-dismiss='modal'>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>";
+  }
+   ?>

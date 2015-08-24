@@ -37,11 +37,6 @@
           <label>Order date to:</label>
           <input type="date" id='last_date' class='form-control' onchange='orderItemSuggestions()'/>
         </div>
-        <div class='col-md-12 form-inline'>
-          <label>Missing final inspection:
-            <input type='checkbox' id='noFinalInspection' onchange='orderItemSuggestions()'/>
-          </label>
-        </div>
       </form>
     </div>
 

@@ -83,7 +83,7 @@
           </button>
         </div>
         <div class='col-md-3'>
-          <button type='button' class='btn btn-primary col-md-8' onclick="location.href='purchaseOverview.php'">Overview</button>
+          <button type='button' class='btn btn-primary col-md-8' onclick="location.href='overview.php'">Overview</button>
         </div>
       </div>
     </div>
@@ -233,10 +233,9 @@
                 <p>Order date: ".$inProgressRow[1]."</p>
               </div>
               <div class='modal-footer'>
-                <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>
                 <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>
-                <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
-                <a href='../Views/purchaseOrderReceived.php' class='btn btn-primary'>Received</a>
+                <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>
+                <a href='../Views/purchaseOrderReceived.php' class='btn btn-success'>Received</a>
                 <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
               </div>
             </div>
@@ -325,10 +324,18 @@
                 <p><strong>Comment: </strong>".$deliveredRow[3]."</p>
               </div>
               <div class='modal-footer'>
-                <a href='../Views/purchaseOrderReceived.php' class='btn btn-primary' style='float:left'>Edit received info</a>
-                <button type='button' onclick='printoutInfo(".$deliveredRow[0].")' class='btn btn-primary' style='float:left;'>Printout</button>
+                <div class='btn-group' style='float:left;'>
+  			            <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+  			              Edit <span class='caret'></span>
+  			            </button>
+  			            <ul class='dropdown-menu' role='menu'>
+  			              <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
+  			              <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
+  			            </ul>
+  			        </div>
+                <button type='button' onclick='printoutInfo(".$deliveredRow[0].")' class='btn btn-primary' style='float:left; margin-left:5px;'>Printout</button>
                 <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
-                <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+                <button type='button' class='btn' data-dismiss='modal'>Close</button>
               </div>
             </div>
           </div>

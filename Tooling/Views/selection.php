@@ -145,7 +145,7 @@
                             </button>
                             <ul class='dropdown-menu' role='menu'>
                               <li><a href='../Views/editPO.php'>Edit PO</a></li>
-                              <li><a href='../Views/editPOTrack.php'>Edit PO track sheet</a></li>
+                              <li><a href='../Views/generateTrackSheet.php'>Edit PO track sheet</a></li>
                               <li><a href='../Views/addTools2.php'>Add lineitems</a></li>
                             </ul>
                         </div>

@@ -36,6 +36,25 @@ function supplierSuggestions() {
     }
   });
 }
+
+function overview(){
+  var department = $('#department').val();
+  var timeInterval = $('#group_by_select').val();
+  var date_from = $('#date_from').val();
+  var date_to = $('#date_to').val();
+  $.ajax({
+    url: '../SearchPHP/overview.php',
+    type: 'POST',
+    data: {department   : department,
+           timeInterval : timeInterval,
+           date_from    : date_from,
+           date_to      : date_to},
+    success: function(data, status, xhr) {
+      $("#output").html(data);
+    }
+  });
+}
+
 function purchaseSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();

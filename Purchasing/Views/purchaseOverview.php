@@ -30,11 +30,6 @@
             <input type='checkbox' id='notReceived' onchange='purchaseSuggestions()'/>
           </label>
         </div>
-        <div class='col-md-12 form-inline'>
-          <label>Missing final inspection:
-            <input type='checkbox' id='noFinalInspection' onchange='purchaseSuggestions()'/>
-          </label>
-        </div>
       </form>
     </div>
 

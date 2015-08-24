@@ -20,6 +20,14 @@ $supplierNameSql = "SELECT supplier_name
                     WHERE supplier_ID = '$supplierRow[0]';";
 $supplierNameResult = mysqli_query($link, $supplierNameSql);
 $supplierNameRow = mysqli_fetch_array($supplierNameResult);
+
+// Query to find how many scans belong to this PO
+$scanSql = "SELECT COUNT(scan_ID)
+            FROM purchase_scan
+            WHERE order_ID = '$order_ID';";
+$scanResult = mysqli_query($link, $scanSql);
+
+$numberOfScans = mysqli_fetch_array($scanResult);
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -66,7 +74,7 @@ $supplierNameRow = mysqli_fetch_array($supplierNameResult);
         <div class='col-md-12'>
           <button class='btn btn-primary' style='float:right;' onclick='confirmFinalInspection();return false;'>Confirm Final Inspection Note</button>
         </div>
-        <h4>Rating</h4>
+        <h4 style='margin-top: 120px;'>Rating (5 is best): </h4>
         <table class='table table-responsive col-md-12'>
           <thead>
             <tr>
@@ -120,7 +128,7 @@ $supplierNameRow = mysqli_fetch_array($supplierNameResult);
           <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
           <p></p>
           <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
-          <a href='viewAllImages.php' class='btn btn-primary'>View all files</a>
+          <a href='viewAllImages.php' class='btn btn-primary'>View all files <?php if(!empty($numberOfScans[0])){echo "(".$numberOfScans[0].")";} ?></a>
         </form>
       </div>
       <div class='col-md-2'>
