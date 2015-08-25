@@ -24,19 +24,28 @@ while($row = mysqli_fetch_array($secResult)){
     <div id='invalidRequest'></div>
     <div class='row well well-lg'>
       <form>
+        <h5>*Only "Description" field is required. More information makes it easier to process the order.
         <h4>Make a request for a purchase order</h4>
-        <p class='col-md-6 form-group'>
+        <div class='col-md-6 form-group'>
           <label>Supplier: </label>
           <input type="text" id='request_supplier' class='form-control'>
-        </p>
-        <p class='col-md-6 form-group'>
+        </div>
+        <div class='col-md-6 form-group'>
           <label>Approved by: </label>
           <input type="text" id='approved_by_employee' class='form-control'>
-        </p>
-        <p class='col-md-6 form-group'>
+        </div>
+        <div class='col-md-6 form-group'>
+          <label>Department: </label>
+          <select id='department' class='form-control'>
+            <option value=''>All departments</option>
+            <option value='PVD'>PVD</option>
+            <option value='CVD'>CVD</option>
+          </select>
+        </div>
+        <div class='col-md-6 form-group'>
           <label>Description: </label>
           <textarea id='request_description' class='form-control'></textarea>
-        </p>
+        </div>
         <input class='form-control btn btn-primary' type="button" value="Request" onclick='orderRequest()'>
       </form>
     </div>

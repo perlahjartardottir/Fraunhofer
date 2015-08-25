@@ -30,11 +30,11 @@
           </select>
         </div>
         <div class='col-md-12 form-group'>
-          <label>From:</label>
+          <label>Order date from:</label>
           <input type="date" name="date_from" id="date_from" class='form-control' onchange='overview()'/>
         </div>
         <div class='col-md-12 form-group'>
-          <label>To:</label>
+          <label>Order date to:</label>
           <input type="date" name="date_to" id="date_to" class='form-control' onchange='overview()'/>
         </div>
       </form>

@@ -29,7 +29,7 @@
   }
 
   // Query to find all active requests
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department
                  FROM order_request
                  WHERE active = 1;";
   $requestResult = mysqli_query($link, $requestSql);
@@ -141,6 +141,7 @@
                       <p>Requested by: ".$employee_name."</p>
                       <p>Date: ".$requestRow[1]."</p>
                       <p>Supplier: ".$requestRow[2]."</p>
+                      <p>Department: ".$requestRow[6]."</p>
                       <p>Approved by: ".$requestRow[3]."</p>
                       <p>Description: ".$requestRow[4]."</p>
                     </div>

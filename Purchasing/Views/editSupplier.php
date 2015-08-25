@@ -16,6 +16,7 @@ $row = mysqli_fetch_array($result);
   <?php include '../header.php'; ?>
   <div class='container'>
     <div class='row well well-lg'>
+      <h5>*Only the fields you edit will be changed, all other fields will remain unchanged</h5>
       <form>
         <?php echo"
         <h3>Edit supplier</h3>

@@ -25,7 +25,7 @@ session_start();
           <input type='text' class='form-control' id='supplier_contact'>
         </div>
         <div class='form-group col-md-4'>
-          <label>Phone</label>
+          <label>Phone:</label>
           <input type='text' class='form-control' id='supplier_phone'>
         </div>
         <div class='form-group col-md-4'>
@@ -49,7 +49,7 @@ session_start();
           <input type='text' class='form-control' id='supplier_password'>
         </div>
         <div class='form-group col-md-4'>
-          <label>Account Nr.:</label>
+          <label>Account Nr:</label>
           <input type='text' class='form-control' id='supplier_accountNr'>
         </div>
         <div class='form-group col-md-4'>

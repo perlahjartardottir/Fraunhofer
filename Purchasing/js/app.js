@@ -9,6 +9,21 @@ function logout() {
     window.location = "../../Login/login.php";
   });
 }
+function addFeedback() {
+  var name = $('#name').val();
+  var comment = $('#comment').val();
+  $.ajax({
+    url: "../InsertPHP/addFeedback.php",
+    type: "POST",
+    data: {
+      name: name,
+      comment: comment
+    },
+    success: function(data, status, xhr) {
+      window.location.reload(true);
+    }
+  });
+}
 function setSessionIDSearch(order_ID){
     $.ajax({
         url : "../UpdatePHP/setSessionID.php",
@@ -112,6 +127,7 @@ function orderItemSuggestions() {
 
 function orderRequest(){
   var request_supplier     = $('#request_supplier').val();
+  var department           = $('#department').val();
   var approved_by_employee = $('#approved_by_employee').val();
   var request_description  = $('#request_description').val();
   var employee_ID          = $('#employee_ID').val();
@@ -123,6 +139,7 @@ function orderRequest(){
       type: 'POST',
       data: {
         request_supplier     : request_supplier,
+        department           : department,
         approved_by_employee : approved_by_employee,
         request_description  : request_description,
         employee_ID          : employee_ID

@@ -24,7 +24,7 @@
         <ul class='navbar-right btn-group' role='group'>
           <a href='../Views/purchaseOverview.php' class='btn btn-primary headerbutton active' role='button'>PO search</a>
           <a href='../Views/orderItemOverview.php' class='btn btn-primary headerbutton active' role='button'>Order item search</a>
-          <a href='../../Tooling/Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
+          <a href='../Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
           <a onclick='logout()' class='btn btn-danger headerbutton active' role='button'>Logout</a>
         </ul>
     </div>
