@@ -6,7 +6,7 @@ session_start();
 $user = $_SESSION["username"];
 $order_ID = $_SESSION["order_ID"];
 
-$orderSql = "SELECT supplier_ID, request_ID, order_name
+$orderSql = "SELECT supplier_ID, request_ID, order_name, order_final_inspection
              FROM purchase_order
              WHERE order_ID = '$order_ID';";
 $orderResult = mysqli_query($link, $orderSql);
@@ -14,6 +14,7 @@ while($row = mysqli_fetch_array($orderResult)){
   $supplier_ID = $row[0];
   $request_ID = $row[1];
   $order_name = $row[2];
+  $comment = $row[3];
 }
 
 // Query for all the order items who are on this purchase order
@@ -39,41 +40,50 @@ $supplierRow = mysqli_fetch_array($supplierResult);
   <div class='container'>
     <div class='row well well-lg'>
       <form>
-        <h4>Select a purchase order</h4>
-        <select class='form-control' onchange='showPOInfoAndRefreshImage(this.value)' id='purchaseOrder' style='width:auto;'>
-          <option value=''>Select a PO#: </option>
+        <div class='col-md-6'>
+          <h4>Select a purchase order</h4>
+          <select class='form-control' onchange='showPOInfoAndRefreshImage(this.value)' id='purchaseOrder' style='width:auto;'>
+            <option value=''>Select a PO#: </option>
+            <?php
+            $sql = "SELECT order_ID
+                    FROM purchase_order
+                    ORDER BY order_ID DESC
+                    LIMIT 10;";
+            $result = mysqli_query($link, $sql);
+            while($row = mysqli_fetch_array($result)){
+              echo"<option value='".$row[0]."'>".$row[0]."</option>";
+            }
+            ?>
+          </select>
+        </form>
+        <p></p>
+        <div>
           <?php
-          $sql = "SELECT order_ID
-                  FROM purchase_order
-                  ORDER BY order_ID DESC
-                  LIMIT 10;";
-          $result = mysqli_query($link, $sql);
-          while($row = mysqli_fetch_array($result)){
-            echo"<option value='".$row[0]."'>".$row[0]."</option>";
+          $requestSql = "SELECT request_date, request_description, active
+                         FROM order_request
+                         WHERE request_ID = '$request_ID';";
+          $requestResult = mysqli_query($link, $requestSql);
+          $requestRow = mysqli_fetch_array($requestResult);
+          if(mysqli_num_rows($requestResult) > 0){
+            echo"
+              <p>Request ID: ".$request_ID."</p>
+              <p>Request date: ".$requestRow[0]."</p>
+              <p>Request description: ".$requestRow[1]."</p>";
+              if($requestRow[2] == 1){
+                echo"<button type='button' class='btn btn-danger' style='margin-bottom:5px;' onclick='finishRequest(".$request_ID.")'>Finish request</button>";
+              }
           }
           ?>
-        </select>
-      </form>
-      <p></p>
-      <div>
-        <?php
-        $requestSql = "SELECT request_date, request_description, active
-                       FROM order_request
-                       WHERE request_ID = '$request_ID';";
-        $requestResult = mysqli_query($link, $requestSql);
-        $requestRow = mysqli_fetch_array($requestResult);
-        if(mysqli_num_rows($requestResult) > 0){
-          echo"
-            <p>Request ID: ".$request_ID."</p>
-            <p>Request date: ".$requestRow[0]."</p>
-            <p>Request description: ".$requestRow[1]."</p>";
-            if($requestRow[2] == 1){
-              echo"<button type='button' class='btn btn-danger' style='margin-bottom:5px;' onclick='finishRequest(".$request_ID.")'>Finish request</button>";
-            }
-        }
-        ?>
+        </div>
+        <button class='btn btn-primary' onclick='window.print()'>Print</button>
       </div>
-      <button class='btn btn-primary' onclick='window.print()'>Print</button>
+      <div class='col-md-6'>
+        <form>
+          <h4>Comment</h4>
+          <textarea class='form-control' rows='4' id='order_final_inspection'><?php echo $comment; ?></textarea>
+          <button class='btn btn-primary' onclick='addCommentToPO()' style='margin-top:5px;'>Add comment</button>
+        </form>
+      </div>
     </div>
     <div class='col-xs-12'>
       <img src="../images/fraunhoferlogo.jpg" alt="Fraunhofer Logo" style="float:right; width:220px; height:auto; margin-top:10px;"/>
@@ -150,6 +160,13 @@ $supplierRow = mysqli_fetch_array($supplierResult);
     <div class='col-xs-12'>
       <div class='col-xs-4 pleaseNote' style='float:right'><i>Please note Fraunhofer USA is Tax Exempt</i></div>
     </div>
+    <?php
+    if($comment != ""){
+      echo"<div class='col-xs-12'>
+            <p> Comment:</br>".$comment."</p>
+          </div>";
+    }
+    ?>
     <div class='col-xs-4'>
       <p> Signature: <hr id='signature'></p>
     </div>

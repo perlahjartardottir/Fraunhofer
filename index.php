@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <?php
-  include '../connection.php';
+  include 'connection.php';
     //session_start();
   ?>
   <meta charset="utf-8">

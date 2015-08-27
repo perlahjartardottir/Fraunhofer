@@ -25,6 +25,10 @@
           <input type="text" id='supplier_name' class='form-control' onkeyup='supplierSuggestions()'/>
         </div>
         <div class='col-md-12 form-group'>
+          <label>Supplier contact: </label>
+          <input type="text" id='supplier_contact' class='form-control' onkeyup='supplierSuggestions()'/>
+        </div>
+        <div class='col-md-12 form-group'>
           <label>Supplier phone: </label>
           <input type="text" id='supplier_phone' class='form-control' onkeyup='supplierSuggestions()'/>
         </div>

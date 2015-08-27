@@ -3,10 +3,13 @@ include '../../connection.php';
 $notReceived = mysqli_real_escape_string($link, $_POST['notReceived']);
 $noFinalInspection = mysqli_real_escape_string($link, $_POST['noFinalInspection']);
 $order_name  = mysqli_real_escape_string($link, $_POST['order_name']);
+$supplier_name  = mysqli_real_escape_string($link, $_POST['supplier_name']);
 $first_date  = mysqli_real_escape_string($link, $_POST['first_date']);
 $last_date   = mysqli_real_escape_string($link, $_POST['last_date']);
 
+
 $order_name .= '%';
+$supplier_name .= '%';
 $totalFinalPrice = 0; // A variable that shows the complete price of all the PO's
 
 ?>
@@ -15,17 +18,21 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
     <thead>
       <tr>
         <th>Purchase number</th>
+        <th>Supplier</th>
         <th>Order date</th>
         <th>Receiving date</th>
-        <th class='col-md-3'>Comment</th>
+        <th>Comment</th>
         <th>Final Price</th>
       </tr>
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name
+      $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name, supplier_ID
               FROM purchase_order
-              WHERE order_name LIKE '$order_name' ";
+              WHERE order_name LIKE '$order_name'
+              AND supplier_ID = ANY(SELECT supplier_ID
+                                    FROM supplier
+                                    WHERE supplier_name LIKE '$supplier_name') ";
       if($notReceived == 'on'){
       	$sql .= "AND order_receive_date IS NULL ";
       }
@@ -41,6 +48,11 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
       $sql .= "ORDER BY order_ID DESC;";
       $result = mysqli_query($link, $sql);
       while($row = mysqli_fetch_array($result)){
+        $supplierSql = "SELECT supplier_name
+                        FROM supplier
+                        WHERE supplier_ID = '$row[5]';";
+        $supplierResult = mysqli_query($link, $supplierSql);
+        $supplierRow = mysqli_fetch_array($supplierResult);
         $finalPrice = 0;
         // Query to find the final price of each purchase Order
         $orderItemSql = "SELECT quantity, unit_price
@@ -53,6 +65,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
         echo"
           <tr>
             <td><a href='#' onclick='setSessionIDSearch(".$row[0].")' data-toggle='modal' data-target='#".$row[0]."'>".$row[4]."</a></td>
+            <td>".$supplierRow[0]."</td>
             <td>".$row[1]."</td>
             <td>".$row[2]."</td>
             <td>".$row[3]."</td>

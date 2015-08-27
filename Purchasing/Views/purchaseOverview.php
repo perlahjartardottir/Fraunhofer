@@ -18,6 +18,10 @@
           <input type="text" id='order_name' onkeyup='purchaseSuggestions()' class='form-control'/>
         </div>
         <div class='col-md-12 form-group'>
+          <label>Supplier: </label>
+          <input type="text" id='supplier_name' onkeyup='purchaseSuggestions()' class='form-control'/>
+        </div>
+        <div class='col-md-12 form-group'>
           <label>Order date from:</label>
           <input type="date" id='first_date' class='form-control' onchange='purchaseSuggestions()'/>
         </div>

@@ -118,10 +118,11 @@ $numberOfScans = mysqli_fetch_array($scanResult);
         <h4>Comment</h4>
         <div class='col-md-6'>
           <textarea class='form-control' id='order_final_inspection' rows='4' cols='50' style='width:auto;'><?php echo $supplierRow[1]; ?></textarea>
+          <button class='btn btn-primary' onclick='addCommentToPO(); return false;' style='margin-top:5px;'>Add comment</button>
         </div>
       </form>
       <div class='col-md-4'>
-        <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(356000)">
+        <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
           <label>Select image to upload:</label>
           <!-- hidden type which is used to redirect to the correct view -->
           <input type='hidden' value='new' id='redirect' name='redirect'>

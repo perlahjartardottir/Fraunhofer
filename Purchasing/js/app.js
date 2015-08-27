@@ -35,6 +35,7 @@ function setSessionIDSearch(order_ID){
 function supplierSuggestions() {
   $('#output').html();
   var supplier_name = $('#supplier_name').val();
+  var supplier_contact = $('#supplier_contact').val();
   var supplier_phone = $('#supplier_phone').val();
   var supplier_email = $('#supplier_email').val();
   var supplier_address = $('#supplier_address').val();
@@ -42,6 +43,7 @@ function supplierSuggestions() {
     url: '../SearchPHP/supplier_search_suggestions.php',
     type: 'POST',
     data: {supplier_name : supplier_name,
+           supplier_contact: supplier_contact,
            supplier_phone: supplier_phone,
            supplier_email: supplier_email,
            supplier_address: supplier_address
@@ -73,6 +75,7 @@ function overview(){
 function purchaseSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();
+  var supplier_name = $('#supplier_name').val();
   var first_date = $('#first_date').val();
   var last_date  = $('#last_date').val();
   var notReceived;
@@ -88,6 +91,7 @@ function purchaseSuggestions() {
     url: '../SearchPHP/purchase_search_suggestions.php',
     type: 'POST',
     data: {order_name : order_name,
+           supplier_name : supplier_name,
            first_date : first_date,
            last_date  : last_date,
            noFinalInspection  : noFinalInspection,
@@ -128,6 +132,7 @@ function orderItemSuggestions() {
 function orderRequest(){
   var request_supplier     = $('#request_supplier').val();
   var department           = $('#department').val();
+  var orderTimeframe       = $('#orderTimeframe').val();
   var approved_by_employee = $('#approved_by_employee').val();
   var request_description  = $('#request_description').val();
   var employee_ID          = $('#employee_ID').val();
@@ -140,6 +145,7 @@ function orderRequest(){
       data: {
         request_supplier     : request_supplier,
         department           : department,
+        orderTimeframe       : orderTimeframe,
         approved_by_employee : approved_by_employee,
         request_description  : request_description,
         employee_ID          : employee_ID
@@ -499,6 +505,49 @@ function packageReceived(order_ID, element){
     },
     success: function(data, status, xhr) {
       window.location = "../Views/purchasing.php";
+    }
+  });
+}
+//This adds the comment to the purchase order
+function addCommentToPO(){
+  var order_final_inspection = $('#order_final_inspection').val();
+  $.ajax({
+    url: '../UpdatePHP/updatePOComment.php',
+    type: "POST",
+    data:{
+      order_final_inspection : order_final_inspection
+    },
+    success: function(data, status, xhr) {
+      window.location.reload();
+    }
+  });
+}
+
+// Function to edit the order item
+function editOrderItem(order_item_ID, element){
+  // Because we are fetching information from a modal, we need to use "this" or "element"
+  // to find the correct modal
+  // parent() is modal-footer
+  // parent().prev() is modal-body
+  // and from there we find the correct id's
+  var quantity    = $(element).parent().prev().find("#quantity").val();
+  var part_number = $(element).parent().prev().find('#part_number').val();
+  var department  = $(element).parent().prev().find('#department').val();
+  var unit_price  = $(element).parent().prev().find('#unit_price').val();
+  var description = $(element).parent().prev().find('#description').val();
+  $.ajax({
+    url: '../UpdatePHP/editOrderItem.php',
+    type: "POST",
+    data:{
+      order_item_ID : order_item_ID,
+      quantity      : quantity,
+      part_number   : part_number,
+      department    : department,
+      unit_price    : unit_price,
+      description   : description
+    },
+    success: function(data, status, xhr) {
+      window.location.reload();
     }
   });
 }

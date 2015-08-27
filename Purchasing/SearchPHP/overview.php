@@ -69,7 +69,13 @@ if(!$result){
   <table class='table table-responsive'>
     <thead>
       <tr>
-        <th>Date</th>
+				<?php
+				if($department == 'department'){
+					echo"<th>Department</th>";
+				}else{
+					echo"<th>Date</th>";
+				}
+				?>
         <th># of orders</th>
         <th>Total cost</th>
       </tr>
@@ -88,13 +94,17 @@ if(!$result){
 
         echo"<tr>";
         if($department == 'department'){
-          echo"<td>".$departmentNameRow[0]."</td>";
+					if($departmentNameRow[0] == ""){
+						echo"<td>N/A</td>";
+					}else{
+						echo"<td>".$departmentNameRow[0]."</td>";
+					}
         } else{
           echo"<td>".$row[0]."</td>";
         }
         echo"
               <td>".$row[1]."</td>
-              <td>$".$row[2]."</td>
+              <td>$".number_format((float)$row[2], 2, '.', '')."</td>
             </tr>";
       }
       ?>

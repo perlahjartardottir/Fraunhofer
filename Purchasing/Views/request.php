@@ -43,6 +43,15 @@ while($row = mysqli_fetch_array($secResult)){
           </select>
         </div>
         <div class='col-md-6 form-group'>
+          <label>Order timeframe: </label>
+          <select id='orderTimeframe' class='form-control'>
+            <option value='withNextOrder'>With next order</option>
+            <option value='thisWeek'>This week</option>
+            <option value='today'>Today</option>
+            <option value='other'>Other</option>
+          </select>
+        </div>
+        <div class='col-md-6 form-group'>
           <label>Description: </label>
           <textarea id='request_description' class='form-control'></textarea>
         </div>

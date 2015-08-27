@@ -34,7 +34,7 @@ $sql = "SELECT l.tool_ID, l.quantity, c.coating_type, l.quantity_on_packinglist,
         AND lir.run_ID = r.run_ID
         AND r.coating_ID = c.coating_ID
         GROUP BY lir.lineitem_ID
-        ORDER BY lir.lineitem_ID DESC";
+        ORDER BY lir.lineitem_ID";
 $tableresult = mysqli_query($link, $sql);
 if(!$tableresult){
   mysqli_error($link);
@@ -183,9 +183,9 @@ while($row = mysqli_fetch_array($result)){
     <tr class="packingTable">
       <th class="packingTable commentHide hidden">Lineitem_ID</th>
       <th class="packingTable">Tool type</th>
-      <th class="packingTable">Tools received</th>
-      <th class="packingTable">Tools in shipment</th>
-      <th class="packingTable">Coating type</th>
+      <th class="packingTable"><center>Tools received</center></th>
+      <th class="packingTable"><center>Tools in shipment</center></th>
+      <th class="packingTable"><center>Coating type</center></th>
     </tr>
     <?php
     while($row = mysqli_fetch_array($tableresult)){
@@ -199,8 +199,8 @@ while($row = mysqli_fetch_array($result)){
       "<td class='packingTable commentHide hidden'>".$row[4]."</td>".
       "<td class='packingTable'>".$row[0]."</td>".
       "<td class='packingTable centering'>".$row[1]."</td>".
-      "<td class='packingTable centering'><input type='text' style='text-align: left;' class='table_input centering' value='".$row[3]."'/><input type='button' style='margin-left: 3px;' class='btn btn-success commentHide saveButton' value='Save changes'></input></td>".
-      "<td class='packingTable'>".$row[2]."</td>";
+      "<td class='packingTable centering'><input type='text' style='text-align: center;' class='table_input' value='".$row[3]."'/><input type='button' style='margin-left: 3px;' class='btn btn-success commentHide' value='Save changes'></input></td>".
+      "<td class='packingTable'><center>".$row[2]."</center></td>";
 
       // "<td class='packingTable'><input type='text' style='text-align: left;' class='table_input' value='".$row[3]."'/><span style='text-align: left;'>/".$row[1]." </span><input type='button' style='text-align: left;' class='btn btn-success commentHide saveButton' value='Save changes'></input></td>".
     }

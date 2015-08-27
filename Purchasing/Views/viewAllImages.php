@@ -33,7 +33,7 @@ $orderResult = mysqli_query($link, $orderSql);
             }
             while($row = mysqli_fetch_array($result)){
               echo"<tr>
-                    <td><img src='../Scan/getImage.php?id=".$row[0]."' width='100' height='100'></td>
+                    <td><input type='image' src='../Scan/getImage.php?id=".$row[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/scanprintout.php')\"></td>
                     <td><button class='btn btn-danger' style='margin-top:35px;' onclick='deletePurchaseScan(".$row[0].")'>Delete</button></td>
                   </tr>";
             }
@@ -68,7 +68,7 @@ $orderResult = mysqli_query($link, $orderSql);
       </div>
       <div class='col-md-12'>
         <div class='col-md-6'>
-          <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(356000)">
+          <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
             <div class='col-md-6'>
               <label>Select image to upload:</label>
               <!-- hidden type which is used to redirect to the correct view -->

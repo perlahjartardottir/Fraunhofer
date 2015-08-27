@@ -5,7 +5,7 @@
     background-color: #E1E1E0;
 }
 .headerinfo{
-    margin-bottom:10px;    
+    margin-bottom:10px;
 }
 #aboveTable{
     margin: 2px;
@@ -52,10 +52,10 @@ hr {
 
 .bottomrow{
     background-color: #E1E1E0 !important;
-     -webkit-print-color-adjust: exact; 
+     -webkit-print-color-adjust: exact;
 }
 .headerinfo{
-    margin-bottom:10px;    
+    margin-bottom:10px;
 }
 #tableDiv{
     padding-bottom: 30px;
@@ -94,8 +94,8 @@ ul, img {
     margin: 2px;
     margin-bottom:20px;
 }
-textarea { 
-    border: none; 
+textarea {
+    border: none;
     resize:none;
 }
 .table_input{

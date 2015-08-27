@@ -2,13 +2,14 @@
 include '../../connection.php';
 session_start();
 $order_ID = $_SESSION['order_ID'];
-$sql = "SELECT quantity, part_number, unit_price, description, order_item_ID
+$sql = "SELECT quantity, part_number, unit_price, description, order_item_ID, department_ID, order_ID
         FROM order_item
         WHERE order_ID = '$order_ID';";
 $result = mysqli_query($link, $sql);
 if(mysqli_num_rows($result) == 0){
   die();
 }
+
 ?>
 <div class='row well well-lg'>
   <table class='table table-responsive' style='width:92%;'>
@@ -18,6 +19,7 @@ if(mysqli_num_rows($result) == 0){
         <th>Quantity</th>
         <th>Part #</th>
         <th>Description</th>
+        <th>Department</th>
         <th>USD Unit</th>
         <th>USD Total</th>
       </tr>
@@ -28,14 +30,62 @@ if(mysqli_num_rows($result) == 0){
       $totalOrderPrice = 0;
       while($row = mysqli_fetch_array($result)){
         $total = $row[0] * $row[2];
+        $departmentSql = "SELECT department_name
+                          FROM department
+                          WHERE department_ID = '$row[5]';";
+        $departmentResult = mysqli_query($link, $departmentSql);
+        $departmentRow = mysqli_fetch_array($departmentResult);
         echo"<tr>
-              <td>".$counter."</td>
+              <td><a href='#' data-toggle='modal' data-target='#".$row[4]."'>".$counter."</a></td>
               <td>".$row[0]."</td>
               <td>".$row[1]."</td>
               <td>".$row[3]."</td>
+              <td>".$departmentRow[0]."</td>
               <td>$".number_format((float)$row[2], 2, '.', '')."</td>
               <td>$".number_format((float)$total, 2, '.', '')."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
-            </tr>";
+            </tr>
+            <div class='modal fade' id='".$row[4]."' tabindex='-1' role='dialog' aria-labelledby='".$row[4]."' aria-hidden='true'>
+              <div class='modal-dialog'>
+                <div class='modal-content col-md-12'>
+                  <div class='modal-header'>
+                    <h4>Order item: ".$row[4]."</h4>
+                  </div>
+                  <div class='modal-body'>
+                    <form>
+                      <div class='col-md-6'>
+                        <label>Quantity</label>
+                        <input type='number' id='quantity' value='".$row[0]."' class='form-control'>
+                      </div>
+                      <div class='col-md-6'>
+                        <label>Part #</label>
+                        <input type='text' id='part_number' value='".$row[1]."' class='form-control'>
+                      </div>
+                      <div class='col-md-6'>
+                        <label>Department</label>
+                        <select id='department' class='form-control'>
+                          <option value=''>All departments</option>
+                          <option value='PVD'"; if($departmentRow[0] == 'PVD'){echo" selected";} echo">PVD</option>
+                          <option value='CVD'"; if($departmentRow[0] == 'CVD'){echo" selected";} echo">CVD</option>
+                        </select>
+                      </div>
+                      <div class='col-md-6'>
+                        <label>USD Unit</label>
+                        <input type='text' id='unit_price' value='".$row[2]."' class='form-control'>
+                      </div>
+                      <div class='col-md-12'>
+                        <label>Description</label>
+                        <textarea id='description' class='form-control'>".$row[3]."</textarea>
+                      </div>
+                      <p>Purchase order ID: ".$row[6]."</p>
+                    </form>
+                  </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-success' data-dismiss='modal' onclick='editOrderItem(".$row[4].", this)'>Edit</button>
+                    <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>";
         $counter = $counter + 1;
         $totalOrderPrice = $totalOrderPrice + $total;
       }

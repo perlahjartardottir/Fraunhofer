@@ -29,24 +29,24 @@
   }
 
   // Query to find all active requests
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe
                  FROM order_request
                  WHERE active = 1;";
   $requestResult = mysqli_query($link, $requestSql);
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
   // have been received
-  $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name
+  $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name, supplier_ID, ROUND(TOTAL_WEEKDAYS(order_date, order_receive_date), 2) - 1
                     FROM purchase_order
                     WHERE order_receive_date IS NOT NULL
-                    ORDER BY order_receive_date DESC
+                    ORDER BY order_ID DESC
                     LIMIT 10;";
   $deliveredResult = mysqli_query($link, $deliveredSql);
   ?>
@@ -115,7 +115,7 @@
 
             echo"
               <tr>
-                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$description."... </td>
+                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$description."... </a></td>
                 <td>".$requestRow[1];
 
                 // Query to find requests that don't belong to a purchase order
@@ -140,6 +140,7 @@
                     <div class='modal-body col-md-12'>
                       <p>Requested by: ".$employee_name."</p>
                       <p>Date: ".$requestRow[1]."</p>
+                      <p>Order timeframe: ".$requestRow[7]."</p>
                       <p>Supplier: ".$requestRow[2]."</p>
                       <p>Department: ".$requestRow[6]."</p>
                       <p>Approved by: ".$requestRow[3]."</p>
@@ -185,12 +186,18 @@
                          FROM order_item
                          WHERE order_ID = '$inProgressRow[0]';";
         $orderItemResult = mysqli_query($link, $orderItemSql);
+        $inProgressSupplierSql = "SELECT supplier_name
+                                  FROM supplier
+                                  WHERE supplier_ID = '$inProgressRow[5]';";
+        $inProgressSupplierResult = mysqli_query($link, $inProgressSupplierSql);
+        $inProgressSupplierRow = mysqli_fetch_array($inProgressSupplierResult);
         echo"
         <div class='modal fade' id='".$inProgressRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$inProgressRow[0]."' aria-hidden='true'>
           <div class='modal-dialog'>
             <div class='modal-content'>
               <div class='modal-header'>
-                <h4>Purchase order: ".$inProgressRow[0]."</h4>
+                <center><h3>".$inProgressSupplierRow[0]."</h3></center>
+                <h4>Purchase order: ".$inProgressRow[4]."</h4>
               </div>
               <div class='modal-body'>
                 <table class='table table-responsive'>
@@ -274,13 +281,19 @@
                          FROM order_item
                          WHERE order_ID = '$deliveredRow[0]';";
         $orderItemResult = mysqli_query($link, $orderItemSql);
+        $deliveredSupplierSql = "SELECT supplier_name
+                                 FROM supplier
+                                 WHERE supplier_ID = '$deliveredRow[5]';";
+        $deliveredSupplierResult = mysqli_query($link, $deliveredSupplierSql);
+        $deliveredSupplierRow = mysqli_fetch_array($deliveredSupplierResult);
         echo"
         <div class='modal fade' id='".$deliveredRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$deliveredRow[0]."' aria-hidden='true'>
           <div class='modal-dialog'>
             <div class='modal-content'>
               <div class='modal-header'>
+                <center><h3>".$deliveredSupplierRow[0]."</h3></center>
                 <div id='invalidOrderFinalInspection'></div>
-                <h4>Purchase order: ".$deliveredRow[0]."</h4>
+                <h4>Purchase order: ".$deliveredRow[4]."</h4>
               </div>
               <div class='modal-body'>
                 <table class='table table-responsive'>
@@ -310,6 +323,12 @@
                           <td>$".number_format((float)$total, 2, '.', '')."</td>";
                           $counter = $counter + 1;
                     }
+                    // find if lead time is more then 1 day
+                    if($deliveredRow[6] != 1){
+                      $leadTime = $deliveredRow[6] . " days";
+                    } else{
+                      $leadTime = $deliveredRow[6] . " day";
+                    }
                   echo"
                     <tr>
                       <td></td>
@@ -322,6 +341,8 @@
                   </tbody>
                 </table>
                 <p><strong>Order date: </strong>".$deliveredRow[1]."</p>
+                <p><strong>Received date: </strong>".$deliveredRow[2]."</p>
+                <p><strong>Lead time: </strong>".$leadTime."</p>
                 <p><strong>Comment: </strong>".$deliveredRow[3]."</p>
               </div>
               <div class='modal-footer'>
