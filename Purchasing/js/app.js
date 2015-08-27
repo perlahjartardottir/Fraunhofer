@@ -523,6 +523,21 @@ function addCommentToPO(){
   });
 }
 
+// Set the currency on the printout since not all purchase orders are in $
+function setCurrency(){
+  var currency = $('#currency').val()
+  $.ajax({
+    url: '../UpdatePHP/updateCurrency.php',
+    type: "POST",
+    data:{
+      currency : currency
+    },
+    success: function(data, status, xhr) {
+      window.location.reload();
+    }
+  });
+}
+
 // Function to edit the order item
 function editOrderItem(order_item_ID, element){
   // Because we are fetching information from a modal, we need to use "this" or "element"

@@ -5,6 +5,15 @@ session_start();
 //find the current user
 $user = $_SESSION["username"];
 $order_ID = $_SESSION["order_ID"];
+$currency = $_SESSION["currency"];
+
+if($currency == 'EUR'){
+  $currencySymbol = '&euro;';
+} else if($currency == 'GBP'){
+  $currencySymbol = '&pound;';
+} else{
+  $currencySymbol = '$';
+}
 
 $orderSql = "SELECT supplier_ID, request_ID, order_name, order_final_inspection
              FROM purchase_order
@@ -124,8 +133,12 @@ $supplierRow = mysqli_fetch_array($supplierResult);
             <th>Quantity.</th>
             <th>Part #</th>
             <th>Description</th>
-            <th class='col-xs-2'>USD Unit</th>
-            <th class='col-xs-2'>USD Total</th>
+            <th class='col-xs-2'><?php echo $currency; ?> Unit</th>
+            <th class='col-xs-2'><?php echo $currency; ?> Total <span class='currency'><select onchange='setCurrency()' class='form-control' id='currency' style='width:auto; float:right; margin-right:-30px;'>
+              <option value='USD'<?php if($currency == 'USD'){echo "selected";}?>>$ USD</option>
+              <option value='EUR'<?php if($currency == 'EUR'){echo "selected";}?>>&euro; EUR</option>
+              <option value='GBP'<?php if($currency == 'GBP'){echo "selected";}?>>&pound; GBP</option>
+            </select></span></th>
           </tr>
         </thead>
         <tbody>
@@ -139,8 +152,8 @@ $supplierRow = mysqli_fetch_array($supplierResult);
                   <td>".$row[0]."</td>
                   <td>".$row[1]."</td>
                   <td>".$row[2]."</td>
-                  <td>$".number_format((float)$row[3], 2, '.', '')."</td>
-                  <td>$".number_format((float)$total, 2, '.', '')."</td>
+                  <td>".$currencySymbol."".number_format((float)$row[3], 2, '.', '')."</td>
+                  <td>".$currencySymbol."".number_format((float)$total, 2, '.', '')."</td>
                 </tr>";
             $counter = $counter + 1;
             $totalOrderPrice = $totalOrderPrice + $total;
@@ -152,7 +165,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
             <td></td>
             <td></td>
             <th>Total Order Price:</th>
-            <th><u style='border-bottom: 1px solid black'>$<?php echo number_format((float)$totalOrderPrice, 2, '.', ''); ?></u></th>
+            <th><u style='border-bottom: 1px solid black'><?php echo $currencySymbol."".number_format((float)$totalOrderPrice, 2, '.', ''); ?></u></th>
           </tr>
         </tbody>
       </table>

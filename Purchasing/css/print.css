@@ -5,7 +5,7 @@
   font-size: 11px;
 }
 @media print{
-  .row{
+  .row, .currency{
     display: none;
   }
   .second-column{
