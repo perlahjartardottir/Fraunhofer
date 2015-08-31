@@ -7,6 +7,7 @@ $sql = "SELECT order_ID
         LIMIT 10;";
 $result = mysqli_query($link, $sql);
 $order_ID = $_SESSION["order_ID"];
+
 $getRequestSql = "SELECT request_ID
                   FROM purchase_order
                   WHERE order_ID = '$order_ID';";

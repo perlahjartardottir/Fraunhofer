@@ -33,7 +33,7 @@ $orderResult = mysqli_query($link, $orderSql);
             }
             while($row = mysqli_fetch_array($result)){
               echo"<tr>
-                    <td><input type='image' src='../Scan/getImage.php?id=".$row[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/scanprintout.php')\"></td>
+                    <td><input type='image' src='../Scan/getImage.php?id=".$row[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/scanprintout.php?id=".$row[0]."')\"></td>
                     <td><button class='btn btn-danger' style='margin-top:35px;' onclick='deletePurchaseScan(".$row[0].")'>Delete</button></td>
                   </tr>";
             }

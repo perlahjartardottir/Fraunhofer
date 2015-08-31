@@ -584,6 +584,21 @@ function finishRequest(request_ID){
   }
 }
 
+// Edit expected delivery date
+function editExpectedDeliveryDate(){
+  var expected_delivery_date = $('#expected_delivery_date').val();
+  $.ajax({
+    url: '../UpdatePHP/editExpectedDeliveryDate.php',
+    type: 'POST',
+    data:{
+      expected_delivery_date : expected_delivery_date
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+    }
+  });
+}
+
 // This function confirms the final inspection notes for every order item in this purchase order
 function confirmFinalInspection(order_ID){
 

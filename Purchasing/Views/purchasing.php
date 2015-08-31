@@ -7,6 +7,9 @@
   session_start();
   // find the current user
   $user = $_SESSION["username"];
+  // find the current date
+  $curDate = date("Y-m-d");
+  $curDate = strtotime($curDate);
 
   // find his level of security
   $secsql = "SELECT security_level, employee_ID
@@ -36,7 +39,7 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
@@ -89,7 +92,7 @@
     </div>
 
     <!-- Here is the requested table ------------------------------------------------>
-    <div class='col-md-4'>
+    <div class='col-md-3'>
       <h4>Requested</h4>
       <table class='table table-responsive'>
         <thead>
@@ -159,22 +162,35 @@
     </div>
 
     <!-- Here we have the In Progress table ---------------------------->
-    <div class='col-md-4'>
-      <h4>In progress</h4>
+    <div class='col-md-5'>
+      <h4>In Progress</h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
             <th>Purchase Order</th>
             <th>Order Date</th>
+            <th>Expected Delivery</th>
           </tr>
         </thead>
         <tbody>
           <?php
           while($inProgressRow = mysqli_fetch_array($inProgressResult)){
+            // Find if the expected date is less then current date
+            // and if it is, then we bold the expected date letters
+            // So it's easy to see which orders are late
+            $expectedDate = strtotime($inProgressRow[6]);
+            $dateDiff = $expectedDate - $curDate;
+            $dateDiffDays = floor($dateDiff/(60*60*24));
+
               echo"<tr>
                     <td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
-                    <td>".$inProgressRow[1]."</td>
-                   </tr>";
+                    <td>".$inProgressRow[1]."</td>";
+              if($dateDiffDays < 0){
+                echo "<td><b>".$inProgressRow[6]."</b></td>";
+              }else{
+                echo "<td>".$inProgressRow[6]."</td>";
+              }
+                echo "</tr>";
           }
            ?>
         </tbody>

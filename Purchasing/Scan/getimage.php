@@ -5,6 +5,7 @@
 
   $order_ID = $_SESSION["order_ID"];
   $id = $_GET['id'];
+
   // do some validation here to ensure id is safe
   if(empty($id)){
     $sql = "SELECT scan_image

@@ -7,6 +7,7 @@ $user = $_SESSION["username"];
 $order_ID = $_SESSION["order_ID"];
 $currency = $_SESSION["currency"];
 
+// get the correct currency display
 if($currency == 'EUR'){
   $currencySymbol = '&euro;';
 } else if($currency == 'GBP'){

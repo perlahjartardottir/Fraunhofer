@@ -2,6 +2,17 @@
 include '../../connection.php';
 session_start();
 $order_ID = $_SESSION['order_ID'];
+$currency = $_SESSION["currency"];
+
+// get the correct currency display
+if($currency == 'EUR'){
+  $currencySymbol = '&euro;';
+} else if($currency == 'GBP'){
+  $currencySymbol = '&pound;';
+} else{
+  $currencySymbol = '$';
+}
+
 $sql = "SELECT quantity, part_number, unit_price, description, order_item_ID, department_ID, order_ID
         FROM order_item
         WHERE order_ID = '$order_ID';";
@@ -20,8 +31,8 @@ if(mysqli_num_rows($result) == 0){
         <th>Part #</th>
         <th>Description</th>
         <th>Department</th>
-        <th>USD Unit</th>
-        <th>USD Total</th>
+        <th><?php echo $currency; ?> Unit</th>
+        <th><?php echo $currency; ?> Total</th>
       </tr>
     </thead>
     <tbody>
@@ -41,8 +52,8 @@ if(mysqli_num_rows($result) == 0){
               <td>".$row[1]."</td>
               <td>".$row[3]."</td>
               <td>".$departmentRow[0]."</td>
-              <td>$".number_format((float)$row[2], 2, '.', '')."</td>
-              <td>$".number_format((float)$total, 2, '.', '')."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
+              <td>".$currencySymbol."".number_format((float)$row[2], 2, '.', '')."</td>
+              <td>".$currencySymbol."".number_format((float)$total, 2, '.', '')."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
             </tr>
             <div class='modal fade' id='".$row[4]."' tabindex='-1' role='dialog' aria-labelledby='".$row[4]."' aria-hidden='true'>
               <div class='modal-dialog'>
@@ -95,9 +106,17 @@ if(mysqli_num_rows($result) == 0){
             <td></td>
             <td></td>
             <th>Total Order Price: </th>
-            <th><u style='border-bottom: 1px solid black'>$".number_format((float)$totalOrderPrice, 2, '.', '')."</u></th>
+            <th><u style='border-bottom: 1px solid black'>".$currencySymbol."".number_format((float)$totalOrderPrice, 2, '.', '')."</u></th>
           </tr>"; ?>
     </tbody>
   </table>
   <a href='../Printouts/purchaseOrder.php' class='btn btn-primary col-md-2' style='float:right;'>Printout</a>
+  <form>
+    <select onchange='setCurrency()' class='form-control' id='currency' style='width:auto; float:right; margin-right:5px;'>
+      <option value='USD'<?php if($currency == 'USD'){echo "selected";}?>>$ USD</option>
+      <option value='EUR'<?php if($currency == 'EUR'){echo "selected";}?>>&euro; EUR</option>
+      <option value='GBP'<?php if($currency == 'GBP'){echo "selected";}?>>&pound; GBP</option>
+    </select>
+  </form>
+
 </div>
