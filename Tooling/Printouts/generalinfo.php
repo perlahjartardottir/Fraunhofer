@@ -68,9 +68,10 @@ echo    "<tr>
             <td>unit price</td>
             <td>total unit price</td>
         </tr>";
+$counter = 1;
 while($row = mysqli_fetch_array($tresult)) {
     echo "<tr>".
-            "<td>" .$row[0]."</td>".
+            "<td>" .$counter."</td>".
             "<td>" .$row[1]."</td>".
             "<td>" .$row[2]."</td>".
             "<td>" .$row[3]."</td>".
@@ -81,6 +82,7 @@ while($row = mysqli_fetch_array($tresult)) {
             "<td>$".$row[7]."</td>".
             "<td>$".$row[8]."</td>".
           "</tr>";
+  $counter += 1;
 }
 // Finds the price of all the tools on that po
 $totalPricesql = "SELECT SUM(ROUND(l.price * l.quantity, 2)), SUM(ROUND(l.est_run_number, 2))

@@ -484,8 +484,7 @@ function deletePurchaseScan(scan_ID){
 // Set the rating and receiving date of the purchase order
 function packageReceived(order_ID, element){
   var receiveDate = $(element).parent().find("#receiveDate").val();
-  var e                 = document.getElementById("rating_timeliness");
-  var rating_timeliness = e.options[e.selectedIndex].value;
+  var rating_timeliness = $("#rating_timeliness").val();
   e                     = document.getElementById("rating_quality");
   var rating_quality    = e.options[e.selectedIndex].value;
   e                     = document.getElementById("rating_price");

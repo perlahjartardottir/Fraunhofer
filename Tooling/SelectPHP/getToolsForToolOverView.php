@@ -41,16 +41,16 @@ if (!$result) {
     die($message);
 }
 //building the header of the table.
-   echo         "<tr>".
-                "<td>Line#</td>".
-                "<td>Quantity</td>".
-                "<td>ToolID</td>".
-                "<td>Dia / IC</td>".
-                "<td>Length</td>".
-                "<td>DblEnd</td>".
-                "<td>Price</td>".
-                "<td>total unit price</td>".
-                "</tr>";
+   echo         "<thead><tr>".
+                "<th>Line#</th>".
+                "<th>Quantity</th>".
+                "<th>ToolID</th>".
+                "<th>Dia / IC</th>".
+                "<th>Length</th>".
+                "<th>DblEnd</th>".
+                "<th>Price</th>".
+                "<th>total unit price</th>".
+                "</tr></thead><tbody>";
 
 //filling it with data from POTools
 while($row = mysqli_fetch_array($result)) {
@@ -78,17 +78,17 @@ if (!$totalSumResult) {
 
 while($row = mysqli_fetch_array($sumresult)){
     echo "<tr>".
-         "<td>".'Number of Items: '.$row[0]."</td>".
-         "<td>".'Number of tools: '.$row[1]."</td>".
+         "<th>".'Number of Items: '.$row[0]."</th>".
+         "<th>".'Number of tools: '.$row[1]."</th>".
          "<td></td>".
          "<td></td>".
          "<td></td>".
          "<td></td>".
-         "<td>Total $: </td>";
+         "<th>Total $: </th>";
 }
 while($row = mysqli_fetch_array($totalSumResult)){
-    echo "<td>".$row[0]."</td>".
-         "</tr>";
+    echo "<th>".$row[0]."</th>".
+         "</tr></tbody>";
 }
  mysqli_close($link);
 ?>

@@ -13,6 +13,7 @@ while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
   $employee_ID = $row[1];
 }
+
 ?>
 <head>
   <title>Fraunhofer CCD</title>

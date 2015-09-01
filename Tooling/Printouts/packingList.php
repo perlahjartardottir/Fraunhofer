@@ -223,6 +223,9 @@ while($row = mysqli_fetch_array($result)){
   <p class='col-xs-3 comments'>Comment: </p>
   <p class='comments'><?php echo $comment; ?></p>
 </div>
+<center><div class='col-xs-12 thankYouNote'>
+  <i>------------ Thank you for your business ------------</i>
+</div></center>
 </div>
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">

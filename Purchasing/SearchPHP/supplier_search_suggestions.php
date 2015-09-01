@@ -45,8 +45,9 @@ $supplier_address .= "%";
               AND supplier_address LIKE '$supplier_address';";
       $result = mysqli_query($link, $sql);
       while($row = mysqli_fetch_array($result)){
+
         // SQL to get each customers rating
-        $ratingSql = "SELECT ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality)) / 3, 2), ROUND(AVG(rating_timeliness), 2), ROUND(AVG(rating_price), 2), ROUND(AVG(rating_quality), 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID)
+        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality)) / 3, 2) / 2.67), 0) * 100, ROUND(AVG(rating_timeliness), 2), ROUND(AVG(rating_price), 2), ROUND(AVG(rating_quality), 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID)
                       FROM purchase_order o LEFT JOIN order_rating r
                       	ON o.order_ID = r.order_ID
                       WHERE o.supplier_ID = '$row[0]';";
@@ -70,7 +71,7 @@ $supplier_address .= "%";
                     data-placement='right'
                     data-html='true'
                     data-content='Avg timeliness: ".$averageRating[1]."<br/> Avg price: ".$averageRating[2]."<br/> Avg quality: ".$averageRating[3]."'>";
-             echo $averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i>";
+             echo $averageRating[0]."% <i class='fa fa-diamond' aria-hidden='true'></i>";
              echo "</button></td></tr>";
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
           			   <div class='modal-dialog'>
@@ -93,7 +94,7 @@ $supplier_address .= "%";
                               <div class='col-md-6'>
                                 <p><strong>Website: </strong><a href='".$row[7]."' target='_blank'><span id='supplier_website'>".$row[7]."</span></a></p>
                                 <p><strong>Login: </strong><span id='supplier_login'>".$row[8]."</span></p>
-                                <p><strong>Passwrd: </strong><span id='supplier_password'>".$row[9]."</span></p>
+                                <p><strong>Password: </strong><span id='supplier_password'>".$row[9]."</span></p>
                             </div>
                             <div class='col-md-6' style='margin-top:20px'>
                               <p><strong>Average lead time: </strong><span id='averageLeadTime'>".$averageRating[4]."</span></p>

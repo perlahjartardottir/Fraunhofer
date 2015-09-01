@@ -30,7 +30,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
 <head>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
-  <link href='../css/main.css' rel='stylesheet'>
+  <!-- <link href='../css/main.css' rel='stylesheet'> -->
   <link href='../css/tabs.css' rel='stylesheet'>
 </head>
 <body>
@@ -369,7 +369,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
       <div id="status_text"></div>
 
       <!-- SelectPHP/getToolsForToolOverView.php -->
-      <table id='txtAdd'>
+      <table id='txtAdd' class='table table-responsive table-bordered table-condensed'>
       </table>
       <div class='navbar navbar-default navbar-static-bottom'>
         <a class='btn btn-primary' style='margin-top:5px; margin-left: 5px; float:right;' href='../views/generateTrackSheet.php'>Generate track sheet for this PO</a>

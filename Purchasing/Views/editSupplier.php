@@ -1,6 +1,18 @@
 <?php
 include '../../connection.php';
 session_start();
+//find the current user
+$user = $_SESSION["username"];
+//find his level of security
+$secsql = "SELECT security_level
+           FROM employee
+           WHERE employee_name = '$user'";
+$secResult = mysqli_query($link, $secsql);
+
+while($row = mysqli_fetch_array($secResult)){
+  $user_sec_lvl = $row[0];
+}
+
 $supplier_ID = $_SESSION['supplier_ID'];
 $sql = "SELECT supplier_name, supplier_address, supplier_contact, supplier_phone, supplier_fax, supplier_email,
                supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes

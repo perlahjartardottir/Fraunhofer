@@ -1,4 +1,17 @@
-<?php session_start(); ?>
+<?php
+session_start();
+//find the current user
+$user = $_SESSION["username"];
+//find his level of security
+$secsql = "SELECT security_level
+           FROM employee
+           WHERE employee_name = '$user'";
+$secResult = mysqli_query($link, $secsql);
+
+while($row = mysqli_fetch_array($secResult)){
+  $user_sec_lvl = $row[0];
+}
+?>
 <head>
   <title>Fraunhofer CCD</title>
 </head>

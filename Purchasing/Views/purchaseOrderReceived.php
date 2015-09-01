@@ -1,7 +1,24 @@
 <?php
 include '../../connection.php';
 session_start();
+
+//find the current user
+$user = $_SESSION["username"];
+//find his level of security
+$secsql = "SELECT security_level
+           FROM employee
+           WHERE employee_name = '$user'";
+$secResult = mysqli_query($link, $secsql);
+
+while($row = mysqli_fetch_array($secResult)){
+  $user_sec_lvl = $row[0];
+}
+
 $order_ID = $_SESSION["order_ID"];
+
+// find the current date
+$curDate = date("Y-m-d");
+$curDate = strtotime($curDate);
 
 // Query to find all the order items within our purchase order
 $sql = "SELECT order_item_ID, quantity, part_number, description, final_inspection
@@ -10,11 +27,17 @@ $sql = "SELECT order_item_ID, quantity, part_number, description, final_inspecti
 $result = mysqli_query($link, $sql);
 
 //Query to find the supplier
-$supplierSql = "SELECT supplier_ID, order_final_inspection
+$supplierSql = "SELECT supplier_ID, order_final_inspection, expected_delivery_date
                 FROM purchase_order
                 WHERE order_ID = '$order_ID';";
 $supplierResult = mysqli_query($link, $supplierSql);
 $supplierRow = mysqli_fetch_array($supplierResult);
+
+// Find the difference between current date and expected receiving date
+$expectedDate = strtotime($supplierRow[2]);
+$dateDiff = $expectedDate - $curDate;
+$dateDiffDays = floor($dateDiff/(60*60*24));
+
 $supplierNameSql = "SELECT supplier_name
                     FROM supplier
                     WHERE supplier_ID = '$supplierRow[0]';";
@@ -74,7 +97,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
         <div class='col-md-12'>
           <button class='btn btn-primary' style='float:right;' onclick='confirmFinalInspection();return false;'>Confirm Final Inspection Note</button>
         </div>
-        <h4 style='margin-top: 120px;'>Rating (5 is best): </h4>
+        <h4 style='margin-top: 120px;'>Rating (3 is best): </h4>
         <table class='table table-responsive col-md-12'>
           <thead>
             <tr>
@@ -87,29 +110,23 @@ $numberOfScans = mysqli_fetch_array($scanResult);
             <tr>
               <td class='col-md-4'>
                 <select id='rating_timeliness' class='form-control'>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option selected>5</option>
+                  <!-- Automaticly select if the order is on time or not on time -->
+                  <option value='1' <?php if($dateDiffDays < 0){echo "selected";}?>>Not on time</option>
+                  <option value='2' <?php if($dateDiffDays >= 0){echo "selected";}?>>On time</option>
                 </select>
               </td>
               <td class='col-md-4'>
                 <select id='rating_quality' class='form-control'>
                   <option>1</option>
                   <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option selected>5</option>
+                  <option selected>3</option>
                 </select>
               </td>
               <td class='col-md-4'>
                 <select id='rating_price' class='form-control'>
                   <option>1</option>
                   <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option selected>5</option>
+                  <option selected>3</option>
                 </select>
               </td>
             </tr>
