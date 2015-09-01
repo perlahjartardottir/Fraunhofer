@@ -12,7 +12,11 @@ $secResult = mysqli_query($link, $secsql);
 while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
-
+// if the user security level is not high enough we kill the page and give him a link to the log in page
+if($user_sec_lvl < 2){
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
+  die("You don't have the privileges to view this site.");
+}
 mysql_set_charset('utf8');
 header('Content-Type: text/html; charset=utf-8');
 $order_ID = $_SESSION["order_ID"];
