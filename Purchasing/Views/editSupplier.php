@@ -19,7 +19,7 @@ if($user_sec_lvl < 2){
 }
 $supplier_ID = $_SESSION['supplier_ID'];
 $sql = "SELECT supplier_name, supplier_address, supplier_contact, supplier_phone, supplier_fax, supplier_email,
-               supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes
+               supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes, net_terms
         FROM supplier
         WHERE supplier_ID = '$supplier_ID';";
 $result = mysqli_query($link, $sql);
@@ -75,6 +75,10 @@ $row = mysqli_fetch_array($result);
         <div class='form-group col-md-4'>
           <label>Account Nr.:</label>
           <input type='text' class='form-control' id='supplier_accountNr' value='".$row[9]."'>
+        </div>
+        <div class='form-group col-md-4'>
+          <label>Net terms (in days):</label>
+          <input type='number' class='form-control' id='net_terms' value='".$row[11]."'>
         </div>
         <div class='form-group col-md-4'>
           <label>Notes:</label>

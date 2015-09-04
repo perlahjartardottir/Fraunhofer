@@ -67,6 +67,13 @@ To have a running website connected to a MySQL database use MAMP.
 You can download it [here](https://www.mamp.info/en/downloads/) for free.
 MAMP setup guide can be found [here](#mamp-guide).
 
+CRON JOB
+-----
+In the purchasing database we have an event that checks if there is any purchase order worth over $1000 that is expected to be delivered in 5 days and send an email to the employee who is expecting that order. In order to do that we set up a cron job which runs the "dailyScript.php" file once a day.
+Write: ```crontab -e``` in terminal and in there should be ```30 11 * * * php /path/dailyScript.php```
+the 'path' part is the full path to that script so if you have to move the server to a different computer then you also have to set up this cron job.
+the ```30 11 * * *``` means that this happens 11:30 AM every day. To change the date to lets say 2:00 pm then you would write ```0 14 * * *```.
+
 Jshint and Uglify
 --------------
 Jshint was used to detect errors and potential problems in the JavaScript code. Uglify was used in this project to minify all JavaScript files. This is done so that the website is as quick as it can possibly be, since the computer in the lab is outdated and the internet connection might get slow this is very important. While developing it is better to include the JavaScript file you are making changes on in the HTML/PHP views, since compiling with uglify takes a few seconds and if you are making a lot of small changes and testing them those seconds add up quickly. A more detailed guide on how to make changes on JavaScript code can be found [here](#uglify-guide). To run those tools we used Grunt.

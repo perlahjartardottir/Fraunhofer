@@ -47,10 +47,12 @@ $supplier_address .= "%";
       while($row = mysqli_fetch_array($result)){
 
         // SQL to get each customers rating
-        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality)) / 3, 2) / 2.67), 0) * 100, ROUND(AVG(rating_timeliness), 2), ROUND(AVG(rating_price), 2), ROUND(AVG(rating_quality), 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID)
-                      FROM purchase_order o LEFT JOIN order_rating r
-                      	ON o.order_ID = r.order_ID
-                      WHERE o.supplier_ID = '$row[0]';";
+        // Since we use the rating system from 1 to 5 diamonds we have to do a little math
+        // To get the correct values, because timeliness is rated from 1 to 2 (not on time, on time) for instance
+        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality)) / 3, 2) / 2.67) * 5, 2), ROUND((AVG(rating_timeliness) / 2) * 5, 2), ROUND(AVG((rating_price) / 3) * 5, 2), ROUND(AVG((rating_quality) / 3) * 5, 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID)
+                      FROM purchase_order o, order_rating r
+                      WHERE o.order_ID = r.order_ID
+                      AND o.supplier_ID = '$row[0]';";
         $ratingResult  = mysqli_query($link, $ratingSql);
         if(!$ratingResult){
           echo mysqli_error($link);
@@ -71,7 +73,7 @@ $supplier_address .= "%";
                     data-placement='right'
                     data-html='true'
                     data-content='Avg timeliness: ".$averageRating[1]."<br/> Avg price: ".$averageRating[2]."<br/> Avg quality: ".$averageRating[3]."'>";
-             echo $averageRating[0]."% <i class='fa fa-diamond' aria-hidden='true'></i>";
+             echo $averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i>";
              echo "</button></td></tr>";
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
           			   <div class='modal-dialog'>

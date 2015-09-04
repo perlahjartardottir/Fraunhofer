@@ -136,6 +136,8 @@ function orderRequest(){
   var approved_by_employee = $('#approved_by_employee').val();
   var request_description  = $('#request_description').val();
   var employee_ID          = $('#employee_ID').val();
+  var part_number          = $('#part_number').val();
+  var quantity             = $('#quantity').val();
   if(request_description === ""){
     $("#invalidRequest").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Description</div>");
   } else{
@@ -148,7 +150,9 @@ function orderRequest(){
         orderTimeframe       : orderTimeframe,
         approved_by_employee : approved_by_employee,
         request_description  : request_description,
-        employee_ID          : employee_ID
+        employee_ID          : employee_ID,
+        part_number          : part_number,
+        quantity             : quantity
       },
       success: function(data, status, xhr){
         window.location.reload();
@@ -358,6 +362,7 @@ function addNewSupplier(){
   var supplier_login   = $('#supplier_login').val();
   var supplier_password = $('#supplier_password').val();
   var supplier_accountNr = $('#supplier_accountNr').val();
+  var net_terms        = $('#net_terms').val();
   var supplier_notes = $('#supplier_notes').val();
   if(!supplier_name){
     $("#invalidSupplier").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier name</div>");
@@ -375,6 +380,7 @@ function addNewSupplier(){
         supplier_login   : supplier_login,
         supplier_password : supplier_password,
         supplier_accountNr : supplier_accountNr,
+        net_terms        : net_terms,
         supplier_website : supplier_website,
         supplier_notes : supplier_notes
       },
@@ -433,6 +439,7 @@ function editSupplier(){
     var supplier_name = $("#supplier_name").val();
     var supplier_phone = $("#supplier_phone").val();
     var supplier_fax = $("#supplier_fax").val();
+    var net_terms   = $("#net_terms").val();
     var supplier_email = $("#supplier_email").val();
     var supplier_address = $("#supplier_address").val();
     var supplier_contact = $("#supplier_contact").val();
@@ -448,6 +455,7 @@ function editSupplier(){
         supplier_name : supplier_name,
         supplier_phone : supplier_phone,
         supplier_fax : supplier_fax,
+        net_terms : net_terms,
         supplier_email : supplier_email,
         supplier_address : supplier_address,
         supplier_contact : supplier_contact,

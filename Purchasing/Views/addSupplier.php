@@ -69,6 +69,10 @@ if($user_sec_lvl < 2){
           <input type='text' class='form-control' id='supplier_accountNr'>
         </div>
         <div class='form-group col-md-4'>
+          <label>Net terms (in days):</label>
+          <input type='number' class='form-control' id='net_terms'>
+        </div>
+        <div class='form-group col-md-4'>
           <label>Notes:</label>
           <textarea class='form-control' id='supplier_notes'></textarea>
         </div>

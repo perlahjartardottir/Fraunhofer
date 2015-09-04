@@ -31,15 +31,19 @@ if($user_sec_lvl < 2){
       <form>
         <h5>*Only "Description" field is required. More information makes it easier to process the order.
         <h4>Make a request for a purchase order</h4>
-        <div class='col-md-6 form-group'>
+        <div class='col-md-4 form-group'>
           <label>Supplier: </label>
           <input type="text" id='request_supplier' class='form-control'>
         </div>
-        <div class='col-md-6 form-group'>
+        <div class='col-md-4 form-group'>
           <label>Approved by: </label>
           <input type="text" id='approved_by_employee' class='form-control'>
         </div>
-        <div class='col-md-6 form-group'>
+        <div class='col-md-4 form-group'>
+          <label>Part #: </label>
+          <input type="text" id='part_number' class='form-control'>
+        </div>
+        <div class='col-md-4 form-group'>
           <label>Department: </label>
           <select id='department' class='form-control'>
             <option value=''>All departments</option>
@@ -47,18 +51,22 @@ if($user_sec_lvl < 2){
             <option value='CVD'>CVD</option>
           </select>
         </div>
-        <div class='col-md-6 form-group'>
+        <div class='col-md-4 form-group'>
           <label>Order timeframe: </label>
           <select id='orderTimeframe' class='form-control'>
-            <option value='withNextOrder'>With next order</option>
-            <option value='thisWeek'>This week</option>
-            <option value='today'>Today</option>
-            <option value='other'>Other</option>
+            <option value='With next order'>With next order</option>
+            <option value='This week'>This week</option>
+            <option value='Today'>Today</option>
+            <option value='Other'>Other</option>
           </select>
         </div>
-        <div class='col-md-6 form-group'>
+        <div class='col-md-4 form-group'>
+          <label>Quantity: </label>
+          <input type="number" id='quantity' class='form-control'>
+        </div>
+        <div class='col-md-4 form-group'>
           <label>Description: </label>
-          <textarea id='request_description' class='form-control'></textarea>
+          <textarea id='request_description' class='form-control' rows='4'></textarea>
         </div>
         <input class='form-control btn btn-primary' type="button" value="Request" onclick='orderRequest()'>
       </form>

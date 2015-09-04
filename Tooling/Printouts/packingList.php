@@ -27,12 +27,16 @@ while($row = mysqli_fetch_array($po_IDresult)){
   $po_number = $row[0];
 }
 // query that gets all the data for the packing list table
+// Add this for lineitems that have been added to runs
+// AND lir.run_ID = r.run_ID
+// AND r.coating_ID = c.coating_ID
+// AND l.lineitem_ID = lir.lineitem_ID
 $sql = "SELECT l.tool_ID, l.quantity, c.coating_type, l.quantity_on_packinglist, l.lineitem_ID
         FROM lineitem l, lineitem_run lir, coating c, run r
         WHERE l.po_ID = '$po_ID'
-        AND l.lineitem_ID = lir.lineitem_ID
         AND lir.run_ID = r.run_ID
         AND r.coating_ID = c.coating_ID
+        AND l.lineitem_ID = lir.lineitem_ID
         GROUP BY lir.lineitem_ID
         ORDER BY lir.lineitem_ID";
 $tableresult = mysqli_query($link, $sql);
@@ -199,7 +203,7 @@ while($row = mysqli_fetch_array($result)){
       "<td class='packingTable commentHide hidden'>".$row[4]."</td>".
       "<td class='packingTable'>".$row[0]."</td>".
       "<td class='packingTable centering'>".$row[1]."</td>".
-      "<td class='packingTable centering'><input type='text' style='text-align: center;' class='table_input' value='".$row[3]."'/><input type='button' style='margin-left: 3px;' class='btn btn-success commentHide' value='Save changes'></input></td>".
+      "<td class='packingTable centering'><input type='text' style='text-align: center;' class='table_input' value='".$row[3]."'/><input type='button' style='margin-left: 3px;' class='btn btn-success commentHide saveButton' value='Save changes'></input></td>".
       "<td class='packingTable'><center>".$row[2]."</center></td>";
 
       // "<td class='packingTable'><input type='text' style='text-align: left;' class='table_input' value='".$row[3]."'/><span style='text-align: left;'>/".$row[1]." </span><input type='button' style='text-align: left;' class='btn btn-success commentHide saveButton' value='Save changes'></input></td>".

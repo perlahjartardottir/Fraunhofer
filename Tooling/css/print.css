@@ -106,7 +106,7 @@ hr {
   }
   .thankYouNote{
     position: fixed;
-    bottom: 5px;
+    bottom: 0px;
     margin-left: 85px;
     font-size: medium;
   }

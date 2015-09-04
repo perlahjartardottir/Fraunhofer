@@ -56,7 +56,7 @@ $request_ID = $row[0];
         </div>
         <div class='form-group col-md-6'>
           <?php
-          $requestSql = "SELECT request_description, department
+          $requestSql = "SELECT request_description, department, part_number, quantity
                          FROM order_request
                          WHERE request_ID = '$request_ID';";
           $requestResult = mysqli_query($link, $requestSql);
@@ -64,6 +64,8 @@ $request_ID = $row[0];
           if($requestRow > 0){
             echo"<h4>Request ID: ".$request_ID."</h4>
                  <p><b>Department:</b> ".$requestRow[1]."</p>
+                 <p><b>Part number:</b> ".$requestRow[2]."</p>
+                 <p><b>Quantity:</b> ".$requestRow[3]."</p>
                  <p><b>Description:</b> ".$requestRow[0]."</p>";
           }
           ?>

@@ -26,31 +26,6 @@
   $curDate = date("Y-m-d");
   $curDate = strtotime($curDate);
 
-  // Send email with php
-  $emailSql = "SELECT email_ID, email_sender, order_ID FROM email";
-  $emailResult = mysqli_query($link, $emailSql);
-  while($emailRow = mysqli_fetch_array($emailResult)){
-    // Find employee email
-    $employeeEmailSql = "SELECT employee_email FROM employee
-                         WHERE employee_ID = '$emailRow[1]';";
-    $employeeEmailResult = mysqli_query($link, $employeeEmailSql);
-    $employeeEmailRow = mysqli_fetch_array($employeeEmailResult);
-
-    // Find the order name
-    $emailOrderNameSql = "SELECT order_name FROM purchase_order
-                          WHERE order_ID = '$emailRow[2]';";
-    $emailOrderNameResult = mysqli_query($link, $emailOrderNameSql);
-    $emailOrderNameRow = mysqli_fetch_array($emailOrderNameResult);
-
-    // send the email
-    mail($employeeEmailRow[0], "Purchase order incoming in 5 days", 'Your purchase order, '.$emailOrderNameRow[0].', is expected in 5 days', "From:" . "ffridfinnsson@fraunhofer.org");
-
-    // As soon as the email is sent, we delete the row in the table so the employee
-    // Doesn't get an email every day.
-    $deleteEmailSql = "DELETE FROM email
-                       WHERE email_ID = '$emailRow[0]';";
-    $deleteEmailResult = mysqli_query($link, $deleteEmailSql);
-  }
   // find his level of security
   $secsql = "SELECT security_level, employee_ID
              FROM employee
@@ -72,7 +47,7 @@
   }
 
   // Query to find all active requests
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity
                  FROM order_request
                  WHERE active = 1;";
   $requestResult = mysqli_query($link, $requestSql);
@@ -97,9 +72,7 @@
 </head>
 <?php
     if($activeRequests[0] > 0){
-      echo "<title id='title'>New request</title>";
-    } else{
-      echo "<title id='title'>Purchasing</title>";
+      echo "<title id='title'>(".$activeRequests[0].") Purchasing</title>";
     }
  ?>
 
@@ -184,6 +157,8 @@
                       <p>Requested by: ".$employee_name."</p>
                       <p>Date: ".$requestRow[1]."</p>
                       <p>Order timeframe: ".$requestRow[7]."</p>
+                      <p>Part number: ".$requestRow[8]."</p>
+                      <p>Quantity: ".$requestRow[9]."</p>
                       <p>Supplier: ".$requestRow[2]."</p>
                       <p>Department: ".$requestRow[6]."</p>
                       <p>Approved by: ".$requestRow[3]."</p>
@@ -426,34 +401,17 @@
     $(document).ready(function(){
       setInterval(test, 10000);
       function test(){
-          $.ajax({
-            url: "../UpdatePHP/update_request_count.php",
-            type: "POST",
-            data: {
-            },
-            success: function(data, status, xhr) {
-              $('#process_order').html(data);
-            }
-          });
-        }
-        var title_function = setInterval(function(){
-          var title = document.title;
-              $.ajax({
-                url: "../UpdatePHP/update_title_text.php",
-                type: "POST",
-                data: {
-                },
-                success: function(data, status, xhr) {
-                  //document.title = (data);
-                  if(data == "Purchasing"){
-                    document.title = "Purchasing";
-                  } else {
-                    document.title = (title == "New request" ? data : "New request");
-                  }
-                }
-              });
-      }, 10000);
-  });
+        $.ajax({
+          url: "../UpdatePHP/update_request_count.php",
+          type: "POST",
+          data: {
+          },
+          success: function(data, status, xhr) {
+            $('#process_order').html(data);
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>

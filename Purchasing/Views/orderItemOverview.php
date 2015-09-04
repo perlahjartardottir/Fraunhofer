@@ -1,4 +1,5 @@
 <?php
+include '../../connection.php';
 session_start();
 //find the current user
 $user = $_SESSION["username"];
