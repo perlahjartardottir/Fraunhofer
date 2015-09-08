@@ -17,6 +17,9 @@ if($user_sec_lvl < 2){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
+$departmentSql = "SELECT department_name
+                  FROM department;";
+$departmentResult = mysqli_query($link, $departmentSql);
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -44,8 +47,10 @@ if($user_sec_lvl < 2){
           <label>Department: </label>
           <select class='form-control' id='department' onchange='orderItemSuggestions()'>
             <option selected value=''>All departments</option>
-            <option value='PVD'>PVD</option>
-            <option value='CVD'>CVD</option>
+            <?php
+            while($departmentRow = mysqli_fetch_array($departmentResult)){
+              echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
+            }?>
           </select>
         </div>
         <div class='col-md-12 form-group'>

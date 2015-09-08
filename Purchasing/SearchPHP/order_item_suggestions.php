@@ -28,7 +28,7 @@ $department_ID = $row[0];
 
 ?>
 <div id='output'>
-  <table class='table table-responsive table-striped'>
+  <table class='table table-responsive table-striped table-condensed'>
     <thead>
       <tr>
         <th>Part Number</th>

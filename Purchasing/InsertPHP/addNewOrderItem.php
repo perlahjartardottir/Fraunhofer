@@ -7,7 +7,7 @@ $part_number = mysqli_real_escape_string($link, $_POST['part_number']);
 $unit_price  = mysqli_real_escape_string($link, $_POST['unit_price']);
 $description = mysqli_real_escape_string($link, $_POST['description']);
 $department  = mysqli_real_escape_string($link, $_POST['department']);
-var_dump($department);
+
 $departmentSql = "SELECT department_ID
                   FROM department
                   WHERE department_name = '$department';";

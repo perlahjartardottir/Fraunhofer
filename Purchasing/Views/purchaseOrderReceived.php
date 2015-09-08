@@ -125,7 +125,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
                 <td class='col-md-4'>
                   <select id='rating_timeliness' class='form-control'>
                     <option value='1' "; if($dateDiffDays < 0){echo "selected";} echo">Not on time</option>
-                    <option value='2' "; if($dateDiffDays >= 0){echo "selected";} echo">On time</option>
+                    <option value='2' "; if($dateDiffDays >= 0 || $dateDiffDays == -16682){echo "selected";} echo">On time</option>
                   </select>
                 </td>
                 <td class='col-md-4'>

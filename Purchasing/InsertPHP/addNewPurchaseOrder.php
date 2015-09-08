@@ -16,18 +16,19 @@ $employeeResult = mysqli_query($link, $employeeSql);
 $row = mysqli_fetch_array($employeeResult);
 $order_for_who = $row[0];
 
-$supplierSql = "SELECT supplier_ID
+$supplierSql = "SELECT supplier_ID, net_terms
                 FROM supplier
                 WHERE supplier_name = '$supplier_name';";
 $supplierResult = mysqli_query($link, $supplierSql);
 $row = mysqli_fetch_array($supplierResult);
 $supplier_ID = $row[0];
+$supplier_net_terms = $row[1];
 if($request_ID == ""){
-  $sql = "INSERT INTO purchase_order (supplier_ID, employee_ID, order_for_who, approved_by, order_date)
-          VALUES ('$supplier_ID', '$employee_ID', '$order_for_who', '$approved_by', CURDATE());";
+  $sql = "INSERT INTO purchase_order (supplier_ID, employee_ID, order_for_who, approved_by, order_date, net_terms)
+          VALUES ('$supplier_ID', '$employee_ID', '$order_for_who', '$approved_by', CURDATE(), '$supplier_net_terms');";
 }else{
-  $sql = "INSERT INTO purchase_order (supplier_ID, employee_ID, order_for_who, approved_by, order_date, request_ID)
-          VALUES ('$supplier_ID', '$employee_ID', '$order_for_who', '$approved_by', CURDATE(), '$request_ID');";
+  $sql = "INSERT INTO purchase_order (supplier_ID, employee_ID, order_for_who, approved_by, order_date, request_ID, net_terms)
+          VALUES ('$supplier_ID', '$employee_ID', '$order_for_who', '$approved_by', CURDATE(), '$request_ID', '$supplier_net_terms');";
 }
 $result = mysqli_query($link, $sql);
 

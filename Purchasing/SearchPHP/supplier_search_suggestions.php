@@ -36,7 +36,7 @@ $supplier_address .= "%";
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email, supplier_address, supplier_fax, supplier_contact, supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes
+      $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email, supplier_address, supplier_fax, supplier_contact, supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes, net_terms
               FROM supplier
               WHERE supplier_name LIKE '$supplier_name'
               AND supplier_contact LIKE '$supplier_contact'
@@ -92,6 +92,7 @@ $supplier_address .= "%";
                                 <p><strong>Address: </strong><span id='supplier_address'>".$row[4]."</span></p>
                                 <p><strong>Contact: </strong><span id='supplier_contact'>".$row[6]."</span></p>
                                 <p><strong>Account Nr: </strong><span id='supplier_accountNr'>".$row[10]."</span></p>
+                                <p><strong>Net Terms: </strong><span id='net_terms'>".$row[12]." days</span></p>
                               </div>
                               <div class='col-md-6'>
                                 <p><strong>Website: </strong><a href='".$row[7]."' target='_blank'><span id='supplier_website'>".$row[7]."</span></a></p>

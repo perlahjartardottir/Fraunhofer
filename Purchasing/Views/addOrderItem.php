@@ -30,6 +30,10 @@ $getRequestSql = "SELECT request_ID
 $getRequestResult = mysqli_query($link, $getRequestSql);
 $row = mysqli_fetch_array($getRequestResult);
 $request_ID = $row[0];
+
+$departmentSql = "SELECT department_name
+                  FROM department;";
+$departmentResult = mysqli_query($link, $departmentSql);
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -83,17 +87,22 @@ $request_ID = $row[0];
           <label>Part number: </label>
           <input type='text' id='part_number' class='form-control'>
         </div>
+
+        <div class='form-group col-md-6'>
+          <label>Department: </label>
+          <select id='department' class='form-control' onchange='updateCostCode()'>
+            <option value=''>All departments</option>
+            <?php
+            while($departmentRow = mysqli_fetch_array($departmentResult)){
+              echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
+            }?>
+          </select>
+        </div>
+        <div class='form-group col-md-6 result'>
+        </div>
         <div class='form-group col-md-6'>
           <label>Unit price: </label>
           <input type='text' id='unit_price' class='form-control'>
-        </div>
-        <div class='form-group col-md-6'>
-          <label>Department: </label>
-          <select id='department' class='form-control'>
-            <option value=''>All departments</option>
-            <option value='PVD'>PVD</option>
-            <option value='CVD'>CVD</option>
-          </select>
         </div>
         <div class='form-group col-md-6'>
           <label>Description: </label>
@@ -113,6 +122,7 @@ $request_ID = $row[0];
           var order_ID = <?php echo $order_ID; ?>;
           showPOInfo(order_ID);
           showOrderItems(order_ID);
+          updateCostCode();
       });
       //if the user enters the view with a PO not on the dropdownlist
       // check if the value is in the list already

@@ -7,7 +7,7 @@ $order_ID = mysqli_real_escape_string($link, $_POST['order_ID']);
 $_SESSION["order_ID"] = $order_ID;
 
 // Get all information for the PO
-$sql = "SELECT order_ID, employee_ID, order_for_who, supplier_ID, approved_by, order_date, order_name, expected_delivery_date
+$sql = "SELECT order_ID, employee_ID, order_for_who, supplier_ID, approved_by, order_date, order_name, expected_delivery_date, net_terms
 		FROM purchase_order
 		WHERE order_ID = '$order_ID';";
 $result = mysqli_query($link, $sql);
@@ -28,7 +28,7 @@ $orderForWhoResult = mysqli_query($link, $orderForWhoSql);
 $orderForWho = mysqli_fetch_array($orderForWhoResult);
 
 //Query to find the supplier name
-$supplierSql ="SELECT supplier_name
+$supplierSql ="SELECT supplier_name, net_terms
                FROM supplier
                WHERE supplier_ID = '$row[3]';";
 $supplierResult = mysqli_query($link, $supplierSql);
@@ -40,7 +40,8 @@ echo "<p>".'For employee: '.$orderForWho[0]."</p>";
 echo "<p>".'Supplier: '.$supplier[0]."</p>";
 echo "<p>".'Approved by: '.$row[4]."</p>";
 echo "<p>".'Order date: '.$row[5]."</p>";
-echo "<p>Order Number: <input type='text' id='order_name' value='".$row[6]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editOrderNumber()'>Edit Order Number</button></p>";
+echo "<p>Order number: <input type='text' id='order_name' value='".$row[6]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editOrderNumber()'>Edit Order Number</button></p>";
 echo "<p>Expected delivery date: <input type='date' id='expected_delivery_date' value='".$row[7]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editExpectedDeliveryDate(); return false;'>Edit Date</button></p>";
+echo "<p>Net terms (days): <input type='number' id='net_terms' value='".$row[8]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editNetTerms(); return false;'>Edit Net Terms</button></p>";
 mysqli_close($link);
 ?>

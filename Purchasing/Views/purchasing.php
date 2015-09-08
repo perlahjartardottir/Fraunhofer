@@ -54,14 +54,14 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
   // have been received
-  $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name, supplier_ID, ROUND(TOTAL_WEEKDAYS(order_date, order_receive_date), 2) - 1
+  $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name, supplier_ID, ROUND(TOTAL_WEEKDAYS(order_date, order_receive_date), 2) - 1, net_terms
                     FROM purchase_order
                     WHERE order_receive_date IS NOT NULL
                     ORDER BY order_ID DESC
@@ -213,6 +213,11 @@
       <?php
       $inProgressResult = mysqli_query($link, $inProgressSql);
       while($inProgressRow = mysqli_fetch_array($inProgressResult)){
+        if($inProgressRow[7] == ""){
+          $expectedPayDate = "N/A";
+        } else{
+          $expectedPayDate = date('Y-m-d', strtotime($inProgressRow[6]. ' + '.$inProgressRow[7].' days'));
+        }
         $orderItemSql = "SELECT quantity, part_number, description, unit_price
                          FROM order_item
                          WHERE order_ID = '$inProgressRow[0]';";
@@ -270,6 +275,7 @@
                   </tbody>
                 </table>
                 <p>Order date: ".$inProgressRow[1]."</p>
+                <p>Expected payment due: ".$expectedPayDate."</p>
               </div>
               <div class='modal-footer'>
                 <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>
@@ -317,6 +323,11 @@
                                  WHERE supplier_ID = '$deliveredRow[5]';";
         $deliveredSupplierResult = mysqli_query($link, $deliveredSupplierSql);
         $deliveredSupplierRow = mysqli_fetch_array($deliveredSupplierResult);
+        if($deliveredRow[7] == ""){
+          $payDate = "N/A";
+        }else{
+          $payDate = date('Y-m-d', strtotime($deliveredRow[2]. ' + '.$deliveredRow[7].' days'));
+        }
         echo"
         <div class='modal fade' id='".$deliveredRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$deliveredRow[0]."' aria-hidden='true'>
           <div class='modal-dialog'>
@@ -374,6 +385,7 @@
                 <p><strong>Order date: </strong>".$deliveredRow[1]."</p>
                 <p><strong>Received date: </strong>".$deliveredRow[2]."</p>
                 <p><strong>Lead time: </strong>".$leadTime."</p>
+                <p><strong>Payment due: </strong>".$payDate."</p>
                 <p><strong>Comment: </strong>".$deliveredRow[3]."</p>
               </div>
               <div class='modal-footer'>

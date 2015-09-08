@@ -14,7 +14,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
 
 ?>
 <div id='output'>
-  <table class='table table-responsive table-striped'>
+  <table class='table table-responsive table-striped table-condensed'>
     <thead>
       <tr>
         <th>Purchase number</th>
@@ -75,6 +75,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
       }
       echo"
         <tr>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>

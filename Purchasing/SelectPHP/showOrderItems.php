@@ -21,6 +21,10 @@ if(mysqli_num_rows($result) == 0){
   die();
 }
 
+$departmentSql2 = "SELECT department_name
+                  FROM department;";
+$departmentResult2 = mysqli_query($link, $departmentSql2);
+
 ?>
 <div class='row well well-lg'>
   <table class='table table-responsive' style='width:92%;'>
@@ -62,6 +66,7 @@ if(mysqli_num_rows($result) == 0){
                     <h4>Order item: ".$row[4]."</h4>
                   </div>
                   <div class='modal-body'>
+                    <div class='col-md-12'>
                     <form>
                       <div class='col-md-6'>
                         <label>Quantity</label>
@@ -73,11 +78,15 @@ if(mysqli_num_rows($result) == 0){
                       </div>
                       <div class='col-md-6'>
                         <label>Department</label>
-                        <select id='department' class='form-control'>
-                          <option value=''>All departments</option>
-                          <option value='PVD'"; if($departmentRow[0] == 'PVD'){echo" selected";} echo">PVD</option>
-                          <option value='CVD'"; if($departmentRow[0] == 'CVD'){echo" selected";} echo">CVD</option>
+                        <select id='department' class='form-control' onchange='updateModalCostCode(this)'>
+                          <option value=''>All departments</option>";
+                          while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
+                            echo "<option value='".$departmentRow2[0]."'"; if($departmentRow[0] == $departmentRow2[0]){echo" selected";} echo">".$departmentRow2[0]."</option>";
+                          }
+                          echo"
                         </select>
+                      </div>
+                      <div class='form-group col-md-6 result'>
                       </div>
                       <div class='col-md-6'>
                         <label>USD Unit</label>
@@ -89,6 +98,7 @@ if(mysqli_num_rows($result) == 0){
                       </div>
                       <p>Purchase order ID: ".$row[6]."</p>
                     </form>
+                    </div>
                   </div>
                   <div class='modal-footer'>
                     <button type='button' class='btn btn-success' data-dismiss='modal' onclick='editOrderItem(".$row[4].", this)'>Edit</button>
@@ -101,6 +111,7 @@ if(mysqli_num_rows($result) == 0){
         $totalOrderPrice = $totalOrderPrice + $total;
       }
       echo"<tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

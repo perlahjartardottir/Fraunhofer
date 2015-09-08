@@ -391,6 +391,34 @@ function addNewSupplier(){
   }
 }
 
+function updateCostCode(){
+  var department_name = $('#department').val();
+  $.ajax({
+    url: "../UpdatePHP/costCode.php",
+    type: "POST",
+    data: {
+      department_name : department_name
+    },
+    success: function(data, status, xhr) {
+      $('.result').html(data);
+    }
+  });
+}
+function updateModalCostCode(element){
+  var department_name = $(element).parent().find('#department').val();
+  console.log(department_name);
+  $.ajax({
+    url: "../UpdatePHP/costCode.php",
+    type: "POST",
+    data: {
+      department_name : department_name
+    },
+    success: function(data, status, xhr) {
+      $('.result').html(data);
+    }
+  });
+}
+
 // This function preserves the session order_ID
 function POInfo(order_ID){
   $.ajax({
@@ -599,6 +627,20 @@ function editExpectedDeliveryDate(){
     type: 'POST',
     data:{
       expected_delivery_date : expected_delivery_date
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+    }
+  });
+}
+// Edit net terms
+function editNetTerms(){
+  var net_terms = $('#net_terms').val();
+  $.ajax({
+    url: '../UpdatePHP/editNetTerms.php',
+    type: 'POST',
+    data:{
+      net_terms : net_terms
     },
     success: function(data, status, xhr){
       window.location.reload();
