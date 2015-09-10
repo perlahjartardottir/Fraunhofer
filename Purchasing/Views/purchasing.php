@@ -47,7 +47,7 @@
   }
 
   // Query to find all active requests
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code
                  FROM order_request
                  WHERE active = 1;";
   $requestResult = mysqli_query($link, $requestSql);
@@ -98,8 +98,15 @@
              ?>
           </button>
         </div>
-        <div class='col-md-3'>
-          <button type='button' class='btn btn-primary col-md-8' onclick="location.href='overview.php'">Overview</button>
+        <div class='col-md-3 btn-group'>
+            <button type='button' class='btn btn-primary col-md-7' onclick="location.href='overview.php'">Overview</button>
+            <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
+              <span class='caret'></span>
+              <span class='sr-only'>Toggle Dropdown</span>
+            </button>
+            <ul class='dropdown-menu' role='menu'>
+              <li><a href='forecast.php'>Forecast</a></li>
+            </ul>
         </div>
       </div>
     </div>
@@ -161,6 +168,7 @@
                       <p>Quantity: ".$requestRow[9]."</p>
                       <p>Supplier: ".$requestRow[2]."</p>
                       <p>Department: ".$requestRow[6]."</p>
+                      <p>Cost code: ".$requestRow[10]."</p>
                       <p>Approved by: ".$requestRow[3]."</p>
                       <p>Description: ".$requestRow[4]."</p>
                     </div>

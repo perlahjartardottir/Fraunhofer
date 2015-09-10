@@ -29,6 +29,7 @@ $departmentResult = mysqli_query($link, $departmentSql);
   <script type="text/javascript">
     window.onload = function() {
       overview();
+      updateCostCode();
     };
   </script>
   <div class='container'>
@@ -36,14 +37,17 @@ $departmentResult = mysqli_query($link, $departmentSql);
       <form>
         <div class='col-md-12 form-group'>
           <label>Department: </label>
-          <select class='form-control' id='department' onchange='overview()'>
+          <select class='form-control' id='department' onchange='updateCostCode(); overview();'>
             <option selected value='department'>All departments</option>
+            <option value='costCode'>All cost codes</option>
             <option value=''>All departments overall</option>
             <?php
             while($departmentRow = mysqli_fetch_array($departmentResult)){
               echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
             }?>
           </select>
+        </div>
+        <div class='form-group col-md-12 result'>
         </div>
         <div class='col-md-12 form-group'>
           <label>Time interval: </label>

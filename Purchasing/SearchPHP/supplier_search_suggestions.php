@@ -91,9 +91,9 @@ $supplier_address .= "%";
                                 <p><strong>Email: </strong><span id='supplier_email'>".$row[3]."</span></p>
                                 <p><strong>Address: </strong><span id='supplier_address'>".$row[4]."</span></p>
                                 <p><strong>Contact: </strong><span id='supplier_contact'>".$row[6]."</span></p>
-                                <p><strong>Account Nr: </strong><span id='supplier_accountNr'>".$row[10]."</span></p>
-                                <p><strong>Net Terms: </strong><span id='net_terms'>".$row[12]." days</span></p>
-                              </div>
+                                <p><strong>Account Nr: </strong><span id='supplier_accountNr'>".$row[10]."</span></p>";
+                                if($row[12] != ""){echo"<p><strong>Net Terms: </strong><span id='net_terms'>".$row[12]." days</span></p>";}
+                              echo"</div>
                               <div class='col-md-6'>
                                 <p><strong>Website: </strong><a href='".$row[7]."' target='_blank'><span id='supplier_website'>".$row[7]."</span></a></p>
                                 <p><strong>Login: </strong><span id='supplier_login'>".$row[8]."</span></p>

@@ -49,13 +49,15 @@ $departmentResult = mysqli_query($link, $departmentSql);
         </div>
         <div class='col-md-4 form-group'>
           <label>Department: </label>
-          <select id='department' class='form-control'>
+          <select id='department' class='form-control' onchange='updateCostCode()'>
             <option value=''>All departments</option>
             <?php
             while($departmentRow = mysqli_fetch_array($departmentResult)){
               echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
             }?>
           </select>
+        </div>
+        <div class='form-group col-md-4 result'>
         </div>
         <div class='col-md-4 form-group'>
           <label>Order timeframe: </label>
@@ -78,4 +80,9 @@ $departmentResult = mysqli_query($link, $departmentSql);
       </form>
     </div>
   </div>
+  <script>
+  $(document).ready(function() {
+      updateCostCode();
+  });
+  </script>
 </body>

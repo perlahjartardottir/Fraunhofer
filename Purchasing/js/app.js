@@ -56,6 +56,7 @@ function supplierSuggestions() {
 
 function overview(){
   var department = $('#department').val();
+  var cost_code = $('#cost_code').val();
   var timeInterval = $('#group_by_select').val();
   var date_from = $('#date_from').val();
   var date_to = $('#date_to').val();
@@ -63,7 +64,26 @@ function overview(){
     url: '../SearchPHP/overview.php',
     type: 'POST',
     data: {department   : department,
+           cost_code    : cost_code,
            timeInterval : timeInterval,
+           date_from    : date_from,
+           date_to      : date_to},
+    success: function(data, status, xhr) {
+      $("#output").html(data);
+    }
+  });
+}
+
+function forecast(){
+  var supplier_name = $('#supplier_name').val();
+  var order_name = $('#order_name').val();
+  var date_from = $('#date_from').val();
+  var date_to = $('#date_to').val();
+  $.ajax({
+    url: '../SearchPHP/forecast.php',
+    type: 'POST',
+    data: {supplier_name: supplier_name,
+           order_name   : order_name,
            date_from    : date_from,
            date_to      : date_to},
     success: function(data, status, xhr) {
@@ -132,6 +152,7 @@ function orderItemSuggestions() {
 function orderRequest(){
   var request_supplier     = $('#request_supplier').val();
   var department           = $('#department').val();
+  var cost_code           = $('#cost_code').val();
   var orderTimeframe       = $('#orderTimeframe').val();
   var approved_by_employee = $('#approved_by_employee').val();
   var request_description  = $('#request_description').val();
@@ -147,6 +168,7 @@ function orderRequest(){
       data: {
         request_supplier     : request_supplier,
         department           : department,
+        cost_code            : cost_code,
         orderTimeframe       : orderTimeframe,
         approved_by_employee : approved_by_employee,
         request_description  : request_description,
@@ -265,6 +287,7 @@ function addOrderItem(){
   var unit_price  = $('#unit_price').val();
   var description = $('#description').val();
   var department  = $('#department').val();
+  var cost_code   = $('#cost_code').val();
   $.ajax({
     url: '../InsertPHP/addNewOrderItem.php',
     type: 'POST',
@@ -273,6 +296,7 @@ function addOrderItem(){
       part_number : part_number,
       unit_price  : unit_price,
       department  : department,
+      cost_code   : cost_code,
       description : description
     },
     success: function(data, status, xhr){
@@ -393,11 +417,13 @@ function addNewSupplier(){
 
 function updateCostCode(){
   var department_name = $('#department').val();
+  var group_by_select = $('#group_by_select').val();
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
     data: {
-      department_name : department_name
+      department_name : department_name,
+      group_by_select : group_by_select
     },
     success: function(data, status, xhr) {
       $('.result').html(data);
