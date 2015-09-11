@@ -543,6 +543,23 @@ function deletePurchaseScan(scan_ID){
   }
 }
 
+// Delete Purchase Scan
+function deleteQuote(quote_ID){
+  var r = confirm("Are you sure you want to delete this quote?");
+  if(r === true){
+    $.ajax({
+      url: '../DeletePHP/deleteQuote.php',
+      type: "POST",
+      data:{
+        quote_ID : quote_ID
+      },
+      success: function(data, status, xhr) {
+        window.location.reload();
+      }
+    });
+  }
+}
+
 // Set the rating and receiving date of the purchase order
 function packageReceived(order_ID, element){
   var receiveDate = $(element).parent().find("#receiveDate").val();
@@ -586,7 +603,7 @@ function addCommentToPO(){
 
 // Set the currency on the printout since not all purchase orders are in $
 function setCurrency(){
-  var currency = $('#currency').val()
+  var currency = $('#currency').val();
   $.ajax({
     url: '../UpdatePHP/updateCurrency.php',
     type: "POST",

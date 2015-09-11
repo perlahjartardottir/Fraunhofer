@@ -31,6 +31,18 @@ $getRequestResult = mysqli_query($link, $getRequestSql);
 $row = mysqli_fetch_array($getRequestResult);
 $request_ID = $row[0];
 
+$quoteSql = "SELECT quote_ID, image
+             FROM quote
+             WHERE request_ID = '$request_ID'
+             OR order_ID = '$order_ID';";
+$quoteResult = mysqli_query($link, $quoteSql);
+while($quoteRow = mysqli_fetch_array($quoteResult)){
+  $quoteUpdateSql = "UPDATE quote
+                     SET order_ID = '$order_ID'
+                     WHERE quote_ID = $quoteRow[0];";
+  $quoteUpdateResult = mysqli_query($link, $quoteUpdateSql);
+}
+
 $departmentSql = "SELECT department_name
                   FROM department;";
 $departmentResult = mysqli_query($link, $departmentSql);
@@ -72,7 +84,34 @@ $departmentResult = mysqli_query($link, $departmentSql);
                  <p><b>Quantity:</b> ".$requestRow[3]."</p>
                  <p><b>Description:</b> ".$requestRow[0]."</p>";
           }
+          $quoteResult = mysqli_query($link, $quoteSql);
+          while($quoteRow = mysqli_fetch_array($quoteResult)){
+            echo"<div class='col-md-3'>
+                  <input type='image' src='../Scan/getQuoteImage.php?id=".$quoteRow[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$quoteRow[0]."')\">
+                  <button class='btn btn-danger' style='margin-top:5px; margin-right:20px' onclick='deleteQuote(".$quoteRow[0].")'>Delete</button>
+                </div>";
+          }
           ?>
+        </div>
+      </form>
+      <h4>Add Quotes</h4>
+      <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
+        <div class='col-md-3'>
+          <label>Quote number: </label>
+          <input type='text' class='form-control' name='quote_number' id='quote_number' name='quote_number'>
+        </div>
+        <div class='col-md-3'>
+          <label>Description: </label>
+          <input type='text' class='form-control' name='description' id='description' name='description'>
+        </div>
+        <div class='col-md-3'>
+          <label>Select image to upload:</label>
+          <!-- hidden type which is used to redirect to the correct view -->
+          <input type='hidden' value='orderQuote' id='redirect' name='redirect'>
+          <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg/pdf">
+        </div>
+        <div class='col-md-3'>
+          <input type="submit" class='btn btn-primary col-md-12' value="Add quote" name="submit" style='margin-top:25px;'>
         </div>
       </form>
     </div>
