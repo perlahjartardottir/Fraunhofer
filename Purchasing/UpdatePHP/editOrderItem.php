@@ -18,7 +18,12 @@ $departmentResult = mysqli_query($link, $departmentSql);
 $departmentRow = mysqli_fetch_array($departmentResult);
 
 $sql = "UPDATE order_item
-        SET quantity = '$quantity', part_number = '$part_number', department_ID = '$departmentRow[0]', unit_price = '$unit_price', description = '$description'
+        SET quantity = '$quantity', part_number = '$part_number', unit_price = '$unit_price', description = '$description'
         WHERE order_item_ID = '$order_item_ID';";
 $result = mysqli_query($link, $sql);
+if (!$result) {
+    $message  = 'Invalid result query: ' . mysqli_error($link);
+    die($message);
+}
+var_dump($sql);
 ?>

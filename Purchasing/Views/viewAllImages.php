@@ -31,6 +31,11 @@ $orderSql = "SELECT quantity, part_number, description, final_inspection
              WHERE order_ID = '$order_ID';";
 $orderResult = mysqli_query($link, $orderSql);
 
+$quoteSql = "SELECT quote_ID, image
+             FROM quote
+             WHERE order_ID = '$order_ID';";
+$quoteResult = mysqli_query($link, $quoteSql);
+
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -56,6 +61,22 @@ $orderResult = mysqli_query($link, $orderSql);
             ?>
           </tbody>
         </table>
+        <?php
+        if(mysqli_num_rows($quoteResult) != 0){
+          echo"<h3>All Quotes</h3>
+               <table class='table table-responsive'>
+                <tbody>";
+              while($quoteRow = mysqli_fetch_array($quoteResult)){
+                echo"<tr>
+                      <td><input type='image' src='../Scan/getQuoteImage.php?id=".$quoteRow[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$quoteRow[0]."')\"></td>
+                      <td><button class='btn btn-danger' style='margin-top:35px;' onclick='deleteQuote(".$quoteRow[0].")'>Delete</button></td>
+                    </tr>";
+              }
+              echo"
+            </tbody>
+          </table>";
+        }
+        ?>
       </div>
       <div class='col-md-7 col-md-offset-1'>
         <h3>Purchase Order: <?php echo $order_ID; ?></h3>

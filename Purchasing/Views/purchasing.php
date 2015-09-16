@@ -81,15 +81,18 @@
   <?php include '../header.php'; ?>
   <div class="container">
     <div class="row well well-lg">
-      <div class='col-md-12'>
-        <div class='col-md-3'>
-          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='supplierList.php'">Supplier list</button>
+      <div class='col-md-12 col-md-offset-1'>
+        <div class='col-md-2'>
+          <button type="button" class='btn btn-primary col-md-12' onclick="location.href='supplierList.php'">Supplier list</button>
         </div>
-        <div class='col-md-3'>
-          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='request.php'">Request for PO</button>
+        <div class='col-md-2'>
+          <button type="button" class='btn btn-primary col-md-12' onclick="location.href='addQuote.php'">Quotes</button>
         </div>
-        <div class='col-md-3' id='process_order'>
-          <button type="button" class='btn btn-primary col-md-8' onclick="location.href='processOrder.php'">
+        <div class='col-md-2'>
+          <button type="button" class='btn btn-primary col-md-12' onclick="location.href='request.php'">Request for PO</button>
+        </div>
+        <div class='col-md-2' id='process_order'>
+          <button type="button" class='btn btn-primary col-md-12' onclick="location.href='processOrder.php'">
             Process order
             <?php
               if($activeRequests[0] > 0){
@@ -98,14 +101,15 @@
              ?>
           </button>
         </div>
-        <div class='col-md-3 btn-group'>
-            <button type='button' class='btn btn-primary col-md-7' onclick="location.href='overview.php'">Overview</button>
+        <div class='col-md-2 btn-group'>
+            <button type='button' class='btn btn-primary col-md-9' onclick="location.href='overview.php'">Overview</button>
             <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
               <span class='caret'></span>
               <span class='sr-only'>Toggle Dropdown</span>
             </button>
             <ul class='dropdown-menu' role='menu'>
               <li><a href='forecast.php'>Forecast</a></li>
+              <li><a href='quotes.php'>Quotes</a></li>
             </ul>
         </div>
       </div>

@@ -4,7 +4,17 @@ session_start();
 $redirect     = mysqli_real_escape_string($link, $_POST['redirect']);
 $quote_number = mysqli_real_escape_string($link, $_POST['quote_number']);
 $description  = mysqli_real_escape_string($link, $_POST['description']);
+$supplier = mysqli_real_escape_string($link, $_POST['supplierList']);
 $order_ID = $_SESSION["order_ID"];
+
+// Find the supplier ID
+$supplierSql = "SELECT supplier_ID
+                FROM supplier
+                WHERE supplier_name = '$supplier';";
+$supplierResult = mysqli_query($link, $supplierSql);
+
+$row = mysqli_fetch_array($supplierResult);
+$supplier_ID = $row[0];
 
 $fileName = $_FILES['fileToUpload']['name'];
 $tmpName  = $_FILES['fileToUpload']['tmp_name'];
@@ -14,28 +24,25 @@ $content = fread($fp, filesize($tmpName));
 $content = addslashes($content);
 fclose($fp);
 
-if($redirect == 'requestQuote'){
-  $sql = "INSERT INTO quote (quote_number, description, image, create_request)
-          VALUES ('$quote_number', '$description', '$content', 1);";
+if($redirect == 'addQuote'){
+  $sql = "INSERT INTO quote (quote_number, description, image, create_request, supplier_ID, quote_date)
+          VALUES ('$quote_number', '$description', '$content', 1, '$supplier_ID', CURDATE());";
 } else if($redirect == 'orderQuote'){
-  $sql = "INSERT INTO quote (quote_number, description, image, order_ID)
-          VALUES ('$quote_number', '$description', '$content', '$order_ID');";
+  $sql = "INSERT INTO quote (quote_number, description, image, order_ID, supplier_ID, quote_date)
+          VALUES ('$quote_number', '$description', '$content', '$order_ID', '$supplier_ID', CURDATE());";
+} else if($redirect == 'quoteOverview'){
+  $sql = "INSERT INTO quote (quote_number, description, image, supplier_ID, quote_date)
+          VALUES ('$quote_number', '$description', '$content', '$supplier_ID', CURDATE());";
 }
 
 $result = mysqli_query($link, $sql);
 
-if(!$result){
-	echo("Something went wrong : ".mysqli_error($link));
-}
-
-// close connection
-mysqli_close($link);
-
-// Redirecting to the correct view, depending on whether
-// we were adding a tool or editing PO
-if($redirect == 'requestQuote'){
-	header('Location: ../Views/request.php');
+// Redirecting to the correct view, depending on where we added the quote
+if($redirect == 'addQuote'){
+	header('Location: ../Views/addQuote.php');
 } else if($redirect == 'orderQuote'){
   header('Location: ../Views/addOrderItem.php');
+} else if($redirect == 'quoteOverview'){
+  header('Location: ../Views/quotes.php');
 }
 ?>

@@ -17,6 +17,8 @@ if($user_sec_lvl < 2){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
+
+// show latest purchase orders
 $sql = "SELECT order_ID
         FROM purchase_order
         ORDER BY order_ID DESC
@@ -24,18 +26,33 @@ $sql = "SELECT order_ID
 $result = mysqli_query($link, $sql);
 $order_ID = $_SESSION["order_ID"];
 
-$getRequestSql = "SELECT request_ID
+// Get the request and supplier ID from the purchase order
+$getRequestSql = "SELECT request_ID, supplier_ID
                   FROM purchase_order
                   WHERE order_ID = '$order_ID';";
 $getRequestResult = mysqli_query($link, $getRequestSql);
 $row = mysqli_fetch_array($getRequestResult);
 $request_ID = $row[0];
+$supplier_ID = $row[1];
 
+// Get supplier name from its ID
+$getSupplierNameSql = "SELECT supplier_name
+                       FROM supplier
+                       WHERE supplier_ID = '$supplier_ID';";
+$getSupplierNameResult = mysqli_query($link, $getSupplierNameSql);
+$supplierRow = mysqli_fetch_array($getSupplierNameResult);
+$supplier_name = $supplierRow[0];
+
+// Get quotes that are linked to this purchase order or linked to
+// the request that is linked to this purchase order
 $quoteSql = "SELECT quote_ID, image
              FROM quote
              WHERE request_ID = '$request_ID'
              OR order_ID = '$order_ID';";
 $quoteResult = mysqli_query($link, $quoteSql);
+
+// Update the quote to have this order ID if we only maintained that
+// quote from a request
 while($quoteRow = mysqli_fetch_array($quoteResult)){
   $quoteUpdateSql = "UPDATE quote
                      SET order_ID = '$order_ID'
@@ -43,9 +60,15 @@ while($quoteRow = mysqli_fetch_array($quoteResult)){
   $quoteUpdateResult = mysqli_query($link, $quoteUpdateSql);
 }
 
+// Find all departments
 $departmentSql = "SELECT department_name
                   FROM department;";
 $departmentResult = mysqli_query($link, $departmentSql);
+
+// Find all suppliers
+$supplierSql = "SELECT supplier_name
+                FROM supplier;";
+$supplierResult = mysqli_query($link, $supplierSql);
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -98,12 +121,26 @@ $departmentResult = mysqli_query($link, $departmentSql);
       <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
         <div class='col-md-3'>
           <label>Quote number: </label>
-          <input type='text' class='form-control' name='quote_number' id='quote_number' name='quote_number'>
+          <input type='text' class='form-control' name='quote_number' id='quote_number'>
         </div>
         <div class='col-md-3'>
           <label>Description: </label>
-          <input type='text' class='form-control' name='description' id='description' name='description'>
+          <input type='text' class='form-control' name='description' id='quoteDescription'>
         </div>
+        <div class='col-md-3'>
+          <label>Supplier: </label>
+            <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
+            <datalist id="suppliers">
+              <?
+              while($row = mysqli_fetch_array($supplierResult)){
+                echo"<option value='".$row[0]."'></option>";
+              }
+              ?>
+            </datalist>
+        </div>
+        <?php
+        echo "<input type='hidden' id='supplierList' name='supplierList' value='".$supplier_name."'>";
+        ?>
         <div class='col-md-3'>
           <label>Select image to upload:</label>
           <!-- hidden type which is used to redirect to the correct view -->

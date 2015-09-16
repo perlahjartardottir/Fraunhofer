@@ -149,6 +149,28 @@ function orderItemSuggestions() {
   });
 }
 
+function quoteSuggestions() {
+  $('#output').html();
+  var order_name = $('#order_name').val();
+  var quote_number = $('#quote_number').val();
+  var supplier_name = $('#supplier_name').val();
+  var first_date = $('#first_date').val();
+  var last_date  = $('#last_date').val();
+
+  $.ajax({
+    url: '../SearchPHP/quote_suggestions.php',
+    type: 'POST',
+    data: {order_name : order_name,
+           quote_number : quote_number,
+           supplier_name : supplier_name,
+           first_date : first_date,
+           last_date  : last_date},
+    success: function(data, status, xhr) {
+      $("#output").html(data);
+    }
+  });
+}
+
 function orderRequest(){
   var request_supplier     = $('#request_supplier').val();
   var department           = $('#department').val();
@@ -288,6 +310,7 @@ function addOrderItem(){
   var description = $('#description').val();
   var department  = $('#department').val();
   var cost_code   = $('#cost_code').val();
+
   $.ajax({
     url: '../InsertPHP/addNewOrderItem.php',
     type: 'POST',
@@ -348,7 +371,6 @@ function editOrderNumber(){
 
 // if this function returns false the file is not added
 function checkSize(max_img_size) {
-  console.log("yoyo");
   var input = document.getElementById("fileToUpload");
   if (input.files && input.files.length == 1) {
     if (input.files[0].size > max_img_size) {
@@ -359,7 +381,6 @@ function checkSize(max_img_size) {
     alert("No image chosen.");
     return false;
   }
-
   return true;
 }
 
@@ -543,12 +564,28 @@ function deletePurchaseScan(scan_ID){
   }
 }
 
-// Delete Purchase Scan
+// Delete quote from database
 function deleteQuote(quote_ID){
   var r = confirm("Are you sure you want to delete this quote?");
   if(r === true){
     $.ajax({
       url: '../DeletePHP/deleteQuote.php',
+      type: "POST",
+      data:{
+        quote_ID : quote_ID
+      },
+      success: function(data, status, xhr) {
+        window.location.reload();
+      }
+    });
+  }
+}
+// Remove quote from request list
+function removeQuoteFromRequest(quote_ID){
+  var r = confirm("Are you sure you want to remove this quote?");
+  if(r === true){
+    $.ajax({
+      url: '../UpdatePHP/removeQuoteFromRequest.php',
       type: "POST",
       data:{
         quote_ID : quote_ID
@@ -628,6 +665,7 @@ function editOrderItem(order_item_ID, element){
   var department  = $(element).parent().prev().find('#department').val();
   var unit_price  = $(element).parent().prev().find('#unit_price').val();
   var description = $(element).parent().prev().find('#description').val();
+
   $.ajax({
     url: '../UpdatePHP/editOrderItem.php',
     type: "POST",
@@ -726,6 +764,24 @@ function confirmFinalInspection(order_ID){
     }
   });
   window.location.reload();
+}
+
+function createRequestFromQuotes(){
+  var selected = [];
+  $('#mytable').find('input[type="checkbox"]:checked').each(function (){
+    selected.push($(this).attr('name'));
+  });
+  var array = selected.join(",");
+  $.ajax({
+    url: '../SelectPHP/createRequestFromQuotes.php',
+    type: 'POST',
+    data:{
+      selected : array
+    },
+    success: function(data, status, xhr) {
+      window.location = "../Views/request.php";
+    }
+  });
 }
 
 // Update the final inspection for the order item
