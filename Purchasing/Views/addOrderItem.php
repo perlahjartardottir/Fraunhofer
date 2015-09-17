@@ -45,7 +45,7 @@ $supplier_name = $supplierRow[0];
 
 // Get quotes that are linked to this purchase order or linked to
 // the request that is linked to this purchase order
-$quoteSql = "SELECT quote_ID, image
+$quoteSql = "SELECT quote_ID, image, quote_number, supplier_ID, quote_date
              FROM quote
              WHERE request_ID = '$request_ID'
              OR order_ID = '$order_ID';";
@@ -54,10 +54,12 @@ $quoteResult = mysqli_query($link, $quoteSql);
 // Update the quote to have this order ID if we only maintained that
 // quote from a request
 while($quoteRow = mysqli_fetch_array($quoteResult)){
-  $quoteUpdateSql = "UPDATE quote
-                     SET order_ID = '$order_ID'
-                     WHERE quote_ID = $quoteRow[0];";
-  $quoteUpdateResult = mysqli_query($link, $quoteUpdateSql);
+  if($quoteRow[3] == $supplier_ID){
+    $quoteUpdateSql = "UPDATE quote
+                       SET order_ID = '$order_ID'
+                       WHERE quote_ID = $quoteRow[0];";
+    $quoteUpdateResult = mysqli_query($link, $quoteUpdateSql);
+  }
 }
 
 // Find all departments
@@ -109,48 +111,64 @@ $supplierResult = mysqli_query($link, $supplierSql);
           }
           $quoteResult = mysqli_query($link, $quoteSql);
           while($quoteRow = mysqli_fetch_array($quoteResult)){
+            $supplierNameSql = "SELECT supplier_name
+                                FROM supplier
+                                WHERE supplier_ID = '$quoteRow[3]';";
+            $supplierNameResult = mysqli_query($link, $supplierNameSql);
+            $supplierNameRow = mysqli_fetch_array($supplierNameResult);
             echo"<div class='col-md-3'>
                   <input type='image' src='../Scan/getQuoteImage.php?id=".$quoteRow[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$quoteRow[0]."')\">
                   <button class='btn btn-danger' style='margin-top:5px; margin-right:20px' onclick='deleteQuote(".$quoteRow[0].")'>Delete</button>
+                </div>
+                <div class='col-md-3'>
+                  <p><strong>Quote number: </strong>".$quoteRow[2]."</p>
+                  <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
+                  <p><strong>Date issued: </strong>".$quoteRow[4]."</p>
                 </div>";
           }
           ?>
         </div>
-      </form>
-      <h4>Add Quotes</h4>
-      <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
-        <div class='col-md-3'>
-          <label>Quote number: </label>
-          <input type='text' class='form-control' name='quote_number' id='quote_number'>
+        <div class='col-md-6'>
+          </form>
+          <h4>Add Quotes</h4>
+          <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
+            <div class='col-md-6'>
+              <label>Quote number: </label>
+              <input type='text' class='form-control' name='quote_number' id='quote_number'>
+            </div>
+            <div class='col-md-6'>
+              <label>Description: </label>
+              <input type='text' class='form-control' name='description' id='quoteDescription'>
+            </div>
+            <div class='col-md-6'>
+              <label>Supplier: </label>
+                <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
+                <datalist id="suppliers">
+                  <?
+                  while($row = mysqli_fetch_array($supplierResult)){
+                    echo"<option value='".$row[0]."'></option>";
+                  }
+                  ?>
+                </datalist>
+            </div>
+            <div class='col-md-6'>
+              <label>Quote issued: </label>
+              <input type='date' class='form-control' name='quote_date' id='quote_date'>
+            </div>
+            <?php
+            echo "<input type='hidden' id='supplierList' name='supplierList' value='".$supplier_name."'>";
+            ?>
+            <div class='col-md-6'>
+              <label>Select image to upload:</label>
+              <!-- hidden type which is used to redirect to the correct view -->
+              <input type='hidden' value='orderQuote' id='redirect' name='redirect'>
+              <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg/pdf">
+            </div>
+            <div class='col-md-6'>
+              <input type="submit" class='btn btn-primary col-md-12' value="Add quote" name="submit" style='margin-top:25px;'>
+            </div>
+          </form>
         </div>
-        <div class='col-md-3'>
-          <label>Description: </label>
-          <input type='text' class='form-control' name='description' id='quoteDescription'>
-        </div>
-        <div class='col-md-3'>
-          <label>Supplier: </label>
-            <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
-            <datalist id="suppliers">
-              <?
-              while($row = mysqli_fetch_array($supplierResult)){
-                echo"<option value='".$row[0]."'></option>";
-              }
-              ?>
-            </datalist>
-        </div>
-        <?php
-        echo "<input type='hidden' id='supplierList' name='supplierList' value='".$supplier_name."'>";
-        ?>
-        <div class='col-md-3'>
-          <label>Select image to upload:</label>
-          <!-- hidden type which is used to redirect to the correct view -->
-          <input type='hidden' value='orderQuote' id='redirect' name='redirect'>
-          <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg/pdf">
-        </div>
-        <div class='col-md-3'>
-          <input type="submit" class='btn btn-primary col-md-12' value="Add quote" name="submit" style='margin-top:25px;'>
-        </div>
-      </form>
     </div>
     <div class='row well well-lg'>
       <h4>Add a new item</h4>

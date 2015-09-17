@@ -19,7 +19,7 @@ if($user_sec_lvl < 2){
   die("You don't have the privileges to view this site.");
 }
 
-$sql = "SELECT quote_ID, image
+$sql = "SELECT quote_ID, image, quote_number, supplier_ID, quote_date
         FROM quote
         WHERE create_request = 1;";
 $result = mysqli_query($link, $sql);
@@ -47,9 +47,19 @@ $supplierResult = mysqli_query($link, $supplierSql);
       <div class='col-md-12'>
         <?php
         while($row = mysqli_fetch_array($result)){
-          echo"<div class='col-md-4 '>
+          $supplierNameSql = "SELECT supplier_name
+                              FROM supplier
+                              WHERE supplier_ID = '$row[3]';";
+          $supplierNameResult = mysqli_query($link, $supplierNameSql);
+          $supplierNameRow = mysqli_fetch_array($supplierNameResult);
+          echo"<div class='col-md-2'>
                 <input type='image' src='../Scan/getRequestQuoteImage.php?id=".$row[0]."' style='margin-top:5px;' width='120' height='120' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quoteRequestPrintout.php?id=".$row[0]."')\">
                 <button class='btn btn-danger' style='margin-top:5px; margin-right:200px' onclick='removeQuoteFromRequest(".$row[0].")'>Deactivate</button>
+              </div>
+              <div class='col-md-2' style='margin-left:-15px;'>
+                <p><strong>Quote number: </strong>".$row[2]."</p>
+                <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
+                <p><strong>Date issued: </strong>".$row[4]."</p>
               </div>";
         }
          ?>

@@ -2,14 +2,20 @@
 include '../../connection.php';
 $order_name    = mysqli_real_escape_string($link, $_POST['order_name']);
 $quote_number  = mysqli_real_escape_string($link, $_POST['quote_number']);
+$description   = mysqli_real_escape_string($link, $_POST['description']);
 $supplier_name = mysqli_real_escape_string($link, $_POST['supplier_name']);
 $first_date    = mysqli_real_escape_string($link, $_POST['first_date']);
 $last_date     = mysqli_real_escape_string($link, $_POST['last_date']);
 
 
 $order_name .= '%';
+$description .= '%';
 $quote_number .= '%';
 $supplier_name .= '%';
+// added '%' in front of description so that I can search for substring in middle of description
+// and not just in the beginning
+$description = '%' . $description;
+$order_name = '%' . $order_name ;
 
 ?>
 <div id='output'>
@@ -27,22 +33,29 @@ $supplier_name .= '%';
     <tbody>
       <?php
       $sql = "SELECT quote_ID, supplier_ID, quote_date, description, order_ID, image, request_ID, quote_number
-              FROM quote
-              WHERE (order_ID = ANY(SELECT order_ID
-                                   FROM purchase_order
-                                   WHERE order_name LIKE '$order_name')
-              OR order_ID IS NULL)
-              AND supplier_ID = ANY(SELECT supplier_ID
+              FROM quote ";
+      if($order_name == '%%'){
+        $sql .= "WHERE (order_ID = ANY(SELECT order_ID
+                             FROM purchase_order
+                             WHERE order_name LIKE '$order_name')
+                 OR order_ID IS NULL) ";
+      } else{
+        $sql .= "WHERE order_ID = ANY(SELECT order_ID
+                             FROM purchase_order
+                             WHERE order_name LIKE '$order_name') ";
+      }
+      $sql .= "AND supplier_ID = ANY(SELECT supplier_ID
                                     FROM supplier
                                     WHERE supplier_name LIKE '$supplier_name')
-              AND quote_number LIKE '$quote_number' ";
+              AND quote_number LIKE '$quote_number'
+              AND description LIKE '$description' ";
       if(!empty($first_date)){
       	$sql .= "AND quote_date >= '$first_date' ";
       }
       if(!empty($last_date)){
       	$sql .= "AND quote_date <= '$last_date' ";
       }
-      $sql .= "ORDER BY quote_ID DESC;";
+      $sql .= "ORDER BY quote_date DESC;";
       $result = mysqli_query($link, $sql);
 
       while($row = mysqli_fetch_array($result)){

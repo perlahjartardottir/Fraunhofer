@@ -42,12 +42,16 @@ if($user_sec_lvl < 2){
           <input type="text" id='quote_number' onkeyup='quoteSuggestions()' class='form-control'/>
         </div>
         <div class='col-md-12 form-group'>
-          <label>Purchase number: </label>
-          <input type="text" id='order_name' onkeyup='quoteSuggestions()' class='form-control'/>
-        </div>
-        <div class='col-md-12 form-group'>
           <label>Supplier: </label>
           <input type="text" id='supplier_name' onkeyup='quoteSuggestions()' class='form-control'/>
+        </div>
+        <div class='col-md-12 form-group'>
+          <label>Description: </label>
+          <input type="text" id='quote_description' onkeyup='quoteSuggestions()' class='form-control'/>
+        </div>
+        <div class='col-md-12 form-group'>
+          <label>Purchase number: </label>
+          <input type="text" id='order_name' onkeyup='quoteSuggestions()' class='form-control'/>
         </div>
         <div class='col-md-12 form-group'>
           <label>Quote issue date from:</label>
@@ -62,7 +66,9 @@ if($user_sec_lvl < 2){
 
     <!-- SearchPHP/purchase_search_suggestions.php -->
     <div class="col-md-8 col-md-offset-1">
-      <p>Select checkboxes and then click "create request" to create a request with all checked quotes</p>
+      <span>This table contains information about all quotes in the system.</span>
+      <span><br>Select received quotes for PO request. Click "create request" to create a new request based on checked quotes.</span>
+      <p>All quotes will be included in request, the final quote will be linked to the PO</p>
       <div id='output' class='table table-responsive'>
       </div>
     </div>

@@ -153,6 +153,7 @@ function quoteSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();
   var quote_number = $('#quote_number').val();
+  var description = $('#quote_description').val();
   var supplier_name = $('#supplier_name').val();
   var first_date = $('#first_date').val();
   var last_date  = $('#last_date').val();
@@ -162,6 +163,7 @@ function quoteSuggestions() {
     type: 'POST',
     data: {order_name : order_name,
            quote_number : quote_number,
+           description : description,
            supplier_name : supplier_name,
            first_date : first_date,
            last_date  : last_date},
@@ -595,6 +597,19 @@ function removeQuoteFromRequest(quote_ID){
       }
     });
   }
+}
+
+// Make quotes inactive and redirect to overview
+function addQuoteToOverview(){
+  $.ajax({
+    url: '../UpdatePHP/deactivateQuotes.php',
+    type: "POST",
+    data:{
+    },
+    success: function(data, status, xhr) {
+      window.location = '../Views/quotes.php';
+    }
+  });
 }
 
 // Set the rating and receiving date of the purchase order

@@ -24,7 +24,7 @@ $supplierSql = "SELECT supplier_name
 $supplierResult = mysqli_query($link, $supplierSql);
 
 // Find all quotes recently created
-$sql = "SELECT quote_ID, image
+$sql = "SELECT quote_ID, image, quote_number, supplier_ID, quote_date
         FROM quote
         WHERE create_request = 1;";
 $result = mysqli_query($link, $sql);
@@ -41,11 +41,11 @@ $result = mysqli_query($link, $sql);
         <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
           <div class='col-md-3'>
             <label>Quote number: </label>
-            <input type='text' class='form-control' name='quote_number' id='quote_number' name='quote_number'>
+            <input type='text' class='form-control' name='quote_number' id='quote_number'>
           </div>
           <div class='col-md-3'>
             <label>Description: </label>
-            <input type='text' class='form-control' name='description' id='description' name='description'>
+            <input type='text' class='form-control' name='description' id='description'>
           </div>
           <div class='col-md-3'>
             <label>Supplier: </label>
@@ -59,24 +59,44 @@ $result = mysqli_query($link, $sql);
               </datalist>
           </div>
           <div class='col-md-3'>
+            <label>Quote issued: </label>
+            <input type='date' class='form-control' name='quote_date' id='quote_date'>
+          </div>
+          <div class='col-md-3'>
             <label>Select image to upload:</label>
             <!-- hidden type which is used to redirect to the correct view -->
             <input type='hidden' value='addQuote' id='redirect' name='redirect'>
             <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg/pdf">
           </div>
-          <div class='col-md-12'>
-            <input type="submit" class='btn btn-primary col-md-6 col-md-offset-3' value="Add quote" name="submit" style='margin-top:25px;'>
+          <div class='col-md-9'>
+            <input type="submit" class='btn btn-primary col-md-8' value="Add quote" name="submit" style='margin-top:25px;'>
           </div>
         </form>
         <div class='col-md-12'>
           <?php
           while($row = mysqli_fetch_array($result)){
-            echo"<div class='col-md-3'>
+            $supplierNameSql = "SELECT supplier_name
+                                FROM supplier
+                                WHERE supplier_ID = '$row[3]';";
+            $supplierNameResult = mysqli_query($link, $supplierNameSql);
+            $supplierNameRow = mysqli_fetch_array($supplierNameResult);
+            echo"<div class='col-md-2' style='margin-top:30px'>
                   <input type='image' src='../Scan/getRequestQuoteImage.php?id=".$row[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quoteRequestPrintout.php?id=".$row[0]."')\">
                   <button class='btn btn-danger' style='margin-top:5px; margin-right:200px' onclick='removeQuoteFromRequest(".$row[0].")'>Deactivate</button>
+                </div>
+                <div class='col-md-2' style='margin-top:30px; margin-left:-35px;'>
+                  <p><strong>Quote number: </strong>".$row[2]."</p>
+                  <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
+                  <p><strong>Date issued: </strong>".$row[4]."</p>
                 </div>";
           }
            ?>
+        </div>
+        <div class='col-md-6' style='margin-top:30;'>
+          <a href='request.php' class='btn btn-primary col-md-12'>Create request</a>
+        </div>
+        <div class='col-md-6' style='margin-top:30;'>
+          <button class='btn btn-primary col-md-12' onclick='addQuoteToOverview()'>Overview</button>
         </div>
       </div>
     </div>
