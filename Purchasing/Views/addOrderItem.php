@@ -117,11 +117,10 @@ $supplierResult = mysqli_query($link, $supplierSql);
             $supplierNameResult = mysqli_query($link, $supplierNameSql);
             $supplierNameRow = mysqli_fetch_array($supplierNameResult);
             echo"<div class='col-md-3'>
-                  <input type='image' src='../Scan/getQuoteImage.php?id=".$quoteRow[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$quoteRow[0]."')\">
+                  <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$quoteRow[0]."'>".$quoteRow[2]."</a><br></p>
                   <button class='btn btn-danger' style='margin-top:5px; margin-right:20px' onclick='deleteQuote(".$quoteRow[0].")'>Delete</button>
                 </div>
                 <div class='col-md-3'>
-                  <p><strong>Quote number: </strong>".$quoteRow[2]."</p>
                   <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
                   <p><strong>Date issued: </strong>".$quoteRow[4]."</p>
                 </div>";
@@ -131,14 +130,14 @@ $supplierResult = mysqli_query($link, $supplierSql);
         <div class='col-md-6'>
           </form>
           <h4>Add Quotes</h4>
-          <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
+          <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data">
             <div class='col-md-6'>
               <label>Quote number: </label>
               <input type='text' class='form-control' name='quote_number' id='quote_number'>
             </div>
             <div class='col-md-6'>
               <label>Description: </label>
-              <input type='text' class='form-control' name='description' id='quoteDescription'>
+              <input type='text' class='form-control' name='quoteDescription' id='quoteDescription'>
             </div>
             <div class='col-md-6'>
               <label>Supplier: </label>
@@ -162,7 +161,8 @@ $supplierResult = mysqli_query($link, $supplierSql);
               <label>Select image to upload:</label>
               <!-- hidden type which is used to redirect to the correct view -->
               <input type='hidden' value='orderQuote' id='redirect' name='redirect'>
-              <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg/pdf">
+              <input type='hidden' name='MAX_FILE_SIZE' value='2000000'>
+              <input type="file" name="fileToUpload" id="fileToUpload">
             </div>
             <div class='col-md-6'>
               <input type="submit" class='btn btn-primary col-md-12' value="Add quote" name="submit" style='margin-top:25px;'>

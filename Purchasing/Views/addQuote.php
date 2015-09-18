@@ -38,14 +38,14 @@ $result = mysqli_query($link, $sql);
     <div class='row well'>
       <div class='col-md-12'>
         <h3><center>Add Quotes</center></h3>
-        <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
+        <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data">
           <div class='col-md-3'>
             <label>Quote number: </label>
             <input type='text' class='form-control' name='quote_number' id='quote_number'>
           </div>
           <div class='col-md-3'>
             <label>Description: </label>
-            <input type='text' class='form-control' name='description' id='description'>
+            <input type='text' class='form-control' name='quoteDescription' id='quoteDescription'>
           </div>
           <div class='col-md-3'>
             <label>Supplier: </label>
@@ -66,7 +66,8 @@ $result = mysqli_query($link, $sql);
             <label>Select image to upload:</label>
             <!-- hidden type which is used to redirect to the correct view -->
             <input type='hidden' value='addQuote' id='redirect' name='redirect'>
-            <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg/pdf">
+            <input type='hidden' name='MAX_FILE_SIZE' value='2000000'>
+            <input type="file" name="fileToUpload" id="fileToUpload">
           </div>
           <div class='col-md-9'>
             <input type="submit" class='btn btn-primary col-md-8' value="Add quote" name="submit" style='margin-top:25px;'>
@@ -81,11 +82,10 @@ $result = mysqli_query($link, $sql);
             $supplierNameResult = mysqli_query($link, $supplierNameSql);
             $supplierNameRow = mysqli_fetch_array($supplierNameResult);
             echo"<div class='col-md-2' style='margin-top:30px'>
-                  <input type='image' src='../Scan/getRequestQuoteImage.php?id=".$row[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quoteRequestPrintout.php?id=".$row[0]."')\">
+                  <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$row[0]."'>".$row[2]."</a><br></p>
                   <button class='btn btn-danger' style='margin-top:5px; margin-right:200px' onclick='removeQuoteFromRequest(".$row[0].")'>Deactivate</button>
                 </div>
                 <div class='col-md-2' style='margin-top:30px; margin-left:-35px;'>
-                  <p><strong>Quote number: </strong>".$row[2]."</p>
                   <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
                   <p><strong>Date issued: </strong>".$row[4]."</p>
                 </div>";

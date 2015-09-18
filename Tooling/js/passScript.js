@@ -1219,7 +1219,7 @@ function applyDiscount() {
   var reason;
   // the following code picks the first input field
   // with the right names that are not empty
-  // this is done so we do put discount on a wrong lineitem.
+  // this is done so we don't put discount on a wrong lineitem.
   $('input[name="quantity"]').each(function() {
     if (this.value !== '') {
       quantity = this.value;
@@ -1244,11 +1244,7 @@ function applyDiscount() {
       reason: reason
     },
     success: function(data, status, xhr) {
-      // TODO :
-      //    Empty ALL input fields
-      $('.discount_quantity').val('');
-      $('.discount').val('');
-      $('.discount_reason').val('');
+      window.location.reload();
     },
   });
 }

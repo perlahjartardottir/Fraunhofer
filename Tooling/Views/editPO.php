@@ -279,7 +279,7 @@ while($row = mysqli_fetch_array($secResult)){
                 </div>";
         }
       ?>
-      <div class='col-md-12'>
+      <div class='col-md-12' style='margin-top:20px;'>
         <a class="btn btn-primary" href="../Views/addTools2.php" style="margin-top: 3px;">Add lineitems</a>
         <?php if($user_sec_lvl > 3){
           echo "<button class='btn btn-danger' style='float: right;' onclick='delPO(".$po_ID.", 1)'>Delete PO</button>";

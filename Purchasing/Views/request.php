@@ -52,15 +52,16 @@ $supplierResult = mysqli_query($link, $supplierSql);
                               WHERE supplier_ID = '$row[3]';";
           $supplierNameResult = mysqli_query($link, $supplierNameSql);
           $supplierNameRow = mysqli_fetch_array($supplierNameResult);
-          echo"<div class='col-md-2'>
-                <input type='image' src='../Scan/getRequestQuoteImage.php?id=".$row[0]."' style='margin-top:5px;' width='120' height='120' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quoteRequestPrintout.php?id=".$row[0]."')\">
-                <button class='btn btn-danger' style='margin-top:5px; margin-right:200px' onclick='removeQuoteFromRequest(".$row[0].")'>Deactivate</button>
-              </div>
-              <div class='col-md-2' style='margin-left:-15px;'>
-                <p><strong>Quote number: </strong>".$row[2]."</p>
-                <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
-                <p><strong>Date issued: </strong>".$row[4]."</p>
-              </div>";
+          echo"<div class='col-md-4'>
+                  <div class='col-md-5'>
+                  <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$row[0]."'>".$row[2]."</a><br></p>
+                  <button class='btn btn-danger' style='margin-top:5px; margin-right:200px' onclick='removeQuoteFromRequest(".$row[0].")'>Deactivate</button>
+                </div>
+                <div class='col-md-7'>
+                  <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
+                  <p><strong>Date issued: </strong>".$row[4]."</p>
+                </div>
+               </div>";
         }
          ?>
       </div>
