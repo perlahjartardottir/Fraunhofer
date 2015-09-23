@@ -47,6 +47,11 @@ $supplierRow = mysqli_fetch_array($supplierResult);
 </head>
 <body>
   <?php include '../header.php'; ?>
+  <script type="text/javascript">
+    window.onload = function() {
+      esignatureCheck();
+    };
+  </script>
   <div class='container'>
     <div class='row well well-lg'>
       <form>
@@ -85,6 +90,8 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           }
           ?>
         </div>
+        <input type='checkbox' id='esignature' onchange='esignatureCheck()'> E-signature<br>
+        <p></p>
         <button class='btn btn-primary' onclick='window.print()'>Print</button>
       </div>
       <div class='col-md-6'>
@@ -177,13 +184,11 @@ $supplierRow = mysqli_fetch_array($supplierResult);
     <?php
     if($comment != ""){
       echo"<div class='col-xs-12'>
-            <p> Comment:</br>".$comment."</p>
+            <p> <strong>Comment: </strong>".$comment."</p>
           </div>";
     }
     ?>
-    <div class='col-xs-4'>
-      <p> Signature: <hr id='signature'></p>
-    </div>
+    <div class='col-xs-5' id='output'></div>
   </div>
   <script>
 //show the info for the PO chosen when you enter the page or refresh it

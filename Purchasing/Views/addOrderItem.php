@@ -97,7 +97,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
         </div>
         <div class='form-group col-md-6'>
           <?php
-          $requestSql = "SELECT request_description, department, part_number, quantity
+          $requestSql = "SELECT request_description, department, part_number, quantity, cost_code
                          FROM order_request
                          WHERE request_ID = '$request_ID';";
           $requestResult = mysqli_query($link, $requestSql);
@@ -105,6 +105,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
           if($requestRow > 0){
             echo"<h4>Request ID: ".$request_ID."</h4>
                  <p><b>Department:</b> ".$requestRow[1]."</p>
+                 <p><b>Cost code:</b> ".$requestRow[4]."</p>
                  <p><b>Part number:</b> ".$requestRow[2]."</p>
                  <p><b>Quantity:</b> ".$requestRow[3]."</p>
                  <p><b>Description:</b> ".$requestRow[0]."</p>";
@@ -117,10 +118,11 @@ $supplierResult = mysqli_query($link, $supplierSql);
             $supplierNameResult = mysqli_query($link, $supplierNameSql);
             $supplierNameRow = mysqli_fetch_array($supplierNameResult);
             echo"<div class='col-md-3'>
-                  <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$quoteRow[0]."'>".$quoteRow[2]."</a><br></p>
+                  <p><input type='image' src='../Scan/getQuoteImage.php?id=".$quoteRow[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$quoteRow[0]."')\"/></p>
                   <button class='btn btn-danger' style='margin-top:5px; margin-right:20px' onclick='deleteQuote(".$quoteRow[0].")'>Delete</button>
                 </div>
                 <div class='col-md-3'>
+                  <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$quoteRow[0]."'>".$quoteRow[2]."</a><br></p>
                   <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
                   <p><strong>Date issued: </strong>".$quoteRow[4]."</p>
                 </div>";

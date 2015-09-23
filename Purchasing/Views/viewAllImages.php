@@ -31,7 +31,7 @@ $orderSql = "SELECT quantity, part_number, description, final_inspection
              WHERE order_ID = '$order_ID';";
 $orderResult = mysqli_query($link, $orderSql);
 
-$quoteSql = "SELECT quote_ID, image
+$quoteSql = "SELECT quote_ID, content, quote_number, supplier_ID, quote_date
              FROM quote
              WHERE order_ID = '$order_ID';";
 $quoteResult = mysqli_query($link, $quoteSql);
@@ -67,9 +67,17 @@ $quoteResult = mysqli_query($link, $quoteSql);
                <table class='table table-responsive'>
                 <tbody>";
               while($quoteRow = mysqli_fetch_array($quoteResult)){
+                $supplierNameSql = "SELECT supplier_name
+                                    FROM supplier
+                                    WHERE supplier_ID = '$quoteRow[3]';";
+                $supplierNameResult = mysqli_query($link, $supplierNameSql);
+                $supplierNameRow = mysqli_fetch_array($supplierNameResult);
                 echo"<tr>
-                      <td><input type='image' src='../Scan/getQuoteImage.php?id=".$quoteRow[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$quoteRow[0]."')\"></td>
-                      <td><button class='btn btn-danger' style='margin-top:35px;' onclick='deleteQuote(".$quoteRow[0].")'>Delete</button></td>
+                      <td><input type='image' src='../Scan/getQuoteImage.php?id=".$quoteRow[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$quoteRow[0]."')\">
+                      <button class='btn btn-danger' style='margin-top:35px;' onclick='deleteQuote(".$quoteRow[0].")'>Delete</button></td>
+                      <td><p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$quoteRow[0]."'>".$quoteRow[2]."</a><br></p>
+                      <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
+                      <p><strong>Date issued: </strong>".$quoteRow[4]."</p></td>
                     </tr>";
               }
               echo"

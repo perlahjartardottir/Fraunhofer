@@ -3,13 +3,11 @@
   session_start();
   mysql_set_charset('utf8');
 
-  $id = $_GET['id'];
+  $employee_ID = mysqli_real_escape_string($link, $_POST['employee_ID']);
 
-  $sql = "SELECT content
-          FROM quote
-          WHERE quote_ID = '$id'
-          ORDER BY quote_ID DESC;";
-
+  $sql = "SELECT employee_signature
+          FROM employee
+          WHERE employee_ID = 7;";
   $result = mysqli_query($link, $sql);
 
   if(!$result){

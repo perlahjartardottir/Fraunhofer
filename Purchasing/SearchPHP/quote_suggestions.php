@@ -111,13 +111,15 @@ $order_name = '%' . $order_name ;
             <h4>Quote: ".$row[0]."</h4>
           </div>
           <div class='modal-body'>
-            <p><strong>Quote number: </strong>".$row[7]."</p>
+            <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$row[0]."'>".$row[7]."</a><br></p>
             <p><strong>Supplier: </strong>".$supplierRow[0]."</p>
+            <p><strong>Quote issued: </strong>".$row[2]."</p>
             <p><strong>Purchase order: </strong>".$orderName[0]."</p>
             <p><strong>Description: </strong>".$row[3]."</p>
             <input type='image' src='../Scan/getQuoteImage.php?id=".$row[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$row[0]."')\">
           </div>
           <div class='modal-footer' style='margin-top:10px'>
+            <button class='btn btn-danger' style='float:left;' onclick='deleteQuote(".$row[0].")'>Delete quote</button>
             <button type='button' style='float:right;' class='btn' data-dismiss='modal'>Close</button>
           </div>
         </div>

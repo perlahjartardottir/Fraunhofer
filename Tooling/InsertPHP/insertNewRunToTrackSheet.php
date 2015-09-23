@@ -15,7 +15,7 @@ $machine_run_number = mysqli_real_escape_string($link, $_POST['machine_run_numbe
 $ah_pulses		    	= mysqli_real_escape_string($link, $_POST['ah_pulses']);
 $machine  					= mysqli_real_escape_string($link, $_POST['machine']);
 $rcomments					= mysqli_real_escape_string($link, $_POST['rcomments']);
-$run_on_this_po			= mysqli_real_escape_string($link, $_POST['run_on_this_PO']);
+// $run_on_this_po			= mysqli_real_escape_string($link, $_POST['run_on_this_PO']);
 
 $run_on_this_po_int = 1;
 /*
@@ -24,14 +24,11 @@ $run_on_this_po_int = 1;
 		any run this is the first run.
 */
 
-$maxRunSql = "SELECT IF(MAX(run_number_on_po) is NULL, 1, MAX(run_number_on_po) + 1)
+$maxRunSql = "SELECT IF(MAX(run_number_on_po) IS NULL, 1, MAX(run_number_on_po) + 1)
 							FROM pos_run
 							WHERE po_ID = '$po_ID';";
-
 $maxRunResult = mysqli_query($link, $maxRunSql);
-
 $run_on_this_po = mysqli_fetch_array($maxRunResult);
-
 
 // this query gets the machine acronym to generate the right run number
 $machineSql = "SELECT machine_acronym

@@ -24,6 +24,22 @@ function addFeedback() {
     }
   });
 }
+function esignatureCheck(){
+  var esignature;
+  if($('#esignature').is(':checked')){
+    esignature = $('#esignature').val();
+  }
+  $.ajax({
+    url: '../UpdatePHP/esignature.php',
+    type: 'POST',
+    data: {
+      esignature : esignature
+    },
+    success: function(data, status, xhr) {
+      $('#output').html(data);
+    }
+  });
+}
 function setSessionIDSearch(order_ID){
     $.ajax({
         url : "../UpdatePHP/setSessionID.php",

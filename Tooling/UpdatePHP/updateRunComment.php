@@ -7,6 +7,7 @@ include '../connection.php';
 
 $comment            = mysqli_real_escape_string($link, $_POST['comment']);
 $run_ID             = mysqli_real_escape_string($link, $_POST['run_ID']);
+$po_ID             = mysqli_real_escape_string($link, $_POST['po_ID']);
 $run_number_on_po   = mysqli_real_escape_string($link, $_POST['run_number_on_po']);
 $ah_pulses          = mysqli_real_escape_string($link, $_POST['ah_pulses']);
 $coatingID          = mysqli_real_escape_string($link, $_POST['coatingID']);
@@ -43,7 +44,8 @@ $result = mysqli_query($link, $sql);
 
 $runOnPOSql = "UPDATE pos_run
 			   SET run_number_on_po = '$run_number_on_po'
-			   WHERE run_ID = $run_ID;";
+			   WHERE run_ID = $run_ID
+				 AND po_ID = '$po_ID';";
 
 $runOnPOResult = mysqli_query($link, $runOnPOSql);
 

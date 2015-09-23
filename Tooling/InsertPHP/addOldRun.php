@@ -12,7 +12,7 @@ $run_ID	   = mysqli_real_escape_string($link, $_POST['old_run']);
 
 // find the next run number on this po by selecting the highest one in the database
 // and adding 1 to it
-$runOnPoSql = "SELECT IF(MAX(run_number_on_po) is NULL, 1, MAX(run_number_on_po) + 1)
+$runOnPoSql = "SELECT IF(MAX(run_number_on_po) IS NULL, 1, MAX(run_number_on_po) + 1)
 			   			 FROM pos_run
 			   	 		 WHERE po_ID = '$po_ID';";
 $runOnPoResult = mysqli_query($link, $runOnPoSql);

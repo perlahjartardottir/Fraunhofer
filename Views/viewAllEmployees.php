@@ -64,7 +64,7 @@ while($row = mysqli_fetch_array($secResult)){
             <div class='col-md-12'>
               <div class='col-md-4 form-group'>
                 <label>Enter the employee ID: </label>
-                <input type='number' id='input_employee_ID' class='form-control'/>
+                <input type='number' id='input_employee_ID' class='form-control' name='input_employee_ID'/>
               </div>
               <div class='col-md-4 form-group'>
                 <label>Change employee name:</label>
@@ -84,7 +84,6 @@ while($row = mysqli_fetch_array($secResult)){
               <label>Change employee security level:</label>
               <input type='text' id='input_security_level' class='form-control'/>
             </div>
-
             <div class='col-md-4 form-group'>
               <label>Delete employee: </label>
               <button type='button' class='btn btn-danger form-control' style='width:auto;' onclick='deleteEmployee()'>
@@ -97,6 +96,26 @@ while($row = mysqli_fetch_array($secResult)){
             </div>
           </form>
         </div>";
+        ?>
+        <div class='row well'>
+          <div class='col-md-12'>
+            <h4>Add e-signature to employee</h4>
+            <form action='../Purchasing/InsertPHP/addEmployeeSignature.php' method='post' enctype='multipart/form-data'>
+              <div class='col-md-4'>
+                <label>Enter the employee ID: </label>
+                <input type='number' id='employee_ID' class='form-control' name='employee_ID'/>
+              </div>
+              <div class='col-md-4'>
+                <label>Select signature to upload:</label>
+                <input type='hidden' value='signature' id='redirect' name='redirect'>
+                <input type='file' name='fileToUpload' id='fileToUpload' accept='image/jpeg'>
+                <p></p>
+                <input type='submit' class='btn btn-primary' value='Upload signature' name='submit'>
+              </div>
+            </form>
+          </div>
+        </div>
+  <?php
     }
   ?>
 </div>

@@ -109,7 +109,31 @@ $numberOfScans = mysqli_fetch_array($scanResult);
         <div class='col-md-12'>
           <button class='btn btn-primary' style='float:right;' onclick='confirmFinalInspection();return false;'>Confirm Final Inspection Note</button>
         </div>
-        <h4 style='margin-top: 120px;'>Rating (3 is best): </h4>
+        <div class='col-md-12'>
+          <h4 style='margin-top: 50px;'>Comment</h4>
+          <div class='col-md-6'>
+            <textarea class='form-control' id='order_final_inspection' rows='4' cols='50' style='width:auto;'><?php echo $supplierRow[1]; ?></textarea>
+            <button class='btn btn-primary' onclick='addCommentToPO(); return false;' style='margin-top:5px;'>Add comment</button>
+          </div>
+        </form>
+        <div class='col-md-4'>
+          <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
+            <label>Select image to upload:</label>
+            <!-- hidden type which is used to redirect to the correct view -->
+            <input type='hidden' value='new' id='redirect' name='redirect'>
+            <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
+            <p></p>
+            <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
+            <a href='viewAllImages.php' class='btn btn-primary'>View all files <?php if(!empty($numberOfScans[0])){echo "(".$numberOfScans[0].")";} ?></a>
+          </form>
+        </div>
+        <div class='col-md-2'>
+          <label>Click to enlarge</label>
+          <input type='image' src="../Scan/getImage.php" width="100" height="100" onerror="this.src='../images/noimage.jpg'" onclick="window.open('../Printouts/scanprintout.php')" />
+        </div>
+      </div>
+      <div class='col-md-12'>
+        <h4 style='margin-top: 50px;'>Rating (3 is best): </h4>
         <table class='table table-responsive col-md-12'>
           <thead>
             <tr>
@@ -171,26 +195,6 @@ $numberOfScans = mysqli_fetch_array($scanResult);
             ?>
           </tbody>
         </table>
-        <h4>Comment</h4>
-        <div class='col-md-6'>
-          <textarea class='form-control' id='order_final_inspection' rows='4' cols='50' style='width:auto;'><?php echo $supplierRow[1]; ?></textarea>
-          <button class='btn btn-primary' onclick='addCommentToPO(); return false;' style='margin-top:5px;'>Add comment</button>
-        </div>
-      </form>
-      <div class='col-md-4'>
-        <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
-          <label>Select image to upload:</label>
-          <!-- hidden type which is used to redirect to the correct view -->
-          <input type='hidden' value='new' id='redirect' name='redirect'>
-          <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
-          <p></p>
-          <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
-          <a href='viewAllImages.php' class='btn btn-primary'>View all files <?php if(!empty($numberOfScans[0])){echo "(".$numberOfScans[0].")";} ?></a>
-        </form>
-      </div>
-      <div class='col-md-2'>
-        <label>Click to enlarge</label>
-        <input type='image' src="../Scan/getImage.php" width="100" height="100" onerror="this.src='../images/noimage.jpg'" onclick="window.open('../Printouts/scanprintout.php')" />
       </div>
       <form>
         <div class='col-md-12' style='margin-top:30px;'>

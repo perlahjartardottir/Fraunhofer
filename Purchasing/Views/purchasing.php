@@ -64,7 +64,7 @@
   $deliveredSql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name, supplier_ID, ROUND(TOTAL_WEEKDAYS(order_date, order_receive_date), 2) - 1, net_terms
                     FROM purchase_order
                     WHERE order_receive_date IS NOT NULL
-                    ORDER BY order_ID DESC
+                    ORDER BY order_receive_date DESC
                     LIMIT 10;";
   $deliveredResult = mysqli_query($link, $deliveredSql);
   ?>

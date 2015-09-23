@@ -683,7 +683,7 @@ function addRun() {
         machine_run_number: machine_run_number,
         ah_pulses: ah_pulses,
         machine: machine,
-        run_on_this_PO: run_on_this_PO,
+        // run_on_this_PO: run_on_this_PO,
         rcomments: rcomments
       },
 
@@ -1363,7 +1363,7 @@ function changeMachine() {
   });
 }
 
-function updateRunComment(run_ID, element) {
+function updateRunComment(run_ID, po_ID, element) {
   $('textarea').select(); //select text inside
   var comment = window.getSelection().toString();
 
@@ -1382,6 +1382,7 @@ function updateRunComment(run_ID, element) {
     url: "../UpdatePHP/updateRunComment.php",
     type: "POST",
     data: {
+      po_ID: po_ID,
       run_ID: run_ID,
       comment: comment,
       run_number_on_po: run_number_on_po,

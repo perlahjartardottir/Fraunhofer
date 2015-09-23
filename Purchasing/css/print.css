@@ -13,9 +13,12 @@
   }
   #signature{
     border-top: dotted 1px;
-    width: 60%;
+    width: 50%;
     margin-top: -10px;
     margin-left: 70px;
+  }
+  #signatureLine{
+    margin-top: 20px;
   }
   #underline{
     border-bottom: 1px dotted #000;

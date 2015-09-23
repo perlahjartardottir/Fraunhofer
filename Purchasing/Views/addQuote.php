@@ -82,10 +82,11 @@ $result = mysqli_query($link, $sql);
             $supplierNameResult = mysqli_query($link, $supplierNameSql);
             $supplierNameRow = mysqli_fetch_array($supplierNameResult);
             echo"<div class='col-md-2' style='margin-top:30px'>
-                  <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$row[0]."'>".$row[2]."</a><br></p>
+                  <p><input type='image' src='../Scan/getQuoteImage.php?id=".$row[0]."' width='100' height='100' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$row[0]."')\"/></p>
                   <button class='btn btn-danger' style='margin-top:5px; margin-right:200px' onclick='removeQuoteFromRequest(".$row[0].")'>Deactivate</button>
                 </div>
                 <div class='col-md-2' style='margin-top:30px; margin-left:-35px;'>
+                  <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$row[0]."'>".$row[2]."</a><br></p>
                   <p><strong>Supplier: </strong>".$supplierNameRow[0]."</p>
                   <p><strong>Date issued: </strong>".$row[4]."</p>
                 </div>";

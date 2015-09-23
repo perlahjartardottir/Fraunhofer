@@ -31,7 +31,7 @@ if($department_name == 'PVD'){
         <option value='C-008'>CVD - HF I (C-008)</option>
         <option value='C-009'>CVD - Etcher (C-009)</option>";
 } else if($department_name == 'Infrastructure'){
-  echo "<option value='INF'>Infrastructure overall</option>
+  echo "<option value='Infrastructure'>Infrastructure overall</option>
         <option value='I-001'>Miele Washer / Dryer / US stations (I-001)</option>
         <option value='I-002'>Tools, work bench, lathe, band saw (I-002)</option>
         <option value='I-003'>Sandblaster (I-003)</option>
@@ -39,7 +39,7 @@ if($department_name == 'PVD'){
         <option value='I-005'>Logitech LP50 Incl. GI20 (I-005)</option>
         <option value='I-006'>Cutting Laser (I-006)</option>";
 } else if($department_name == 'Analytical'){
-  echo "<option value='ANA'>Analytical overall</option>
+  echo "<option value='Analytical'>Analytical overall</option>
         <option value='A-001'>Lawave / microscope / profiler / contact angle (A-001)</option>
         <option value='A-002'>Tribometer / Indenter / Calotte I+II (A-002)</option>
         <option value='A-003'>Electrochemistry / Potentiometer (A-003)</option>
@@ -48,7 +48,7 @@ if($department_name == 'PVD'){
         <option value='A-006'>OES / RGA (A-006)</option>
         <option value='A-007'>UV/Vis (A-007)</option>";
 } else if($department_name == 'Others'){
-  echo "<option value='OH'>Overhead</option>
+  echo "<option value='Others'>Overhead</option>
         <option value='O-001'>Office Supplies (O-001)</option>
         <option value='O-002'>Laboratory Supplies (O-002)</option>
         <option value='O-003'>Computer Network (O-003)</option>
