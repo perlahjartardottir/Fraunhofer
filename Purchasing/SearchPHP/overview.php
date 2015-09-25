@@ -9,6 +9,15 @@ $date_type     = mysqli_real_escape_string($link, $_POST['timeInterval']);
 $date_to       = mysqli_real_escape_string($link, $_POST['date_to']);
 $date_from     = mysqli_real_escape_string($link, $_POST['date_from']);
 
+// Change the cost code so that the "..overall" options show all cost codes within that department
+if($cost_code_name == 'OH'){
+	$cost_code_name = 'Others';
+} else if($cost_code_name == 'INF'){
+	$cost_code_name = 'Infrastructure';
+} else if($cost_code_name == 'ANA'){
+	$cost_code_name = 'Analytical';
+}
+
 // Getting the correct date type
 $date_format = "";
 if($date_type == "Year"){

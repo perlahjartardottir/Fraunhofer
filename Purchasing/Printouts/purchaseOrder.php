@@ -28,7 +28,7 @@ while($row = mysqli_fetch_array($orderResult)){
 }
 
 // Query for all the order items who are on this purchase order
-$orderItemSql = "SELECT quantity, part_number, description, unit_price
+$orderItemSql = "SELECT quantity, part_number, description, unit_price, cost_code_ID
                  FROM order_item
                  WHERE order_ID = '$order_ID';";
 $orderItemResult = mysqli_query($link, $orderItemSql);
@@ -93,6 +93,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
         <input type='checkbox' id='esignature' onchange='esignatureCheck()'> E-signature<br>
         <p></p>
         <button class='btn btn-primary' onclick='window.print()'>Print</button>
+        <a href="mailto:?" class='btn btn-primary'>Email</a>
       </div>
       <div class='col-md-6'>
         <form>
@@ -138,15 +139,12 @@ $supplierRow = mysqli_fetch_array($supplierResult);
         <thead>
           <tr>
             <th class='col-xs-1'>Pos. #</th>
-            <th>Quantity.</th>
+            <th>Quantity</th>
+            <th>Internal CCD</th>
             <th>Part #</th>
             <th>Description</th>
             <th class='col-xs-2'><?php echo $currency; ?> Unit</th>
-            <th class='col-xs-2'><?php echo $currency; ?> Total <span class='currency'><select onchange='setCurrency()' class='form-control' id='currency' style='width:auto; float:right; margin-right:-30px;'>
-              <option value='USD'<?php if($currency == 'USD'){echo "selected";}?>>$ USD</option>
-              <option value='EUR'<?php if($currency == 'EUR'){echo "selected";}?>>&euro; EUR</option>
-              <option value='GBP'<?php if($currency == 'GBP'){echo "selected";}?>>&pound; GBP</option>
-            </select></span></th>
+            <th class='col-xs-2'><?php echo $currency; ?> Total <span class='currency'></span></th>
           </tr>
         </thead>
         <tbody>
@@ -154,10 +152,16 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           $counter = 1;
           $totalOrderPrice = 0;
           while($row = mysqli_fetch_array($orderItemResult)){
+            $costCodeSql = "SELECT cost_code_name
+                            FROM cost_code
+                            WHERE cost_code_ID = '$row[4]';";
+            $costCodeResult = mysqli_query($link, $costCodeSql);
+            $costCodeRow = mysqli_fetch_array($costCodeResult);
             $total = $row[0] * $row[3];
             echo"<tr>
                   <td>".$counter."</td>
                   <td>".$row[0]."</td>
+                  <td>".$costCodeRow[0]."</td>
                   <td>".$row[1]."</td>
                   <td>".$row[2]."</td>
                   <td>".$currencySymbol."".number_format((float)$row[3], 2, '.', '')."</td>
@@ -168,6 +172,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           }
           ?>
           <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

@@ -4,12 +4,14 @@
 <link href='/css/header.css' rel='stylesheet'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src='../js/app.js'></script>
+<script src='../Tooling/js/bootstrap.js'></script>
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header">
       <div class='navbar-brand'>
         <a href='../menu.php'>Home</a>
         <span class='username'><strong><?php echo $_SESSION["username"];?></strong></span>
+        <a href='Views/editProfile.php'>Edit profile</a>
       </div>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                 <span class="icon-bar"></span>

@@ -49,6 +49,56 @@ function addEmployee() {
   });
 }
 
+function changePassword(employee_ID){
+  var currentPass = $('#currentPass').val();
+  var newPass = $('#newPass').val();
+  var confirmPass = $('#confirmPass').val();
+  $.ajax({
+    url: '../Tooling/UpdatePHP/updatePassword.php',
+    type: 'POST',
+    data: {
+      employee_ID : employee_ID,
+      currentPass : currentPass,
+      newPass     : newPass,
+      confirmPass : confirmPass
+    },
+    success: function(data, status, xhr){
+      if(data.indexOf('invalid password') > -1) {
+        $("#error").html("<div class='alert alert-danger alert-dismissible' role='alert'><button class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button>Wrong current password</div>");
+      }
+      if(data.indexOf('different passwords') > -1) {
+        $("#error").html("<div class='alert alert-danger alert-dismissible' role='alert'><button class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button>Passwords don't match</div>");
+      }else{
+        window.location.reload();
+      }
+    }
+  });
+}
+
+function editProfile(employee_ID){
+  var employee_email = $('#input_employee_email').val();
+  var employee_phone = $('#input_employee_phone').val();
+  $.ajax({
+    url: '../Tooling/UpdatePHP/updateProfile.php',
+    type: 'POST',
+    data: {
+      employee_ID    : employee_ID,
+      employee_email : employee_email,
+      employee_phone : employee_phone
+    },
+    success: function(data, status, xhr){
+      if (data.indexOf("invalid email") > -1) {
+        alert("Invalid email");
+      }
+      if (data.indexOf("invalid phone number") > -1) {
+        alert("Invalid phone number");
+      } else{
+        window.location.reload(true);
+      }
+    }
+  });
+}
+
 function changeEmployee() {
   var employee_ID = $('#input_employee_ID').val();
   var employee_name = $('#input_employee_name').val();
