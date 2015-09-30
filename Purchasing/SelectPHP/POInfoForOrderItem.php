@@ -43,5 +43,6 @@ echo "<p>".'Order date: '.$row[5]."</p>";
 echo "<p>Order number: <input type='text' id='order_name' value='".$row[6]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editOrderNumber()'>Edit Order Number</button></p>";
 echo "<p>Expected delivery date: <input type='date' id='expected_delivery_date' value='".$row[7]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editExpectedDeliveryDate(); return false;'>Edit Date</button></p>";
 echo "<p>Net terms (days): <input type='number' id='net_terms' value='".$row[8]."'><button class='btn btn-primary' style='margin-left: 10px;' onclick='editNetTerms(); return false;'>Edit Net Terms</button></p>";
+echo "<p><input type='checkbox' id='credit' onchange='payByCredit()'> Pay by credit card</p>";
 mysqli_close($link);
 ?>

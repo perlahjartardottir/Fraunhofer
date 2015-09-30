@@ -20,6 +20,7 @@ $today = date('Y-m-d');
         <th>Purchase number</th>
         <th>Supplier</th>
         <th>Receiving date</th>
+        <th>Net terms</th>
         <th>Payment due</th>
         <th>Final Price</th>
       </tr>
@@ -40,7 +41,7 @@ $today = date('Y-m-d');
       if(!empty($last_date)){
       	$sql .= "AND DATE_ADD(order_receive_date, INTERVAL net_terms day) <= '$last_date' ";
       }
-      $sql .= "ORDER BY order_ID DESC;";
+      $sql .= "ORDER BY DATE_ADD(order_receive_date, INTERVAL net_terms day);";
       $result = mysqli_query($link, $sql);
       while($row = mysqli_fetch_array($result)){
         $supplierSql = "SELECT supplier_name
@@ -64,6 +65,7 @@ $today = date('Y-m-d');
             <td><a href='#' onclick='setSessionIDSearch(".$row[0].")' data-toggle='modal' data-target='#".$row[0]."'>".$row[2]."</a></td>
             <td>".$supplierRow[0]."</td>
             <td>".$row[4]."</td>
+            <td>".$row[5]."</td>
             <td>".$payDate."</td>
             <td>$".number_format((float)$finalPrice, 2, '.', '')."</td>
           </tr>";
@@ -71,6 +73,7 @@ $today = date('Y-m-d');
       }
       echo"
         <tr>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>

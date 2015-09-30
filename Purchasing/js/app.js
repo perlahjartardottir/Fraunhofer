@@ -40,6 +40,21 @@ function esignatureCheck(){
     }
   });
 }
+function payByCredit(){
+  var credit;
+  if($('#credit').is(':checked')){
+    credit = $('#credit').val();
+  }
+  if(credit === 'on'){
+    $.ajax({
+        url : "../UpdatePHP/editNetTerms.php",
+        type: "POST",
+        data : {
+          net_terms : 0
+        }
+    });
+  }
+}
 function setSessionIDSearch(order_ID){
     $.ajax({
         url : "../UpdatePHP/setSessionID.php",
@@ -258,6 +273,47 @@ function delRequest(request_ID){
     });
   }
 }
+
+function requestApproval(){
+  var employee_ID = $('#approvedBy').val();
+  $.ajax({
+    url: '../SelectPHP/requestApproval.php',
+    type: 'POST',
+    data:{
+      employee_ID : employee_ID
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+    }
+  });
+}
+
+function declineApprovalRequest(order_ID){
+  $.ajax({
+    url: '../UpdatePHP/declineApprovalRequest.php',
+    type: 'POST',
+    data:{
+      order_ID : order_ID
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+    }
+  });
+}
+
+function approveApprovalRequest(order_ID){
+  $.ajax({
+    url: '../UpdatePHP/approveApprovalRequest.php',
+    type: 'POST',
+    data:{
+      order_ID : order_ID
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+    }
+  });
+}
+
 function delOrderItem(order_item_ID){
   var r = confirm("Are you sure you want to delete this line item?");
   if(r === true){
@@ -427,6 +483,10 @@ function addNewSupplier(){
   var supplier_accountNr = $('#supplier_accountNr').val();
   var net_terms        = $('#net_terms').val();
   var supplier_notes = $('#supplier_notes').val();
+  if (net_terms === ''){
+    net_terms = 30;
+  }
+  console.log(net_terms);
   if(!supplier_name){
     $("#invalidSupplier").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier name</div>");
   } else{

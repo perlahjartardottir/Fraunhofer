@@ -54,7 +54,7 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
@@ -208,9 +208,16 @@
             $expectedDate = strtotime($inProgressRow[6]);
             $dateDiff = $expectedDate - $curDate;
             $dateDiffDays = floor($dateDiff/(60*60*24));
-
-              echo"<tr>
-                    <td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
+            if($inProgressRow[8] == 'pending'){
+              echo"<tr class='bg-warning'>";
+            } else if($inProgressRow[8] == 'approved'){
+              echo"<tr class='bg-success'>";
+            } else if($inProgressRow[8] == 'declined'){
+              echo"<tr class='bg-danger'>";
+            } else{
+              echo"<tr>";
+            }
+              echo"<td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
                     <td>".$inProgressRow[1]."</td>";
               if($dateDiffDays < 0){
                 echo "<td><b>".$inProgressRow[6]."</b></td>";

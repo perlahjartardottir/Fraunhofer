@@ -14,13 +14,18 @@ while($emailRow = mysqli_fetch_array($emailResult)){
   $employeeEmailRow = mysqli_fetch_array($employeeEmailResult);
 
   // Find the order name
-  $emailOrderNameSql = "SELECT order_name FROM purchase_order
+  $emailOrderNameSql = "SELECT order_name, supplier_ID FROM purchase_order
                         WHERE order_ID = '$emailRow[2]';";
   $emailOrderNameResult = mysqli_query($link, $emailOrderNameSql);
   $emailOrderNameRow = mysqli_fetch_array($emailOrderNameResult);
 
+  $supplierSql = "SELECT supplier_name FROM supplier
+                  WHERE supplier_ID = '$emailOrderNameRow[1]';";
+  $supplierResult = mysqli_query($link, $supplierSql);
+  $supplier = mysqli_fetch_array($supplierResult);
+
   // send the email
-  mail($employeeEmailRow[0], "Purchase order incoming in 5 days", 'Your purchase order, '.$emailOrderNameRow[0].', is expected in 5 days', "From:" . "ffridfinnsson@fraunhofer.org");
+  mail($employeeEmailRow[0], $emailOrderNameRow[0]." from ".$supplier[0]." expected delivery in three days", 'Your purchase order, '.$emailOrderNameRow[0].', is expected in three days', "From:" . "ffridfinnsson@fraunhofer.org");
 
   // As soon as the email is sent, we delete the row in the table so the employee
   // Doesn't get an email every day.

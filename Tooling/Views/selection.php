@@ -94,18 +94,19 @@
       $result = mysqli_query($link, $sql);
       //Total price of all the POs
       $totalPrice = 0;
+      $totalEstRun = 0;
       while($row = mysqli_fetch_array($result)){
         // find the overall price of the PO
-        $sumSql = "SELECT round(sum(l.price * l.quantity),2)
+        $sumSql = "SELECT round(sum(l.price * l.quantity),2), ROUND(SUM(l.est_run_number), 2)
                    FROM lineitem l
                    WHERE l.po_ID = '$row[5]';";
         $sumResult = mysqli_query($link, $sumSql);
-        $finalPrice = mysqli_fetch_array($sumResult);
-        $totalPrice += $finalPrice[0];
+        $total = mysqli_fetch_array($sumResult);
+        $totalPrice += $total[0];
+        $totalEstRun += $total[1];
       }
-
       ?>
-      <h2>POs that have not been shipped<span style='float:right; font-size:75%; margin-top:8px; margin-right:54px;'>Total: $<?php echo $totalPrice; ?></span></h2>
+      <h2>POs that have not been shipped<span style='float:right; font-size:60%; margin-top:8px; margin-right:80px;'>Total price: $<?php echo $totalPrice; ?></span><span style='float:right; font-size:60%; margin-top:8px; margin-right:17px;'>Total est run: <?php echo $totalEstRun; ?></span></h2>
 
       <table class="table">
         <thead>
@@ -120,8 +121,6 @@
         </thead>
         <tbody>
         <?php
-
-
           $result = mysqli_query($link, $sql);
 
           if (!$result) {

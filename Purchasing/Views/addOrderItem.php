@@ -27,13 +27,14 @@ $result = mysqli_query($link, $sql);
 $order_ID = $_SESSION["order_ID"];
 
 // Get the request and supplier ID from the purchase order
-$getRequestSql = "SELECT request_ID, supplier_ID
+$getRequestSql = "SELECT request_ID, supplier_ID, approval_status
                   FROM purchase_order
                   WHERE order_ID = '$order_ID';";
 $getRequestResult = mysqli_query($link, $getRequestSql);
 $row = mysqli_fetch_array($getRequestResult);
 $request_ID = $row[0];
 $supplier_ID = $row[1];
+$approval_status = $row[2];
 
 // Get supplier name from its ID
 $getSupplierNameSql = "SELECT supplier_name
@@ -71,6 +72,12 @@ $departmentResult = mysqli_query($link, $departmentSql);
 $supplierSql = "SELECT supplier_name
                 FROM supplier;";
 $supplierResult = mysqli_query($link, $supplierSql);
+
+//Get total value of the po
+$totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
+                  FROM purchase_order po, order_item oi
+                  WHERE po.order_ID = oi.order_ID
+                  AND po.order_ID = '$order_ID';";
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -78,6 +85,11 @@ $supplierResult = mysqli_query($link, $supplierSql);
 <body>
   <?php include '../header.php'; ?>
   <div class='container'>
+    <?php
+     if($approval_status == 'pending'){
+       echo"<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>This PO is waiting for approval</div>";
+     }
+     ?>
     <div class='row well well-lg'>
       <form>
         <div class='form-group col-md-6'>
@@ -209,8 +221,31 @@ $supplierResult = mysqli_query($link, $supplierSql);
         </div>
       </form>
     </div>
+    <?php
+    $totalValueResult = mysqli_query($link, $totalValueSql);
+    $totalValue = mysqli_fetch_array($totalValueResult);
+    if($totalValue[0] > 1000 && $approval_status != 'pending'){
+      echo "<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Purchase orders worth more than $1000 need to be approved</div>
+            <div class='row well'>
+              <form>
+                <div class='col-md-12'>
+                  <h4>Ask for approval</h4>
+                  <div class='col-md-3'>
+                    <select id='approvedBy' class='form-control' style='width:auto;'>
+                      <option value='7'>Freyr Fridfinnsson</option>
+                      <option value='4'>Michael Petzold</option>
+                    </select>
+                  </div>
+                  <div class='col-md-3'>
+                    <button class='btn btn-primary' onclick='requestApproval(); return false;'>Send request for approval</button>
+                  </div>
+                </div>
+              </form>
+            </div>";
+    }
+    ?>
     <!-- SelectPHP/showOrderItems -->
-    <div id='orderItems'</div>
+    <div id='orderItems'></div>
   </div>
   <script>
   //show the info for the PO chosen when you enter the page or refresh it

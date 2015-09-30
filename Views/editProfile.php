@@ -47,7 +47,7 @@
     <div id='error'></div>
     <div class='row well'>
       <div class='col-md-12'>
-        <h3>Change password</h3>
+        <h3>Edit password</h3>
         <div class='col-md-4 form-group'>
           <label>Current password:</label>
           <input type='password' id='currentPass' class='form-control'>
@@ -63,6 +63,24 @@
         <div class='col-md-8 col-md-offset-2'>
           <input type='submit' value='Change password' onclick='changePassword(<?php echo $employee_ID;?>)' class='btn btn-primary form-control'/>
         </div>
+      </div>
+    </div>
+    <div class='row well'>
+      <div class='col-md-12'>
+        <h3>Edit e-signature</h3>
+        <form action='../Purchasing/InsertPHP/addEmployeeSignature.php?id=<?php echo $employee_ID;?>' method='post' enctype='multipart/form-data'>
+          <div class='col-md-6'>
+            <label>Select signature to upload:</label>
+            <input type='hidden' value='editProfile' id='redirect' name='redirect'>
+            <input type='file' name='fileToUpload' id='fileToUpload' accept='image/jpeg'>
+          </div>
+          <div class='col-md-6' style='margin-top:-40px; margin-bottom: 15px;'>
+            <input type='image' src='../Purchasing/Scan/getSignature.php?id=<?php echo $employee_ID;?>' width='100' height='100' onerror=\"this.src='../Purchasing/images/noimage.jpg'\"/>
+          </div>
+          <div class='col-md-8 col-md-offset-2'>
+            <input type='submit' class='btn btn-primary col-md-12' value='Upload signature' name='submit'>
+          </div>
+        </form>
       </div>
     </div>
   </div>

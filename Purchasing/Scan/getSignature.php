@@ -4,10 +4,11 @@
   mysql_set_charset('utf8');
 
   $employee_ID = mysqli_real_escape_string($link, $_POST['employee_ID']);
+  $id = $_GET['id'];
 
   $sql = "SELECT employee_signature
           FROM employee
-          WHERE employee_ID = 7;";
+          WHERE employee_ID = '$id';";
   $result = mysqli_query($link, $sql);
 
   if(!$result){

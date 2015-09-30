@@ -22,6 +22,7 @@
     </div>
     <div class="collapse navbar-collapse navHeaderCollapse">
         <ul class='navbar-right btn-group' role='group'>
+          <a href='../Views/pendingApprovals.php' class='btn btn-primary headerbutton active' role='button'>Pending approvals</a>
           <a href='../Views/purchaseOverview.php' class='btn btn-primary headerbutton active' role='button'>PO search</a>
           <a href='../Views/orderItemOverview.php' class='btn btn-primary headerbutton active' role='button'>Order item search</a>
           <a href='../Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
