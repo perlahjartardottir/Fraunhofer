@@ -11,12 +11,16 @@ $employee_ID          = mysqli_real_escape_string($link, $_POST['employee_ID']);
 $part_number          = mysqli_real_escape_string($link, $_POST['part_number']);
 $quantity             = mysqli_real_escape_string($link, $_POST['quantity']);
 
+// Insert all the fields to the request, no matter if they are empty or not
 $sql = "INSERT INTO order_request (employee_ID, timeframe, department, cost_code, approved_by_employee, request_description, request_date, active, request_supplier, part_number, quantity)
         VALUES ('$employee_ID', '$timeframe', '$department', '$cost_code', '$approved_by_employee', '$request_description', CURDATE(), 1, '$request_supplier', '$part_number', '$quantity');";
 $result = mysqli_query($link, $sql);
 
 // mysqli_insert_id fetches the last inserted row
 $request_ID = mysqli_insert_id($link);
+
+// create_request = 0 means that the quote is no longer active
+// this query deactivates all active quotes and links them to the request
 $quoteSql = "UPDATE quote
              SET create_request = 0, request_ID = '$request_ID'
              WHERE create_request = 1;";

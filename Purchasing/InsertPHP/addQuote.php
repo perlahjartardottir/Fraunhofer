@@ -17,6 +17,8 @@ $supplierResult = mysqli_query($link, $supplierSql);
 $row = mysqli_fetch_array($supplierResult);
 $supplier_ID = $row[0];
 
+// Since the user can upload any kind of file we need to know what kind of file it is
+// The quotes can be excel files, pdf, jpeg, etc...
 $fileName = $_FILES['fileToUpload']['name'];
 $fileType = $_FILES['fileToUpload']['type'];
 $fileSize = $_FILES['fileToUpload']['size'];
@@ -27,6 +29,8 @@ $content = fread($fp, filesize($tmpName));
 $content = addslashes($content);
 fclose($fp);
 
+// Depending on where we are adding the quote, the quote either gets active or it gets an order ID if
+// the user adds the quote in the process purchase order view.
 if($redirect == 'addQuote'){
   if($quote_date == ''){
     $sql = "INSERT INTO quote (quote_number, description, content, create_request, supplier_ID, quote_date, type, size)

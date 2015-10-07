@@ -14,6 +14,7 @@ $supplier_accountNr  = mysqli_real_escape_string($link, $_POST['supplier_account
 $net_terms           = mysqli_real_escape_string($link, $_POST['net_terms']);
 $supplier_notes      = mysqli_real_escape_string($link, $_POST['supplier_notes']);
 
+// Insert all the fields to the supplier, no matter if they are empty or not
 $sql = "INSERT INTO supplier (supplier_name, supplier_address, supplier_phone, supplier_fax, supplier_email, supplier_contact, supplier_website, supplier_login, supplier_password, supplier_accountNr, net_terms, supplier_notes)
         VALUES ('$supplier_name', '$supplier_address', '$supplier_phone', '$supplier_fax', '$supplier_email', '$supplier_contact', '$supplier_website', '$supplier_login', '$supplier_password', '$supplier_accountNr', '$net_terms', '$supplier_notes');";
 $result = mysqli_query($link, $sql);

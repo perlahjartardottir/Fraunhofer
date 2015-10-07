@@ -14,6 +14,9 @@ $content = fread($fp, filesize($tmpName));
 $content = addslashes($content);
 fclose($fp);
 
+// if the user is setting his own signature he does not send ID with the link (?id=...)
+// so he updates his own signature, but if you want to add signature for someone else in
+// edit employee view then you send in an ID and update that persons signature
 if($id == ''){
   $sql = "UPDATE employee
           SET employee_signature = '$content'
