@@ -251,7 +251,10 @@
           <div class='modal-dialog'>
             <div class='modal-content'>
               <div class='modal-header'>
-                <center><h3>".$inProgressSupplierRow[0]."</h3></center>
+                <center><h3>".$inProgressSupplierRow[0];
+                if($inProgressRow[8] == 'pending'){ echo " (pending)";}
+                else if($inProgressRow[8] == 'declined'){ echo " (declined)";}
+                echo"</h3></center>
                 <h4>Purchase order: ".$inProgressRow[4]."</h4>
               </div>
               <div class='modal-body'>
@@ -299,7 +302,9 @@
               <div class='modal-footer'>
                 <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>
                 <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>
-                <a href='../Views/purchaseOrderReceived.php' class='btn btn-success'>Received</a>
+                <a href='../Views/purchaseOrderReceived.php' class='btn btn-success'";
+                if($inProgressRow[8] == 'pending' || $inProgressRow[8] == 'declined'){ echo " disabled";}
+                echo">Received</a>
                 <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
               </div>
             </div>

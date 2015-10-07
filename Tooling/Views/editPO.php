@@ -19,9 +19,6 @@ while($row = mysqli_fetch_array($secResult)){
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
   <link href='../css/main.css' rel='stylesheet'>
-
-
-
 </head>
 <body>
   <?php include '../header.php'; ?>
@@ -286,6 +283,44 @@ while($row = mysqli_fetch_array($secResult)){
         }else if(safe_delete($po_ID)){
           echo "<button class='btn btn-danger' style='float: right;' onclick='delPO(".$po_ID.", 0)'>Delete PO</button>";
         }?>
+      </div>
+    </div>
+    <div class='row well'>
+      <div class='col-md-12'>
+        <h2>Status pictures</h2>
+        <div class='col-md-3'>
+          <!-- The onsubmit is to not allow the user to add files bigger than 2mb -->
+          <form action="../InsertPHP/addStatusPicture.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(2097152)">
+            <label>Select image to upload:</label>
+            <!-- hidden type which is used to redirect to the correct view -->
+            <input type='hidden' value='edit' id='redirect' name='redirect'>
+            <input type="file" name="fileToUpload" id="fileToUpload" accept="image/jpeg">
+            <p></p>
+            <label>Picture comment:</label>
+            <textarea class='form-control' rows='4' id='status_comment' name='status_comment'></textarea>
+            <p></p>
+            <input type="submit" class='btn btn-primary' value="Upload Image" name="submit">
+          </form>
+        </div>
+        <div class='col-md-8'>
+          <?php
+          $statusSql = "SELECT status_ID, status_picture, status_comment
+                        FROM po_status
+                        WHERE po_ID = '$po_ID';";
+          $statusResult = mysqli_query($link, $statusSql);
+          while($statusRow = mysqli_fetch_array($statusResult)){
+            echo"<div class='col-md-6'>
+                  <div class='col-md-6'>
+                    <input type='image' src='../Scan/getStatusPicture.php?id=".$statusRow[0]."' width='150' height='150' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/statusPrintout.php?id=".$statusRow[0]."')\"/>
+                    <button class='btn btn-danger' onclick='deleteStatusPicture(".$statusRow[0].")'>Delete image</button>
+                  </div>
+                  <div class='col-md-6'>
+                    <p>".$statusRow[2]."</p>
+                  </div>
+                </div>";
+          }
+          ?>
+        </div>
       </div>
     </div>
   </div>

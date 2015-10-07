@@ -16,7 +16,7 @@ while($row = mysqli_fetch_array($secResult)){
 }
 // if the users security level is to low he cant access this page.
 if($user_sec_lvl < 2){
-  echo "<a href='../Login/login.php'>Login Page</a></br>";
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
 ?>

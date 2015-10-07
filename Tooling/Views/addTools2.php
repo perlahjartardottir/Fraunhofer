@@ -14,7 +14,7 @@ while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
 if($user_sec_lvl < 2){
-  echo "<a href='../Login/login.php'>Login Page</a></br>";
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
 // get the po_number from the session po_ID
@@ -103,7 +103,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
       <div class='row well well-lg'>
         <div role="tabpanel">
           <!-- Nav tabs -->
-          <ul class="nav nav-tabs tablist" role="tablist">
+          <ul class="nav nav-tabs tablist sampleTabs" role="tablist">
             <li role="presentation" class="active"><a href="#normal" aria-controls="home" role="tab" data-toggle="tab">Round Tools</a></li>
             <li role="presentation"><a href="#inserts" aria-controls="inserts" role="tab" data-toggle="tab">Insert tools</a></li>
             <li role="presentation"><a href="#odd" aria-controls="odd" role="tab" data-toggle="tab">Odd shaped tools</a></li>
@@ -208,7 +208,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
                 </div>
                 <div class='col-xs-3 form-group'>
                   <label for="coatingIDInsert">Coating</label>
-                  <select id='coating_sel_insert' onchange='generatePriceInsert()' class='form-control'>
+                  <select id='coating_sel_insert' class='form-control'>
                     <option value="">Select coating type:</option>
                     <?php
                       $sql = "SELECT coating_ID, coating_type
@@ -229,7 +229,7 @@ $po_number = mysqli_fetch_array($po_numberResult);
                 <div class='col-xs-3 form-group'>
                   <label for="IC">IC: </label>
                   <!-- TODO : calculate prices using this value -->
-                  <select id="diameterInsert" name="IC" onchange='generatePriceInsert()' class='form-control'>
+                  <select id="diameterInsert" name="IC" class='form-control'>
                     <option value="0">N/A</option>
                     <option value="1/8">1/8</option>
                     <option value="3/16">3/16</option>

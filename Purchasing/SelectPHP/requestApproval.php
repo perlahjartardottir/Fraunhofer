@@ -31,6 +31,7 @@ $sql = "UPDATE purchase_order
         SET approval_status = 'pending'
         WHERE order_ID = '$order_ID';";
 $result = mysqli_query($link, $sql);
+
 mail($approvalEmail[0], "Order ".$orderForWhoRow[1]." needs your approval", "http://35.9.146.244:8888/Purchasing/Views/pendingApprovals.php", $headers);
 
 ?>

@@ -16,7 +16,7 @@ if($currency == 'EUR'){
   $currencySymbol = '$';
 }
 
-$orderSql = "SELECT supplier_ID, request_ID, order_name, order_final_inspection
+$orderSql = "SELECT supplier_ID, request_ID, order_name, order_final_inspection, approval_status
              FROM purchase_order
              WHERE order_ID = '$order_ID';";
 $orderResult = mysqli_query($link, $orderSql);
@@ -25,6 +25,7 @@ while($row = mysqli_fetch_array($orderResult)){
   $request_ID = $row[1];
   $order_name = $row[2];
   $comment = $row[3];
+  $approval_status = $row[4];
 }
 
 // Query for all the order items who are on this purchase order
@@ -53,6 +54,13 @@ $supplierRow = mysqli_fetch_array($supplierResult);
     };
   </script>
   <div class='container'>
+    <?php
+    if($approval_status == 'pending'){
+      die("<h1>This PO is currently pending for approval</h1>");
+    } else if($approval_status == 'declined'){
+      die("<h1>This PO has been declined</h1>");
+    }
+    ?>
     <div class='row well well-lg'>
       <form>
         <div class='col-md-6'>

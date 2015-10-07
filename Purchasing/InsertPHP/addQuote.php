@@ -5,7 +5,7 @@ $redirect     = mysqli_real_escape_string($link, $_POST['redirect']);
 $quote_number = mysqli_real_escape_string($link, $_POST['quote_number']);
 $quote_date   = mysqli_real_escape_string($link, $_POST['quote_date']);
 $description  = mysqli_real_escape_string($link, $_POST['quoteDescription']);
-$supplier     = mysqli_real_escape_string($link, $_POST['supplierList']);
+$supplier     = mysqli_real_escape_string($link, $_POST['supplierListTwo']);
 $order_ID = $_SESSION["order_ID"];
 
 // Find the supplier ID

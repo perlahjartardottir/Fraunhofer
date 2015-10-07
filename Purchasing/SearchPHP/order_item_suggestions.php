@@ -90,7 +90,7 @@ $department_ID = $row[0];
   $result = mysqli_query($link, $sql);
   while($row = mysqli_fetch_array($result)){
     // Find the purchase order number
-    $orderNumberSql = "SELECT order_name
+    $orderNumberSql = "SELECT order_name, approval_status
                        FROM purchase_order
                        WHERE order_ID = '$row[6]';";
     $orderNumberResult = mysqli_query($link, $orderNumberSql);
@@ -153,13 +153,17 @@ $department_ID = $row[0];
                 <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                   Edit <span class='caret'></span>
                 </button>
-                <ul class='dropdown-menu' role='menu'>
-                  <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
-                  <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
+                <ul class='dropdown-menu' role='menu'>";
+                if($orderNumber[1] != 'pending' && $orderNumber[1] != 'declined'){echo "<li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>";}
+                  echo"<li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
                 </ul>
             </div>
-            <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left; margin-left:5px;'>Printout</a>
-            <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
+            <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left; margin-left:5px;'";
+            if($orderNumber[1] == 'pending' || $orderNumber[1] == 'declined'){echo " disabled";}
+            echo">Printout</a>
+            <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'";
+            if($orderNumber[1] == 'pending' || $orderNumber[1] == 'declined'){echo " disabled";}
+            echo">View Scan</a>
             <button type='button' style='float:right;' class='btn' data-dismiss='modal'>Close</button>
           </div>
         </div>

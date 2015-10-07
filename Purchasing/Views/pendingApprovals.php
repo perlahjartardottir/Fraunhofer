@@ -37,7 +37,7 @@ if($user_sec_lvl < 4){
         <input type='number' id='userID' class='form-control' placeholder='Employee ID' required autofocus>
         <label for='password' class='sr-only'>Password</label>
         <input type='password' id='password' class='form-control' placeholder='Password' required>
-        <button class='btn btn-lg btn-primary btn-block' id='loginbtn' type='submit' onclick='authenticate2()'>Sign in</button>
+        <button class='btn btn-lg btn-primary btn-block' id='loginbtn' type='submit' onclick='authenticateAppending()'>Sign in</button>
       </div>";
       $sql = "SELECT employee_name, employee_ID
               FROM employee";
@@ -141,15 +141,19 @@ $result = mysqli_query($link, $sql);
               echo"
                  </tbody>
                 </table>
-               </div>
-               <div class='modal-footer'>
-                <button class='btn btn-danger' onclick='declineApprovalRequest(".$row[0].")'>Decline</button>
-                <button type='button' style='float:right;' class='btn' data-dismiss='modal'>Close</button>
-                <button style='float:right;' class='btn btn-success' onclick='approveApprovalRequest(".$row[0].")'>Approve</button>
-               </div>
+                <form>
+                  <label>Reply: </label><br>
+                  <textarea id='approval_response' class='form-control' rows='4'></textarea>
+                </form>
+                 </div>
+                 <div class='modal-footer'>
+                  <button class='btn btn-danger' onclick='declineApprovalRequest(".$row[0].", this)'>Decline</button>
+                  <button type='button' style='float:right;' class='btn' data-dismiss='modal'>Close</button>
+                  <button style='float:right;' class='btn btn-success' onclick='approveApprovalRequest(".$row[0].", this)'>Approve</button>
+                 </div>
+                </div>
               </div>
-            </div>
-          </div>";
+            </div>";
         }
         ?>
      </div>

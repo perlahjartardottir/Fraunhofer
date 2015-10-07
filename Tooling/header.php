@@ -1,6 +1,9 @@
 <!-- The header file for almost all views. -->
 <!-- This file includes all the .css and .js needed  -->
 <!-- It also displays the top of the page and the user who is logged in -->
+<meta charset="UTF-8">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="en">
 <link href='../css/header.css' rel='stylesheet'>
 <link href='../css/bootstrap.min.css' rel='stylesheet'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

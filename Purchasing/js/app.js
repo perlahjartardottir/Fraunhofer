@@ -288,30 +288,68 @@ function requestApproval(){
   });
 }
 
-function declineApprovalRequest(order_ID){
-  $.ajax({
-    url: '../UpdatePHP/declineApprovalRequest.php',
-    type: 'POST',
-    data:{
-      order_ID : order_ID
-    },
-    success: function(data, status, xhr){
-      window.location.reload();
+function declineApprovalRequest(order_ID, element){
+  var approval_response = $(element).parent().prev().find('#approval_response').val();
+  if(approval_response === ""){
+    var r = confirm("Are you sure you want to decline this without any response message?");
+    if(r === true){
+      $.ajax({
+        url: '../UpdatePHP/declineApprovalRequest.php',
+        type: 'POST',
+        data:{
+          order_ID : order_ID,
+          approval_response : approval_response
+        },
+        success: function(data, status, xhr){
+          window.location.reload();
+        }
+      });
     }
-  });
+  }else{
+    $.ajax({
+      url: '../UpdatePHP/declineApprovalRequest.php',
+      type: 'POST',
+      data:{
+        order_ID : order_ID,
+        approval_response : approval_response
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
 }
 
-function approveApprovalRequest(order_ID){
-  $.ajax({
-    url: '../UpdatePHP/approveApprovalRequest.php',
-    type: 'POST',
-    data:{
-      order_ID : order_ID
-    },
-    success: function(data, status, xhr){
-      window.location.reload();
+function approveApprovalRequest(order_ID, element){
+  var approval_response = $(element).parent().prev().find('#approval_response').val();
+  if(approval_response === ""){
+    var r = confirm("Are you sure you want to approve this without any response message?");
+    if(r === true){
+      $.ajax({
+        url: '../UpdatePHP/approveApprovalRequest.php',
+        type: 'POST',
+        data:{
+          order_ID : order_ID,
+          approval_response : approval_response
+        },
+        success: function(data, status, xhr){
+          window.location.reload();
+        }
+      });
     }
-  });
+  } else{
+    $.ajax({
+      url: '../UpdatePHP/approveApprovalRequest.php',
+      type: 'POST',
+      data:{
+        order_ID : order_ID,
+        approval_response : approval_response
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
 }
 
 function delOrderItem(order_item_ID){

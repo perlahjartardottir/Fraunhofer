@@ -14,7 +14,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
 
 ?>
 <div id='output'>
-  <table class='table table-responsive table-striped table-condensed'>
+  <table class='table table-responsive table-condensed'>
     <thead>
       <tr>
         <th>Purchase number</th>
@@ -27,7 +27,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name, supplier_ID
+      $sql = "SELECT order_ID, order_date, order_receive_date, order_final_inspection, order_name, supplier_ID, approval_status
               FROM purchase_order
               WHERE order_name LIKE '$order_name'
               AND supplier_ID = ANY(SELECT supplier_ID
@@ -62,8 +62,16 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
         while($orderItemRow = mysqli_fetch_array($orderItemResult)){
           $finalPrice += $orderItemRow[0] * $orderItemRow[1];
         }
+        if($row[6] == 'pending'){
+          echo"<tr class='bg-warning'>";
+        } else if($row[6] == 'approved'){
+          echo"<tr class='bg-success'>";
+        } else if($row[6] == 'declined'){
+          echo"<tr class='bg-danger'>";
+        } else{
+          echo"<tr>";
+        }
         echo"
-          <tr>
             <td><a href='#' onclick='setSessionIDSearch(".$row[0].")' data-toggle='modal' data-target='#".$row[0]."'>".$row[4]."</a></td>
             <td>".$supplierRow[0]."</td>
             <td>".$row[1]."</td>
@@ -138,26 +146,25 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
                 </tr>
               </tbody>
             </table>
-            <span>Order date: ".$row[1]."</span>";
-            if(empty($row[2])){
-              echo"
-                <button type='button' style='float:right;' class='btn btn-primary' onclick='packageReceived(".$row[0].", this)'>Package received</button>
-                <input type='date' id='receiveDate' style='float:right; margin-right:5px;'>";
-            }
-            echo"
+            <span>Order date: ".$row[1]."</span>
           </div>
           <div class='modal-footer' style='margin-top:10px'>
             <div class='btn-group' style='float:left;'>
                 <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                   Edit <span class='caret'></span>
                 </button>
-                <ul class='dropdown-menu' role='menu'>
-                  <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
+                <ul class='dropdown-menu' role='menu'>";
+                if($row[6] != 'pending' && $row[6] != 'declined'){ echo "<li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>";}
+                echo"
                   <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
                 </ul>
             </div>
-            <button type='button' onclick='printoutInfo(".$row[0].")' class='btn btn-primary' style='float:left; margin-left:5px'>Printout</button>
-            <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
+            <button type='button' onclick='printoutInfo(".$row[0].")' class='btn btn-primary' style='float:left; margin-left:5px'";
+            if($row[6] == 'pending' || $row[6] == 'declined'){echo " disabled";}
+            echo">Printout</button>
+            <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'";
+            if($row[6] == 'pending' || $row[6] == 'declined'){echo " disabled";}
+            echo">View Scan</a>
             <button type='button' style='float:right;' class='btn' data-dismiss='modal'>Close</button>
           </div>
         </div>

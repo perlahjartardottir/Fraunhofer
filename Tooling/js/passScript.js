@@ -103,7 +103,10 @@ function addPO() {
         } else {
 
           setSessionIDAfterAddingPO(POID);
-          window.location.reload();
+          $('#POID').val('');
+          $('#iInspect').val('');
+          $('#nrOfLines').val('');
+          $("#invalidPO").html("<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>PO successfully created!</div>");
         }
       }
     });
@@ -283,6 +286,7 @@ function addTool() {
       type: "POST",
       data: {
         toolID: toolID,
+        toolType: 'round',
         lineItem: lineItem,
         coating_ID: coating_ID,
         quantity: quantity,
@@ -330,6 +334,7 @@ function addToolInsert() {
       type: "POST",
       data: {
         toolID: toolID,
+        toolType: 'insert',
         lineItem: lineItem,
         coating_ID: coating_ID,
         quantity: quantity,
@@ -380,6 +385,7 @@ function addToolOdd() {
       type: "POST",
       data: {
         toolID: toolID,
+        toolType: 'odd',
         coating_ID: coating_ID,
         lineItem: lineItem,
         quantity: quantity,
@@ -429,6 +435,7 @@ function addToolTop() {
       url: "../InsertPHP/insertNewToolToPo.php",
       type: "POST",
       data: {
+        toolType   : 'top',
         toolID     : toolID,
         coating_ID : coating_ID,
         lineItem   : lineItem,
@@ -934,7 +941,7 @@ function authenticate() {
     }
   });
 }
-function authenticate2() {
+function authenticateAppending() {
   var userID = $('#userID').val();
   var password = $('#password').val();
   $.ajax({
@@ -1463,6 +1470,23 @@ function deletePOScan(po_ID) {
     });
   }
 }
+
+function deleteStatusPicture(status_ID) {
+  var r = confirm("Are you sure you want to delete this image?");
+  if (r === true) {
+    $.ajax({
+      url: "../deletePHP/deleteStatusPicture.php",
+      type: "POST",
+      data: {
+        status_ID: status_ID,
+      },
+      success: function(data, status, xhr) {
+        window.location.reload(true);
+      },
+    });
+  }
+}
+
 function tools_left() {
   var line_on_po = $('#lineItem').val();
   $.ajax({

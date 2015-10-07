@@ -27,7 +27,7 @@ $result = mysqli_query($link, $sql);
 $order_ID = $_SESSION["order_ID"];
 
 // Get the request and supplier ID from the purchase order
-$getRequestSql = "SELECT request_ID, supplier_ID, approval_status
+$getRequestSql = "SELECT request_ID, supplier_ID, approval_status, approved_by, approval_response
                   FROM purchase_order
                   WHERE order_ID = '$order_ID';";
 $getRequestResult = mysqli_query($link, $getRequestSql);
@@ -35,6 +35,8 @@ $row = mysqli_fetch_array($getRequestResult);
 $request_ID = $row[0];
 $supplier_ID = $row[1];
 $approval_status = $row[2];
+$approved_by = $row[3];
+$approval_response = $row[4];
 
 // Get supplier name from its ID
 $getSupplierNameSql = "SELECT supplier_name
@@ -88,6 +90,18 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
     <?php
      if($approval_status == 'pending'){
        echo"<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>This PO is waiting for approval</div>";
+     } else if($approval_status == 'approved'){
+       echo"<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>This PO has been approved by ".$approved_by."</div>
+       <div class='row well'>
+         <h4>Message from ".$approved_by."</h4>
+         <p>".$approval_response."</p>
+       </div>";
+     } else if($approval_status == 'declined'){
+       echo"<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>This PO has been declined by ".$approved_by."</div>
+       <div class='row well'>
+         <h4>Message from ".$approved_by."</h4>
+         <p>".$approval_response."</p>
+       </div>";
      }
      ?>
     <div class='row well well-lg'>
@@ -155,7 +169,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
             </div>
             <div class='col-md-6'>
               <label>Supplier: </label>
-                <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
+                <input type='text' list="suppliers" name="supplierListTwo" id='supplierListTwo' value='' class='col-md-12 form-control'>
                 <datalist id="suppliers">
                   <?
                   while($row = mysqli_fetch_array($supplierResult)){
@@ -224,7 +238,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
     <?php
     $totalValueResult = mysqli_query($link, $totalValueSql);
     $totalValue = mysqli_fetch_array($totalValueResult);
-    if($totalValue[0] > 1000 && $approval_status != 'pending'){
+    if($totalValue[0] > 1000 && $approval_status == ''){
       echo "<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Purchase orders worth more than $1000 need to be approved</div>
             <div class='row well'>
               <form>
