@@ -593,6 +593,20 @@ function delRunTool(lineitem, run_ID) {
   });
 }
 
+function updateEstRunAfterDel(lineitem, run_ID, number_of_items) {
+  $.ajax({
+    url: "../UpdatePHP/updateRunToolComment.php",
+    type: "POST",
+    data: {
+      lineitem_ID : lineitem,
+      number_of_items : number_of_items,
+      run_ID   : run_ID,
+      comment  : 'ok',
+      delete   : 'true'
+    }
+  });
+}
+
 // If entire == 1, we delete the PO and everything related to it
 // Else we can only delete empty POs
 function delPO(po_ID, entire) {
@@ -1094,6 +1108,7 @@ function updateRunToolComment(lineitem_ID, run_ID) {
     success: function(data, status, xhr) {
       // delay since bootstrap modal was
       // causing the page to be unscrollable after saving data.
+      console.log(data);
       setTimeout(function() {
         showRunTools();
       }, 1000);

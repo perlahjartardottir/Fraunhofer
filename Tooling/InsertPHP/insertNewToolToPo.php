@@ -38,6 +38,7 @@ if($toolType == 'top' && $coating_ID == 2){
 		$est_run_number = $quantity * 0.5;
 		$est_run_number = $est_run_number / 159;
 	}
+	$diameter = $insert_size;
 } else if($toolType == 'top'){
 	$tool_ID .= " TPN-".$insert_size;
 	if($insert_size == 1 || $insert_size == 2){
@@ -52,6 +53,7 @@ if($toolType == 'top' && $coating_ID == 2){
 		$est_run_number = $quantity * 0.5;
 		$est_run_number = $est_run_number / 143;
 	}
+	$diameter = $insert_size;
 }
 
 // this calculates the est_run_time depending on size and quantity
@@ -138,7 +140,7 @@ if($toolType == 'insert' && $coating_ID == 2){
 }
 
 
-$sql = "INSERT INTO lineitem(line_on_po, po_ID, quantity, tool_ID, diameter, length, double_end, price, coating_ID, est_run_number) VALUES('$line_item', '$po_ID', '$quantity', '$tool_ID', '$diameter', '$length', '$doubleEnd', '$price', '$coating_ID', '$est_run_number')";
+$sql = "INSERT INTO lineitem(line_on_po, po_ID, quantity, tool_ID, diameter, length, double_end, price, coating_ID, est_run_number, tool_type) VALUES('$line_item', '$po_ID', '$quantity', '$tool_ID', '$diameter', '$length', '$doubleEnd', '$price', '$coating_ID', '$est_run_number', '$toolType')";
 
 $result = mysqli_query($link, $sql);
 if (!$result) {

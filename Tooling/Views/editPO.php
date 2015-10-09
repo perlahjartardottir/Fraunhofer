@@ -290,7 +290,7 @@ while($row = mysqli_fetch_array($secResult)){
         <h2>Status pictures</h2>
         <div class='col-md-3'>
           <!-- The onsubmit is to not allow the user to add files bigger than 2mb -->
-          <form action="../InsertPHP/addStatusPicture.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(2097152)">
+            <form action="../InsertPHP/addStatusPicture.php" method="post" enctype="multipart/form-data">
             <label>Select image to upload:</label>
             <!-- hidden type which is used to redirect to the correct view -->
             <input type='hidden' value='edit' id='redirect' name='redirect'>

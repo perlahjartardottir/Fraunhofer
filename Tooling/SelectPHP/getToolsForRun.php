@@ -35,7 +35,7 @@ while($row = mysqli_fetch_array($result)) {
             "<td><a href='#' data-toggle='modal' data-target='#".$linecounter."'>".$row[0]."</td>".
             "<td>".$row[1]."/".$row[2]."</td>".
             "<td>".$row[3]."</td>".
-            "<td>".$row[4]."<button id='delRunToolButton' style='float:right; margin-right:-50px'class='btn btn-danger' onclick='delRunTool(".$row[0].", ".$row[6].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>".
+            "<td>".$row[4]."<button id='delRunToolButton' style='float:right; margin-right:-50px'class='btn btn-danger' onclick='updateEstRunAfterDel(".$row[5].", ".$row[6].", ".$row[1]."); delRunTool(".$row[0].", ".$row[6]."); return false;'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>".
         "</tr>";
         $linecounter = $linecounter + 1;
 }
