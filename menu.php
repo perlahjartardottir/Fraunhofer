@@ -15,6 +15,7 @@
     while($row = mysqli_fetch_array($secResult)){
       $user_sec_lvl = $row[0];
     }
+    $user_sec_lvl = str_split($user_sec_lvl);
   ?>
   <title>Login Fraunhofer CCD</title>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -24,9 +25,17 @@
   <?php include 'header.php'; ?>
   <div class="container">
     <div class="btn-group-vertical col-md-12" role="group" aria-label="...">
-        <a href='Tooling/Views/selection.php' class='btn btn-primary btn-lg'>Tooling</a>
-        <a href='Purchasing/Views/purchasing.php' class='btn btn-primary btn-lg'>Purchasing</a>
-        <a href='DataAnalysis/Views/dataAnalysis.php' class='btn btn-primary btn-lg'>Data Analysis</a>
+      <?php
+      if($user_sec_lvl[0] > 0){
+        echo "<a href='Tooling/Views/selection.php' class='btn btn-primary btn-lg'>Tooling</a>";
+      }
+      if($user_sec_lvl[1] > 0){
+        echo "<a href='Purchasing/Views/purchasing.php' class='btn btn-primary btn-lg'>Purchasing</a>";
+      }
+      if($user_sec_lvl[2] > 0){
+        echo "<a href='DataAnalysis/Views/dataAnalysis.php' class='btn btn-primary btn-lg'>Data Analysis</a>";
+      }
+      ?>
     </div>
   </div>
   <div class="container">

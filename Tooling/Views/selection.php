@@ -18,6 +18,8 @@
   while($row = mysqli_fetch_array($secResult)){
     $user_sec_lvl = $row[0];
   }
+  $user_sec_lvl = str_split($user_sec_lvl);
+  $user_sec_lvl = $user_sec_lvl[0];
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>

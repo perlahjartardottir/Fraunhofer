@@ -11,7 +11,7 @@ $security_level = mysqli_real_escape_string($link, $_POST['security_level']);
 $sqlError = "SELECT employee_ID
 			 FROM employee
 			 WHERE employee_ID = '$employee_ID' ;";
-$sqlErrorResult = mysqli_query($link, $sqlError);			
+$sqlErrorResult = mysqli_query($link, $sqlError);
 
 if(mysqli_num_rows($sqlErrorResult) == 0){
 	die("invalid ID");
@@ -28,7 +28,7 @@ if(!empty($employee_email)){
 	}else{
 		die("invalid email");
 	}
-	
+
 }
 if(!empty($employee_phone)){
 	$phone = preg_replace('/[^0-9]/', '', $_POST['employee_phone']);
@@ -37,17 +37,9 @@ if(!empty($employee_phone)){
 	}else{
 		die("invalid phone number");
 	}
-	
 }
-if(!empty($security_level)){
-	if(1 <= $security_level && 4 >= $security_level){
-		$sql .= ", security_level = '$security_level'";
-	}else{
-		die("invalid security level");
-	}
-}
+$sql .= ", security_level = '$security_level'";
 
 $sql .= "WHERE employee_ID = '$employee_ID';";
 $result = mysqli_query($link, $sql);
 ?>
-

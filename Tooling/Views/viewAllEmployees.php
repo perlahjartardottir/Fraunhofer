@@ -12,15 +12,14 @@ $secResult = mysqli_query($link, $secsql);
 while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
+$user_sec_lvl = str_split($user_sec_lvl);
+$user_sec_lvl = $user_sec_lvl[0];
 ?>
 <html>
 <head>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
   <link href='../css/main.css' rel='stylesheet'>
-
-
-
 </head>
 <body>
 <?php include '../header.php'; ?>

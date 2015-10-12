@@ -13,6 +13,8 @@ $secResult = mysqli_query($link, $secsql);
 while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
+$user_sec_lvl = str_split($user_sec_lvl);
+$user_sec_lvl = $user_sec_lvl[1];
 // if the user security level is not high enough we kill the page and give him a link to the log in page
 if($user_sec_lvl < 2){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";

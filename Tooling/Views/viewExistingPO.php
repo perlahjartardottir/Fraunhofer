@@ -4,7 +4,7 @@ include '../connection.php';
 session_start();
 //find the current user
 $user = $_SESSION["username"];
-//find his level of security 
+//find his level of security
 $secsql = "SELECT security_level
            FROM employee
            WHERE employee_name = '$user'";
@@ -13,14 +13,14 @@ $secResult = mysqli_query($link, $secsql);
 while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
+$user_sec_lvl = str_split($user_sec_lvl);
+$user_sec_lvl = $user_sec_lvl[0];
 ?>
 <html>
 <head>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
   <link href='../css/main.css' rel='stylesheet'>
-  
-  
 </head>
 <body>
   <?php include '../header.php'; ?>
@@ -47,8 +47,8 @@ while($row = mysqli_fetch_array($secResult)){
         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       </button>
     </div>
-  </div>  
-</div>    
+  </div>
+</div>
 <ul id="results" class="update">
 </ul>
 </body>

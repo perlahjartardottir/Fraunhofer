@@ -14,6 +14,8 @@ while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
   $employee_ID = $row[1];
 }
+$user_sec_lvl = str_split($user_sec_lvl);
+$user_sec_lvl = $user_sec_lvl[0];
 // if the users security level is to low he cant access this page.
 if($user_sec_lvl < 2){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";
