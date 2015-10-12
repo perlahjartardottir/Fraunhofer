@@ -7,26 +7,6 @@
   session_start();
   // find the current user
   $user = $_SESSION["username"];
-  //find his level of security
-  $secsql = "SELECT security_level
-             FROM employee
-             WHERE employee_name = '$user'";
-  $secResult = mysqli_query($link, $secsql);
-
-  while($row = mysqli_fetch_array($secResult)){
-    $user_sec_lvl = $row[0];
-  }
-  $user_sec_lvl = str_split($user_sec_lvl);
-  $user_sec_lvl = $user_sec_lvl[1];
-  // if the user security level is not high enough we kill the page and give him a link to the log in page
-  if($user_sec_lvl < 2){
-    echo "<a href='../../Login/login.php'>Login Page</a></br>";
-    die("You don't have the privileges to view this site.");
-  }
-
-  // find the current date
-  $curDate = date("Y-m-d");
-  $curDate = strtotime($curDate);
 
   // find his level of security
   $secsql = "SELECT security_level, employee_ID
@@ -38,6 +18,20 @@
     $user_sec_lvl = $row[0];
     $employee_ID  = $row[1];
   }
+  $user_sec_lvl = str_split($user_sec_lvl);
+  $user_sec_lvl = $user_sec_lvl[1];
+
+  // if the user security level is not high enough we kill the page and give him a link to the log in page
+  if($user_sec_lvl < 2){
+    echo "<a href='../../Login/login.php'>Login Page</a></br>";
+    die("You don't have the privileges to view this site.");
+  }
+
+  // find the current date
+  $curDate = date("Y-m-d");
+  $curDate = strtotime($curDate);
+
+
   // query to find how many active requests there are
   $activeRequestsSql = "SELECT COUNT(request_ID)
                         FROM order_request
@@ -93,27 +87,35 @@
         <div class='col-md-2'>
           <button type="button" class='btn btn-primary col-md-12' onclick="location.href='request.php'">Request for PO</button>
         </div>
-        <div class='col-md-2' id='process_order'>
-          <button type="button" class='btn btn-primary col-md-12' onclick="location.href='processOrder.php'">
-            Process order
-            <?php
-              if($activeRequests[0] > 0){
-                  echo "<span class='badge'>".$activeRequests[0]."</span>";
-              }
-             ?>
-          </button>
-        </div>
-        <div class='col-md-2 btn-group'>
-            <button type='button' class='btn btn-primary col-md-9' onclick="location.href='overview.php'">Overview</button>
-            <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
-              <span class='caret'></span>
-              <span class='sr-only'>Toggle Dropdown</span>
+        <?php
+        if($user_sec_lvl > 2){
+          ?>
+          <div class='col-md-2' id='process_order'>
+            <button type="button" class='btn btn-primary col-md-12' onclick="location.href='processOrder.php'">
+              Process order
+              <?php
+                if($activeRequests[0] > 0){
+                    echo "<span class='badge'>".$activeRequests[0]."</span>";
+                }
+               ?>
             </button>
-            <ul class='dropdown-menu' role='menu'>
-              <li><a href='forecast.php'>Forecast</a></li>
-              <li><a href='quotes.php'>Quotes</a></li>
-            </ul>
-        </div>
+          </div>
+        <?php
+        }
+        if($user_sec_lvl > 3){
+          ?>
+          <div class='col-md-2 btn-group'>
+              <button type='button' class='btn btn-primary col-md-9' onclick="location.href='overview.php'">Overview</button>
+              <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
+                <span class='caret'></span>
+                <span class='sr-only'>Toggle Dropdown</span>
+              </button>
+              <ul class='dropdown-menu' role='menu'>
+                <li><a href='forecast.php'>Forecast</a></li>
+                <li><a href='quotes.php'>Quotes</a></li>
+              </ul>
+          </div>
+        <?php } ?>
       </div>
     </div>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <?php
-  include 'connection.php';
+  include '../connection.php';
     session_start();
     //find the current user
     $user = $_SESSION["username"];
@@ -18,22 +18,22 @@
     $user_sec_lvl = str_split($user_sec_lvl);
   ?>
   <title>Login Fraunhofer CCD</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
 </head>
 <body>
-  <?php include 'header.php'; ?>
+  <?php include '../header.php'; ?>
   <div class="container">
     <div class="btn-group-vertical col-md-12" role="group" aria-label="...">
       <?php
       if($user_sec_lvl[0] > 0){
-        echo "<a href='Tooling/Views/selection.php' class='btn btn-primary btn-lg'>Tooling</a>";
+        echo "<a href='../Tooling/Views/selection.php' class='btn btn-primary btn-lg'>Tooling</a>";
       }
       if($user_sec_lvl[1] > 0){
-        echo "<a href='Purchasing/Views/purchasing.php' class='btn btn-primary btn-lg'>Purchasing</a>";
+        echo "<a href='../Purchasing/Views/purchasing.php' class='btn btn-primary btn-lg'>Purchasing</a>";
       }
       if($user_sec_lvl[2] > 0){
-        echo "<a href='DataAnalysis/Views/dataAnalysis.php' class='btn btn-primary btn-lg'>Data Analysis</a>";
+        echo "<a href='../DataAnalysis/Views/dataAnalysis.php' class='btn btn-primary btn-lg'>Data Analysis</a>";
       }
       ?>
     </div>
@@ -41,11 +41,11 @@
   <div class="container">
     <div class='btn-group col-md-4 pull-right' style="position: absolute; bottom: 10px; right:25px">
       <?php
-        if($user_sec_lvl >= 3){
-          echo "<a href='Views/addNewEmployee.php' class='btn btn-primary'>Add new employee</a>";
+        if($user_sec_lvl[3] > 0){
+          echo "<a href='addNewEmployee.php' class='btn btn-primary'>Add new employee</a>";
         }
       ?>
-      <a href='/Views/viewAllEmployees.php' class='btn btn-primary'>View all employees</a>
+      <a href='viewAllEmployees.php' class='btn btn-primary'>View all employees</a>
     </div>
   </div>
 </body>

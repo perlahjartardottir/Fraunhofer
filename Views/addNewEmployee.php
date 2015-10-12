@@ -31,7 +31,7 @@ while($row = mysqli_fetch_array($secResult)){
             <input type="text" name="eName" id="eName" class='form-control'>
           </p>
           <p class='col-md-4 form-group'>
-            <label for="sec_lvl">Security level 1-4: </label>
+            <label for="sec_lvl">Security level: </label>
             <input type="text" name="sec_lvl" id="sec_lvl" class='form-control'>
           </p>
           <p class='col-md-4 form-group'>

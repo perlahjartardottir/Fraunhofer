@@ -12,6 +12,8 @@ $secResult = mysqli_query($link, $secsql);
 while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
+$user_sec_lvl = str_split($user_sec_lvl);
+$user_sec_lvl = $user_sec_lvl[3];
 ?>
 <html>
 <head>
@@ -55,7 +57,7 @@ while($row = mysqli_fetch_array($secResult)){
     </div>
   </div>
     <?php
-    if($user_sec_lvl >=3)
+    if($user_sec_lvl > 0)
     {
       echo"
         <div class='row well well-lg'>
@@ -92,7 +94,7 @@ while($row = mysqli_fetch_array($secResult)){
             </div>
           </div>
             <div class='col-md-12' style='float:right;'>
-              <input type='submit' value='Submit changes' onclick='changeEmployee()' class='btn btn-primary' style='float:right;'/>
+              <input type='submit' value='Submit changes' onclick='changeEmployee(); return false;' class='btn btn-primary' style='float:right;'/>
             </div>
           </form>
         </div>";

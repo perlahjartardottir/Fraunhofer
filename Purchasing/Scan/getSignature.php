@@ -12,7 +12,7 @@
   $result = mysqli_query($link, $sql);
 
   if(!$result){
-      echo("Something went wrong : ".mysqli_error($link));
+      die("Something went wrong : ".mysqli_error($link));
   }
   if(mysqli_num_rows($result) > 0){
     header('Content-Type: text/html; charset=utf-8');

@@ -8,7 +8,7 @@
   <div class="container">
     <div class="navbar-header">
       <div class='navbar-brand'>
-        <a href='../../menu.php'>Menu</a>
+        <a href='../../Views/menu.php'>Menu</a>
         <a href='../views/dataAnalysis.php' style="margin-left:7px;">Home</a>
         <span class='username'><strong><?php echo $_SESSION["username"];?></strong></span>
       </div>

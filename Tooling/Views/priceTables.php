@@ -20,7 +20,7 @@ while ($row = mysqli_fetch_array($secResult)) {
     $user_sec_lvl = $row[0];
 }
 $user_sec_lvl = str_split($user_sec_lvl);
-$user_sec_lvl = $user_sec_lvl[0];
+$user_sec_lvl = $user_sec_lvl[3];
 ?>
 <html>
 <head>
@@ -49,7 +49,7 @@ $user_sec_lvl = $user_sec_lvl[0];
       </div>
     </div>
     <?php
-      if ($user_sec_lvl >= 4) {
+      if ($user_sec_lvl > 0) {
           echo"
               <div class='row well well-lg'>
                 <div id='invalidPrice'></div>

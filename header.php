@@ -9,9 +9,9 @@
   <div class="container">
     <div class="navbar-header">
       <div class='navbar-brand'>
-        <a href='../menu.php'>Home</a>
+        <a href='menu.php'>Home</a>
         <span class='username'><strong><?php echo $_SESSION["username"];?></strong></span>
-        <a href='Views/editProfile.php'>Edit profile</a>
+        <a href='editProfile.php'>Edit profile</a>
       </div>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                 <span class="icon-bar"></span>
@@ -21,7 +21,7 @@
     </div>
     <div class="collapse navbar-collapse navHeaderCollapse">
         <ul class='navbar-right btn-group' role='group'>
-          <a href='Tooling/Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
+          <a href='../Tooling/Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
           <a onclick='logout()' class='btn btn-danger headerbutton active' role='button'>Logout</a>
         </ul>
     </div>

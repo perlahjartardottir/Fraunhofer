@@ -950,7 +950,7 @@ function authenticate() {
       if (data.indexOf("error") > -1) {
         alert("Please enter the right information.");
       } else {
-        window.location = "../menu.php";
+        window.location = "../Views/menu.php";
       }
     }
   });

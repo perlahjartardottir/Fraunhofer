@@ -1,5 +1,20 @@
 <?php
 include '../../connection.php';
+session_start();
+//find the current user
+$user = $_SESSION["username"];
+//find his level of security
+$secsql = "SELECT security_level
+           FROM employee
+           WHERE employee_name = '$user'";
+$secResult = mysqli_query($link, $secsql);
+
+while($row = mysqli_fetch_array($secResult)){
+  $user_sec_lvl = $row[0];
+}
+$user_sec_lvl = str_split($user_sec_lvl);
+$user_sec_lvl = $user_sec_lvl[1];
+
 $supplier_name = mysqli_real_escape_string($link, $_POST['supplier_name']);
 $supplier_name .= "%";
 $supplier_contact = mysqli_real_escape_string($link, $_POST['supplier_contact']);
@@ -108,8 +123,11 @@ $supplier_address .= "%";
                          </div>
                         </div>
           			        <div class='modal-footer'>
-                          <p style='float:left'><strong>Rating</strong>: ".$averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i></p>
-                          <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='setSupplierID(this)'>Edit Supplier</button>
+                          <p style='float:left'><strong>Rating</strong>: ".$averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i></p>";
+                          if($user_sec_lvl > 2){
+                            echo"  <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='setSupplierID(this)'>Edit Supplier</button>";
+                          }
+                          echo"                        
           			          <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
           			        </div>
           			      </div>
