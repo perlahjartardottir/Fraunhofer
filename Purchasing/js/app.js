@@ -368,6 +368,22 @@ function delOrderItem(order_item_ID){
   }
 }
 
+function delPurchaseOrder(order_ID){
+  var r = confirm("Are you sure you want to delete this purchase order?");
+  if(r === true){
+    $.ajax({
+      url: '../DeletePHP/deletePurchaseOrder.php',
+      type: 'POST',
+      data:{
+        order_ID : order_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
+}
+
 function createPurchaseOrder(){
   // function to find the correct value from the datalist
   var employee_name = $("input[name='employeeList']").on('input', function(e){

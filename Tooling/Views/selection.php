@@ -20,6 +20,10 @@
   }
   $user_sec_lvl = str_split($user_sec_lvl);
   $user_sec_lvl = $user_sec_lvl[0];
+  if($user_sec_lvl < 1){
+    echo "<a href='../../Login/login.php'>Login Page</a></br>";
+    die("You don't have the privileges to view this site.");
+  }
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>

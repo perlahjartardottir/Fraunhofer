@@ -15,6 +15,7 @@
         <a href='../../Views/menu.php'>Menu</a>
         <a href='../views/selection.php' style="margin-left:7px;">Home</a>
         <span class='username'><strong><?php echo $_SESSION["username"];?></strong></span>
+        <a href='../../Views/editProfile.php'>Edit profile</a>
       </div>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                 <span class="icon-bar"></span>
