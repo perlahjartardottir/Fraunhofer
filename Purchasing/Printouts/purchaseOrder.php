@@ -137,10 +137,6 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <span class='col-xs-12'>+1 517-432-8709  (phone)</span>
       <span class='col-xs-12'>+1 517-432-8167  (fax)</span>
       <p class='col-xs-12'>kklimczak@fraunhofer.org</p>
-      <span class='col-xs-12'><strong>Accounts Payable Contact:</strong></span>
-      <span class='col-xs-12'>Beth Fohrman</span>
-      <span class='col-xs-12'>+1 734-738-0556</span>
-      <span class='col-xs-12'>bfohrman@fraunhofer.org</span>
     </div>
     <div class='col-xs-12' style='margin-top:20px;'>
       <table class='table table-responsive'>
@@ -201,7 +197,8 @@ $supplierRow = mysqli_fetch_array($supplierResult);
           </div>";
     }
     ?>
-    <div class='col-xs-5' id='output'></div>
+    <!-- updatePHP/esignature.php -->
+    <div class='col-xs-6' id='output'></div>
   </div>
   <script>
 //show the info for the PO chosen when you enter the page or refresh it

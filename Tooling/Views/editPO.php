@@ -31,7 +31,7 @@ $user_sec_lvl = $user_sec_lvl[0];
         <!-- Getting the po_number from the po_ID -->
         <?php
             $po_ID = $_SESSION["po_ID"];
-            $sql = "SELECT po_number, receiving_date, initial_inspection, nr_of_lines, shipping_info
+            $sql = "SELECT po_number, receiving_date, initial_inspection, nr_of_lines, shipping_info, customer_ID
                     FROM pos
                     WHERE po_ID = '$po_ID'";
             $result = mysqli_query($link, $sql);
@@ -41,57 +41,65 @@ $user_sec_lvl = $user_sec_lvl[0];
                 $initial_inspection = $row[2];
                 $nr_of_lines = $row[3];
                 $shipping_info = $row[4];
+                $customerSql = "SELECT customer_name FROM customer
+                                WHERE customer_ID = '$row[5]';";
+                $customerResult = mysqli_query($link, $customerSql);
+                $customerRow = mysqli_fetch_array($customerResult);
+                $customer = $customerRow[0];
             }
+            $customerSql = "SELECT customer_ID, customer_name FROM customer;";
+            $customerResult = mysqli_query($link, $customerSql);
         ?>
         <h1><?php echo $po_number; ?></h1>
         <p>Insert new values to the input fields below to edit the PO.</p>
         <p>Fields you leave empty will remain unchanged.</p>
         <div class='col-md-8'>
-        <div class='col-md-4'>
-            <p>
-              <strong>PO number : </strong><?php echo $po_number; ?>
-            </p>
-            <input type='text' id='input_po_number'/>
+          <form>
+            <div class='col-md-6'>
+              <strong>PO number: </strong><?php echo $po_number; ?>
+              <input type='text' id='input_po_number' class='form-control'/>
+            </div>
+            <div class='col-md-6'>
+              <strong>Receiving date: </strong><?php echo $receiving_date; ?>
+              <input type='date' id='input_date' class='form-control'/>
+            </div>
+            <div class='col-md-6' style='margin-top:4px;'>
+              <strong>Initial inspection: </strong><?php echo $initial_inspection; ?>
+              <input type='text' id='input_initial_inspect' class='form-control'/>
+            </div>
+            <div class='col-md-6' style='margin-top:4px;'>
+              <strong>Number of lines on PO: </strong><?php echo $nr_of_lines; ?>
+              <input type='number' id='input_number_of_lines' class='form-control'/>
+            </div>
+            <div class='col-md-6' style='margin-top:4px'>
+              <strong>Shipping info: </strong><?php echo $shipping_info; ?>
+              <select id='shipping_sel' class='form-control'>
+                <option value=''>Unchanged</option>
+                <option value='Ground'>Ground</option>
+                <option value='3 day'>3 day</option>
+                <option value='2 day'>2 day</option>
+                <option value='next day'>Next day</option>
+                <option value='fedex'>Fedex</option>
+                <option value='other'>Other</option>
+              </select>
+            </div>
+            <div class='col-md-6' style='margin-top:4px;'>
+              <strong>Customer: </strong><?php echo $customer; ?>
+              <select id='customer_sel' class='form-control'>
+                <?php
+                while($customerRow = mysqli_fetch_array($customerResult)){
+                  echo"<option value='".$customerRow[0]."'";
+                  if($customerRow[1] == $customer){ echo " selected";}
+                  echo">".$customerRow[1]."</option>";
+                } ?>
+              </select>
+            </div>
+            <div class='col-md-12'>
+              <p></p>
+              <input type='submit' value='Submit changes' onclick='changePOInfo(<?php echo $po_ID;?>)' class='btn btn-primary'/>
+            </div>
+          </form>
         </div>
-        <div class='col-md-4'>
-            <p>
-              <strong>Receiving date : </strong><?php echo $receiving_date; ?>
-            </p>
-            <input type='date' id='input_date'/>
-        </div>
-        <p></p>
-        <div class='col-md-4' style='margin-top: -8px;'>
-            <p>
-              <strong>Initial inspection : </strong><?php echo $initial_inspection; ?>
-            </p>
-            <input type='text' id='input_initial_inspect'/>
-        </div>
-        <p></p>
-        <div class='col-md-5' style='margin-top:4px;'>
-            <p>
-              <strong>Number of lines on PO : </strong><?php echo $nr_of_lines; ?>
-            </p>
-            <input type='number' id='input_number_of_lines'/>
-        </div>
-        <div class='col-md-4' style='margin-left:-56px; margin-top:4px'>
-          <p>
-            <strong>Shipping info: </strong><?php echo $shipping_info; ?>
-          </p>
-          <select id='shipping_sel'>
-            <option value=''>Unchanged</option>
-            <option value='Ground'>Ground</option>
-            <option value='3 day'>3 day</option>
-            <option value='2 day'>2 day</option>
-            <option value='next day'>Next day</option>
-            <option value='fedex'>Fedex</option>
-            <option value='other'>Other</option>
-          </select>
-        </div>
-        <div class='col-md-12'>
-        <p></p>
-        <input type='submit' value='Submit changes' onclick='changePOInfo(<?php echo $po_ID;?>)' class='btn btn-primary'/>
-        </div>
-      </div>
       <div class='col-xs-3'>
         <!-- The onsubmit is to not allow the user to add files bigger than 250kb -->
         <form action="../InsertPHP/addimage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(356000)">

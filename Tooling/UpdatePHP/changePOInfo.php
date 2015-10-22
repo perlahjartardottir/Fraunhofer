@@ -8,9 +8,7 @@ $input_initial_inspect = mysqli_real_escape_string($link, $_POST['input_initial_
 $input_number_of_lines = mysqli_real_escape_string($link, $_POST['input_number_of_lines']);
 $shipping_info 		   = mysqli_real_escape_string($link, $_POST['shipping_info']);
 $input_po_number 	   = mysqli_real_escape_string($link, $_POST['input_po_number']);
-
-
-
+$customer_ID 	   = mysqli_real_escape_string($link, $_POST['customer_ID']);
 
 // we do this so all the following update additions
 // can start with ',' instead of 'SET'
@@ -31,6 +29,9 @@ if(!empty($shipping_info)){
 }
 if(!empty($input_po_number)){
 	$sql .= ", po_number = '$input_po_number' ";
+}
+if(!empty($customer_ID)){
+	$sql .= ", customer_ID = '$customer_ID' ";
 }
 
 $sql .= "WHERE po_ID = '$po_ID';";

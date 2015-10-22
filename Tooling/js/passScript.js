@@ -1180,8 +1180,13 @@ function changePOInfo(po_ID) {
   var input_number_of_lines = $('#input_number_of_lines').val();
   var input_po_number = $('#input_po_number').val();
   var e = document.getElementById("shipping_sel");
+
   //this chooses the selected item from the dropdown list
   var shipping_info = e.options[e.selectedIndex].value;
+
+  var customer = document.getElementById("customer_sel");
+  var customer_ID = customer.options[customer.selectedIndex].value;
+
   $.ajax({
     url: "../UpdatePHP/changePOInfo.php",
     type: "POST",
@@ -1192,6 +1197,7 @@ function changePOInfo(po_ID) {
       input_initial_inspect: input_initial_inspect,
       input_number_of_lines: input_number_of_lines,
       shipping_info: shipping_info,
+      customer_ID: customer_ID
     },
     success: function(data, status, xhr) {
       window.location.reload(true);
