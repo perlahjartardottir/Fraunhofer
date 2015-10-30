@@ -15,10 +15,9 @@
       die("Something went wrong : ".mysqli_error($link));
   }
   if(mysqli_num_rows($result) > 0){
-    header('Content-Type: text/html; charset=utf-8');
-      while($row = mysqli_fetch_array($result)){
-        echo $row[0];
-      }
+      $row = mysqli_fetch_array($result);
+      header('Content-Type: text/html; charset=utf-8');
+      echo $row[0];
   }else{
       echo "Image does not exist";
   }

@@ -44,7 +44,7 @@ $supplier_address .= "%";
         <th>Supplier name</th>
         <th>Contact</th>
         <th class='col-md-2'>Phone</th>
-        <th>Email</th>
+        <th class='col-md-3'>Email</th>
         <th>Address</th>
         <th>Rating</th>
       </tr>
@@ -127,7 +127,7 @@ $supplier_address .= "%";
                           if($user_sec_lvl > 2){
                             echo"  <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='setSupplierID(this)'>Edit Supplier</button>";
                           }
-                          echo"                        
+                          echo"
           			          <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
           			        </div>
           			      </div>

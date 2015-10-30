@@ -93,7 +93,7 @@ function editProfile(employee_ID){
       if (data.indexOf("invalid phone number") > -1) {
         alert("Invalid phone number");
       } else{
-        window.location.reload(true);
+        window.location.reload();
       }
     }
   });

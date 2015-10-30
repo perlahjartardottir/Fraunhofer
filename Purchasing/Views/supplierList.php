@@ -68,7 +68,7 @@ if($user_sec_lvl < 2){
     </div>
 
     <!-- SearchPHP/supplier_search_suggestions.php -->
-    <div class="col-md-8 col-md-offset-1">
+    <div class="col-md-9" style='margin-left: 30px;'>
       <div id='output' class='table table-responsive'>
       </div>
     </div>

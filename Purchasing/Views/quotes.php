@@ -33,6 +33,9 @@ if($user_sec_lvl < 2){
   <script type="text/javascript">
     window.onload = function() {
       quoteSuggestions();
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker();
+      });
     };
   </script>
   <div class='container'>
@@ -66,7 +69,7 @@ if($user_sec_lvl < 2){
       </form>
     </div>
 
-    <!-- SearchPHP/purchase_search_suggestions.php -->
+    <!-- SearchPHP/quote_suggestions.php -->
     <div class="col-md-8 col-md-offset-1">
       <span>This table contains information about all quotes in the system.</span>
       <span><br>Select received quotes for PO request. Click "create request" to create a new request based on checked quotes.</span>

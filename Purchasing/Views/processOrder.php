@@ -51,7 +51,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
       <form>
         <h4>Purchase order</h4>
         <div class='col-md-6 form-group'>
-          <label>Employee: </label>
+          <label>For employee: </label>
             <input type='text' list="employees" name="employeeList" id='employeeList' value='' class='col-md-12 form-control'>
             <datalist id="employees">
               <?
@@ -72,11 +72,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
               ?>
             </datalist>
         </div>
-        <div class='col-md-6 form-group'>
-          <label>Approved by: </label>
-          <input type="text" class='form-control' id='approved_by'>
-        </div>
-        <input class='form-control btn btn-primary' type="button" value="Order" onclick='createPurchaseOrder()'>
+        <input class='form-control btn btn-primary' type="button" value="Order" onclick='createPurchaseOrder()' style='margin-top:20px;'>
       </form>
     </div>
     <div class='row well well-lg col-md-6'>

@@ -31,6 +31,9 @@ $departmentResult = mysqli_query($link, $departmentSql);
   <script type="text/javascript">
     window.onload = function() {
       orderItemSuggestions();
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker();
+      });
     };
   </script>
   <div class='container'>

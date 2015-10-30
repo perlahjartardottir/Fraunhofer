@@ -17,11 +17,11 @@ $today = date('Y-m-d');
   <table class='table table-responsive table-striped table-condensed'>
     <thead>
       <tr>
+        <th>Payment due</th>
         <th>Purchase number</th>
         <th>Supplier</th>
         <th>Receiving date</th>
         <th>Net terms</th>
-        <th>Payment due</th>
         <th>Final Price</th>
       </tr>
     </thead>
@@ -43,6 +43,7 @@ $today = date('Y-m-d');
       }
       $sql .= "ORDER BY DATE_ADD(order_receive_date, INTERVAL net_terms day);";
       $result = mysqli_query($link, $sql);
+      $monthName = "";
       while($row = mysqli_fetch_array($result)){
         $supplierSql = "SELECT supplier_name
                         FROM supplier
@@ -59,14 +60,28 @@ $today = date('Y-m-d');
         while($orderItemRow = mysqli_fetch_array($orderItemResult)){
           $finalPrice += $orderItemRow[0] * $orderItemRow[1];
         }
+        // Calculates when the payment is due by adding the receiving date to the net terms
         $payDate = date('Y-m-d', strtotime($row[4]. ' + '.$row[5].' days'));
+        if($monthName != date('F', strtotime($payDate))){
+          // Find the month of that payment
+          $monthName = date('F', strtotime($payDate));
+          echo"
+            <tr height='50'>
+              <th></th>
+              <th></th>
+              <th style='font-size: 150%;'>".$monthName."</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>";
+        }
         echo"
           <tr>
+            <td>".$payDate."</td>
             <td><a href='#' onclick='setSessionIDSearch(".$row[0].")' data-toggle='modal' data-target='#".$row[0]."'>".$row[2]."</a></td>
             <td>".$supplierRow[0]."</td>
             <td>".$row[4]."</td>
             <td>".$row[5]."</td>
-            <td>".$payDate."</td>
             <td>$".number_format((float)$finalPrice, 2, '.', '')."</td>
           </tr>";
           $totalFinalPrice += $finalPrice;

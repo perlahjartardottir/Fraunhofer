@@ -23,7 +23,7 @@ if($top_runs == 'on'){
 // Add the % to the input string so we only have to write
 // for instance the first letter for something and then
 // the table shows all results that begin with that letter
-$stringInput = $input . '%';
+$stringInput = '%' . $input . '%';
 
 // Getting what we want to show in our table and connecting
 // runs, pos and lineitems so the results match

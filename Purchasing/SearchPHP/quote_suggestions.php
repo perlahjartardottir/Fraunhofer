@@ -7,7 +7,6 @@ $supplier_name = mysqli_real_escape_string($link, $_POST['supplier_name']);
 $first_date    = mysqli_real_escape_string($link, $_POST['first_date']);
 $last_date     = mysqli_real_escape_string($link, $_POST['last_date']);
 
-
 $order_name .= '%';
 $description .= '%';
 $quote_number .= '%';
@@ -44,10 +43,17 @@ $order_name = '%' . $order_name ;
                              FROM purchase_order
                              WHERE order_name LIKE '$order_name') ";
       }
-      $sql .= "AND supplier_ID = ANY(SELECT supplier_ID
-                                    FROM supplier
-                                    WHERE supplier_name LIKE '$supplier_name')
-              AND quote_number LIKE '$quote_number'
+      if(strlen($supplier_name) == 1){
+        $sql .= "AND (supplier_ID = ANY(SELECT supplier_ID
+                                      FROM supplier
+                                      WHERE supplier_name LIKE '$supplier_name')
+                OR supplier_ID IS NULL) ";
+      } else{
+        $sql .= "AND supplier_ID = ANY(SELECT supplier_ID
+                                      FROM supplier
+                                      WHERE supplier_name LIKE '$supplier_name') ";
+      }
+      $sql .= "AND quote_number LIKE '$quote_number'
               AND description LIKE '$description' ";
       if(!empty($first_date)){
       	$sql .= "AND quote_date >= '$first_date' ";

@@ -209,7 +209,6 @@ function orderRequest(){
   var department           = $('#department').val();
   var cost_code           = $('#cost_code').val();
   var orderTimeframe       = $('#orderTimeframe').val();
-  var approved_by_employee = $('#approved_by_employee').val();
   var request_description  = $('#request_description').val();
   var employee_ID          = $('#employee_ID').val();
   var part_number          = $('#part_number').val();
@@ -225,7 +224,6 @@ function orderRequest(){
         department           : department,
         cost_code            : cost_code,
         orderTimeframe       : orderTimeframe,
-        approved_by_employee : approved_by_employee,
         request_description  : request_description,
         employee_ID          : employee_ID,
         part_number          : part_number,
@@ -407,7 +405,6 @@ function createPurchaseOrder(){
   employee_name   = employee_name.val();
   supplier_name   = supplier_name.val();
   var employee_ID = $('#employee_ID').val();
-  var approved_by = $('#approved_by').val();
   var request_ID  = $('#activeRequest').text();
 
   if(!employee_name){
@@ -422,8 +419,7 @@ function createPurchaseOrder(){
         employee_name : employee_name,
         employee_ID   : employee_ID,
         supplier_name : supplier_name,
-        request_ID    : request_ID,
-        approved_by   : approved_by
+        request_ID    : request_ID
       },
       success: function(data, status, xhr){
         window.location = "../views/addOrderItem.php";

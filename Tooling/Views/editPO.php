@@ -117,7 +117,7 @@ $user_sec_lvl = $user_sec_lvl[0];
         <input type='image' src="../Scan/getImage.php" width="100" height="100" onerror="this.src='../images/noimage.jpg'" onclick="window.open('../Printouts/scanprintout.php')"/>
       </div>
         <h4 class='col-md-12' style='margin-left: -15px;'>Lineitems</h4>
-        <table class='col-md-12' style='width:84%'>
+        <table class='col-md-12 table table-responsive table-bordered table-condensed' style='width:84%'>
           <tr>
             <th>Line on PO</th>
             <th>Quantity</th>

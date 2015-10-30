@@ -32,9 +32,15 @@ fclose($fp);
 // Depending on where we are adding the quote, the quote either gets active or it gets an order ID if
 // the user adds the quote in the process purchase order view.
 if($redirect == 'addQuote'){
-  if($quote_date == ''){
+  if($quote_date == '' && $supplier_ID == ''){
+    $sql = "INSERT INTO quote (quote_number, description, content, create_request, quote_date, type, size)
+            VALUES ('$quote_number', '$description', '$content', 1, CURDATE(), '$fileType', '$fileSize');";
+  } else if($quote_date == ''){
     $sql = "INSERT INTO quote (quote_number, description, content, create_request, supplier_ID, quote_date, type, size)
             VALUES ('$quote_number', '$description', '$content', 1, '$supplier_ID', CURDATE(), '$fileType', '$fileSize');";
+  } else if($supplier_ID == ''){
+    $sql = "INSERT INTO quote (quote_number, description, content, create_request, quote_date, type, size)
+            VALUES ('$quote_number', '$description', '$content', 1, '$quote_date', '$fileType', '$fileSize');";
   } else{
     $sql = "INSERT INTO quote (quote_number, description, content, create_request, supplier_ID, quote_date, type, size)
             VALUES ('$quote_number', '$description', '$content', 1, '$supplier_ID', '$quote_date', '$fileType', '$fileSize');";
@@ -49,7 +55,7 @@ if($redirect == 'addQuote'){
   }
 }
 
-mysqli_query($link, $sql) or die('Error, query failed');
+mysqli_query($link, $sql) or die('Error, query failed ' . mysqli_error($link));
 
 // Redirecting to the correct view, depending on where we added the quote
 if($redirect == 'addQuote'){

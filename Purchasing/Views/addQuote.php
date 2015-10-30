@@ -43,7 +43,7 @@ $result = mysqli_query($link, $sql);
         <form action="../InsertPHP/addQuote.php" method="post" enctype="multipart/form-data">
           <div class='col-md-3'>
             <label>Quote number: </label>
-            <input type='text' class='form-control' name='quote_number' id='quote_number'>
+            <input type='text' class='form-control' name='quote_number' id='quote_number' required>
           </div>
           <div class='col-md-3'>
             <label>Description: </label>
@@ -51,7 +51,7 @@ $result = mysqli_query($link, $sql);
           </div>
           <div class='col-md-3'>
             <label>Supplier: </label>
-              <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
+              <input type='text' list="suppliers" name="supplierListTwo" id='supplierListTwo' value='' class='col-md-12 form-control'>
               <datalist id="suppliers">
                 <?
                 while($row = mysqli_fetch_array($supplierResult)){

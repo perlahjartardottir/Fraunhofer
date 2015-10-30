@@ -28,6 +28,9 @@ if($user_sec_lvl < 2){
   <script type="text/javascript">
     window.onload = function() {
       purchaseSuggestions();
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker();
+      });
     };
   </script>
   <div class='container'>

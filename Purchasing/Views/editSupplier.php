@@ -1,6 +1,7 @@
 <?php
 include '../../connection.php';
 session_start();
+$supplier_ID = $_SESSION["supplier_ID"];
 //find the current user
 $user = $_SESSION["username"];
 //find his level of security
@@ -19,13 +20,14 @@ if($user_sec_lvl < 3){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
-$supplier_ID = $_SESSION['supplier_ID'];
 $sql = "SELECT supplier_name, supplier_address, supplier_contact, supplier_phone, supplier_fax, supplier_email,
                supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes, net_terms
         FROM supplier
         WHERE supplier_ID = '$supplier_ID';";
 $result = mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result);
+if(!$result){
+	die("Could not find supplier: ".mysqli_error($link));
+}
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -36,7 +38,9 @@ $row = mysqli_fetch_array($result);
     <div class='row well well-lg'>
       <h5>*Only the fields you edit will be changed, all other fields will remain unchanged</h5>
       <form>
-        <?php echo"
+        <?php
+        $row = mysqli_fetch_array($result);
+        echo"
         <h3>Edit supplier</h3>
         <div class='form-group col-md-4'>
           <label>Name:</label>

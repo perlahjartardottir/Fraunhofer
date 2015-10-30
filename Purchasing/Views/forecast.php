@@ -28,6 +28,9 @@ if($user_sec_lvl < 4){
   <script type="text/javascript">
     window.onload = function() {
       forecast();
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker();
+      });
     };
   </script>
   <div class='container'>

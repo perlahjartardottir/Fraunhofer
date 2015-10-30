@@ -75,7 +75,7 @@
             <input type='file' name='fileToUpload' id='fileToUpload' accept='image/jpeg/png'>
           </div>
           <div class='col-md-6' style='margin-top:-40px; margin-bottom: 15px;'>
-            <input type='image' src='../Purchasing/Scan/getSignature.php?id=<?php echo $employee_ID;?>' width='250' height='100' onerror=\"this.src='../Purchasing/images/noimage.jpg'\"/>
+            <input type='image' src='../Purchasing/Scan/getSignature.php?id=<?php echo $employee_ID;?>' width='250' height='100' onerror="this.src='../Purchasing/images/noimage.jpg'"/>
           </div>
           <div class='col-md-8 col-md-offset-2'>
             <input type='submit' class='btn btn-primary col-md-12' value='Upload signature' name='submit'>

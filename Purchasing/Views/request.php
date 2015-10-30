@@ -80,12 +80,12 @@ $supplierResult = mysqli_query($link, $supplierSql);
           <input type="text" id='request_supplier' class='form-control'>
         </div>
         <div class='col-md-4 form-group'>
-          <label>Approved by: </label>
-          <input type="text" id='approved_by_employee' class='form-control'>
-        </div>
-        <div class='col-md-4 form-group'>
           <label>Part #: </label>
           <input type="text" id='part_number' class='form-control'>
+        </div>
+        <div class='col-md-4 form-group'>
+          <label>Quantity: </label>
+          <input type="number" id='quantity' class='form-control'>
         </div>
         <div class='col-md-4 form-group'>
           <label>Department: </label>
@@ -107,10 +107,6 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <option value='Today'>Today</option>
             <option value='Other'>Other</option>
           </select>
-        </div>
-        <div class='col-md-4 form-group'>
-          <label>Quantity: </label>
-          <input type="number" id='quantity' class='form-control'>
         </div>
         <div class='col-md-4 form-group'>
           <label>Description: </label>
