@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Language" content="en">
 <link href='../css/header.css' rel='stylesheet'>
 <link href='../css/bootstrap.min.css' rel='stylesheet'>
+<link href='/css/jquery-ui.min.css' rel='stylesheet'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src='/Purchasing/js/jquery-ui.js'></script>
 <script src='../dest/fraunhofer.min.js'></script>
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">

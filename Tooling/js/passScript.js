@@ -1047,13 +1047,11 @@ function setSessionIDAfterAddingPO(po_ID) {
 }
 
 function addFeedback() {
-  var name = $('#name').val();
   var comment = $('#comment').val();
   $.ajax({
     url: "../InsertPHP/addFeedback.php",
     type: "POST",
     data: {
-      name: name,
       comment: comment
     },
     success: function(data, status, xhr) {

@@ -30,6 +30,15 @@ if($user_sec_lvl < 2){
   </head>
   <body>
     <?php include '../header.php'; ?>
+    <script type="text/javascript">
+      window.onload = function() {
+        $('input[type=date]').each(function() {
+          if  (this.type != 'date' ) $(this).datepicker({
+            dateFormat: 'yy-mm-dd'
+          });
+        });
+      };
+    </script>
       <?php echo "<input type='hidden' id='employeeId' value='".$employee_ID."'>"; ?>
         <div class='container'>
           <div id='invalidPO'></div>

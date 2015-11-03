@@ -80,10 +80,18 @@ while($row = mysqli_fetch_array($result)){
 <html>
 <head>
   <title>Fraunhofer CCD</title>
-  <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body>
   <?php include '../header.php'; ?>
+  <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
   <link href='../css/print.css' rel='stylesheet'>
   <div class='container'>
     <div class='col-xs-12 commentHide'>
@@ -112,7 +120,7 @@ while($row = mysqli_fetch_array($result)){
      <div class='col-xs-12' style='padding:0;'>
       <label>Set shipping date</label>
     </br>
-    <input type="date" id="addShippingDate" name='addShippingDate' value='<?php echo date("Y-m-d") ?>'/>
+    <input type="date" id="addShippingDate" name='addShippingDate' value='<?php echo date("Y-m-d") ?>' class='form-control' style='width:auto;'/>
   </div>
   </br>
   <button type='button' id='addShippingDateButton' class='btn btn-primary' onclick='confirmPO()'>

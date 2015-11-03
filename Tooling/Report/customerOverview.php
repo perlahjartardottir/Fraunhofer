@@ -21,7 +21,6 @@ if($user_sec_lvl < 4){
 <html>
 <head>
   <title>Fraunhofer CCD</title>
-  <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body>
   <?php include '../header.php'; ?>
@@ -94,10 +93,14 @@ if($user_sec_lvl < 4){
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery.js"></script>
   <script>
     $(document).ready(function(){
         applyFilter();
+        $('input[type=date]').each(function() {
+          if  (this.type != 'date' ) $(this).datepicker({
+            dateFormat: 'yy-mm-dd'
+          });
+        });
     });
   </script>
 

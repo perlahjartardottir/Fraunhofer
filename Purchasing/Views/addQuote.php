@@ -36,6 +36,15 @@ $result = mysqli_query($link, $sql);
 </head>
 <body>
   <?php include '../header.php'; ?>
+  <script>
+		$(document).ready(function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+		});
+	</script>
   <div class='container'>
     <div class='row well'>
       <div class='col-md-12'>

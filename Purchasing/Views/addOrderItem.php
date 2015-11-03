@@ -29,7 +29,7 @@ $result = mysqli_query($link, $sql);
 $order_ID = $_SESSION["order_ID"];
 
 // Get the request and supplier ID from the purchase order
-$getRequestSql = "SELECT request_ID, supplier_ID, approval_status, approved_by, approval_response
+$getRequestSql = "SELECT request_ID, supplier_ID, approval_status, approved_by, approval_response, order_for_who
                   FROM purchase_order
                   WHERE order_ID = '$order_ID';";
 $getRequestResult = mysqli_query($link, $getRequestSql);
@@ -39,6 +39,7 @@ $supplier_ID = $row[1];
 $approval_status = $row[2];
 $approved_by = $row[3];
 $approval_response = $row[4];
+$order_for_who = $row[5];
 
 // Get supplier name from its ID
 $getSupplierNameSql = "SELECT supplier_name
@@ -239,7 +240,9 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
     <?php
     $totalValueResult = mysqli_query($link, $totalValueSql);
     $totalValue = mysqli_fetch_array($totalValueResult);
-    if($totalValue[0] > 1000 && $approval_status == ''){
+    // If the total value of the order is more than $1000 then the order needs to be approved by Lars, Thomas or Becker
+    // If the order is being ordered for Lars, Becker or Thomas then this step is not necessary
+    if($totalValue[0] > 1000 && $approval_status == '' && $order_for_who != 1 && $order_for_who != 5 && $order_for_who != 8){
       echo "<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Purchase orders worth more than $1000 need to be approved</div>
             <div class='row well'>
               <form>
@@ -247,8 +250,9 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
                   <h4>Ask for approval</h4>
                   <div class='col-md-3'>
                     <select id='approvedBy' class='form-control' style='width:auto;'>
-                      <option value='7'>Freyr Fridfinnsson</option>
-                      <option value='4'>Michael Petzold</option>
+                      <option value='1'>Thomas Schuelke</option>
+                      <option value='5'>Lars Haubold</option>
+                      <option value='8'>Michael Becker</option>
                     </select>
                   </div>
                   <div class='col-md-3'>

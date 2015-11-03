@@ -32,7 +32,9 @@ $departmentResult = mysqli_query($link, $departmentSql);
     window.onload = function() {
       orderItemSuggestions();
       $('input[type=date]').each(function() {
-        if  (this.type != 'date' ) $(this).datepicker();
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
       });
     };
   </script>

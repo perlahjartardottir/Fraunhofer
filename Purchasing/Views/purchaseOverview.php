@@ -29,7 +29,9 @@ if($user_sec_lvl < 2){
     window.onload = function() {
       purchaseSuggestions();
       $('input[type=date]').each(function() {
-        if  (this.type != 'date' ) $(this).datepicker();
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
       });
     };
   </script>

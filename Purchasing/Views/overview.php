@@ -32,8 +32,10 @@ $departmentResult = mysqli_query($link, $departmentSql);
     window.onload = function() {
       overview();
       updateCostCode();
-			$('input[type=date]').each(function() {
-        if  (this.type != 'date' ) $(this).datepicker();
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
       });
     };
   </script>

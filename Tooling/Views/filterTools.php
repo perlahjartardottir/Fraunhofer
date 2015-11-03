@@ -26,13 +26,17 @@ $user_sec_lvl = $user_sec_lvl[0];
 <html>
 <head>
   <title>Fraunhofer CCD</title>
-  <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body>
   <?php include '../header.php'; ?>
   <script type="text/javascript">
     window.onload = function() {
       tool_suggestions();
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
     };
   </script>
   <div class='container'>
@@ -76,7 +80,6 @@ $user_sec_lvl = $user_sec_lvl[0];
       </table>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery.js"></script>
 
 </body>
 </html>

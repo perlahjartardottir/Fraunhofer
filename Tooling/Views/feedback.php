@@ -2,37 +2,38 @@
 <?php
 include '../connection.php';
 session_start();
-?>  
+?>
 <html>
 <head>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
   <link href='../css/main.css' rel='stylesheet'>
-  
-  
+
+
 </head>
 <body>
   <div class='col-md-12'>
     <?php include '../header.php'; ?>
     <div class='container'>
-      <h2>Place for feedback</h2>
-      <h3>Name:</h3> <input type="text" id='name'name="name"><br>
-      <h3>Feedback:</h3><textarea id='comment'name="comment"></textarea><br>
-      <input type="submit" onclick='addFeedback()'>
-      <div class='col-md-12'>
-        <h2>Comments:</h2>
-        <?php 
-        $sql = "SELECT * 
-                FROM Feedback 
-                ORDER BY FID DESC";
-        $result = mysqli_query($link, $sql);
-        if(!$result){
-            mysqli_error($link);
-        }
-        while($row = mysqli_fetch_array($result)){
-            echo "<div class='row well well-lg'>".$row[0]."<div><strong>".$row[1]."</strong></div><div>". $row[2]."</div></div>";
-        }
-        ?>
+      <form>
+        <h2>Place for feedback</h2>
+        <h3>Feedback:</h3><textarea id='comment'name="comment" class='form-control' style='width:auto;' cols='50' rows='3'></textarea><br>
+        <input type="submit" onclick='addFeedback()'>
+        <div class='col-md-12'>
+          <h2>Comments:</h2>
+          <?php
+          $sql = "SELECT *
+                  FROM Feedback
+                  ORDER BY FID DESC";
+          $result = mysqli_query($link, $sql);
+          if(!$result){
+              mysqli_error($link);
+          }
+          while($row = mysqli_fetch_array($result)){
+              echo "<div class='row well well-lg'>".$row[0]."<div><strong>".$row[1]."</strong></div><div>". $row[2]."</div></div>";
+          }
+          ?>
+        </form>
       </div>
     </div>
     <script type="text/javascript">
@@ -57,6 +58,6 @@ session_start();
             window.location.reload();
         }
     }
-  </script> 
+  </script>
 </body>
 </html>

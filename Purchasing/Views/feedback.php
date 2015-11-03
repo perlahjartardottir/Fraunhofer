@@ -25,8 +25,6 @@ if($user_sec_lvl < 2){
 <head>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
-
-
 </head>
 <body>
   <div class='col-md-12'>
@@ -34,8 +32,7 @@ if($user_sec_lvl < 2){
     <div class='container'>
       <form>
         <h2>Place for feedback</h2>
-        <h3>Name:</h3> <input type="text" id='name'name="name" class='form-control' style='width:auto;'><br>
-        <h3>Feedback:</h3><textarea id='comment'name="comment" class='form-control' style='width:auto;'></textarea><br>
+        <h3>Feedback:</h3><textarea id='comment'name="comment" class='form-control' style='width:auto;' cols='50' rows='3'></textarea><br>
         <input type="submit" onclick='addFeedback()'>
         <div class='col-md-12'>
           <h2>Comments:</h2>

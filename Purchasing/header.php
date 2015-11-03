@@ -44,7 +44,7 @@ $user_sec_lvl = $user_sec_lvl[1]; ?>
     <div class="collapse navbar-collapse navHeaderCollapse">
         <ul class='navbar-right btn-group' role='group'>
           <?php
-          if($user_sec_lvl > 3){
+          if($user_sec_lvl > 4){
             echo"<a href='../Views/pendingApprovals.php' class='btn btn-primary headerbutton active' role='button'>Pending approvals</a>";
           } ?>
           <a href='../Views/purchaseOverview.php' class='btn btn-primary headerbutton active' role='button'>PO search</a>

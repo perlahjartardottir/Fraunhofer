@@ -115,6 +115,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
     </div>
 
     <!-- js/app.js and the function activeRequest(element) -->
+    <!-- /SearchPHP/showRequest.php -->
     <div id='output'>
     </div>
   </div>

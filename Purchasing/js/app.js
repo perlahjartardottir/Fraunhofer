@@ -10,13 +10,11 @@ function logout() {
   });
 }
 function addFeedback() {
-  var name = $('#name').val();
   var comment = $('#comment').val();
   $.ajax({
     url: "../InsertPHP/addFeedback.php",
     type: "POST",
     data: {
-      name: name,
       comment: comment
     },
     success: function(data, status, xhr) {
@@ -129,6 +127,8 @@ function purchaseSuggestions() {
   var supplier_name = $('#supplier_name').val();
   var first_date = $('#first_date').val();
   var last_date  = $('#last_date').val();
+  console.log(first_date);
+  console.log(last_date);
   var notReceived;
   if($('#notReceived').is(':checked')){
     notReceived = $('#notReceived').val();
@@ -205,7 +205,15 @@ function quoteSuggestions() {
 }
 
 function orderRequest(){
-  var request_supplier     = $('#request_supplier').val();
+  var supplier_name = $("input[name='supplierList']").on('input', function(e){
+    var $input = $(this),
+        val = $input.val(),
+        list = $input.attr('list'),
+        match = $('#'+list + ' option').filter(function() {
+           return ($(this).val() === val);
+       });
+  });
+  var request_supplier     = supplier_name.val();
   var department           = $('#department').val();
   var cost_code           = $('#cost_code').val();
   var orderTimeframe       = $('#orderTimeframe').val();

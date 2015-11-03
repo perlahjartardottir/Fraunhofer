@@ -94,10 +94,14 @@ if($user_sec_lvl < 4){
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery.js"></script>
   <script>
     $(document).ready(function(){
         applyMachineFilter();
+        $('input[type=date]').each(function() {
+          if  (this.type != 'date' ) $(this).datepicker({
+            dateFormat: 'yy-mm-dd'
+          });
+        });
     });
   </script>
 
