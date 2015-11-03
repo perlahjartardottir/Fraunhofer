@@ -104,7 +104,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
             $employeeResult = mysqli_query($link, $employeeSql);
             $employee = mysqli_fetch_array($employeeResult);
             echo "<tr>
-                    <td onclick='activeRequest(this)' id='request_ID'><a href='#' onclick='return false;'>".$row[0]."</a></td>
+                    <td onclick='activeRequest(this);' id='request_ID'><a href='#' onclick='return false;'>".$row[0]."</a></td>
                     <td id='employee_name'>".$employee[0]."</td>
                     <td>".$row[2]."<button style='float:right;' class='btn btn-danger btn-xs' onclick='finishRequest(".$row[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
                   </tr>";
