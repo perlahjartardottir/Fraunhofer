@@ -25,3 +25,4 @@
 - Finally you rate the purchase order, based on timeliness, quality and price
 - Those ratings will affect the supplier rating
 - Then you click "package received" and if you don't specify a date, the database assumes it was received on current day
+  

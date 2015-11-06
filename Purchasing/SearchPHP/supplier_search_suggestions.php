@@ -51,20 +51,26 @@ $supplier_address .= "%";
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT supplier_ID, supplier_name, supplier_phone, supplier_email, supplier_address, supplier_fax, supplier_contact, supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes, net_terms
-              FROM supplier
-              WHERE supplier_name LIKE '$supplier_name'
-              AND supplier_contact LIKE '$supplier_contact'
-              AND supplier_phone LIKE '$supplier_phone'
-              AND supplier_email LIKE '$supplier_email'
-              AND supplier_address LIKE '$supplier_address';";
+      $sql = "SELECT s.supplier_ID, s.supplier_name, s.supplier_phone, s.supplier_email, s.supplier_address, s.supplier_fax, s.supplier_contact, s.supplier_website, s.supplier_login, s.supplier_password, s.supplier_accountNr, s.supplier_notes, s.net_terms
+              FROM supplier s
+              WHERE s.supplier_name LIKE '$supplier_name'
+              AND s.supplier_contact LIKE '$supplier_contact'
+              AND s.supplier_phone LIKE '$supplier_phone'
+              AND s.supplier_email LIKE '$supplier_email'
+              AND s.supplier_address LIKE '$supplier_address'
+              ORDER BY (SELECT AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) / 3
+                        FROM order_rating r, purchase_order o
+                        WHERE o.order_ID = r.order_ID
+                        AND o.supplier_ID = s.supplier_ID) DESC, s.supplier_name;";
       $result = mysqli_query($link, $sql);
+      $category = "";
       while($row = mysqli_fetch_array($result)){
 
         // SQL to get each customers rating
         // Since we use the rating system from 1 to 5 diamonds we have to do a little math
-        // To get the correct values, because timeliness is rated from 1 to 2 (not on time, on time) for instance
-        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality)) / 3, 2) / 2.67) * 5, 2), ROUND((AVG(rating_timeliness) / 2) * 5, 2), ROUND(AVG((rating_price) / 3) * 5, 2), ROUND(AVG((rating_quality) / 3) * 5, 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID)
+        // To get the correct values, because timeliness is rated from 1 to 2 (not on time, on time)
+        // and quality and price are ranked from 1 to 3
+        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 1.75) * 5, 2), ROUND((AVG(rating_timeliness) / 1) * 5, 2), ROUND(AVG((rating_price) / 2) * 5, 2), ROUND(AVG((rating_quality) / 2) * 5, 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID), ROUND((AVG(customer_service) / 2) * 5, 2)
                       FROM purchase_order o, order_rating r
                       WHERE o.order_ID = r.order_ID
                       AND o.supplier_ID = '$row[0]';";
@@ -73,6 +79,57 @@ $supplier_address .= "%";
           echo mysqli_error($link);
         }
         $averageRating = mysqli_fetch_array($ratingResult);
+
+        // Groupping together suppliers who have similar rating
+        if($category != 'Ideal' && $averageRating[0] >= 4){
+          $category = 'Ideal';
+          echo"
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th style='font-size: 180%;'>".$category."</th>
+              <th></th>
+              <th></th>
+            </tr>";
+        }
+        if($category != 'Acceptable' && $averageRating[0] >= 3 && $averageRating[0] < 4){
+          $category = 'Acceptable';
+          echo"
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th style='font-size: 180%;'>".$category."</th>
+              <th></th>
+              <th></th>
+            </tr>";
+        }
+        if($category != 'Not Recommended' && $averageRating[0] < 3 && $averageRating[0] != ''){
+          $category = 'Not Recommended';
+          echo"
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th style='font-size: 180%;'>".$category."</th>
+              <th></th>
+              <th></th>
+            </tr>";
+        }
+        if($category != 'Not Yet Rated' && $averageRating[0] == ''){
+          $category = 'Not Yet Rated';
+          echo"
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th style='font-size: 180%;'>".$category."</th>
+              <th></th>
+              <th></th>
+            </tr>";
+        }
+
         echo"<tr>
               <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</td>
               <td>".$row[6]."</td>
@@ -87,7 +144,7 @@ $supplier_address .= "%";
                     data-toggle='popover'
                     data-placement='right'
                     data-html='true'
-                    data-content='Avg timeliness: ".$averageRating[1]."<br/> Avg price: ".$averageRating[2]."<br/> Avg quality: ".$averageRating[3]."'>";
+                    data-content='Avg timeliness: ".$averageRating[1]."<br/> Avg price: ".$averageRating[2]."<br/> Avg quality: ".$averageRating[3]."<br/> Avg customer service: ".$averageRating[7]."'>";
              echo $averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i>";
              echo "</button></td></tr>";
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>

@@ -41,7 +41,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
 $supplierRow = mysqli_fetch_array($supplierResult);
 
 // Find the ratings that are linked to this PO if it has already been rated
-$ratingSql = "SELECT rating_timeliness, rating_quality, rating_price
+$ratingSql = "SELECT rating_timeliness, rating_quality, rating_price, customer_service
               FROM order_rating
               WHERE order_ID = '$order_ID';";
 $ratingResult = mysqli_query($link, $ratingSql);
@@ -142,54 +142,69 @@ $numberOfScans = mysqli_fetch_array($scanResult);
               <th>Timeliness</th>
               <th>Quality</th>
               <th>Price</th>
+              <th>Customer Service</th>
             </tr>
           </thead>
           <tbody>
             <?php if(mysqli_num_rows($ratingResult) == 0){
               echo"
               <tr>
-                <td class='col-md-4'>
+                <td class='col-md-3'>
                   <select id='rating_timeliness' class='form-control'>
-                    <option value='1' "; if($dateDiffDays < 0){echo "selected";} echo">Not on time</option>
-                    <option value='2' "; if($dateDiffDays >= 0 || $dateDiffDays == -16682){echo "selected";} echo">On time</option>
+                    <option value='0' "; if($dateDiffDays < 0){echo "selected";} echo">Not on time</option>
+                    <option value='1' "; if($dateDiffDays >= 0 || $dateDiffDays == -16682){echo "selected";} echo">On time</option>
                   </select>
                 </td>
-                <td class='col-md-4'>
+                <td class='col-md-3'>
                   <select id='rating_quality' class='form-control'>
-                    <option>1</option>
-                    <option>2</option>
-                    <option selected>3</option>
+                    <option value='0'>1</option>
+                    <option value='1' selected>2</option>
+                    <option value='2'>3</option>
                   </select>
                 </td>
-                <td class='col-md-4'>
+                <td class='col-md-3'>
                   <select id='rating_price' class='form-control'>
-                    <option>1</option>
-                    <option>2</option>
-                    <option selected>3</option>
+                    <option value='0'>1</option>
+                    <option value='1' selected>2</option>
+                    <option value='2'>3</option>
+                  </select>
+                </td>
+                <td class='col-md-3'>
+                  <select id='customer_service' class='form-control'>
+                    <option value='0'>1</option>
+                    <option value='1' selected>2</option>
+                    <option value='2'>3</option>
                   </select>
                 </td>
               </tr>";
             }else{
               echo"
               <tr>
-                <td class='col-md-4'>
+                <td class='col-md-3'>
                   <select id='rating_timeliness' class='form-control'>
-                    <option value='1' "; if($ratingRow[0] == 1){echo "selected";} echo" disabled>Not on time</option>
-                    <option value='2' "; if($ratingRow[0] == 2){echo "selected";} echo" disabled>On time</option>
+                    <option value='0' "; if($ratingRow[0] == 0){echo "selected";} echo" disabled>Not on time</option>
+                    <option value='1' "; if($ratingRow[0] == 1){echo "selected";} echo" disabled>On time</option>
                   </select>
                 </td>
-                <td class='col-md-4'>
+                <td class='col-md-3'>
                   <select id='rating_quality' class='form-control'>
-                    <option "; if($ratingRow[1] == 1){echo "selected";} echo" disabled>1</option>
-                    <option "; if($ratingRow[1] == 2){echo "selected";} echo" disabled>2</option>
-                    <option "; if($ratingRow[1] == 3){echo "selected";} echo" disabled>3</option>
+                    <option value='0'"; if($ratingRow[1] == 0){echo "selected";} echo" disabled>1</option>
+                    <option value='1'"; if($ratingRow[1] == 1){echo "selected";} echo" disabled>2</option>
+                    <option value='2'"; if($ratingRow[1] == 2){echo "selected";} echo" disabled>3</option>
                   </select>
                 </td>
-                <td class='col-md-4'>
+                <td class='col-md-3'>
                   <select id='rating_price' class='form-control'>
-                    <option "; if($ratingRow[2] == 1){echo "selected";} echo" disabled>1</option>
-                    <option "; if($ratingRow[2] == 2){echo "selected";} echo" disabled>2</option>
-                    <option "; if($ratingRow[2] == 3){echo "selected";} echo" disabled>3</option>
+                    <option value='0'"; if($ratingRow[2] == 0){echo "selected";} echo" disabled>1</option>
+                    <option value='1'"; if($ratingRow[2] == 1){echo "selected";} echo" disabled>2</option>
+                    <option value='2'"; if($ratingRow[2] == 2){echo "selected";} echo" disabled>3</option>
+                  </select>
+                </td>
+                <td class='col-md-3'>
+                  <select id='customer_service' class='form-control'>
+                    <option value='0'"; if($ratingRow[3] == 0){echo "selected";} echo" disabled>1</option>
+                    <option value='1'"; if($ratingRow[3] == 1){echo "selected";} echo" disabled>2</option>
+                    <option value='2'"; if($ratingRow[3] == 2){echo "selected";} echo" disabled>3</option>
                   </select>
                 </td>
               </tr>";

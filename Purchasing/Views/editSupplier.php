@@ -90,7 +90,7 @@ if(!$result){
           <label>Notes:</label>
           <textarea class='form-control' id='supplier_notes'>".$row[10]."</textarea>
         </div>
-        <button type='button' class='btn btn-primary form-control' onclick='editSupplier()'>Edit</button>";
+        <button type='button' class='btn btn-primary form-control' onclick='editSupplier(".$supplier_ID.")'>Edit</button>";
         ?>
       </form>
     </div>

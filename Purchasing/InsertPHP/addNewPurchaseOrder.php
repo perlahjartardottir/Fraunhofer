@@ -14,6 +14,9 @@ $employeeSql = "SELECT employee_ID
 $employeeResult = mysqli_query($link, $employeeSql);
 $row = mysqli_fetch_array($employeeResult);
 $order_for_who = $row[0];
+if($order_for_who == ''){
+  die('invalidEmployee');
+}
 
 // Get the ID and the net terms from the supplier name
 $supplierSql = "SELECT supplier_ID, net_terms
@@ -24,6 +27,10 @@ $supplierResult = mysqli_query($link, $supplierSql);
 $row = mysqli_fetch_array($supplierResult);
 $supplier_ID = $row[0];
 $supplier_net_terms = $row[1];
+
+if($supplier_ID == ''){
+  die('invalidSupplier');
+}
 
 // if there is no request linked to this po then we don't add a request, we would have to add NULL
 // but since we would add it as a variable then it would become 'NULL' (the string) and that is not what we want

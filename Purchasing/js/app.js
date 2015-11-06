@@ -1,3 +1,16 @@
+$(document).ready(function () {
+  var nativedatalist = !!('list' in document.createElement('input')) &&
+    !!(document.createElement('datalist') && window.HTMLDataListElement);
+
+  if (!nativedatalist) {
+    $('input[list]').each(function () {
+      var availableTags = $('#' + $(this).attr("list")).find('option').map(function () {
+        return this.value;
+      }).get();
+      $(this).autocomplete({ source: availableTags });
+    });
+  }
+});
 function logout() {
   $.ajax({
     url: "../../Login/logout.php",
@@ -430,7 +443,13 @@ function createPurchaseOrder(){
         request_ID    : request_ID
       },
       success: function(data, status, xhr){
-        window.location = "../views/addOrderItem.php";
+        if(data.indexOf('invalidEmployee') > -1){
+          $("#invalidPO").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a valid employee</div>");
+        } else if (data.indexOf('invalidSupplier') > -1){
+          $("#invalidPO").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a valid supplier</div>");
+        } else{
+            window.location = "../views/addOrderItem.php";
+        }
       }
     });
   }
@@ -644,7 +663,7 @@ function setSupplierID(element){
 }
 
 // Function for editing the supplier
-function editSupplier(){
+function editSupplier(supplier_ID){
   var r = confirm("Are you sure you want to edit this supplier?");
   if(r === true){
     var supplier_name = $("#supplier_name").val();
@@ -664,6 +683,7 @@ function editSupplier(){
       type: "POST",
       data:{
         supplier_name : supplier_name,
+        supplier_ID : supplier_ID,
         supplier_phone : supplier_phone,
         supplier_fax : supplier_fax,
         net_terms : net_terms,
@@ -677,7 +697,8 @@ function editSupplier(){
         supplier_notes : supplier_notes
       },
       success: function(data, status, xhr) {
-       window.location="../Views/supplierList.php";
+      //  window.location="../Views/supplierList.php";
+      console.log(data);
       }
     });
   }
@@ -750,10 +771,9 @@ function addQuoteToOverview(){
 function packageReceived(order_ID, element){
   var receiveDate = $(element).parent().find("#receiveDate").val();
   var rating_timeliness = $("#rating_timeliness").val();
-  e                     = document.getElementById("rating_quality");
-  var rating_quality    = e.options[e.selectedIndex].value;
-  e                     = document.getElementById("rating_price");
-  var rating_price      = e.options[e.selectedIndex].value;
+  var rating_quality    = $("#rating_quality").val();
+  var rating_price      = $("#rating_price").val();
+  var customer_service      = $("#customer_service").val();
   var order_final_inspection = $('#order_final_inspection').val();
 
   $.ajax({
@@ -765,6 +785,7 @@ function packageReceived(order_ID, element){
       order_final_inspection : order_final_inspection,
       rating_timeliness : rating_timeliness,
       rating_price      : rating_price,
+      customer_service      : customer_service,
       rating_quality    : rating_quality
     },
     success: function(data, status, xhr) {

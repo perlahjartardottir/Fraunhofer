@@ -34,7 +34,7 @@ $orderItemSql = "SELECT quantity, part_number, description, unit_price, cost_cod
                  WHERE order_ID = '$order_ID';";
 $orderItemResult = mysqli_query($link, $orderItemSql);
 
-$supplierSql = "SELECT supplier_name, supplier_address, supplier_phone, supplier_email
+$supplierSql = "SELECT supplier_name, supplier_address, supplier_phone, supplier_email, supplier_contact
                 FROM supplier
                 WHERE supplier_ID = '$supplier_ID';";
 $supplierResult = mysqli_query($link, $supplierSql);
@@ -118,6 +118,10 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <h3>Purchase Order</h3>
       <span class='col-xs-12'><strong>To: </strong></span>
       <span class='col-xs-12'><strong><?php echo $supplierRow[0]; ?></strong></span>
+      <?
+      if($supplierRow[4] != ""){
+        echo"<span class='col-xs-12'>Attn: ".$supplierRow[4]."</span>";
+      }?>
       <span class='col-xs-12'><?php echo $supplierRow[1]; ?></span>
       <span class='col-xs-12'>Phone: <?php echo $supplierRow[2]; ?></span>
       <p class='col-xs-12'>Email: <?php echo $supplierRow[3]; ?></p>

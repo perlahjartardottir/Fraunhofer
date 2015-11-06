@@ -22,8 +22,11 @@ $user_sec_lvl = $user_sec_lvl[1]; ?>
 <link href='/css/header.css' rel='stylesheet'>
 <link href='/css/bootstrap.min.css' rel='stylesheet'>
 <link href='/css/jquery-ui.min.css' rel='stylesheet'>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src='../js/jquery-ui.js'></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src='../js/jquery-ui.js'></script> -->
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='../js/app.js'></script>
 <script src='../js/bootstrap.js'></script>
 <div class="navbar navbar-default navbar-static-top">

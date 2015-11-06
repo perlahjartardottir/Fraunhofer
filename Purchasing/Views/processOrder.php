@@ -52,14 +52,16 @@ $supplierResult = mysqli_query($link, $supplierSql);
         <h4>Purchase order</h4>
         <div class='col-md-6 form-group'>
           <label>For employee: </label>
-            <input type='text' list="employees" name="employeeList" id='employeeList' value='' class='col-md-12 form-control'>
-            <datalist id="employees">
+          <input type='text' list="employees" name="employeeList" id='employeeList' value='' class='col-md-12 form-control'>
+          <datalist id="employees">
+              <select style='display:none'>
               <?
               while($row = mysqli_fetch_array($employeeResult)){
                 echo"<option value='".$row[0]."'></option>";
               }
               ?>
-            </datalist>
+            </select>
+          </datalist>
         </div>
         <div class='col-md-6 form-group'>
           <label>Supplier: </label>
