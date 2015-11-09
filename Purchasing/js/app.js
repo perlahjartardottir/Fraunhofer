@@ -1,3 +1,4 @@
+// Safari support for datalists
 $(document).ready(function () {
   var nativedatalist = !!('list' in document.createElement('input')) &&
     !!(document.createElement('datalist') && window.HTMLDataListElement);
@@ -11,6 +12,7 @@ $(document).ready(function () {
     });
   }
 });
+
 function logout() {
   $.ajax({
     url: "../../Login/logout.php",

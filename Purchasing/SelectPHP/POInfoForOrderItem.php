@@ -47,8 +47,10 @@ echo "<p><input type='checkbox' id='credit' onchange='payByCredit()'> Pay by cre
 echo "<script>
 				$(document).ready(function() {
 					$('input[type=date]').each(function() {
-            if  (this.type != 'date' ) $(this).datepicker();
-          });
+		        if  (this.type != 'date' ) $(this).datepicker({
+		          dateFormat: 'yy-mm-dd'
+		        });
+		      });
 				});
 			</script>";
 ?>

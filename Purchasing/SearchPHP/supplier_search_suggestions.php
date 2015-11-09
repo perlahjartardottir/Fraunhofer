@@ -70,7 +70,7 @@ $supplier_address .= "%";
         // Since we use the rating system from 1 to 5 diamonds we have to do a little math
         // To get the correct values, because timeliness is rated from 1 to 2 (not on time, on time)
         // and quality and price are ranked from 1 to 3
-        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 1.75) * 5, 2), ROUND((AVG(rating_timeliness) / 1) * 5, 2), ROUND(AVG((rating_price) / 2) * 5, 2), ROUND(AVG((rating_quality) / 2) * 5, 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID), ROUND((AVG(customer_service) / 2) * 5, 2)
+        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2), ROUND((AVG(rating_timeliness) / 2) * 5, 2), ROUND(AVG((rating_price) / 2) * 5, 2), ROUND(AVG((rating_quality) / 2) * 5, 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID), ROUND((AVG(customer_service) / 2) * 5, 2)
                       FROM purchase_order o, order_rating r
                       WHERE o.order_ID = r.order_ID
                       AND o.supplier_ID = '$row[0]';";

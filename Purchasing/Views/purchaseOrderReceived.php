@@ -152,7 +152,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
                 <td class='col-md-3'>
                   <select id='rating_timeliness' class='form-control'>
                     <option value='0' "; if($dateDiffDays < 0){echo "selected";} echo">Not on time</option>
-                    <option value='1' "; if($dateDiffDays >= 0 || $dateDiffDays == -16682){echo "selected";} echo">On time</option>
+                    <option value='2' "; if($dateDiffDays >= 0 || $dateDiffDays == -16682){echo "selected";} echo">On time</option>
                   </select>
                 </td>
                 <td class='col-md-3'>
@@ -183,7 +183,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
                 <td class='col-md-3'>
                   <select id='rating_timeliness' class='form-control'>
                     <option value='0' "; if($ratingRow[0] == 0){echo "selected";} echo" disabled>Not on time</option>
-                    <option value='1' "; if($ratingRow[0] == 1){echo "selected";} echo" disabled>On time</option>
+                    <option value='2' "; if($ratingRow[0] == 2){echo "selected";} echo" disabled>On time</option>
                   </select>
                 </td>
                 <td class='col-md-3'>
