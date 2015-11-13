@@ -136,7 +136,20 @@ if(!$result){
 					if($costCodeNameRow[0] == ""){
 						echo"<td>N/A</td>";
 					}else{
-						echo"<td>".$costCodeNameRow[0]."</td>";
+						if($costCodeNameRow[0] == 'CVD'){
+              $costCode = 'C-000';
+            } else if($costCodeNameRow[0] == 'PVD'){
+              $costCode = 'P-000';
+            } else if($costCodeNameRow[0] == 'INF'){
+              $costCode = 'I-000';
+            } else if($costCodeNameRow[0] == 'ANA'){
+              $costCode = 'A-000';
+            } else if($costCodeNameRow[0] == 'OH'){
+              $costCode = 'O-000';
+            } else{
+              $costCode = $costCodeNameRow[0];
+            }
+						echo"<td>".$costCode."</td>";
 					}
         } else{
           echo"<td>".$row[0]."</td>";

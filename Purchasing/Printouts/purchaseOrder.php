@@ -165,11 +165,24 @@ $supplierRow = mysqli_fetch_array($supplierResult);
                             WHERE cost_code_ID = '$row[4]';";
             $costCodeResult = mysqli_query($link, $costCodeSql);
             $costCodeRow = mysqli_fetch_array($costCodeResult);
+            if($costCodeRow[0] == 'CVD'){
+              $costCode = 'C-000';
+            } else if($costCodeRow[0] == 'PVD'){
+              $costCode = 'P-000';
+            } else if($costCodeRow[0] == 'INF'){
+              $costCode = 'I-000';
+            } else if($costCodeRow[0] == 'ANA'){
+              $costCode = 'A-000';
+            } else if($costCodeRow[0] == 'OH'){
+              $costCode = 'O-000';
+            } else{
+              $costCode = $costCodeRow[0];
+            }
             $total = $row[0] * $row[3];
             echo"<tr>
                   <td>".$counter."</td>
                   <td>".$row[0]."</td>
-                  <td>".$costCodeRow[0]."</td>
+                  <td>".$costCode."</td>
                   <td>".$row[1]."</td>
                   <td>".$row[2]."</td>
                   <td>".$currencySymbol."".number_format((float)$row[3], 2, '.', '')."</td>

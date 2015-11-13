@@ -108,15 +108,18 @@ $numberOfScans = mysqli_fetch_array($scanResult);
             </tr>
           </tbody>
         </table>
-        <div class='col-md-12'>
+        <?php
+        if($supplierRow[1] != ''){
+          echo "<div class='col-md-6'>
+                  <p><strong>Comment: </strong>".$supplierRow[1]."</p>
+                </div>";
+        } else{
+          echo"<div class='col-md-6'></div>";
+        }?>
+        <div class='col-md-6'>
           <button class='btn btn-primary' style='float:right;' onclick='confirmFinalInspection();return false;'>Confirm Final Inspection Note</button>
         </div>
-        <div class='col-md-12'>
-          <h4 style='margin-top: 50px;'>Comment</h4>
-          <div class='col-md-6'>
-            <textarea class='form-control' id='order_final_inspection' rows='4' cols='50' style='width:auto;'><?php echo $supplierRow[1]; ?></textarea>
-            <button class='btn btn-primary' onclick='addCommentToPO(); return false;' style='margin-top:5px;'>Add comment</button>
-          </div>
+        <div class='col-md-12' style='margin-top: 40px;'>
         </form>
         <div class='col-md-4'>
           <form action="../InsertPHP/addImage.php" method="post" enctype="multipart/form-data" onsubmit="return checkSize(1000000)">
@@ -135,7 +138,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
         </div>
       </div>
       <div class='col-md-12'>
-        <h4 style='margin-top: 50px;'>Rating (3 is best): </h4>
+        <h4 style='margin-top: 40px;'>Rating (3 is best): </h4>
         <table class='table table-responsive col-md-12'>
           <thead>
             <tr>

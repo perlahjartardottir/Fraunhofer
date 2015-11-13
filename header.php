@@ -9,7 +9,7 @@
   <div class="container">
     <div class="navbar-header">
       <div class='navbar-brand'>
-        <a href='menu.php'>Home</a>
+        <a href='menu.php'>Menu</a>
         <span class='username'><strong><?php echo $_SESSION["username"];?></strong></span>
         <a href='editProfile.php'>Edit profile</a>
       </div>

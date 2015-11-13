@@ -14,8 +14,10 @@ $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 echo"
 <script type='text/javascript'>
-  var textbox = document.getElementById('supplierList');
-  textbox.value = '".$row[6]."';
+  var supplier = document.getElementById('supplierList');
+  supplier.value = '".$row[6]."';
+  var employee = document.getElementById('employeeList');
+  employee.value = '".$employee_name."';
 </script>
 <div id='output'>
   <div class='row well well-lg col-md-5 col-md-offset-1'>
@@ -29,7 +31,6 @@ echo"
       <p> Supplier: ".$row[6]."</p>
       <p> Department: ".$row[7]."</p>
       <p> Cost code: ".$row[11]."</p>
-      <p> Approved by: ".$row[2]."</p>
       <p> Description: ".$row[4]."</p>
     </form>
   </div>

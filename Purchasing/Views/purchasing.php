@@ -115,6 +115,11 @@
                 <li><a href='quotes.php'>Quotes</a></li>
               </ul>
           </div>
+        <?php } else {
+          ?>
+          <div class='col-md-2'>
+            <button type="button" class='btn btn-primary col-md-12' onclick="location.href='quotes.php'">Quote overview</button>
+          </div>
         <?php } ?>
       </div>
     </div>
@@ -177,7 +182,6 @@
                       <p>Supplier: ".$requestRow[2]."</p>
                       <p>Department: ".$requestRow[6]."</p>
                       <p>Cost code: ".$requestRow[10]."</p>
-                      <p>Approved by: ".$requestRow[3]."</p>
                       <p>Description: ".$requestRow[4]."</p>
                     </div>
                     <div class='modal-footer'>
