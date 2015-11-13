@@ -8,8 +8,8 @@ $first_date  = mysqli_real_escape_string($link, $_POST['first_date']);
 $last_date   = mysqli_real_escape_string($link, $_POST['last_date']);
 
 
-$order_name .= '%';
-$supplier_name .= '%';
+$order_name = '%' . $order_name . "%";
+$supplier_name = '%' . $supplier_name . "%";
 $totalFinalPrice = 0; // A variable that shows the complete price of all the PO's
 
 ?>

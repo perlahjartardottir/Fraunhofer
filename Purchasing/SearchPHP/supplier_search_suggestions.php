@@ -16,15 +16,15 @@ $user_sec_lvl = str_split($user_sec_lvl);
 $user_sec_lvl = $user_sec_lvl[1];
 
 $supplier_name = mysqli_real_escape_string($link, $_POST['supplier_name']);
-$supplier_name .= "%";
+$supplier_name = "%" . $supplier_name . "%";
 $supplier_contact = mysqli_real_escape_string($link, $_POST['supplier_contact']);
-$supplier_contact .= "%";
+$supplier_contact = "%" . $supplier_contact . "%";
 $supplier_phone = mysqli_real_escape_string($link, $_POST['supplier_phone']);
 $supplier_phone .= "%";
 $supplier_email = mysqli_real_escape_string($link, $_POST['supplier_email']);
-$supplier_email .= "%";
+$supplier_email = "%" . $supplier_email . "%";
 $supplier_address = mysqli_real_escape_string($link, $_POST['supplier_address']);
-$supplier_address .= "%";
+$supplier_address = "%" . $supplier_address . "%";
 ?>
 <script>
 // script to activate popovers
