@@ -71,6 +71,15 @@ $numberOfScans = mysqli_fetch_array($scanResult);
 </head>
 <body>
   <?php include '../header.php'; ?>
+  <script>
+		$(document).ready(function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+		});
+	</script>
   <div class='container'>
     <div class='row well well-lg'>
       <h3><center>Package received</center></h3>

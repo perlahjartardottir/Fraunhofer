@@ -43,14 +43,16 @@
   }
 
   // Query to find all active requests
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code, request_price
                  FROM order_request
-                 WHERE active = 1;";
+                 WHERE active = 1
+                 ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
+                          CASE WHEN timeframe = 'This week' then 1 else 2 end;";
   $requestResult = mysqli_query($link, $requestSql);
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status, comment
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
@@ -179,6 +181,7 @@
                       <p>Order timeframe: ".$requestRow[7]."</p>
                       <p>Part number: ".$requestRow[8]."</p>
                       <p>Quantity: ".$requestRow[9]."</p>
+                      <p>Total price: $".$requestRow[11]."</p>
                       <p>Supplier: ".$requestRow[2]."</p>
                       <p>Department: ".$requestRow[6]."</p>
                       <p>Cost code: ".$requestRow[10]."</p>
@@ -306,6 +309,11 @@
                 </table>
                 <p>Order date: ".$inProgressRow[1]."</p>
                 <p>Expected payment due: ".$expectedPayDate."</p>
+                <form>
+                  <label>In progress comment: </label>
+                  <textarea class='form-control' id='inProgressComment'>".$inProgressRow[9]."</textarea>
+                  <button class='btn btn-primary' style='margin-top: 5px;' onclick='addInProgressComment(".$inProgressRow[0].", this);'>Add comment</button>
+                </form>
               </div>
               <div class='modal-footer'>
                 <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>

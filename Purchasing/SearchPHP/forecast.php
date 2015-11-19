@@ -65,6 +65,18 @@ $today = date('Y-m-d');
         if($monthName != date('F', strtotime($payDate))){
           // Find the month of that payment
           $monthName = date('F', strtotime($payDate));
+          if($totalFinalPrice != 0){
+            echo"
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>Total price:</th>
+                <th><u style='border-bottom: 1px solid black'>$".number_format((float)$totalFinalPrice, 2, '.', '')."</u></th>
+              </tr>";
+              $totalFinalPrice = 0;
+          }
           echo"
             <tr height='50'>
               <th></th>

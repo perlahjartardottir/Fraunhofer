@@ -55,10 +55,6 @@ $result = mysqli_query($link, $sql);
             <input type='text' class='form-control' name='quote_number' id='quote_number' required>
           </div>
           <div class='col-md-3'>
-            <label>Description: </label>
-            <input type='text' class='form-control' name='quoteDescription' id='quoteDescription'>
-          </div>
-          <div class='col-md-3'>
             <label>Supplier: </label>
               <input type='text' list="suppliers" name="supplierListTwo" id='supplierListTwo' value='' class='col-md-12 form-control'>
               <datalist id="suppliers">
@@ -80,7 +76,11 @@ $result = mysqli_query($link, $sql);
             <input type='hidden' name='MAX_FILE_SIZE' value='2000000'>
             <input type="file" name="fileToUpload" id="fileToUpload">
           </div>
-          <div class='col-md-9'>
+          <div class='col-md-4' style='margin-top: 15px;'>
+            <label>Description: </label>
+            <textarea class='form-control' name='quoteDescription' id='quoteDescription'></textarea>
+          </div>
+          <div class='col-md-9 col-md-offset-3'>
             <input type="submit" class='btn btn-primary col-md-8' value="Add quote" name="submit" style='margin-top:25px;'>
           </div>
         </form>

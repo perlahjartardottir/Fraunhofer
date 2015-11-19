@@ -51,6 +51,13 @@ if(!$result){
 $_SESSION["order_ID"] = mysqli_insert_id($link);
 $order_ID = $_SESSION["order_ID"];
 
+// Link that request to this PO by setting the order_ID in the request to the correct order ID
+// This way we can have multiple requests linked to the same PO.
+$requestSql = "UPDATE order_request
+               SET order_ID = '$order_ID'
+               WHERE request_ID = '$request_ID';";
+$requestResult = mysqli_query($link, $requestSql);
+
 // Add CCD- as a prefix for the purchase order name
 $orderNameSql = "UPDATE purchase_order
                  SET order_name = 'CCD-".$order_ID."'

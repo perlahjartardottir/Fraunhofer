@@ -16,6 +16,10 @@ $supplier_name .= '%';
 $description = '%' . $description;
 $order_name = '%' . $order_name ;
 
+// Find all suppliers
+$supplierSqlTwo = "SELECT supplier_name FROM supplier;";
+$supplierResultTwo = mysqli_query($link, $supplierSqlTwo);
+
 ?>
 <div id='output'>
   <table class='table table-responsive table-striped table-condensed' id='mytable'>
@@ -25,7 +29,7 @@ $order_name = '%' . $order_name ;
         <th>Supplier</th>
         <th>Quote issued</th>
         <th>Description</th>
-        <th>Purchase number</th>
+        <th>Purchase order</th>
         <th><button class='btn btn-primary btn-xs' onclick='createRequestFromQuotes()'>Create request</button></th>
       </tr>
     </thead>
@@ -79,6 +83,11 @@ $order_name = '%' . $order_name ;
                          WHERE order_ID = '$row[4]';";
         $orderNameResult = mysqli_query($link, $orderNameSql);
         $orderName = mysqli_fetch_array($orderNameResult);
+
+        // If there isn't any quote number, use the quote ID instead so you can still click and download the quote
+        if($row[7] == ""){
+          $row[7] = $row[0];
+        }
         echo"
           <tr>
             <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[7]."</a></td>
@@ -117,11 +126,20 @@ $order_name = '%' . $order_name ;
             <h4>Quote: ".$row[0]."</h4>
           </div>
           <div class='modal-body'>
-            <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$row[0]."'>".$row[7]."</a><br></p>
-            <p><strong>Supplier: </strong>".$supplierRow[0]."</p>
-            <p><strong>Quote issued: </strong>".$row[2]."</p>
-            <p><strong>Purchase order: </strong>".$orderName[0]."</p>
-            <p><strong>Description: </strong>".$row[3]."</p>
+            <form>
+              <p><strong>Quote number: </strong><a href='../SelectPHP/download.php?id=".$row[0]."'>".$row[7]." (Click to download)</a><br></p>
+              <label>Supplier: </label>
+                <input type='text' list='suppliers' name='quoteSupplier' id='quoteSupplier' value='".$supplierRow[0]."' class='form-control' style='width:auto; display:inline;'>
+                <datalist id='suppliers'>";
+                  while($supplierRowTwo = mysqli_fetch_array($supplierResultTwo)){
+                    echo"<option value='".$supplierRowTwo[0]."'></option>";
+                  }
+                  echo"
+                </datalist><button class='btn btn-primary' onclick='editQuoteSupplier(".$row[0].", this);'>Edit supplier</button>
+              <p><strong>Quote issued: </strong>".$row[2]."</p>
+              <p><strong>Purchase order: </strong>".$orderName[0]."</p>
+              <p><strong>Description: </strong>".$row[3]."</p>
+            </form>
             <input type='image' src='../Scan/getQuoteImage.php?id=".$row[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$row[0]."')\">
           </div>
           <div class='modal-footer' style='margin-top:10px'>

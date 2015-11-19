@@ -72,6 +72,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
     <?php } ?>
     <div class='row well well-lg'>
       <h5>*Only "Description" field is required. More information makes it easier to process the order.</h5>
+      <h5>*To add quotes to the request, please add them <strong><u>before</u></strong> you create the request (Press Quotes button on Home view).</h5>
 
       <form>
         <h3>Make a request for a purchase order</h3>
@@ -114,6 +115,10 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <option value='Today'>Today</option>
             <option value='Other'>Other</option>
           </select>
+        </div>
+        <div class='col-md-4 form-group'>
+          <label>Total price: </label>
+          <input type='number' id='request_price' class='form-control'>
         </div>
         <div class='col-md-4 form-group'>
           <label>Description: </label>

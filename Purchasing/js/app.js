@@ -236,6 +236,7 @@ function orderRequest(){
   var employee_ID          = $('#employee_ID').val();
   var part_number          = $('#part_number').val();
   var quantity             = $('#quantity').val();
+  var request_price        = $('#request_price').val();
   if(request_description === ""){
     $("#invalidRequest").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Description</div>");
   } else{
@@ -250,10 +251,11 @@ function orderRequest(){
         request_description  : request_description,
         employee_ID          : employee_ID,
         part_number          : part_number,
+        request_price        : request_price,
         quantity             : quantity
       },
       success: function(data, status, xhr){
-        window.location.reload();
+        window.location = "purchasing.php";
       }
     });
   }
@@ -481,6 +483,22 @@ function addOrderItem(){
     }
   });
 }
+
+function addNewRequest(request_ID){
+  var r = confirm('Are you sure you are finished with your current request?');
+  if (r === true){
+    $.ajax({
+      url: '../UpdatePHP/addRequestToPO.php',
+      type: 'POST',
+      data: {
+        request_ID : request_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    })
+  }
+}
 function showPOInfo(order_ID) {
   $.ajax({
     url: "../SelectPHP/POInfoForOrderItem.php",
@@ -549,6 +567,34 @@ function showOrderItems(order_ID){
     }
   });
 }
+
+function checkIfSupplierExists(){
+  console.log('hehe');
+    var supplier_address = $('#supplier_address').val();
+    var supplier_phone   = $('#supplier_phone').val();
+    var supplier_email   = $('#supplier_email').val();
+    $.ajax({
+      url: "../InsertPHP/checkIfSupplierExists.php",
+      type: "POST",
+      data: {
+        supplier_address : supplier_address,
+        supplier_phone   : supplier_phone,
+        supplier_email   : supplier_email
+      },
+      success: function(data, status, xhr) {
+        if(data.indexOf('address') > -1){
+          $("#invalidSupplier").html("<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + data + "</div>");
+        }
+        if(data.indexOf('phone') > -1){
+          $("#invalidSupplier").html("<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + data + "</div>");
+        }
+        if(data.indexOf('email') > -1){
+          $("#invalidSupplier").html("<div class='alert alert-warning fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" + data + "</div>");
+        }
+      }
+    })
+}
+
 function addNewSupplier(){
   var supplier_name    = $('#supplier_name').val();
   var supplier_address = $('#supplier_address').val();
@@ -721,6 +767,19 @@ function deletePurchaseScan(scan_ID){
       }
     });
   }
+}
+
+// Edit supplier for this quote
+function editQuoteSupplier(quote_ID, element){
+  var supplier_name = $(element).parent().find("#quoteSupplier").val();
+  $.ajax({
+    url: '../UpdatePHP/editQuoteSupplier.php',
+    type: 'POST',
+    data: {
+      supplier_name : supplier_name,
+      quote_ID : quote_ID
+    }
+  })
 }
 
 // Delete quote from database
@@ -903,7 +962,6 @@ function editNetTerms(){
 
 // This function confirms the final inspection notes for every order item in this purchase order
 function confirmFinalInspection(order_ID){
-
   var final_inspection;
   var order_item_ID;
   var ok;
@@ -980,4 +1038,20 @@ function updateFinalInspection(final_inspection, order_item_ID, element){
       window.location.reload();
     }
   });
+}
+
+function addInProgressComment(order_ID, element){
+  // Because we are fetching information from a modal, we need to use "this" or "element"
+  // to find the correct modal
+  // parent() is modal-body since this button is located in the body
+  // and from there we find the correct id's
+  var comment = $(element).parent().find("#inProgressComment").val();
+  $.ajax({
+    url: '../UpdatePHP/setInProgressComment.php',
+    type: 'POST',
+    data: {
+      order_ID : order_ID,
+      comment  : comment
+    }
+  })
 }

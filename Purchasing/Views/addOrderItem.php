@@ -49,6 +49,17 @@ $getSupplierNameResult = mysqli_query($link, $getSupplierNameSql);
 $supplierRow = mysqli_fetch_array($getSupplierNameResult);
 $supplier_name = $supplierRow[0];
 
+// Find all active requests that have the same supplier and are not the current request
+$findActiveRequestsSql = "SELECT request_ID, request_supplier, request_date, employee_ID, request_description, part_number, quantity
+                          FROM order_request
+                          WHERE active = 1
+                          AND request_supplier = '$supplier_name'
+                          AND request_ID != '$request_ID';";
+$findActiveRequestsResult = mysqli_query($link, $findActiveRequestsSql);
+if(!$findActiveRequestsResult){
+  die(mysqli_error($link));
+}
+
 // Get quotes that are linked to this purchase order or linked to
 // the request that is linked to this purchase order
 $quoteSql = "SELECT quote_ID, image, quote_number, supplier_ID, quote_date
@@ -200,6 +211,49 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
           </form>
         </div>
     </div>
+    <?php
+    if(mysqli_num_rows($findActiveRequestsResult) > 0){
+      echo"<style>
+              ul#activeRequests li {
+                  display:inline;
+                  font-size: 150%;
+              }
+            </style>
+            <div class='row well'>
+            <h4>Active requests with supplier: ".$supplier_name."</h4>
+            <ul id='activeRequests'>";
+            while($findActiveRequestsRow = mysqli_fetch_array($findActiveRequestsResult)){
+              // Find the employee who requested this
+              $employeeSql = "SELECT employee_name FROM employee
+                              WHERE employee_ID = '$findActiveRequestsRow[3]';";
+              $employeeResult = mysqli_query($link, $employeeSql);
+              $employeeRow = mysqli_fetch_array($employeeResult);
+              echo"<li><a href='#' data-toggle='modal' data-target='#".$findActiveRequestsRow[0]."'> ".$findActiveRequestsRow[0]." </a></li>";
+              echo"
+                <div class='modal fade' id='".$findActiveRequestsRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
+                  <div class='modal-dialog'>
+                    <div class='modal-content col-md-12'>
+                      <div class='modal-header'>
+                        <h4>Request ID: ".$findActiveRequestsRow[0]."</h4>
+                      </div>
+                      <div class='modal-body col-md-12'>
+                        <p><strong>Requested by:</strong> ".$employeeRow[0]."</p>
+                        <p><strong>Supplier:</strong> ".$findActiveRequestsRow[1]."</p>
+                        <p><strong>Date:</strong> ".$findActiveRequestsRow[2]."</p>
+                        <p><strong>Part number:</strong> ".$findActiveRequestsRow[5]."</p>
+                        <p><strong>Quantity:</strong> ".$findActiveRequestsRow[6]."</p>
+                        <p><strong>Description:</strong> ".$findActiveRequestsRow[4]."</p>
+                      </div>
+                      <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary' onclick='addNewRequest(".$findActiveRequestsRow[0].")'>Use</button>
+                        <button type='button' class='btn' data-dismiss='modal'>Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>";
+            }
+          echo"</ul></div>";
+    } ?>
     <div class='row well well-lg'>
       <h4>Add a new item</h4>
       <form>

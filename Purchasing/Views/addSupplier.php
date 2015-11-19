@@ -36,7 +36,7 @@ if($user_sec_lvl < 2){
         </div>
         <div class='form-group col-md-4'>
           <label>Address:</label>
-          <input type='text' class='form-control' id='supplier_address'>
+          <input type='text' class='form-control' id='supplier_address' onchange='checkIfSupplierExists();'>
         </div>
         <div class='form-group col-md-4'>
           <label>Contact:</label>
@@ -44,7 +44,7 @@ if($user_sec_lvl < 2){
         </div>
         <div class='form-group col-md-4'>
           <label>Phone:</label>
-          <input type='text' class='form-control' id='supplier_phone'>
+          <input type='text' class='form-control' id='supplier_phone' onchange='checkIfSupplierExists();'>
         </div>
         <div class='form-group col-md-4'>
           <label>Fax:</label>
@@ -52,7 +52,7 @@ if($user_sec_lvl < 2){
         </div>
         <div class='form-group col-md-4'>
           <label>Email:</label>
-          <input type='text' class='form-control' id='supplier_email'>
+          <input type='text' class='form-control' id='supplier_email' onchange='checkIfSupplierExists();'>
         </div>
         <div class='form-group col-md-4'>
           <label>Website:</label>

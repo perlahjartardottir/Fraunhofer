@@ -29,6 +29,7 @@ $user_sec_lvl = $user_sec_lvl[1]; ?>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='../js/app.js'></script>
 <script src='../js/bootstrap.js'></script>
+<script src='../js/bootbox.min.js'></script>
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header">

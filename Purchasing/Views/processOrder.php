@@ -84,6 +84,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
           <tr>
             <th>Requests</th>
             <th>Employee</th>
+            <th>Supplier</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -94,9 +95,11 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <td></td>
           </tr>
           <?php
-          $sql = "SELECT request_ID, employee_ID, request_date, request_description
+          $sql = "SELECT request_ID, employee_ID, request_date, request_description, request_supplier
                   FROM order_request
-                  WHERE active = 1;";
+                  WHERE active = 1
+                  ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
+                           CASE WHEN timeframe = 'This week' then 1 else 2 end;";
           $result = mysqli_query($link, $sql);
 
           while($row = mysqli_fetch_array($result)){
@@ -108,6 +111,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
             echo "<tr>
                     <td onclick='activeRequest(this);' id='request_ID'><a href='#' onclick='return false;'>".$row[0]."</a></td>
                     <td id='employee_name'>".$employee[0]."</td>
+                    <td id='request_supplier'>".$row[4]."</td>
                     <td>".$row[2]."<button style='float:right;' class='btn btn-danger btn-xs' onclick='finishRequest(".$row[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
                   </tr>";
           }
