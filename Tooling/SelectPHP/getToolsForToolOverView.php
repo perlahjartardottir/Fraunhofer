@@ -45,11 +45,11 @@ if (!$result) {
                 "<th>Line#</th>".
                 "<th>Quantity</th>".
                 "<th>ToolID</th>".
-                "<th>Dia / IC</th>".
+                "<th>Dia / IC / Size</th>".
                 "<th>Length</th>".
                 "<th>DblEnd</th>".
-                "<th>Price</th>".
-                "<th>total unit price</th>".
+                "<th>Unit Price</th>".
+                "<th>Total Price</th>".
                 "</tr></thead><tbody>";
 
 //filling it with data from POTools
@@ -62,8 +62,8 @@ while($row = mysqli_fetch_array($result)) {
         "<td>".$row[3]."</td>".
         "<td>".$row[4]."</td>".
         "<td>".$row[5]."</td>".
-        "<td>".$row[6]."</td>".
-        "<td>".$row[7]."<button id='delRunToolButton' style='float:right; margin-right:-50px'class='btn btn-danger' onclick='delTool(".$row[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>".
+        "<td>$".$row[6]."</td>".
+        "<td>$".$row[7]."<button id='delRunToolButton' style='float:right; margin-right:-50px'class='btn btn-danger' onclick='delTool(".$row[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>".
         "</tr>";
 }
 $totalSumSql = "SELECT SUM(ROUND(l.price * l.quantity, 2))

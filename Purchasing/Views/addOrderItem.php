@@ -136,7 +136,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
         </div>
         <div class='form-group col-md-6'>
           <?php
-          $requestSql = "SELECT request_description, department, part_number, quantity, cost_code
+          $requestSql = "SELECT request_description, department, part_number, quantity, cost_code, request_price
                          FROM order_request
                          WHERE request_ID = '$request_ID';";
           $requestResult = mysqli_query($link, $requestSql);
@@ -147,6 +147,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
                  <p><b>Cost code:</b> ".$requestRow[4]."</p>
                  <p><b>Part number:</b> ".$requestRow[2]."</p>
                  <p><b>Quantity:</b> ".$requestRow[3]."</p>
+                 <p><b>Price:</b> $".$requestRow[5]."</p>
                  <p><b>Description:</b> ".$requestRow[0]."</p>";
           }
           $quoteResult = mysqli_query($link, $quoteSql);

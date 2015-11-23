@@ -8,6 +8,12 @@
   <script type="text/javascript" src='../js/searchScript.js'></script>
 </head>
 <body>
+  <script>
+    var oldURL = document.referrer;
+    if(oldURL === 'http://35.9.146.244:8888/Tooling/Views/addTools2.php'){
+      window.print();
+    }
+  </script>
 	<h4>General information sheet</h4>
 <?php
 /*
@@ -59,14 +65,14 @@ echo "<table>";
 echo    "<tr>
             <td>Line#</td>
             <td>Quantity</td>
-            <td>ToolID</td>
+            <td>Tool ID</td>
             <td>Coating</td>
-            <td>dia / IC</td>
-            <td>length</td>
-            <td>est run#</td>
-            <td>double end</td>
-            <td>unit price</td>
-            <td>total unit price</td>
+            <td>Dia / IC / Size</td>
+            <td>Length</td>
+            <td>Est Run#</td>
+            <td>Double End</td>
+            <td>Unit Price</td>
+            <td>Total Price</td>
         </tr>";
 $counter = 1;
 while($row = mysqli_fetch_array($tresult)) {

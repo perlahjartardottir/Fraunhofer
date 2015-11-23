@@ -215,6 +215,30 @@ function showToolsTrack(str) {
   }
 }
 
+function generatePriceTopNotch(){
+  var coating = $('#coating_sel_top').val();
+  var insert_size = $('#insert_size').val();
+  var price;
+  if(insert_size === '1' || insert_size === '2'){
+    price = 0.63;
+  } else if(insert_size === '3'){
+    price = 0.90;
+  } else if(insert_size === '4'){
+    price = 1.11;
+  } else if(insert_size === '5'){
+    price = 2.18;
+  } else if(insert_size === '6'){
+    price = 2.32;
+  } else{
+    price = 0;
+  }
+  if(coating === '3'){
+    price *= 2;
+  }
+  price = price.toFixed(2);
+  document.getElementById('priceTop').value = price;
+}
+
 function generatePrice() {
   var diameter = $('#diameter').val();
   var length = $('#length').val();

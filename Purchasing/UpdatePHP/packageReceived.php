@@ -21,8 +21,18 @@ $result = mysqli_query($link, $sql);
 if(!$result){
   die(mysqli_error($link));
 }
-$ratingSql = "INSERT INTO order_rating(order_ID, rating_timeliness, rating_price, rating_quality, customer_service)
-              VALUES ('$order_ID','$rating_timeliness', '$rating_price', '$rating_quality', '$customer_service');";
+// Check if this order has already been rated. If so, then update the ratings
+$alreadyRatedSql = "SELECT * FROM order_rating WHERE order_ID = '$order_ID';";
+$alreadyRatedResult = mysqli_query($link, $alreadyRatedSql);
+if(mysqli_num_rows($alreadyRatedResult) > 0){
+  $ratingSql = "UPDATE order_rating
+                SET rating_timeliness = '$rating_timeliness', rating_price = '$rating_price', rating_quality = '$rating_quality', customer_service = '$customer_service'
+                WHERE order_ID = '$order_ID';";
+} else{
+  $ratingSql = "INSERT INTO order_rating(order_ID, rating_timeliness, rating_price, rating_quality, customer_service)
+                VALUES ('$order_ID','$rating_timeliness', '$rating_price', '$rating_quality', '$customer_service');";
+}
+
 $ratingResult = mysqli_query($link, $ratingSql);
 if(!$ratingResult){
   die(mysqli_error($link));
