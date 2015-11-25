@@ -407,7 +407,24 @@ function delPurchaseOrder(order_ID){
   }
 }
 
+function checkIfRecommended(supplier_name){
+  var recommended;
+  $.ajax({
+    url: '../SelectPHP/checkIfRecommended.php',
+    type: 'POST',
+    async: false,
+    data:{
+      supplier_name : supplier_name
+    },
+    success: function(data, status, xhr){
+      recommended = data;
+    }
+  })
+
+  return recommended;
+}
 function createPurchaseOrder(){
+  var recommended;
   // function to find the correct value from the datalist
   var employee_name = $("input[name='employeeList']").on('input', function(e){
     var $input = $(this),
@@ -431,6 +448,13 @@ function createPurchaseOrder(){
   supplier_name   = supplier_name.val();
   var employee_ID = $('#employee_ID').val();
   var request_ID  = $('#activeRequest').text();
+
+  if(checkIfRecommended(supplier_name) === 'Not Recommended'){
+    r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
+    if (r !== true){
+      return;
+    }
+  }
 
   if(!employee_name){
     $("#invalidPO").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Employee</div>");

@@ -52,7 +52,7 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status, comment
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status, comment, order_for_who
                     FROM purchase_order
                     WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
@@ -243,6 +243,12 @@
       <?php
       $inProgressResult = mysqli_query($link, $inProgressSql);
       while($inProgressRow = mysqli_fetch_array($inProgressResult)){
+        // Find the employee who the order is for
+        $forEmployeeSql = "SELECT employee_name FROM employee WHERE employee_ID = '$inProgressRow[10]';";
+        $forEmployeeResult = mysqli_query($link, $forEmployeeSql);
+        $forEmployee = mysqli_fetch_array($forEmployeeResult);
+
+        // If there is any expected pay date, put that in the correct format
         if($inProgressRow[7] == ""){
           $expectedPayDate = "N/A";
         } else{
@@ -267,6 +273,7 @@
                 else if($inProgressRow[8] == 'declined'){ echo " (declined)";}
                 echo"</h3></center>
                 <h4>Purchase order: ".$inProgressRow[4]."</h4>
+                <h4>For employee: ".$forEmployee[0]."</h4>
               </div>
               <div class='modal-body'>
                 <table class='table table-responsive'>
