@@ -2,7 +2,7 @@
 <?php
 include '../../connection.php';
 session_start();
-//find the current user
+//find the current user, order and type of currency 
 $user = $_SESSION["username"];
 $order_ID = $_SESSION["order_ID"];
 $currency = $_SESSION["currency"];

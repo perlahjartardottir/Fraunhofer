@@ -12,6 +12,9 @@ $secResult = mysqli_query($link, $secsql);
 while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
+
+// Since the security level is a 4 digit code and the second digit represents the purchasing database
+// We only need to use the second digit
 $user_sec_lvl = str_split($user_sec_lvl);
 $user_sec_lvl = $user_sec_lvl[1];
 
@@ -181,6 +184,9 @@ $supplier_address = "%" . $supplier_address . "%";
                         </div>
           			        <div class='modal-footer'>
                           <p style='float:left'><strong>Rating</strong>: ".$averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i></p>";
+                          if($user_sec_lvl > 3){
+                            echo"<button type='button' class='btn btn-danger' onclick='deleteSupplier(this)'>Delete Supplier</button>";
+                          }
                           if($user_sec_lvl > 2){
                             echo"  <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='setSupplierID(this)'>Edit Supplier</button>";
                           }

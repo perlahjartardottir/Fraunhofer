@@ -6,7 +6,8 @@
   $order_ID = $_SESSION["order_ID"];
   $id = $_GET['id'];
 
-  // do some validation here to ensure id is safe
+  // If there is no id sent in to this view then we find all the images linked to that PO
+  // Otherwise we find the image linked to that PO that has the specific scan ID
   if(empty($id)){
     $sql = "SELECT scan_image
             FROM purchase_scan

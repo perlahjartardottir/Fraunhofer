@@ -4,6 +4,7 @@
 .pleaseNoteBold{
   font-size: 11px;
 }
+/* styling for how the printout will look*/
 @media print{
   .row, .currency{
     display: none;

@@ -4,6 +4,8 @@ session_start();
 
 $redirect = mysqli_real_escape_string($link, $_POST['redirect']);
 $employee_ID = mysqli_real_escape_string($link, $_POST['employee_ID']);
+
+// get the id that was sent in with ?id=...
 $id = $_GET['id'];
 
 $fileName = $_FILES['fileToUpload']['name'];

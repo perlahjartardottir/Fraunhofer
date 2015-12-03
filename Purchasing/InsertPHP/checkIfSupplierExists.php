@@ -5,6 +5,9 @@ $supplier_phone    = mysqli_real_escape_string($link, $_POST['supplier_phone']);
 $supplier_address  = mysqli_real_escape_string($link, $_POST['supplier_address']);
 $supplier_email    = mysqli_real_escape_string($link, $_POST['supplier_email']);
 
+// Look for an existing supplier that has the same address and if we find one then the user will see a warning
+// letting him know that there already exists a supplier with the same address.
+// So he might be trying to create a supplier that already exists, and this will hopefully prevent that.
 $addressSql = "SELECT supplier_name FROM supplier
                WHERE supplier_address = '$supplier_address';";
 $addressResult = mysqli_query($link, $addressSql);
@@ -15,6 +18,7 @@ if($supplier_address != ''){
   }
 }
 
+// Look for an existing supplier with the same email
 $emailSql = "SELECT supplier_name FROM supplier
                WHERE supplier_email = '$supplier_email';";
 $emailResult = mysqli_query($link, $emailSql);
@@ -25,6 +29,7 @@ if($supplier_email != ''){
   }
 }
 
+// Look for an existing supplier with the same phone number 
 $phoneSql = "SELECT supplier_name FROM supplier
                WHERE supplier_phone = '$supplier_phone';";
 $phoneResult = mysqli_query($link, $phoneSql);

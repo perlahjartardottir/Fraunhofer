@@ -734,6 +734,24 @@ function setSupplierID(element){
   });
 }
 
+// Function for deleting the supplier
+function deleteSupplier(element){
+  var supplier_ID = $(element).parent().prev().find("#supplier_ID").val();
+  var r = confirm("Are you sure you want to delete this supplier?");
+  if(r === true){
+    $.ajax({
+      url: '../DeletePHP/deleteSupplier.php',
+      type: "POST",
+      data:{
+        supplier_ID: supplier_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    })
+  }
+}
+
 // Function for editing the supplier
 function editSupplier(supplier_ID){
   var r = confirm("Are you sure you want to edit this supplier?");
@@ -1013,11 +1031,13 @@ function confirmFinalInspection(order_ID){
           order_ID          : order_ID,
           final_inspection  : final_inspection,
           ok                : ok
+        },
+        success: function(data, status, xhr){
+          window.location.reload();
         }
       });
     }
   });
-  window.location.reload();
 }
 
 function createRequestFromQuotes(){

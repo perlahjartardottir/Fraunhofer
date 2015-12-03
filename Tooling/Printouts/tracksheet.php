@@ -27,7 +27,7 @@ $topsql ="SELECT p.po_number, p.receiving_date, c.customer_name, p.shipping_date
 $topresult = mysqli_query($link, $topsql);
 
 // the overall price of the PO
-$sumSql ="SELECT SUM(ROUND(l.price * l.quantity, 2)) 
+$sumSql ="SELECT SUM(ROUND(l.price * l.quantity, 2))
           FROM lineitem l
           WHERE l.po_ID = '$q'";
 $sumResult = mysqli_query($link, $sumSql);
@@ -106,7 +106,7 @@ if(!$runresult){
           "<td>ToolID</td>".
           "<td>Dia</td>".
           "<td>Len</td>".
-          "<td>DblEnd</td>".  
+          "<td>DblEnd</td>".
           "<td>Run#</td>".
           "<td># of items in run</td>".
           "<td>Final inspection</td>".
@@ -162,4 +162,3 @@ mysqli_close($link);
 ?>
 </body>
 </html>
-

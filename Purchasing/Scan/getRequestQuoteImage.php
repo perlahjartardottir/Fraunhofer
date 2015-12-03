@@ -5,7 +5,8 @@
 
   $id = $_GET['id'];
 
-  // do some validation here to ensure id is safe
+  // If there is no id sent in to this view then we find all the quotes linked that are active
+  // Otherwise we find the quote that is active and has that specific id
   if(empty($id)){
     $sql = "SELECT image
             FROM quote

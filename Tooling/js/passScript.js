@@ -845,6 +845,17 @@ function confirmPO() {
     }
   });
 }
+
+function changeShippingAddress(){
+  var newCustomerName = $('#newCustomerName').val();
+  var newAddress1 = $('#newAddress1').val();
+  var newAddress2 = $('#newAddress2').val();
+  var newPhone = $('#newPhone').val();
+  var newFax = $('#newFax').val();
+  $('#changeShippingAddress').html("<span class='col-xs-12'><strong>"+newCustomerName + "</strong></span>" + "<span class='col-xs-12'>" + newAddress1 + "</span>" + "<span class='col-xs-12'>" + newAddress2 + "</span>" + "<span class='col-xs-12'>" + newPhone + "</span>" + "<span class='col-xs-12'>" + newFax + "</span>");
+  $('#originalShippingAddress').html("");
+}
+
 // alerts the user if the PO is not complete
 // if the user does not mind that or if the PO is complete the print menu opens
 function saveAndPrint() {

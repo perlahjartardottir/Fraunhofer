@@ -122,13 +122,49 @@ while($row = mysqli_fetch_array($result)){
     </br>
     <input type="date" id="addShippingDate" name='addShippingDate' value='<?php echo date("Y-m-d") ?>' class='form-control' style='width:auto;'/>
   </div>
-  </br>
-  <button type='button' id='addShippingDateButton' class='btn btn-primary' onclick='confirmPO()'>
-    Save
-  </button>
-  <button type='button' class='btn btn-primary' onclick='saveAndPrint()'>
-    Print
-  </button>
+  <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#changeShipping'>Change shipping address</button>
+  <p></p>
+  <button type='button' id='addShippingDateButton' class='btn btn-primary' onclick='confirmPO()'>Save</button>
+  <button type='button' class='btn btn-primary' onclick='saveAndPrint()'>Print</button>
+
+  <!-- Modal to change shipping address -->
+  <div id="changeShipping" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Change shipping address</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class='form-group'>
+            <label>Customer name: </label><input type='text' id='newCustomerName' class='form-control' style='width:auto' />
+          </div>
+          <div class='form-group'>
+            <label>Address line 1: </label><input type='text' id='newAddress1' class='form-control' style='width:auto'>
+          </div>
+          <div class='form-group'>
+            <label>Address line 2: </label><input type='text' id='newAddress2' class='form-control' style='width:auto'>
+          </div>
+          <div class='form-group'>
+            <label>Phone number: </label><input type='text' id='newPhone' class='form-control' style='width:auto'>
+          </div>
+          <div class='form-group'>
+            <label>Fax number: </label><input type='text' id='newFax' class='form-control' style='width:auto'>
+          </div>
+        </form>
+        <p>*These changes will only be for this session, to see original version just refresh the page</p>
+      </div>
+      <div class="modal-footer">
+        <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='changeShippingAddress()'>Make changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 </div>
 </div>
 <div class="col-xs-12">
@@ -145,11 +181,13 @@ while($row = mysqli_fetch_array($result)){
 <div class='col-xs-6'>
   <span class='col-xs-12'><strong>Shipped to: </strong></span>
   <span class='col-xs-12'></br></span>
+  <span id='changeShippingAddress'></span>
+  <span id='originalShippingAddress'>
   <span class="col-xs-12"><strong><?php echo $customer_name;?></strong></span>
   <span class="col-xs-12"><?php echo $address_line_1; ?></span>
   <span class="col-xs-12"><?php echo $address_line_2; ?></span>
   <span class="col-xs-12">Ph. <?php echo $customer_phone;?></span>
-  <span class="col-xs-12">Fax <?php echo $customer_fax;?></span>
+  <span class="col-xs-12">Fax <?php echo $customer_fax;?></span></span>
 </div>
 <div class="col-xs-6" id="bottomDiv">
   <span class="col-xs-12 col-xs-offset-2">Fraunhofer USA</span>
@@ -277,7 +315,6 @@ $('.saveButton').click(function () {
     var exists = false;
     $('#packingsel option').each(function(){
         if (this.value == '<?php echo $po_ID; ?>') {
-            console.log("return false");
             return false;
         }
     });
