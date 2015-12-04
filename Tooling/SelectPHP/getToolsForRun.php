@@ -39,7 +39,15 @@ while($row = mysqli_fetch_array($result)) {
         "</tr>";
         $linecounter = $linecounter + 1;
 }
-echo "</tbody></table>";
+$result = mysqli_query($link, $sql);
+$row = mysqli_fetch_array($result);
+echo "<tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><button type='button' class='btn btn-primary col-md-12' onclick='allToolsOK(".$po_ID.", ".$row[5].", ".$row[6].")'>All OK</button></td>
+      </tr>
+    </tbody></table>";
 // reset linecounter so the buttons are linked to the right modals.
 $linecounter = 0;
 $result = mysqli_query($link, $sql);

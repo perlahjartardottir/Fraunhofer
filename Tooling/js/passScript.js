@@ -631,6 +631,21 @@ function updateEstRunAfterDel(lineitem, run_ID, number_of_items) {
   });
 }
 
+function allToolsOK(po_ID, lineitem_ID, run_ID){
+  $.ajax({
+    url: "../UpdatePHP/allToolsOK.php",
+    type: "POST",
+    data: {
+      po_ID : po_ID,
+      lineitem_ID : lineitem_ID,
+      run_ID : run_ID
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+    }
+  });
+}
+
 // If entire == 1, we delete the PO and everything related to it
 // Else we can only delete empty POs
 function delPO(po_ID, entire) {
