@@ -176,7 +176,14 @@ Instead of running the grunt command in your terminal after each javascript file
 <a name='uploading-changes'>Uploading changes to server</a>
 ----------------------------------------------------------------
 
-Originally this
+Originally this database was just hosted locally on the developers computer. As of November 2015, it is hosted on a server which Robert Rechenberg administrates. That means that you can host a testing database locally and when you are ready to publish the changes you replace the Fraunhofer file on the server with your Fraunhofer file. I like to put the recent version of the PHP/JavaScript in a backup folder first and then move the new version over.
+
+<a href="images for markdown/gif_guides/UploadChanges.gif" target="blank"><img src="images for markdown/gif_guides/UploadChanges.gif" alt="General overview" width='700px'/></a>
+
+The PHP/JavaScript/HTML files are all hosted on the Database guest account on the server. However, the MySQL code is all hosted on the Admin account so if you need to manipulate the database directly you will have to talk to Robert about that.
+
+I recommend exporting the MySQL code from the server Admin account regularly and import to your local SQL, so that your test database remains similar to the public database.
+
 
 Guides
 ======================================================
