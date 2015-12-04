@@ -122,10 +122,16 @@ while($row = mysqli_fetch_array($result)){
     </br>
     <input type="date" id="addShippingDate" name='addShippingDate' value='<?php echo date("Y-m-d") ?>' class='form-control' style='width:auto;'/>
   </div>
-  <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#changeShipping'>Change shipping address</button>
-  <p></p>
-  <button type='button' id='addShippingDateButton' class='btn btn-primary' onclick='confirmPO()'>Save</button>
-  <button type='button' class='btn btn-primary' onclick='saveAndPrint()'>Print</button>
+
+  <div class='col-md-12' style='margin-bottom:5px; margin-left:-15px;'>
+    <button type='button' id='addShippingDateButton' class='btn btn-primary col-md-3' onclick='confirmPO()'>Save <span class='glyphicon glyphicon-save'></span></button>
+  </div>
+  <div class='col-md-12' style='margin-bottom:5px; margin-left:-15px;'>
+    <button type='button' class='btn btn-primary col-md-3' data-toggle='modal' data-target='#changeShipping'>Change shipping address</button>
+  </div>
+  <div class='col-md-12' style='margin-left:-15px;'>
+    <button type='button' class='btn btn-primary col-md-3' onclick='saveAndPrint()'>Print <span class='glyphicon glyphicon-print'></span></button>
+  </div>
 
   <!-- Modal to change shipping address -->
   <div id="changeShipping" class="modal fade" role="dialog">

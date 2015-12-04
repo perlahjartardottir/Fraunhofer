@@ -2,7 +2,7 @@
 <?php
 include '../../connection.php';
 session_start();
-//find the current user, order and type of currency 
+//find the current user, order and type of currency
 $user = $_SESSION["username"];
 $order_ID = $_SESSION["order_ID"];
 $currency = $_SESSION["currency"];
@@ -100,7 +100,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
         </div>
         <input type='checkbox' id='esignature' onchange='esignatureCheck()'> E-signature<br>
         <p></p>
-        <button class='btn btn-primary' onclick='window.print()'>Print</button>
+        <button class='btn btn-primary' onclick='window.print()'>Print <span class='glyphicon glyphicon-print'></span></button>
         <a href="mailto:?" class='btn btn-primary'>Email</a>
       </div>
       <div class='col-md-6'>

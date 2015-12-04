@@ -45,7 +45,7 @@ echo "<tr>
         <td></td>
         <td></td>
         <td></td>
-        <td><button type='button' class='btn btn-primary col-md-12' onclick='allToolsOK(".$po_ID.", ".$row[5].", ".$row[6].")'>All OK</button></td>
+        <td><button type='button' class='btn btn-primary col-md-12' onclick='allToolsOK(".$po_ID.", ".$row[5].", ".$row[6].")'>All line items OK</button></td>
       </tr>
     </tbody></table>";
 // reset linecounter so the buttons are linked to the right modals.

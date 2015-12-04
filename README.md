@@ -36,6 +36,7 @@ Table of contents
 	- [Fixing minor errors](#minor-changes)
 	- [Changing database tables/procedures etc.](#database-changes)
 	- [Changing Javascript or jQuery functions](#javascript-changes)
+	- [Uploading changes to server](#uploading-changes)
 - [Guides](#guides)
 	- [MySQL setup guide](#mysql-guide)
 	- [MAMP setup guide](#mamp-guide)
@@ -171,6 +172,11 @@ After that you should be all set to simply run 'grunt' in the terminal and that 
 Instead of running the grunt command in your terminal after each javascript file modification, you can write 'grunt watch'. After that, every time you save your changes in a javascript file, the 'grunt' command is executed automatically.
 
 <strong>The server computer should have everything installed for you to simply run the grunt command in the terminal after you edit the js files</strong>
+
+<a name='uploading-changes'>Uploading changes to server</a>
+----------------------------------------------------------------
+
+Originally this
 
 Guides
 ======================================================
