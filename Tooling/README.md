@@ -68,7 +68,7 @@ Adding a new PO to the database
 <br><br><br><br><br><br>
 Adding a scan of the PO
 -----------------------
-<a href="../images for markdown/gif_guides/add_scan_to_po.gif" target="blank"><img src="images for markdown/gif_guides/add_scan_to_po.gif" alt="Add scan to PO" width='400px' align='right'/></a>
+<a href="../images for markdown/gif_guides/add_scan_to_po" target="blank"><img src="../images for markdown/gif_guides/add_scan_to_po.gif" alt="Add scan to PO" width='400px' align='right'/></a>
 
 - Use the scanner and the computer in the lab to save a scanned picture of the PO.
 - Ask your supervisor about what to name the scan and were to save it.
@@ -78,7 +78,7 @@ Adding a scan of the PO
 <br><br><br><br><br><br><br><br>
 Adding tools to a PO
 ---------------------
-<a href="../images for markdown/gif_guides/add_tool_to_po.gif" target="blank"><img src="images for markdown/gif_guides/add_tool_to_po.gif" alt="Add tool to PO" width='400px' align='right' /></a>
+<a href="../images for markdown/gif_guides/add_tool_to_po.gif" target="blank"><img src="../images for markdown/gif_guides/add_tool_to_po.gif" alt="Add tool to PO" width='400px' align='right' /></a>
 
 - Fill out the information as it is on the PO received from the customer.
 - Inserting a diameter and length generates the price for each customer.
@@ -90,7 +90,7 @@ Adding tools to a PO
 <br>
 Viewing the general overview page
 ----------------------------------
-<a href="../images for markdown/gif_guides/view_general_overview.gif" target="blank"><img src="images for markdown/gif_guides/view_general_overview.gif" alt="General overview" width='400px' align='right'/></a>
+<a href="../images for markdown/gif_guides/view_general_overview.gif" target="blank"><img src="../images for markdown/gif_guides/view_general_overview.gif" alt="General overview" width='400px' align='right'/></a>
 
 - After adding all the tools from the PO make sure all the information is correct.
 - Click ```Print general information sheet``` for a printable version of this information.
@@ -99,7 +99,7 @@ Viewing the general overview page
 <br><br><br><br>
 Adding a run
 ------------
-<a href="../images for markdown/gif_guides/add_run_to_tracksheet.gif" target="blank"><img src="images for markdown/gif_guides/add_run_to_tracksheet.gif" alt="Add run" width='400px' align='right'/></a>
+<a href="../images for markdown/gif_guides/add_run_to_tracksheet.gif" target="blank"><img src="../images for markdown/gif_guides/add_run_to_tracksheet.gif" alt="Add run" width='400px' align='right'/></a>
 
 - Make sure you have the correct PO chosen.
 - After filling out the form click the plus to store the run.
@@ -108,7 +108,7 @@ Adding a run
 <br><br><br><br><br><br><br><br><br><br>
 A quick way to add runs and edit them.
 ------------------------------------------------------------------
-<a href="../images for markdown/gif_guides/add_old_run_and_edit.gif" target="blank"><img src="images for markdown/gif_guides/add_old_run_and_edit.gif" alt="Add old run" width='400px' align='right'/></a>
+<a href="../images for markdown/gif_guides/add_old_run_and_edit.gif" target="blank"><img src="../images for markdown/gif_guides/add_old_run_and_edit.gif" alt="Add old run" width='400px' align='right'/></a>
 
 - The recently added runs list shows the 6 newest runs in the database.
 - Select the run and click ```Add run```. Now this run is linked to this PO.
@@ -117,7 +117,7 @@ A quick way to add runs and edit them.
 <br><br><br><br><br><br><br><br><br>
 Assign tools to run
 --------------------
-<a href="../images for markdown/gif_guides/add_tools_to_run.gif" target="blank"><img src="images for markdown/gif_guides/add_tools_to_run.gif" alt="Add tools to run" width='400px' align='right'/></a>
+<a href="../images for markdown/gif_guides/add_tools_to_run.gif" target="blank"><img src="../images for markdown/gif_guides/add_tools_to_run.gif" alt="Add tools to run" width='400px' align='right'/></a>
 
 - You can add the same line item to multiple runs
 - You can edit the information displayed in the table by clicking the right ```Line item #```.
@@ -126,7 +126,7 @@ Assign tools to run
 <br><br><br><br><br><br><br><br><br>
 Adding tools error
 ------------------
-<a href="../images for markdown/gif_guides/add_tools_to_run_error_warning.gif" target="blank"><img src="images for markdown/gif_guides/add_tools_to_run_error_warning.gif" alt="Add tool error" width='400px' align='right'/></a>
+<a href="../images for markdown/gif_guides/add_tools_to_run_error_warning.gif" target="blank"><img src="../images for markdown/gif_guides/add_tools_to_run_error_warning.gif" alt="Add tool error" width='400px' align='right'/></a>
 
 - You can not add the same line item twice to the same run.
 - If you want to change the number of tools in a run, delete the entry and add it again with correct information.
@@ -134,7 +134,7 @@ Adding tools error
 <br><br><br><br><br><br><br><br>
 Shipping the PO
 ----------------
-<a href="../images for markdown/gif_guides/packing_list.gif" target="blank"><img src="images for markdown/gif_guides/packing_list.gif" alt="New po gif" width='400px' align='right'/></a>
+<a href="../images for markdown/gif_guides/packing_list.gif" target="blank"><img src="../images for markdown/gif_guides/packing_list.gif" alt="New po gif" width='400px' align='right'/></a>
 
 - After all tools have been coated you can ship the PO back.
 - Make sure all information is correct. You can change the tools in shipment if it is wrong for some reason.
