@@ -54,7 +54,7 @@ $user_sec_lvl = $user_sec_lvl[1]; ?>
           <a href='../Views/purchaseOverview.php' class='btn btn-primary headerbutton active' role='button'>PO search</a>
           <a href='../Views/orderItemOverview.php' class='btn btn-primary headerbutton active' role='button'>Order item search</a>
           <a href='../Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
-          <a href='https://github.com/Freyr12/Fraunhofer/tree/master/Purchasing' class='btn btn-primary headerbutton active' role='button'>?</a>
+          <a href='https://github.com/Freyr12/Fraunhofer/tree/master/Purchasing' target='_blank' class='btn btn-primary headerbutton active' role='button'>?</a>
           <a onclick='logout()' class='btn btn-danger headerbutton active' role='button'>Logout</a>
         </ul>
     </div>

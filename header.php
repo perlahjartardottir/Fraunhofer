@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse navHeaderCollapse">
         <ul class='navbar-right btn-group' role='group'>
           <a href='../Tooling/Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
-          <a href='https://github.com/Freyr12/Fraunhofer' class='btn btn-primary headerbutton active' role='button'>?</a>
+          <a href='https://github.com/Freyr12/Fraunhofer' target='_blank' class='btn btn-primary headerbutton active' role='button'>?</a>
           <a onclick='logout()' class='btn btn-danger headerbutton active' role='button'>Logout</a>
         </ul>
     </div>
