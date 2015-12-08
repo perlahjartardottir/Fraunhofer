@@ -4,7 +4,7 @@
 <html>
 <head>
   <?php
-  include 'connection.php';
+  include '../../connection.php';
   session_start();
   // find the current user
   $user = $_SESSION["username"];
@@ -18,6 +18,10 @@
   while($row = mysqli_fetch_array($secResult)){
     $user_sec_lvl = $row[0];
   }
+  // Get the third digit from the security level since that digit represents the
+  // security level of the data analysis database
+  $user_sec_lvl = str_split($user_sec_lvl);
+  $user_sec_lvl = $user_sec_lvl[2];
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
@@ -35,7 +39,7 @@
         </div>
       </div>
     </div>
-    <h1> Here we will have the data analysis view </h1>
+    <h1> Here we will have the data analysis view</h1>
   </div>
 </body>
 </html>
