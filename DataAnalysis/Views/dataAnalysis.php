@@ -25,6 +25,16 @@
 <body>
   <?php include '../header.php'; ?>
   <div class="container">
+    <div class='row well'>
+      <div class='col-md-12'>
+        <div class='col-md-6'>
+          <button type='button' class='btn btn-primary col-md-12'>Add new sample</button>
+        </div>
+        <div class='col-md-6'>
+          <button type='button' class='btn btn-primary col-md-12'>Add to existing sample</button>
+        </div>
+      </div>
+    </div>
     <h1> Here we will have the data analysis view </h1>
   </div>
 </body>
