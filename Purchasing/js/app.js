@@ -678,6 +678,19 @@ function updateCostCode(){
     }
   });
 }
+function updateCostCodeOnClick(){
+  var department_name = document.getElementById("departmentInTable").innerHTML;
+  $.ajax({
+    url: "../UpdatePHP/costCode.php",
+    type: "POST",
+    data: {
+      department_name : department_name
+    },
+    success: function(data, status, xhr) {
+      $('.result').html(data);
+    }
+  });
+}
 function updateModalCostCode(element){
   var department_name = $(element).parent().find('#department').val();
   console.log(department_name);
@@ -936,6 +949,7 @@ function editOrderItem(order_item_ID, element){
   var quantity    = $(element).parent().prev().find("#quantity").val();
   var part_number = $(element).parent().prev().find('#part_number').val();
   var department  = $(element).parent().prev().find('#department').val();
+  var cost_code  = $(element).parent().prev().find('#cost_code').val();
   var unit_price  = $(element).parent().prev().find('#unit_price').val();
   var description = $(element).parent().prev().find('#description').val();
 
@@ -947,11 +961,26 @@ function editOrderItem(order_item_ID, element){
       quantity      : quantity,
       part_number   : part_number,
       department    : department,
+      cost_code     : cost_code,
       unit_price    : unit_price,
       description   : description
     },
     success: function(data, status, xhr) {
       window.location.reload();
+    }
+  });
+}
+
+function updateCostCodeModal(element){
+  var department_name = $(element).parent().find('#department').val();
+  $.ajax({
+    url: "../UpdatePHP/costCode.php",
+    type: "POST",
+    data: {
+      department_name : department_name
+    },
+    success: function(data, status, xhr) {
+      $('.result').html(data);
     }
   });
 }

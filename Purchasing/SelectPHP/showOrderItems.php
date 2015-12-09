@@ -13,7 +13,7 @@ if($currency == 'EUR'){
   $currencySymbol = '$';
 }
 
-$sql = "SELECT quantity, part_number, unit_price, description, order_item_ID, department_ID, order_ID
+$sql = "SELECT quantity, part_number, unit_price, description, order_item_ID, department_ID, order_ID, cost_code_ID
         FROM order_item
         WHERE order_ID = '$order_ID';";
 $result = mysqli_query($link, $sql);
@@ -43,18 +43,28 @@ $departmentSql2 = "SELECT department_name
       $counter = 1;
       $totalOrderPrice = 0;
       while($row = mysqli_fetch_array($result)){
+        // multiply quantity with unit price to find the total price
         $total = $row[0] * $row[2];
+
+        // Find the department name from the department ID
         $departmentSql = "SELECT department_name
                           FROM department
                           WHERE department_ID = '$row[5]';";
         $departmentResult = mysqli_query($link, $departmentSql);
         $departmentRow = mysqli_fetch_array($departmentResult);
+
+        // Find the cost code name from the cost code ID
+        $costCodeSql = "SELECT cost_code_name
+                        FROM cost_code
+                        WHERE cost_code_ID = '$row[7]';";
+        $costCodeResult = mysqli_query($link, $costCodeSql);
+        $costCode = mysqli_fetch_array($costCodeResult);
         echo"<tr>
-              <td><a href='#' data-toggle='modal' data-target='#".$row[4]."'>".$counter."</a></td>
+              <td><a href='#' data-toggle='modal' onclick='updateCostCodeOnClick()' data-target='#".$row[4]."'>".$counter."</a></td>
               <td>".$row[0]."</td>
               <td>".$row[1]."</td>
               <td>".$row[3]."</td>
-              <td>".$departmentRow[0]."</td>
+              <td id='departmentInTable'>".$departmentRow[0]."</td>
               <td>".$currencySymbol."".number_format((float)$row[2], 2, '.', '')."</td>
               <td>".$currencySymbol."".number_format((float)$total, 2, '.', '')."<button style='float:right; margin-right:-50px' onclick='delOrderItem(".$row[4].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
             </tr>
@@ -76,7 +86,7 @@ $departmentSql2 = "SELECT department_name
                       </div>
                       <div class='col-md-6'>
                         <label>Department</label>
-                        <select id='department' class='form-control'>
+                        <select id='department' class='form-control' onchange='updateCostCodeModal(this)'>
                           <option value=''>All departments</option>";
                           $departmentResult2 = mysqli_query($link, $departmentSql2);
                           while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
@@ -85,9 +95,11 @@ $departmentSql2 = "SELECT department_name
                           echo"
                         </select>
                       </div>
-                      <div class='col-md-6'>
+                      <div class='col-md-6 result'>
+                      </div>
+                      <div class='col-md-12'>
                         <label>USD Unit</label>
-                        <input type='text' id='unit_price' value='".$row[2]."' class='form-control'>
+                        <input type='text' id='unit_price' value='".$row[2]."' class='form-control' style='width:auto;'>
                       </div>
                       <div class='col-md-12'>
                         <label>Description</label>
@@ -97,7 +109,7 @@ $departmentSql2 = "SELECT department_name
                     </form>
                   </div>
                   <div class='modal-footer'>
-                    <button type='button' class='btn btn-success' data-dismiss='modal' onclick='editOrderItem(".$row[4].", this)'>Edit</button>
+                    <button type='button' class='btn btn-success' onclick='editOrderItem(".$row[4].", this)'>Edit</button>
                     <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
                   </div>
                 </div>
