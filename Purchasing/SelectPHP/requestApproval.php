@@ -24,7 +24,7 @@ while($orderItemRow = mysqli_fetch_array($orderItemResult)){
   $totalPrice += $orderItemRow[0] * $orderItemRow[3];
   $message .= $orderItemRow[0]." ".$orderItemRow[1]." - $".$orderItemRow[3]." each\n".$orderItemRow[2]."\n\n";
 }
-$message .= "Total price: $".$totalPrice."\n\n http://35.9.146.244:8888/Purchasing/Views/pendingApprovals.php";
+$message .= "Total price: $".$totalPrice."\n\n http://35.9.146.121:8888/Purchasing/Views/pendingApprovals.php";
 
 // Find the email address of the employee who this order is for
 $orderForWhoEmailSql = "SELECT employee_email
@@ -40,7 +40,7 @@ $approvalSql = "SELECT employee_email
 $approvalResult = mysqli_query($link, $approvalSql);
 $approvalEmail = mysqli_fetch_array($approvalResult);
 
-$headers = "From: ffridfinnsson@fraunhofer.org" . "\r\n" . "CC: ".$orderForWhoEmail[0];
+$headers = "From: ccd.purchasing@gmail.com" . "\r\n" . "CC: ".$orderForWhoEmail[0];
 
 $sql = "UPDATE purchase_order
         SET approval_status = 'pending'

@@ -25,7 +25,7 @@ while($emailRow = mysqli_fetch_array($emailResult)){
   $supplier = mysqli_fetch_array($supplierResult);
 
   // send the email
-  mail($employeeEmailRow[0], $emailOrderNameRow[0]." from ".$supplier[0]." expected delivery in three days", 'Your purchase order, '.$emailOrderNameRow[0].', is expected in three days', "From:" . "ffridfinnsson@fraunhofer.org");
+  mail($employeeEmailRow[0], $emailOrderNameRow[0]." from ".$supplier[0]." expected delivery in three days", 'Your purchase order, '.$emailOrderNameRow[0].', is expected in three days', "From:" . "ccd.purchasing@gmail.com");
 
   // As soon as the email is sent, we delete the row in the table so the employee
   // Doesn't get an email every day.
