@@ -63,6 +63,7 @@ $user_sec_lvl = $user_sec_lvl[3];
         <div class='row well well-lg'>
           <form>
             <h4>Enter employee ID to insert or change some values in the table. The employee ID can not be changed!</h4>
+            <h5>'Reset password' resets the password to the first name of the employee in lower case.</h5>
             <div class='col-md-12'>
               <div class='col-md-4 form-group'>
                 <label>Enter the employee ID: </label>
@@ -86,6 +87,10 @@ $user_sec_lvl = $user_sec_lvl[3];
               <label>Change employee security level:</label>
               <input type='text' id='input_security_level' class='form-control'/>
             </div>
+            <div class='col-md-4 form-group'>
+              <button type='button' class='btn btn-primary form-control' style='margin-top:24px;' onclick='resetPassword()'>Reset password</button>
+            </div>
+            <div class='col-md-12'></div>
             <div class='col-md-4 form-group'>
               <label>Delete employee: </label>
               <button type='button' class='btn btn-danger form-control' style='width:auto;' onclick='deleteEmployee()'>

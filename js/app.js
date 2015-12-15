@@ -137,7 +137,7 @@ function changeEmployee() {
 
 function deleteEmployee() {
   var employee_ID = $('#input_employee_ID').val();
-  var r = confirm("Are you sure you want to delete employee with ID: " + employee_ID);
+  var r = confirm("Are you sure you want to delete employee with ID: " + employee_ID + "?");
   if (r === true) {
     $.ajax({
       url: "../Tooling/DeletePHP/deleteEmployee.php",
@@ -149,6 +149,23 @@ function deleteEmployee() {
         window.location.reload(true);
         $("#status_text").html(data);
         $("#input_employee_ID").val("");
+      }
+    });
+  }
+}
+
+function resetPassword(){
+  var employee_ID = $('#input_employee_ID').val();
+  var r = confirm("Are you sure you want to reset the password for employee with ID: " + employee_ID + "?");
+  if (r === true) {
+    $.ajax({
+      url: "../Tooling/UpdatePHP/resetPassword.php",
+      type: "POST",
+      data: {
+        employee_ID: employee_ID
+      },
+      success: function(data, status, xhr) {
+        window.location.reload(true);
       }
     });
   }

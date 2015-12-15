@@ -1071,7 +1071,7 @@ function confirmFinalInspection(order_ID){
 
 function createRequestFromQuotes(){
   var selected = [];
-  $('#mytable').find('input[type="checkbox"]:checked').each(function (){
+  $('#mytable').find('input[type="checkbox"][value="chooseQuote"]:checked').each(function (){
     selected.push($(this).attr('name'));
   });
   var array = selected.join(",");
@@ -1086,6 +1086,24 @@ function createRequestFromQuotes(){
     }
   });
 }
+
+// function createPOFromQuotes(){
+//   var selected = [];
+//   $('#mytable').find('input[type="checkbox"][value="chooseQuotePO"]:checked').each(function (){
+//     selected.push($(this).attr('name'));
+//   });
+//   var array = selected.join(",");
+//   $.ajax({
+//     url: '../SelectPHP/createPOFromQuotes.php',
+//     type: 'POST',
+//     data:{
+//       selected : array
+//     },
+//     success: function(data, status, xhr) {
+//       window.location = "../Views/addOrderItem.php";
+//     }
+//   });
+// }
 
 // Update the final inspection for the order item
 function updateFinalInspection(final_inspection, order_item_ID, element){
