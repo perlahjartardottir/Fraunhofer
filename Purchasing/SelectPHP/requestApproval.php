@@ -47,6 +47,13 @@ $sql = "UPDATE purchase_order
         WHERE order_ID = '$order_ID';";
 $result = mysqli_query($link, $sql);
 
-mail($approvalEmail[0], "Order ".$orderForWhoRow[1]." needs your approval", $message, $headers);
+$to = $approvalEmail[0];
+$subject = "Order ".$orderForWhoRow[1]." needs your approval";
+
+$mail = mail($to, $subject, $message, $headers);
+if(!$mail){
+  print_r(error_get_last());
+  var_dump(error_get_last());
+}
 
 ?>

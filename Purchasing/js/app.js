@@ -306,7 +306,11 @@ function requestApproval(){
       employee_ID : employee_ID
     },
     success: function(data, status, xhr){
-      window.location.reload();
+      // window.location.reload();
+      console.log(data);
+      setTimeout(function() {
+        showRunTools();
+      }, 1000);
     }
   });
 }
