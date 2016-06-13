@@ -288,7 +288,7 @@ $user_sec_lvl = $user_sec_lvl[0];
       ?>
       <div class='col-md-12' style='margin-top:20px;'>
         <a class="btn btn-primary" href="../Views/addTools2.php" style="margin-top: 3px;">Add lineitems</a>
-        <?php if($user_sec_lvl > 3){
+        <?php if($user_sec_lvl > 1){
           echo "<button class='btn btn-danger' style='float: right;' onclick='delPO(".$po_ID.", 1)'>Delete PO</button>";
         }else if(safe_delete($po_ID)){
           echo "<button class='btn btn-danger' style='float: right;' onclick='delPO(".$po_ID.", 0)'>Delete PO</button>";
