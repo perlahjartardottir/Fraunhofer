@@ -82,7 +82,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
 	</script>
   <div class='container'>
     <div class='row well well-lg'>
-      <h3><center>Package received</center></h3>
+      <h3><center>Order received</center></h3>
       <h4>Supplier: <?php echo $supplierNameRow[0]; ?></h4>
       <form>
         <table class='table table-responsive' id='finalInspectionTable'>
@@ -227,7 +227,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
       </div>
       <form>
         <div class='col-md-12' style='margin-top:30px;'>
-          <button class='btn btn-primary' style='float:right;' onclick='packageReceived(<?php echo $order_ID;?>, this)'>Package Received</button>
+          <button class='btn btn-primary' style='float:right;' onclick='packageReceived(<?php echo $order_ID;?>, this)'>Order Received</button>
           <input type='date' id='receiveDate' class='form-control' style='float:right; margin-right:5px; width:auto;'>
         </div>
       </form>
