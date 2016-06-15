@@ -55,7 +55,8 @@
 
   $inProgressSql = "SELECT o.order_ID, o.order_date, o.request_ID, o.order_final_inspection, o.order_name, o.supplier_ID, o.expected_delivery_date, o.net_terms, o.approval_status, comment, o.order_for_who, s.supplier_name
                     FROM purchase_order o, supplier s
-                    WHERE order_receive_date IS NULL AND o.supplier_ID = s.supplier_ID;";
+                    WHERE order_receive_date IS NULL AND o.supplier_ID = s.supplier_ID
+                    ORDER BY o.order_date asc;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
@@ -201,7 +202,7 @@
     </div>
 
     <!-- Here we have the In Progress table ---------------------------->
-    <div class='col-md-5'>
+    <div class='col-md-6'>
       <h4>In Progress</h4>
       <table class='table table-responsive'>
         <thead>
@@ -344,7 +345,7 @@
     </div>
 
     <!-- Here we have the Delivered table -------------------------------->
-    <div class='col-md-4'>
+    <div class='col-md-3'>
       <h4>Delivered</h4>
       <table class='table table-responsive'>
         <thead>
