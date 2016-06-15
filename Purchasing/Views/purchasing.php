@@ -45,7 +45,7 @@
   // Query to find all active requests
   $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code, request_price
                  FROM order_request
-                 WHERE active = 1
+                 WHERE active = 1 AND order_ID IS NULL
                  ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
                           CASE WHEN timeframe = 'This week' then 1 else 2 end;";
   $requestResult = mysqli_query($link, $requestSql);
