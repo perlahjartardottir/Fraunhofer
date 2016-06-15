@@ -4,6 +4,13 @@ session_start();
 $order_ID = $_SESSION['order_ID'];
 $currency = $_SESSION["currency"];
 
+// For debugging reasons, can be deleted
+function console_log( $data ){
+  echo '<script>';
+  echo 'console.log('. json_encode( $data ) .')';
+  echo '</script>';
+  }
+
 // get the correct currency display
 if($currency == 'EUR'){
   $currencySymbol = '&euro;';
@@ -31,6 +38,7 @@ $departmentSql2 = "SELECT department_name
       <tr>
         <th>Pos. #</th>
         <th>Quantity</th>
+        <th>Cost code</th>
         <th>Part #</th>
         <th>Description</th>
         <th>Department</th>
@@ -58,10 +66,25 @@ $departmentSql2 = "SELECT department_name
                         FROM cost_code
                         WHERE cost_code_ID = '$row[7]';";
         $costCodeResult = mysqli_query($link, $costCodeSql);
-        $costCode = mysqli_fetch_array($costCodeResult);
+        $costCodeRow = mysqli_fetch_array($costCodeResult);
+        if($costCodeRow[0] == 'CVD'){
+           $costCode = 'C-000';
+        } else if($costCodeRow[0] == 'PVD'){
+          $costCode = 'P-000';
+        } else if($costCodeRow[0] == 'INF'){
+          $costCode = 'I-000';
+        } else if($costCodeRow[0] == 'ANA'){
+          $costCode = 'A-000';
+        } else if($costCodeRow[0] == 'OH'){
+          $costCode = 'O-000';
+        } else{
+          $costCode = $costCodeRow[0];
+        }
+
         echo"<tr>
               <td><a href='#' data-toggle='modal' onclick='updateCostCodeOnClick()' data-target='#".$row[4]."'>".$counter."</a></td>
               <td>".$row[0]."</td>
+              <td>".$costCode."</td>
               <td>".$row[1]."</td>
               <td>".$row[3]."</td>
               <td id='departmentInTable'>".$departmentRow[0]."</td>
