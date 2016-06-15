@@ -52,9 +52,10 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status, comment, order_for_who
-                    FROM purchase_order
-                    WHERE order_receive_date IS NULL;";
+
+  $inProgressSql = "SELECT o.order_ID, o.order_date, o.request_ID, o.order_final_inspection, o.order_name, o.supplier_ID, o.expected_delivery_date, o.net_terms, o.approval_status, comment, o.order_for_who, s.supplier_name
+                    FROM purchase_order o, supplier s
+                    WHERE order_receive_date IS NULL AND o.supplier_ID = s.supplier_ID;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
@@ -206,6 +207,7 @@
         <thead>
           <tr>
             <th>Purchase Order</th>
+            <th>Supplier</th>
             <th>Order Date</th>
             <th>Expected Delivery</th>
           </tr>
@@ -229,6 +231,7 @@
               echo"<tr>";
             }
               echo"<td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
+                    <td>".substr($inProgressRow[11],0,15)."</td>
                     <td>".$inProgressRow[1]."</td>";
               if($dateDiffDays < 0){
                 echo "<td><b>".$inProgressRow[6]."</b></td>";
