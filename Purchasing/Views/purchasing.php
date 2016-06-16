@@ -35,7 +35,7 @@
   // query to find how many active requests there are
   $activeRequestsSql = "SELECT COUNT(request_ID)
                         FROM order_request
-                        WHERE active = 1;";
+                        WHERE active = 1 AND order_ID IS NULL;";
   $activeRequestsResult = mysqli_query($link, $activeRequestsSql);
   $activeRequests = mysqli_fetch_array($activeRequestsResult);
   if(!$activeRequestsResult){
@@ -52,11 +52,9 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-
-  $inProgressSql = "SELECT o.order_ID, o.order_date, o.request_ID, o.order_final_inspection, o.order_name, o.supplier_ID, o.expected_delivery_date, o.net_terms, o.approval_status, comment, o.order_for_who, s.supplier_name
-                    FROM purchase_order o, supplier s
-                    WHERE order_receive_date IS NULL AND o.supplier_ID = s.supplier_ID
-                    ORDER BY o.order_date asc;";
+  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status, comment, order_for_who
+                    FROM purchase_order
+                    WHERE order_receive_date IS NULL;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
@@ -202,13 +200,12 @@
     </div>
 
     <!-- Here we have the In Progress table ---------------------------->
-    <div class='col-md-6'>
+    <div class='col-md-5'>
       <h4>In Progress</h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
             <th>Purchase Order</th>
-            <th>Supplier</th>
             <th>Order Date</th>
             <th>Expected Delivery</th>
           </tr>
@@ -232,7 +229,6 @@
               echo"<tr>";
             }
               echo"<td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
-                    <td>".substr($inProgressRow[11],0,15)."</td>
                     <td>".$inProgressRow[1]."</td>";
               if($dateDiffDays < 0){
                 echo "<td><b>".$inProgressRow[6]."</b></td>";
@@ -345,7 +341,7 @@
     </div>
 
     <!-- Here we have the Delivered table -------------------------------->
-    <div class='col-md-3'>
+    <div class='col-md-4'>
       <h4>Delivered</h4>
       <table class='table table-responsive'>
         <thead>
@@ -444,14 +440,14 @@
               </div>
               <div class='modal-footer'>
                 <div class='btn-group' style='float:left;'>
-  			            <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-  			              Edit <span class='caret'></span>
-  			            </button>
-  			            <ul class='dropdown-menu' role='menu'>
-  			              <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
-  			              <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
-  			            </ul>
-  			        </div>
+                    <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                      Edit <span class='caret'></span>
+                    </button>
+                    <ul class='dropdown-menu' role='menu'>
+                      <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
+                      <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
+                    </ul>
+                </div>
                 <button type='button' onclick='printoutInfo(".$deliveredRow[0].")' class='btn btn-primary' style='float:left; margin-left:5px;'>Printout</button>
                 <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
                 <button type='button' class='btn' data-dismiss='modal'>Close</button>
