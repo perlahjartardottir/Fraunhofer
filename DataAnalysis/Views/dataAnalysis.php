@@ -11,8 +11,8 @@
 
   // find his level of security
   $secsql = "SELECT security_level
-             FROM employee
-             WHERE employee_name = '$user'";
+  FROM employee
+  WHERE employee_name = '$user'";
   $secResult = mysqli_query($link, $secsql);
 
   while($row = mysqli_fetch_array($secResult)){
@@ -39,7 +39,51 @@
         </div>
       </div>
     </div>
-    <h1> Here we will have the data analysis view</h1>
+    <div class='col-md-4'>
+      <h4>Recent Samples</h4>
+      <table class='table table-responsive'>
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sample 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class='col-md-4'>
+      <h4>Process Equipment</h4>
+      <table class='table table-responsive'>
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Equipment 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class='col-md-4'>
+      <h4>Analysis Equipment</h4>
+      <table class='table table-responsive'>
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Equipment 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 </html>
