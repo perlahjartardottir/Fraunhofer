@@ -36,10 +36,6 @@
                           WHERE anlys_eq_active = TRUE;";
   $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
 
-  echo "<script> console.log(".json_encode($analysisEquipmentSql).")</script>";
-  echo "<script> console.log(".json_encode($analysisEquipmentResult).")</script>";
-
-
 
   ?>
   <title>Fraunhofer CCD</title>
@@ -51,7 +47,7 @@
     <div class='row well'>
       <div class='col-md-12'>
         <div class='col-md-6'>
-          <button type='button' class='btn btn-primary col-md-12'>Add new sample</button>
+          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='addSample.php'">Add new sample</button>
         </div>
         <div class='col-md-6'>
           <button type='button' class='btn btn-primary col-md-12'>Add to existing sample</button>
