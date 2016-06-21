@@ -8,13 +8,11 @@
   session_start();
   // find the current user
   $user = $_SESSION["username"];
-
   // find his level of security
   $secsql = "SELECT security_level
   FROM employee
   WHERE employee_name = '$user'";
   $secResult = mysqli_query($link, $secsql);
-
   while($row = mysqli_fetch_array($secResult)){
     $user_sec_lvl = $row[0];
   }
@@ -22,6 +20,27 @@
   // security level of the data analysis database
   $user_sec_lvl = str_split($user_sec_lvl);
   $user_sec_lvl = $user_sec_lvl[2];
+
+  // if the user security level is not high enough we kill the page and give him a link to the log in page
+  if($user_sec_lvl < 2){
+    echo "<a href='../../Login/login.php'>Login Page</a></br>";
+    die("You don't have the privileges to view this site.");
+  }
+  $processEquipmentSql = "SELECT prcs_eq_ID, prcs_eq_name
+                          FROM process_equipment
+                          WHERE prcs_eq_active = TRUE;";
+  $processEquipmentResult = mysqli_query($link, $processEquipmentSql);
+
+  $analysisEquipmentSql = "SELECT anlys_eq_ID, anlys_eq_name
+                          FROM anlys_equipment
+                          WHERE anlys_eq_active = TRUE;";
+  $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
+
+  echo "<script> console.log(".json_encode($analysisEquipmentSql).")</script>";
+  echo "<script> console.log(".json_encode($analysisEquipmentResult).")</script>";
+
+
+
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
@@ -63,9 +82,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Equipment 1</td>
-          </tr>
+          <?php
+          while($processEqRow = mysqli_fetch_array($processEquipmentResult)){
+            echo"
+            <tr>
+               <td><a href='#' data-toggle='modal' data-target='#".$processEqRow[0]."'>".$processEqRow[1]."</a><td>
+            </tr>";
+          }
+          ?>
         </tbody>
       </table>
     </div>
@@ -78,9 +102,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Equipment 1</td>
-          </tr>
+          <?php
+          while($analysisEqRow = mysqli_fetch_array($analysisEquipmentResult)){
+            echo"
+              <tr>
+               <td><a href='#' data-toggle='modal' data-target='#".$analysisEqRow[0]."'>".$analysisEqRow[1]."</a><td>
+              </tr>";
+          }
+          ?>
         </tbody>
       </table>
     </div>
