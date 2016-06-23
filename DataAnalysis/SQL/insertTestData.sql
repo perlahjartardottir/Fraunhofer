@@ -1,6 +1,6 @@
-USE DA_test;
+USE Fraunhofer;
 
-/*SELECT *
+SELECT *
 FROM process_equipment;
 
 INSERT INTO process_equipment(prcs_eq_name, prcs_eq_acronym, prcs_eq_active)
@@ -8,16 +8,16 @@ INSERT INTO process_equipment(prcs_eq_name, prcs_eq_acronym, prcs_eq_active)
 	("PVD Coating Chamber K2", "K2", TRUE),
     ("PVD Coating Chamber LA", "LA", TRUE),
     ("PVD Coating Chamber PVD75", "PVD75", TRUE);
-    */
+    
 
-/*INSERT INTO anlys_equipment(anlys_eq_name, anlys_eq_active)
+
+INSERT INTO anlys_equipment(anlys_eq_name, anlys_eq_active)
 	VALUES("Dektak Profilemeter", TRUE),
     ("Calotte Grinder", TRUE),
     ("Microscope (stereo)", TRUE),
     ("Hardness Tester (adhesion)", TRUE);
-    */
 
-/*SELECT *
+SELECT *
 FROM anlys_equipment;
 
 
@@ -29,6 +29,6 @@ INSERT INTO anlys_property(anlys_eq_ID,anlys_prop_name)
     
 SELECT *
 FROM anlys_property;
-*/
+
 
     

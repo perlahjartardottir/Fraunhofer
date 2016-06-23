@@ -36,7 +36,6 @@
                           WHERE anlys_eq_active = TRUE;";
   $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
 
-
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>

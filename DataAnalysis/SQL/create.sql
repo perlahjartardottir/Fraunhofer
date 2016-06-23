@@ -1,17 +1,17 @@
-USE DA_test;
+USE Fraunhofer;
 
-DROP TABLE IF EXISTS storage;
-DROP TABLE IF EXISTS process_property;
-DROP TABLE IF EXISTS process_equipment;
-DROP TABLE IF EXISTS anlys_property;
-DROP TABLE IF EXISTS anlys_equipment;
-DROP TABLE IF EXISTS anlys_file;
-DROP TABLE IF EXISTS anlys_value;
-DROP TABLE IF EXISTS anlys_comment;
-DROP TABLE IF EXISTS analysis;
-DROP TABLE IF EXISTS process;
-DROP TABLE IF EXISTS sample;
-DROP TABLE IF EXISTS sample_set;
+-- DROP TABLE IF EXISTS storage;
+-- DROP TABLE IF EXISTS process_property;
+-- DROP TABLE IF EXISTS process_equipment;
+-- DROP TABLE IF EXISTS anlys_property;
+-- DROP TABLE IF EXISTS anlys_equipment;
+-- DROP TABLE IF EXISTS anlys_file;
+-- DROP TABLE IF EXISTS anlys_value;
+-- DROP TABLE IF EXISTS anlys_comment;
+-- DROP TABLE IF EXISTS analysis;
+-- DROP TABLE IF EXISTS process;
+-- DROP TABLE IF EXISTS sample;
+-- DROP TABLE IF EXISTS sample_set;
 
 CREATE TABLE sample_set(
 	sample_set_ID INT AUTO_INCREMENT,
