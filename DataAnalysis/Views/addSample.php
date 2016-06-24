@@ -25,6 +25,11 @@ $allemployeeSql = "SELECT employee_ID, employee_name
 FROM employee
 ORDER BY employee_name ASC;";
 $allemployeeResult = mysqli_query($link, $allemployeeSql);
+
+$allSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+FROM sample_set;";
+$allSampleSetsResult = mysqli_query($link, $allSampleSetsSql);
+echo "<script> console.log(".json_encode($allSampleSetsResult).")</script>";
 ?>
 
 <head>
@@ -39,24 +44,34 @@ $allemployeeResult = mysqli_query($link, $allemployeeSql);
     	<h5>Here we will display some information about this form.</h5>
     </div>
     <div class='row well well-lg'>
-    <h3>Add a new sample</h3>
-    <form>
-      <div class='col-md-6 form-group'>
-
-        <label>Sample Unique Name: </label>
-        <input type='text' id='sample_name' class='form-control'>
-      </div>
+      <h3>Add a new sample</h3>
+      <form>
       <!--<div class='col-md-4 form-group'>
         <label>Employee: </label>
         <input type='text' list='employees' name='employeeList' id='employeeList' value='' class='col-md-12 form-control'>
         <datalist id="employees">
           <?
-          while($row = mysqli_fetch_array($allemployeeResult)){
-            echo"<option value='".$row[1]."'></option>";
-          }
+          // while($row = mysqli_fetch_array($allemployeeResult)){
+            // echo"<option value='".$row[1]."'></option>";
+          // }
           ?>
         </datalist>
       </div>-->
+      <div class='form-group col-md-6'>
+        <label>Sample set: </label>
+        <select class='form-control' onchange='showSamplesInSet(this.value)' id='sample_set_ID' style='width:auto;'>
+          <option value=''>New</option>
+          <?
+          while($sampleSetRow = mysqli_fetch_array($allSampleSetsResult)){
+            echo"<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
+          }
+          ?>
+        </select>
+      </div>
+      <div class='col-md-6 form-group'>
+        <label>Sample Unique Name: </label>
+        <input type='text' id='sample_name' class='form-control'>
+      </div>
       <div class='col-md-6 form-group'>
         <label>Material: </label>
         <input type='text' id='sample_material' class='form-control'>
@@ -66,17 +81,16 @@ $allemployeeResult = mysqli_query($link, $allemployeeSql);
         <textarea id='sample_comment' class='form-control' rows='4'></textarea>
       </div>
 
-    <button type='button' class='btn btn-primary col-md-2' onclick='addSample()'>Add</button>
-        </form>
-    </div>
-    <!-- SelectPHP/showSamplesInSet.php-->
-    <div id='samples_in_set'></div>
+      <button type='button' class='btn btn-primary col-md-2' onclick='addSample() '>Add</button>
+    </form>
   </div>
-  <script>
-        // Show the samples in the sample set.
+  <!-- SelectPHP/showSamplesInSet.php-->
+  <div id='samples_in_set'></div>
+</div>
+<script>
+        // Show the samples in the sample set on refresh.
         $(document).ready(function(){
          showSamplesInSet();
-         console.log("Now refreshing");
        });
      </script>
    </body>

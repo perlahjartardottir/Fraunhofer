@@ -25,7 +25,7 @@ CREATE TABLE sample(
 	sample_name VARCHAR(20),
 	sample_material VARCHAR(50),
 	sample_comment VARCHAR(2000),
-	-- sample_picture MEDIUMBLOB,
+	sample_picture MEDIUMBLOB,
 	PRIMARY KEY(sample_ID),
     FOREIGN KEY(sample_set_ID) REFERENCES sample_set(sample_set_ID)
 );

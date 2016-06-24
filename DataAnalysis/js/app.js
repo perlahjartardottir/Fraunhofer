@@ -11,6 +11,7 @@ function logout(){
 }
 
 function addSample(){
+	var sampleSetID = $('#sample_set_ID').val();
 	var sampleName = $('#sample_name').val();
 	var sampleMaterial = $('#sample_material').val();
 	var sampleComment = $('#sample_comment').val();
@@ -20,23 +21,27 @@ function addSample(){
 		data: {
 			sampleName : sampleName,
 			sampleMaterial : sampleMaterial,
-			sampleComment : sampleComment
-
+			sampleComment : sampleComment,
+			sampleSetID : sampleSetID
 		},
 		success: function(data, status, xhr){
 			 window.location.reload(true);
+			 console.log(data);
 		}
 	});
 }
 
 // Display sample and reload page after adding it to a set.
-function showSamplesInSet(){
+function showSamplesInSet(sampleSetID){
 	$.ajax({
 		url: "../SelectPHP/showSamplesInSet.php",
 		type: "POST",
+		data: {
+			sampleSetID : sampleSetID
+		},
 		success: function(data,status, xhr){
-			console.log("app.js: showSamplesInSet success");
 			$("#samples_in_set").html(data);
+			
 		}
 	})
 }
