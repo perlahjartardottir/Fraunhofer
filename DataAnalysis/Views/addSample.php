@@ -29,7 +29,6 @@ $allemployeeResult = mysqli_query($link, $allemployeeSql);
 $allSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set;";
 $allSampleSetsResult = mysqli_query($link, $allSampleSetsSql);
-echo "<script> console.log(".json_encode($allSampleSetsResult).")</script>";
 ?>
 
 <head>

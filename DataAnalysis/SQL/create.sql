@@ -97,7 +97,7 @@ CREATE TABLE analysis(
 CREATE TABLE anlys_file(
 	anlys_file_ID INT AUTO_INCREMENT,
     analysis_ID INT NOT NULL,
-    -- anlys_file MEDIUMBLOB,
+	anlys_file MEDIUMBLOB,
     PRIMARY KEY(anlys_file_ID),
     FOREIGN KEY(analysis_ID) REFERENCES analysis(analysis_ID)
 );
