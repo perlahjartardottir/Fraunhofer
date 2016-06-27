@@ -1,13 +1,16 @@
 <?php
 include '../../connection.php';
 session_start();
+
 $sampleSetID = mysqli_real_escape_string($link, $_POST['sampleSetID']);
+$_SESSION["sampleID"] = $sampleSetID;
+
 $sql = "SELECT sample_ID, sample_name, sample_material, sample_comment
 FROM sample
 WHERE sample_set_ID = '$sampleSetID';";
 $result = mysqli_query($link, $sql);
 
-if(mysqli_num_rows ($result) > 0){
+if($sampleSetID !== ""){
   echo"
   <div class='row well well-lg'>
    <table class='table table-responsive' style='width:92%;'>
@@ -30,6 +33,6 @@ if(mysqli_num_rows ($result) > 0){
     echo"
     </tbody>
    </table>
-    <button type='button' class='btn btn-primary col-md-2' onclick='' style='float:right'>Finish</button>
+    <!--<button type='button' class='btn btn-primary col-md-2' onclick='' style='float:right'>Finish</button>-->
 </div>";
 }

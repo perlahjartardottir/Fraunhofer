@@ -21,6 +21,9 @@ if($user_sec_lvl < 2){
   die("You don't have the privileges to view this site.");
 }
 
+// Find the current chosen sampleID
+$sessionSampleID = $_SESSION["sampleID"];
+
 $allemployeeSql = "SELECT employee_ID, employee_name
 FROM employee
 ORDER BY employee_name ASC;";

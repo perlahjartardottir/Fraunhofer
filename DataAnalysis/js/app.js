@@ -18,7 +18,6 @@ function addSample(){
 	var sampleName = $('#sample_name').val();
 	var sampleMaterial = $('#sample_material').val();
 	var sampleComment = $('#sample_comment').val();
-	console.log(sampleSetID);
 	$.ajax({
 		url: "../InsertPHP/addSample.php",
 		type: "POST",
@@ -30,7 +29,8 @@ function addSample(){
 		},
 		success: function(data, status, xhr){
 			 console.log(data);
-			 window.location.reload(true);
+			 //window.location.reload(true);
+			 showSamplesInSet(sampleSetID);
 			 
 		}
 	});
