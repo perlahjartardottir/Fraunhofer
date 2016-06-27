@@ -27,13 +27,13 @@
     die("You don't have the privileges to view this site.");
   }
   $processEquipmentSql = "SELECT prcs_eq_ID, prcs_eq_name
-                          FROM process_equipment
-                          WHERE prcs_eq_active = TRUE;";
+  FROM process_equipment
+  WHERE prcs_eq_active = TRUE;";
   $processEquipmentResult = mysqli_query($link, $processEquipmentSql);
 
-  $analysisEquipmentSql = "SELECT anlys_eq_ID, anlys_eq_name
-                          FROM anlys_equipment
-                          WHERE anlys_eq_active = TRUE;";
+  $analysisEquipmentSql = "SELECT anlys_eq_ID, anlys_eq_name, anlys_eq_comment
+  FROM anlys_equipment
+  WHERE anlys_eq_active = TRUE;";
   $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
 
   ?>
@@ -41,7 +41,7 @@
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body>
-  <?php include '../header.php'; ?>
+<?php include '../header.php';?>
   <div class="container">
     <div class='row well'>
       <div class='col-md-12'>
@@ -81,15 +81,15 @@
           while($processEqRow = mysqli_fetch_array($processEquipmentResult)){
             echo"
             <tr>
-               <td><a href='#' data-toggle='modal' data-target='#".$processEqRow[0]."'>".$processEqRow[1]."</a><td>
-            </tr>";
-          }
-          ?>
-        </tbody>
-      </table>
-    </div>
-    <div class='col-md-4'>
-      <h4>Analysis Equipment <button type='button' class='btn btn-success' onclick="location.href=''"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></h4>
+             <td><a href='#' data-toggle='modal' data-target='#".$processEqRow[0]."'>".$processEqRow[1]."</a><td>
+             </tr>";
+           }
+           ?>
+         </tbody>
+       </table>
+     </div>
+     <div class='col-md-4'>
+      <h4>Analysis Equipment <button type='button' id='newAnalysisEq' class='btn btn-success' onclick="location.href=''"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
@@ -102,29 +102,46 @@
             echo"
             <tr>
               <td><a href='#' onclick='' data-toggle='modal' data-target='#".$analysisEqRow[0]."'>".$analysisEqRow[1]."</a></td>
-              </tr>";
+            </tr>";
           }
           ?>
         </tbody>
       </table>
     </div>
     <?php
+
+
     $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
     while($analysisEqRow = mysqli_fetch_array($analysisEquipmentResult)){
-    echo"
-    <div class='modal fade' id='".$analysisEqRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$analysisEqRow[0]."' aria-hidden='true'>
-          <div class='modal-dialog'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <center><h3>Hello - ".$analysisEqRow[1]."</h3></center>
-                <div class='modal-body'>
+      echo"
+      <div class='modal fade' id='".$analysisEqRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$analysisEqRow[0]."' aria-hidden='true'>
+        <div class='modal-dialog'>
+          <div class='modal-content col-md-12'>
+            <div class='modal-header'>
+              <center><h3>".$analysisEqRow[1]."</h3></center>
+            </div>
+            <div class='modal-body'>
+              <form>
+                <div class='col-md-6'>
+                  <label>Name</label>
+                  <input type='text' id='analaysisEqName' value='".$analysisEqRow[1]."' class='form-control'>
                 </div>
+                <div class='col-md-6'>
+                  <label>Comment</label>
+                  <textarea value='".$analysisEqRow[2]."' class='form-control'></textarea> 
                 </div>
-                </div>
-                </div>";
-              }
-
-                ?>
+              </form>
+            </div>
+            <div class='modal-footer'>
+              <button type='button' class='btn btn-success' onclick=''>Edit</button>
+              <button type='button' class='btn btn-danger' onclick=''>Delete</button>
+              <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+            </div>
+          </div>
+        </div>
+      </div>";
+    }
+    ?>
   </div>
 </body>
 </html>
