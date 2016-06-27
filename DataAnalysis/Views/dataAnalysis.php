@@ -89,7 +89,7 @@
       </table>
     </div>
     <div class='col-md-4'>
-      <h4>Analysis Equipment</h4>
+      <h4>Analysis Equipment <button type='button' class='btn btn-success' onclick="location.href=''"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
@@ -100,14 +100,31 @@
           <?php
           while($analysisEqRow = mysqli_fetch_array($analysisEquipmentResult)){
             echo"
-              <tr>
-               <td><a href='#' data-toggle='modal' data-target='#".$analysisEqRow[0]."'>".$analysisEqRow[1]."</a><td>
+            <tr>
+              <td><a href='#' onclick='' data-toggle='modal' data-target='#".$analysisEqRow[0]."'>".$analysisEqRow[1]."</a></td>
               </tr>";
           }
           ?>
         </tbody>
       </table>
     </div>
+    <?php
+    $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
+    while($analysisEqRow = mysqli_fetch_array($analysisEquipmentResult)){
+    echo"
+    <div class='modal fade' id='".$analysisEqRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$analysisEqRow[0]."' aria-hidden='true'>
+          <div class='modal-dialog'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <center><h3>Hello - ".$analysisEqRow[1]."</h3></center>
+                <div class='modal-body'>
+                </div>
+                </div>
+                </div>
+                </div>";
+              }
+
+                ?>
   </div>
 </body>
 </html>
