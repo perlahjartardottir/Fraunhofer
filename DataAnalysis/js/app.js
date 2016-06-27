@@ -12,6 +12,9 @@ function logout(){
 
 function addSample(){
 	var sampleSetID = $('#sample_set_ID').val();
+	if(sampleSetID === ""){
+		sampleSetID = -1;
+	}
 	var sampleName = $('#sample_name').val();
 	var sampleMaterial = $('#sample_material').val();
 	var sampleComment = $('#sample_comment').val();

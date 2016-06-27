@@ -40,7 +40,7 @@ $allSampleSetsResult = mysqli_query($link, $allSampleSetsSql);
   <div class='container'>
     <div id='invalidRequest'></div>
     <div class='row well well-lg'>
-    	<h5>Here we will display some information about this form.</h5>
+      <h5>Here we will display some information about this form.</h5>
     </div>
     <div class='row well well-lg'>
       <h3>Add a new sample</h3>
