@@ -1,5 +1,6 @@
 <?php
 include '../../connection.php';
+session_start();
 
 $sampleSetID = mysqli_real_escape_string($link, $_POST['sampleSetID']);
 $sampleName = mysqli_real_escape_string($link, $_POST['sampleName']);
@@ -28,6 +29,9 @@ if($sampleSetID === '-1'){
  	$sampleSetNameResult = mysqli_query($link, $sampleSetNameSql);
 
 }
+
+$_SESSION["sampleSetID"] = $sampleSetID;
+
 
 
 $sql = "INSERT INTO sample(sample_set_ID, sample_name, sample_material, sample_comment)

@@ -22,7 +22,7 @@ if($user_sec_lvl < 2){
 }
 
 // Find the current chosen sampleID
-$sessionSampleID = $_SESSION["sampleID"];
+$sampleSetID = $_SESSION["sampleSetID"];
 
 $allemployeeSql = "SELECT employee_ID, employee_name
 FROM employee
@@ -46,22 +46,22 @@ $allSampleSetsResult = mysqli_query($link, $allSampleSetsSql);
       <h5>Here we will display some information about this form.</h5>
     </div>
     <div class='row well well-lg'>
-      <h3>Add a new sample</h3>
+      <h3>Add a new sample <?php echo"$sampleSetID"; ?></h3>
       <form>
-      <!--<div class='col-md-4 form-group'>
+      <!-- <div class='col-md-4 form-group'>
         <label>Employee: </label>
         <input type='text' list='employees' name='employeeList' id='employeeList' value='' class='col-md-12 form-control'>
         <datalist id="employees">
           <?
-          // while($row = mysqli_fetch_array($allemployeeResult)){
-            // echo"<option value='".$row[1]."'></option>";
-          // }
+           // while($row = mysqli_fetch_array($allemployeeResult)){
+           //   echo"<option value='".$row[1]."'></option>";
+           // }
           ?>
         </datalist>
       </div>-->
       <div class='form-group col-md-6'>
         <label>Sample set: </label>
-        <select class='form-control' onchange='showSamplesInSet(this.value)' id='sample_set_ID' style='width:auto;'>
+        <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
           <option value=''>New</option>
           <?
           while($sampleSetRow = mysqli_fetch_array($allSampleSetsResult)){
@@ -92,7 +92,11 @@ $allSampleSetsResult = mysqli_query($link, $allSampleSetsSql);
 <script>
         // Show the samples in the sample set on refresh.
         $(document).ready(function(){
-         showSamplesInSet();
+         var sampleSetID = <?php echo $sampleSetID; ?>;
+         showSamplesInSet(sampleSetID);
        });
+
+      // Make the dropdown list show the currently chosen sample set.
+      $('#sample_set_ID').val("<?php echo $sampleSetID; ?>");
      </script>
    </body>

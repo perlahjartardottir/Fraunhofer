@@ -3,12 +3,14 @@ include '../../connection.php';
 session_start();
 
 $sampleSetID = mysqli_real_escape_string($link, $_POST['sampleSetID']);
-$_SESSION["sampleID"] = $sampleSetID;
+$_SESSION["sampleSetID"] = $sampleSetID;
+
 
 $sql = "SELECT sample_ID, sample_name, sample_material, sample_comment
 FROM sample
 WHERE sample_set_ID = '$sampleSetID';";
 $result = mysqli_query($link, $sql);
+
 
 if($sampleSetID !== ""){
   echo"

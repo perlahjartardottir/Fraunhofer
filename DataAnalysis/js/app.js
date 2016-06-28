@@ -29,8 +29,8 @@ function addSample(){
 		},
 		success: function(data, status, xhr){
 			 console.log(data);
-			 //window.location.reload(true);
-			 showSamplesInSet(sampleSetID);
+			 window.location.reload(true);
+			 //showSamplesInSet(sampleSetID);
 			 
 		}
 	});
@@ -51,4 +51,17 @@ function showSamplesInSet(sampleSetID){
 	})
 }
 
-
+// Display sample and reload page after adding it to a set.
+function showSamplesInSetAndRefresh(sampleSetID){
+	$.ajax({
+		url: "../SelectPHP/showSamplesInSet.php",
+		type: "POST",
+		data: {
+			sampleSetID : sampleSetID
+		},
+		success: function(data,status, xhr){
+			$("#samples_in_set").html(data);
+			window.location.reload(true);
+		}
+	})
+}
