@@ -7,6 +7,8 @@ $sampleName = mysqli_real_escape_string($link, $_POST['sampleName']);
 $sampleMaterial = mysqli_real_escape_string($link, $_POST['sampleMaterial']);
 $sampleComment = mysqli_real_escape_string($link, $_POST['sampleComment']);
 
+// LATER THIS WILL BE CHANGED TO A UNIQUE DESCRIPTIVE NAME FOR EACH SET AND SAMPLE SET
+
 // If it is a new sample set.
 if($sampleSetID === '-1'){ 
 
@@ -32,8 +34,6 @@ if($sampleSetID === '-1'){
 
 $_SESSION["sampleSetID"] = $sampleSetID;
 
-
-
 $sql = "INSERT INTO sample(sample_set_ID, sample_name, sample_material, sample_comment)
 		VALUES ('$sampleSetID', '$sampleName', '$sampleMaterial', '$sampleComment');";
 $result = mysqli_query($link, $sql);
@@ -44,4 +44,5 @@ if(!$result){
 }
 
 mysqli_close($link);
+
 ?>

@@ -18,6 +18,7 @@ if($sampleSetID !== ""){
    <table class='table table-responsive' style='width:92%;'>
     <thead>
       <tr>
+        <th></th>
         <th>Sample Name</th>
         <th>Material</th>
         <th>Comment</th>
@@ -27,6 +28,7 @@ if($sampleSetID !== ""){
       while($row = mysqli_fetch_array($result)){
         echo"
             <tr>
+               <td><button onclick='deleteSample(".$row[0].")' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button></td>
                <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</a><td>
                <td>".$row[2]."</td>
                <td>".$row[3]."</td>

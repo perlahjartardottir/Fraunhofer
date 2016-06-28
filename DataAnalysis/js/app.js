@@ -30,7 +30,6 @@ function addSample(){
 		success: function(data, status, xhr){
 			 console.log(data);
 			 window.location.reload(true);
-			 //showSamplesInSet(sampleSetID);
 			 
 		}
 	});
@@ -61,6 +60,19 @@ function showSamplesInSetAndRefresh(sampleSetID){
 		},
 		success: function(data,status, xhr){
 			$("#samples_in_set").html(data);
+			window.location.reload(true);
+		}
+	})
+}
+
+function deleteSample(sampleID){
+	$.ajax({
+		url: "../DeletePHP/deleteSample.php",
+		type: "POST",
+		data: {
+			sampleID : sampleID
+		},
+		success: function(data, status, xhr){
 			window.location.reload(true);
 		}
 	})

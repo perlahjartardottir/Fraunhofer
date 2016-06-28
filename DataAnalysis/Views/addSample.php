@@ -29,9 +29,10 @@ FROM employee
 ORDER BY employee_name ASC;";
 $allemployeeResult = mysqli_query($link, $allemployeeSql);
 
-$allSampleSetsSql = "SELECT sample_set_ID, sample_set_name
-FROM sample_set;";
-$allSampleSetsResult = mysqli_query($link, $allSampleSetsSql);
+$recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+FROM sample_set
+ORDER BY sample_set_ID DESC LIMIT 10;";
+$recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 ?>
 
 <head>
@@ -64,19 +65,19 @@ $allSampleSetsResult = mysqli_query($link, $allSampleSetsSql);
         <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
           <option value=''>New</option>
           <?
-          while($sampleSetRow = mysqli_fetch_array($allSampleSetsResult)){
+          while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
             echo"<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
           }
           ?>
         </select>
       </div>
       <div class='col-md-6 form-group'>
-        <label>Sample Unique Name: </label>
-        <input type='text' id='sample_name' class='form-control'>
-      </div>
-      <div class='col-md-6 form-group'>
         <label>Material: </label>
         <input type='text' id='sample_material' class='form-control'>
+      </div>
+      <div class='col-md-6 form-group'>
+        <label>Sample Unique Name: </label>
+        <input type='text' id='sample_name' class='form-control'>
       </div>
       <div class='col-md-6 form-group'>
         <label>Comment: </label>
