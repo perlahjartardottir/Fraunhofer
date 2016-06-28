@@ -44,10 +44,7 @@ $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
   <div class='container'>
     <div id='invalidRequest'></div>
     <div class='row well well-lg'>
-      <h5>Here we will display some information about this form.</h5>
-    </div>
-    <div class='row well well-lg'>
-      <h3>Add a new sample <?php echo"$sampleSetID"; ?></h3>
+      <h3>Add a new sample</h3>
       <form>
       <!-- <div class='col-md-4 form-group'>
         <label>Employee: </label>
@@ -63,7 +60,7 @@ $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
       <div class='form-group col-md-6'>
         <label>Sample set: </label>
         <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
-          <option value=''>New</option>
+          <option value='-1'>New</option>
           <?
           while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
             echo"<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
@@ -98,6 +95,6 @@ $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
        });
 
       // Make the dropdown list show the currently chosen sample set.
-      $('#sample_set_ID').val("<?php echo $sampleSetID; ?>");
+      $('#sample_set_ID').val(<?php echo $sampleSetID; ?>)
      </script>
    </body>
