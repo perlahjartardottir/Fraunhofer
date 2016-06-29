@@ -12,7 +12,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 $result = mysqli_query($link, $sql);
 
 
-if($sampleSetID !== ""){
+if($sampleSetID !== "-1"){
   echo"
   <div class='row well well-lg'>
    <table class='table table-responsive' style='width:92%;'>

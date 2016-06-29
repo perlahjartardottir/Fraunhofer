@@ -57,7 +57,7 @@ $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
           ?>
         </datalist>
       </div>-->
-      <div class='form-group col-md-6'>
+      <div class='col-md-6 form-group'>
         <label>Sample set: </label>
         <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
           <option value='-1'>New</option>

@@ -26,49 +26,69 @@
     echo "<a href='../../Login/login.php'>Login Page</a></br>";
     die("You don't have the privileges to view this site.");
   }
-  $processEquipmentSql = "SELECT prcs_eq_ID, prcs_eq_name
-  FROM process_equipment
-  WHERE prcs_eq_active = TRUE;";
-  $processEquipmentResult = mysqli_query($link, $processEquipmentSql);
+  // $processEquipmentSql = "SELECT prcs_eq_ID, prcs_eq_name
+  // FROM process_equipment
+  // WHERE prcs_eq_active = TRUE;";
+  // $processEquipmentResult = mysqli_query($link, $processEquipmentSql);
 
-  $analysisEquipmentSql = "SELECT anlys_eq_ID, anlys_eq_name, anlys_eq_comment
-  FROM anlys_equipment
-  WHERE anlys_eq_active = TRUE;";
-  $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
+  // $analysisEquipmentSql = "SELECT anlys_eq_ID, anlys_eq_name, anlys_eq_comment
+  // FROM anlys_equipment
+  // WHERE anlys_eq_active = TRUE;";
+  // $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
+
+  $recentSamplesSql = "SELECT sample_ID, sample_name
+  FROM sample
+  ORDER BY sample_ID DESC LIMIT 10;";
+  $recentSamplesResult = mysqli_query($link, $recentSamplesSql);
 
   ?>
   <title>Fraunhofer CCD</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body>
-<?php include '../header.php';?>
+  <?php include '../header.php';?>
   <div class="container">
-    <div class='row well'>
-      <div class='col-md-12'>
-        <div class='col-md-6'>
-          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='addSample.php'">Add new sample</button>
+    <div class='row well well-lg'>
+      <div class='col-md-12 col-md-offset-1'>
+        <div class='col-md-2'>
+          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='addSample.php'">Add sample</button>
         </div>
-        <div class='col-md-6'>
-          <button type='button' class='btn btn-primary col-md-12'>Add to existing sample</button>
+        <div class='col-md-2'>
+          <button type='button' class='btn btn-primary col-md-12'>Process</button>
+        </div>
+        <div class='col-md-2'>
+          <button type='button' class='btn btn-primary col-md-12'>Analyze</button>
+        </div>
+        <div class='col-md-2'>
+          <button type='button' class='btn btn-primary col-md-12'>Search</button>
+        </div>
+        <div class='col-md-2'>
+          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='overview.php'">Overview</button>
         </div>
       </div>
     </div>
-    <div class='col-md-4'>
-      <h4>Recent Samples</h4>
+    <div class='col-md-12'>
+     <!-- <h4 >Recent Samples</h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
-            <th></th>
+            <th>Name</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Sample 1</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class='col-md-4'>
+            <? while($sampleRow = mysqli_fetch_array($recentSamplesResult)){
+              echo"
+              <tr>
+               <td><a href='#' data-toggle='modal' data-target='#".$sampleRow[0]."'>".$sampleRow[1]."</a><td>
+               </tr>";
+             }
+             ?>
+           </tr>
+         </tbody>
+       </table>
+       </div>-->
+    <!--<div class='col-md-4'>
       <h4>Process Equipment</h4>
       <table class='table table-responsive'>
         <thead>
@@ -107,7 +127,7 @@
           ?>
         </tbody>
       </table>
-    </div>
+    </div>-->
     <?php
 
 

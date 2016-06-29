@@ -1,3 +1,20 @@
+CREATE TABLE anlys_equipment(
+	anlys_eq_ID INT AUTO_INCREMENT,
+    anlys_eq_name VARCHAR(50),
+    anlys_eq_comment VARCHAR(2000),
+    anlys_eq_active BOOLEAN,
+    PRIMARY KEY(anlys_eq_ID)
+);
+
+CREATE TABLE anlys_property(
+	anlys_prop_ID INT AUTO_INCREMENT,
+    anlys_eq_ID INT NOT NULL,
+    anlys_prop_name VARCHAR(50),
+    anlys_prop_comment VARCHAR(2000),
+    PRIMARY KEY(anlys_prop_ID),
+    FOREIGN KEY(anlys_eq_ID) REFERENCES anlys_equipment(anlys_eq_ID)
+);
+
 INSERT INTO anlys_equipment(anlys_eq_name, anlys_eq_active) VALUES
 			("Dektak",TRUE), ("Rockwell Hardness Tester", TRUE), ("LaWave", TRUE),
             ("Contact Angle Gonionmeter", TRUE), ("Tribometer", TRUE), ("UV VIS", TRUE),
