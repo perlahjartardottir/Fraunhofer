@@ -62,8 +62,17 @@
         <div class='col-md-2'>
           <button type='button' class='btn btn-primary col-md-12'>Search</button>
         </div>
-        <div class='col-md-2'>
-          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='overview.php'">Overview</button>
+        <div class='col-md-2 btn-group'>
+          <button type='button' class='btn btn-primary' onclick="location.href='overview.php'">Overview</button>
+           <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
+              <span class='caret'></span>
+              <span class='sr-only'>Toggle Dropdown</span>
+            </button>
+            <ul class='dropdown-menu' role='menu'>
+              <li><a href='viewAnalysisEquipment.php'>Analysis equipment</a></li>
+              <li><a href='../../Tooling/Views/viewAllMachines.php'>Process equipment</a></li>
+            </ul>
+            </div>
         </div>
       </div>
     </div>

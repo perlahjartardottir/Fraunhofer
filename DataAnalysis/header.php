@@ -18,11 +18,13 @@ while($row = mysqli_fetch_array($secResult)){
   $user_sec_lvl = $row[0];
 }
 $user_sec_lvl = str_split($user_sec_lvl);
-$user_sec_lvl = $user_sec_lvl[1];
+$user_sec_lvl = $user_sec_lvl[2];
 
 ?>
 
-
+<meta charset="UTF-8">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="en">
 <link href='../css/header.css' rel='stylesheet'>
 <link href='/css/bootstrap.min.css' rel='stylesheet'>
 <link href='/css/jquery-ui.min.css' rel='stylesheet'>

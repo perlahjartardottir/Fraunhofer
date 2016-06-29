@@ -77,7 +77,7 @@ function deleteSample(sampleID){
 				console.log(data);
 				window.location.reload(true);
 			}
-	})
+		})
 	}
 }
 
@@ -86,9 +86,9 @@ function editSample(sampleID, element){
 	// to find the correct modal.
 	// parent() is modal-footer
 	// parent().prev() is modal-body
-  var name = $(element).parent().prev().find("#sample_name").val();
-  var material = $(element).parent().prev().find("#sample_material").val();
-  var comment = $(element).parent().prev().find("#sample_comment").val();
+	var name = $(element).parent().prev().find("#sample_name").val();
+	var material = $(element).parent().prev().find("#sample_material").val();
+	var comment = $(element).parent().prev().find("#sample_comment").val();
 	$.ajax({
 		url: "../UpdatePHP/editSample.php",
 		type: "POST",
@@ -103,4 +103,25 @@ function editSample(sampleID, element){
 			window.location.reload();
 		}
 	})
+}
+
+
+function editAnalysisEquipment(eqID, element){
+	var name = $(element).parent().prev().find("#eq_name").val();
+	var comment = $(element).parent().prev().find("#eq_comment").val();
+
+
+  $.ajax({
+  	url: "../UpdatePHP/editAnalysisEquipment.php",
+  	type: "POST",
+  	data: {
+  		eqID : eqID,
+  		name : name,
+  		comment : comment
+  	},
+  	success: function(data, status, xhr){
+  		console.log(data);
+  		window.location.reload();
+  	}
+  })
 }

@@ -50,30 +50,29 @@ if($sampleSetID !== "-1"){
       echo"
       <div class='modal fade' id='".$sampleRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$sampleRow[0]."' aria-hidden='true'>
         <div class='modal-dialog'>
-          <div class='modal-content col-md-12'>
+          <div class='modal-content '>
             <div class='modal-header'>
               <center><h3>".$sampleRow[1]."</h3></center>
             </div>
             <div class='modal-body'>
-              <form>
-                <div class='col-md-6'>
+              <form role='form'>
+                <div class='form-group'>
                   <label>Name</label>
                   <input type='text' id='sample_name' value='".$sampleRow[1]."' class='form-control'>
                 </div>
-                <div class='col-md-6'>
+                <div class='form-group'>
                   <label>Material</label>
                   <input type='text' id='sample_material' value='".$sampleRow[2]."' class='form-control'>
                 </div>
-                <div class='col-md-6'>
+                <div class='form-group'>
                   <label>Comment</label>
-                  <textarea id='sample_comment' value='".$sampleRow[3]."' class='form-control'></textarea> 
-                </div>
+                  <textarea id='sample_comment' class='form-control'>".$sampleRow[3]."</textarea> 
               </form>
             </div>
             <div class='modal-footer'>
-              <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this)'>Edit</button>
-              <button type='button' class='btn btn-danger' onclick=''>Delete</button>
-              <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+                <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this)'>Edit</button>
+                <button type='button' class='btn btn-danger' onclick=''>Delete</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
             </div>
           </div>
         </div>
