@@ -68,11 +68,11 @@ while($row = mysqli_fetch_array($analysisEqResult2)){
   <div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
     <div class='modal-dialog'>
       <div class='modal-content col-md-12'>
-        <form id='eqForm' role='form'>
-          <div class='modal-header'>
-            <center><h3>".$row[1]."</h3></center>
-          </div>
-          <div class='modal-body'>
+        <div class='modal-header'>
+          <center><h3>".$row[1]."</h3></center>
+        </div>
+        <div class='modal-body'>
+          <form id='eqForm' role='form' action='welcome.php' method='post'>
             <div class='form-group'>
               <label>Name:</label>
               <input type='text' id='eq_name' name='eq_name' value='".$row[1]."' class='form-control'>
@@ -81,6 +81,12 @@ while($row = mysqli_fetch_array($analysisEqResult2)){
               <label>Comment:</label>
               <textarea id='eq_comment' name='eq_comment' class='form-control'>".$row[2]."</textarea> 
             </div>
+            <button type='button' class='btn btn-success' onclick='editAnalysisEquipment(".$row[0].",this.form)'>Edit</button>
+            <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].")'></button>
+
+
+            <input type='submit'>
+
             <center><h3>Properties</h3></center>";
             $propCounter = 1;
             $analysisPropertySql = "SELECT anlys_prop_ID, anlys_prop_name
@@ -92,41 +98,21 @@ while($row = mysqli_fetch_array($analysisEqResult2)){
              <div class='form-group'>
                <label>Property ".$propCounter.":</label>
                <br>
-               <input type='hidden' name='prop_ID' value='".$propRow[0]."'>
-               <input type='text' name='prop_name' value='".$propRow[1]." 'class='col-md-8'>
+               <input type='text' id='prop_name' name='prop_name' value='".$propRow[1]."' class='col-md-8'>
+               <button type='button' class='btn btn-success' onclick='editAnalysisEqProperty(".$propRow[0].",this.form)'>Edit</button>
                <button type='button' class='btn btn-danger glyphicon glyphicon-trash'' onclick='deleteAnalysisEqProperty(".$propRow[0].")'></button>
              </div>";
              $propCounter++;
            }    
            echo "
-         </div>
-         <div id='prop' class='form-group'>
-           <button type='button' id='button' class='btn btn-primary' onclick='addProp(this)'>Add a new property</button>
-         </div>
-         <div class='modal-footer'>
-           <button type='button' class='btn btn-success' onclick='editAnalysisEquipment(".$row[0].",this.form)'>Edit</button>
-           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].")'></button>
-           <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button> 
-         </div>
-       </form>
-     </div>
-   </div>
- </div>";
+         </form>
+       </div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+      </div>
+    </div>
+  </div>
+</div>";
 }
 ?>
-
-<script>
-  function addProp(elem){
-    
-    newProp = "<div class='form-group'>"+
-               "<label>New property:</label>"+
-               "<br>"+
-               "<input type='hidden' name='prop_ID' value='-1'>"+
-               "<input type='text' name='prop_name' class='col-md-8'>"+
-               "<button type='button' class='btn btn-danger glyphicon glyphicon-trash'' onclick='deleteAnalysisEqProperty(-1)'></button>"+
-                "</div>"
-
-    $(elem).parent().prev().append(newProp);
-  }
-</script>
 </body>

@@ -17,7 +17,7 @@ CREATE TABLE anlys_property(
 
 INSERT INTO anlys_equipment(anlys_eq_name, anlys_eq_active) VALUES
 			("Dektak",TRUE), ("Rockwell Hardness Tester", TRUE), ("LaWave", TRUE),
-            ("Contact Angle Gonionmeter", TRUE), ("Tribometer", TRUE), ("UV VIS", TRUE),
+            ("Contact Angle Goniometer", TRUE), ("Tribometer", TRUE), ("UV VIS", TRUE),
             ("Calotte Grinder", TRUE), ("AFM", TRUE), ("Stereo Microscope", TRUE),
             ("Nikon Microscope", TRUE), ("Laurane", TRUE), ("XPS", TRUE);
 

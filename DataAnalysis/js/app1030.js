@@ -105,37 +105,29 @@ function editSample(sampleID, element){
 	})
 }
 
-function editAnalysisEquipment(eqID, form){
+function editAnalysisEquipment(eqID, element){
 	//var name = $(element).parent().find("#eq_name").val();
 	//var comment = $(element).parent().find("#eq_comment").val();
 
-	var name = $(form).find("#eq_name").val();
-	var comment = $(form).find("#eq_comment").val();
-	
-	var propertyIDs = [];
-	for (i = 0; i < form.elements["prop_ID"].length; i++){
-		propertyIDs.push(form.elements["prop_ID"][i].value);
-	}
+	var name = $(element).find("#eq_name").val();
+	var comment = $(element).find("#eq_comment").val();
+	console.log(name);
+	console.log(comment);
 
-	var propertyNames = [];
-	for (i = 0; i < form.elements["prop_name"].length; i++){
-		propertyNames.push(form.elements["prop_name"][i].value);
-	}
 
-	$.ajax({
-		url: "../UpdatePHP/editAnalysisEquipment.php",
-		type: "POST",
-		data: {
-			eqID : eqID,
-			name : name,
-			comment : comment
-		},
-		success: function(data, status, xhr){
-			console.log(data);
-			//window.location.reload(true);
-			editAnalysisEqProperty(propertyIDs, propertyNames, eqID)
-		}
-	})
+	// $.ajax({
+	// 	url: "../UpdatePHP/editAnalysisEquipment.php",
+	// 	type: "POST",
+	// 	data: {
+	// 		eqID : eqID,
+	// 		name : name,
+	// 		comment : comment
+	// 	},
+	// 	success: function(data, status, xhr){
+	// 		console.log(data);
+	// 		window.location.reload(true);
+	// 	}
+	// })
 }
 
 function deleteAnalysisEquipment(eqID){
@@ -156,20 +148,32 @@ function deleteAnalysisEquipment(eqID){
   	}
  }
 
- function editAnalysisEqProperty(propertyIDs, propertyNames, eqID){
-	 $.ajax({
-	 	url: "../UpdatePHP/editAnalysisEqProperty.php",
-	 	type: "POST",
-	 	data: {
-	 		propertyIDs : propertyIDs,
-	 		propertyNames : propertyNames,
-	 		eqID : eqID
-	 	},
-	 	success: function(data, status, xhr){
-	 		console.log(data);
-	 		window.location.reload(true);
-	 	}
-	 })
+ function editAnalysisEqProperty(propID, element){
+	//var name = $(element).parent().find("#prop_name").val();
+	//console.log(name);
+
+	//names = $(element).parent().getElementsByName("prop_name");
+	//var names= $(element).parent().find("prop_name").val();
+
+	console.log(element);
+	console.log(element.length);
+
+	 for (i = 0; i < element.length; i++) {
+       console.log(element.elements[i].value + "\n");
+	}
+
+	// $.ajax({
+	// 	url: "../UpdatePHP/editAnalysisEqProperty.php",
+	// 	type: "POST",
+	// 	data: {
+	// 		propID : propID,
+	// 		name : name
+	// 	},
+	// 	success: function(data, status, xhr){
+	// 		console.log(data);
+	// 		window.location.reload(true);
+	// 	}
+	// })
 }
 
 function deleteAnalysisEqProperty(propID){
