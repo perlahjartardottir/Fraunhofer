@@ -105,7 +105,7 @@ while($row = mysqli_fetch_array($analysisEqResult2)){
          </div>
          <div class='modal-footer'>
            <button type='button' class='btn btn-success' onclick='editAnalysisEquipment(".$row[0].",this.form)'>Edit</button>
-           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].")'></button>
+           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].",this.form)'></button>
            <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button> 
          </div>
        </form>
@@ -116,17 +116,23 @@ while($row = mysqli_fetch_array($analysisEqResult2)){
 ?>
 
 <script>
-  function addProp(elem){
-    
-    newProp = "<div class='form-group'>"+
+  var divCounter = 1;
+  function addProp(elem){  
+    newProp = "<div id='new_prop' class='form-group'>"+
                "<label>New property:</label>"+
                "<br>"+
                "<input type='hidden' name='prop_ID' value='-1'>"+
                "<input type='text' name='prop_name' class='col-md-8'>"+
-               "<button type='button' class='btn btn-danger glyphicon glyphicon-trash'' onclick='deleteAnalysisEqProperty(-1)'></button>"+
+               "<button type='button' class='btn btn-danger glyphicon glyphicon-trash'' onclick='hideDiv()'></button>"+
                 "</div>"
 
     $(elem).parent().prev().append(newProp);
+    divCounter++;
   }
+
+  function hideDiv(){
+      document.getElementById('new_prop').hidden = true;
+  }
+
 </script>
 </body>
