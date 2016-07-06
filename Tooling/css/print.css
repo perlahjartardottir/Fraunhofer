@@ -105,9 +105,8 @@ hr {
       text-align: right;
   }
   .thankYouNote{
-    position: fixed;
     bottom: 0px;
-    margin-left: 85px;
+    margin-top: 85px;
     font-size: medium;
   }
 }

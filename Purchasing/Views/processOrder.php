@@ -97,7 +97,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
           <?php
           $sql = "SELECT request_ID, employee_ID, request_date, request_description, request_supplier
                   FROM order_request
-                  WHERE active = 1
+                  WHERE active = 1 AND order_ID IS NULL
                   ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
                            CASE WHEN timeframe = 'This week' then 1 else 2 end;";
           $result = mysqli_query($link, $sql);

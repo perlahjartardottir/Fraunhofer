@@ -328,6 +328,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
           showPOInfo(order_ID);
           showOrderItems(order_ID);
           updateCostCode();
+          console.log(order_ID);
       });
       //if the user enters the view with a PO not on the dropdownlist
       // check if the value is in the list already

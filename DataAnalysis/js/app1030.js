@@ -105,46 +105,29 @@ function editSample(sampleID, element){
 	})
 }
 
-function editAnalysisEquipment(eqID, form){
-	var errorMessage = "";
-	var name = $(form).find("#eq_name").val();
-	var comment = $(form).find("#eq_comment").val();
-	var propertyIDs = [];
-	var propertyNames = [];
+function editAnalysisEquipment(eqID, element){
+	//var name = $(element).parent().find("#eq_name").val();
+	//var comment = $(element).parent().find("#eq_comment").val();
 
-	if (!name){
-		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
-	}
+	var name = $(element).find("#eq_name").val();
+	var comment = $(element).find("#eq_comment").val();
+	console.log(name);
+	console.log(comment);
 
-	for (i = 0; i < form.elements["prop_ID"].length; i++){
-		propertyIDs.push(form.elements["prop_ID"][i].value);
-		propertyName = form.elements["prop_name"][i].value;
-		if(!propertyName){
-			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
-		}
-		else{
-			propertyNames.push(name);
-		}
-	}
 
-	if(errorMessage){
-		$(form).find("#error_message").html(errorMessage);
-	}  else{
-		$.ajax({
-			url: "../UpdatePHP/editAnalysisEquipment.php",
-			type: "POST",
-			data: {
-				eqID : eqID,
-				name : name,
-				comment : comment
-			},
-			success: function(data, status, xhr){
-				console.log(data);
-			//window.location.reload(true);
-			editAnalysisEqProperty(propertyIDs, propertyNames, eqID)
-		}
-	})
-	}
+	// $.ajax({
+	// 	url: "../UpdatePHP/editAnalysisEquipment.php",
+	// 	type: "POST",
+	// 	data: {
+	// 		eqID : eqID,
+	// 		name : name,
+	// 		comment : comment
+	// 	},
+	// 	success: function(data, status, xhr){
+	// 		console.log(data);
+	// 		window.location.reload(true);
+	// 	}
+	// })
 }
 
 function deleteAnalysisEquipment(eqID){
@@ -163,25 +146,37 @@ function deleteAnalysisEquipment(eqID){
   			}
   		})
   	}
-  }
+ }
 
-  function editAnalysisEqProperty(propertyIDs, propertyNames, eqID){
-  	$.ajax({
-  		url: "../UpdatePHP/editAnalysisEqProperty.php",
-  		type: "POST",
-  		data: {
-  			propertyIDs : propertyIDs,
-  			propertyNames : propertyNames,
-  			eqID : eqID
-  		},
-  		success: function(data, status, xhr){
-  			console.log(data);
-  			window.location.reload(true);
-  		}
-  	})
-  }
+ function editAnalysisEqProperty(propID, element){
+	//var name = $(element).parent().find("#prop_name").val();
+	//console.log(name);
 
-  function deleteAnalysisEqProperty(propID){
+	//names = $(element).parent().getElementsByName("prop_name");
+	//var names= $(element).parent().find("prop_name").val();
+
+	console.log(element);
+	console.log(element.length);
+
+	 for (i = 0; i < element.length; i++) {
+       console.log(element.elements[i].value + "\n");
+	}
+
+	// $.ajax({
+	// 	url: "../UpdatePHP/editAnalysisEqProperty.php",
+	// 	type: "POST",
+	// 	data: {
+	// 		propID : propID,
+	// 		name : name
+	// 	},
+	// 	success: function(data, status, xhr){
+	// 		console.log(data);
+	// 		window.location.reload(true);
+	// 	}
+	// })
+}
+
+function deleteAnalysisEqProperty(propID){
   	// Display a confirmation popup window before proceeding.
   	var answer = confirm("Are you sure you want to delete this property?");
   	if (answer === true){
@@ -197,4 +192,4 @@ function deleteAnalysisEquipment(eqID){
   			}
   		})
   	}
-  }
+ }

@@ -16,7 +16,7 @@ if($currency == 'EUR'){
   $currencySymbol = '$';
 }
 
-$orderSql = "SELECT supplier_ID, request_ID, order_name, order_final_inspection, approval_status
+$orderSql = "SELECT supplier_ID, request_ID, order_name, order_final_inspection, approval_status, order_date
              FROM purchase_order
              WHERE order_ID = '$order_ID';";
 $orderResult = mysqli_query($link, $orderSql);
@@ -26,6 +26,7 @@ while($row = mysqli_fetch_array($orderResult)){
   $order_name = $row[2];
   $comment = $row[3];
   $approval_status = $row[4];
+  $order_date = $row[5];
 }
 
 // Query for all the order items who are on this purchase order
@@ -127,7 +128,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <p class='col-xs-12'>Email: <?php echo $supplierRow[3]; ?></p>
       <span class='col-xs-12' style='margin-left: 15px; border:1px solid black; width:auto; background-color: #127705;'><strong>Purchase Order Number: <?php echo $order_name; ?></strong></span>
       <p class='col-xs-12 pleaseNote'><i>Please refer to the purchase order number on all invoices</i></p>
-      <p class='col-xs-12'>Date: <span id='underline'><?php echo date("M. d, Y"); ?></span></p>
+      <p class='col-xs-12'>Date: <span id='underline'><?php echo $order_date; ?></span></p>
 
     </div>
     <div class='col-xs-4 second-column'>
@@ -136,7 +137,7 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <span class='col-xs-12'>1449 Engineering Research Court</span>
       <p class='col-xs-12'>East Lansing, MI 48824</p>
       <p class='col-xs-12 pleaseNoteBold'><i><b>Please send invoices to the above address or email to kklimczak@fraunhofer.org</b></i></p>
-      <span class='col-xs-12'><strong>Technical Contact:</strong></span>
+      <span class='col-xs-12'><strong>Purchasing Contact:</strong></span>
       <span class='col-xs-12'><strong>Kathryn Klimczak</strong></span>
       <span class='col-xs-12'>+1 517-432-8709  (phone)</span>
       <span class='col-xs-12'>+1 517-432-8167  (fax)</span>

@@ -2,7 +2,7 @@
     include '../../connection.php';
     $activeRequestsSql = "SELECT COUNT(request_ID)
                           FROM order_request
-                          WHERE active = 1;";
+                          WHERE active = 1 AND order_ID IS NULL;";
     $activeRequestsResult = mysqli_query($link, $activeRequestsSql);
     $activeRequests = mysqli_fetch_array($activeRequestsResult);
     if(!$activeRequestsResult){

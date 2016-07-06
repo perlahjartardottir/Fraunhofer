@@ -73,7 +73,7 @@ $supplier_address = "%" . $supplier_address . "%";
         // Since we use the rating system from 1 to 5 diamonds we have to do a little math
         // To get the correct values, because timeliness is rated from 1 to 2 (not on time, on time)
         // and quality and price are ranked from 1 to 3
-        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2), ROUND((AVG(rating_timeliness) / 2) * 5, 2), ROUND(AVG((rating_price) / 2) * 5, 2), ROUND(AVG((rating_quality) / 2) * 5, 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2),  SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(o.order_ID), ROUND((AVG(customer_service) / 2) * 5, 2)
+        $ratingSql = "SELECT ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2), ROUND((AVG(rating_timeliness) / 2) * 5, 2), ROUND(AVG((rating_price) / 2) * 5, 2), ROUND(AVG((rating_quality) / 2) * 5, 2), ROUND(AVG(TOTAL_WEEKDAYS(order_date, order_receive_date) - 1), 2), ROUND((AVG(customer_service) / 2) * 5, 2)
                       FROM purchase_order o, order_rating r
                       WHERE o.order_ID = r.order_ID
                       AND o.supplier_ID = '$row[0]';";
@@ -82,6 +82,16 @@ $supplier_address = "%" . $supplier_address . "%";
           echo mysqli_error($link);
         }
         $averageRating = mysqli_fetch_array($ratingResult);
+
+        $numberOfPOsSql = "SELECT SUM(CASE WHEN order_receive_date IS NULL THEN 1 ELSE 0 END), COUNT(order_ID)
+                      FROM purchase_order
+                      WHERE supplier_ID = '$row[0]';";
+        $numberOfPOsResult = mysqli_query($link, $numberOfPOsSql);
+        if(!$numberOfPOsResult){
+          echo mysqli_error($link);
+        }
+        $numberOfPOs = mysqli_fetch_array($numberOfPOsResult);
+
 
         // Groupping together suppliers who have similar rating
         if($category != 'Ideal' && $averageRating[0] >= 4){
@@ -151,13 +161,13 @@ $supplier_address = "%" . $supplier_address . "%";
              echo $averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i>";
              echo "</button></td></tr>";
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
-          			   <div class='modal-dialog'>
-          			      <div class='modal-content'>
-          			         <div class='modal-header'>
-          			            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-          			            <h4 class='modal-title' id='myModalLabel'>".$row[1]." - Information</h4>
-          			         </div>
-          			         <div class='modal-body'>
+                   <div class='modal-dialog'>
+                      <div class='modal-content'>
+                         <div class='modal-header'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title' id='myModalLabel'>".$row[1]." - Information</h4>
+                         </div>
+                         <div class='modal-body'>
                             <div class='row'>
                               <div class='col-md-6'>
                                 <input type='hidden' id='supplier_ID' value='".$row[0]."'>
@@ -176,13 +186,13 @@ $supplier_address = "%" . $supplier_address . "%";
                             </div>
                             <div class='col-md-6' style='margin-top:20px'>
                               <p><strong>Average lead time: </strong><span id='averageLeadTime'>".$averageRating[4]."</span></p>
-                              <p><strong>Number of active POs: </strong><span id='numberOfActivePOs'>".$averageRating[5]."</span></p>
-                              <p><strong>Overall orders: </strong><span id='overallOrders'>".$averageRating[6]."</span></p>
+                              <p><strong>Number of active POs: </strong><span id='numberOfActivePOs'>".$numberOfPOs[0]."</span></p>
+                              <p><strong>Overall orders: </strong><span id='overallOrders'>".$numberOfPOs[1]."</span></p>
                             </div>
                             <div class='col-md-12'><label>Notes: </label><p id='supplier_notes'>".$row[11]."</p>
                          </div>
                         </div>
-          			        <div class='modal-footer'>
+                        <div class='modal-footer'>
                           <p style='float:left'><strong>Rating</strong>: ".$averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i></p>";
                           if($user_sec_lvl > 3){
                             echo"<button type='button' class='btn btn-danger' onclick='deleteSupplier(this)'>Delete Supplier</button>";
@@ -191,11 +201,11 @@ $supplier_address = "%" . $supplier_address . "%";
                             echo"  <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='setSupplierID(this)'>Edit Supplier</button>";
                           }
                           echo"
-          			          <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-          			        </div>
-          			      </div>
-          			   </div>
-          		   </div>";
+                          <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                        </div>
+                      </div>
+                   </div>
+                 </div>";
       }
       ?>
     </tbody>

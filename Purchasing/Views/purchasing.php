@@ -35,7 +35,7 @@
   // query to find how many active requests there are
   $activeRequestsSql = "SELECT COUNT(request_ID)
                         FROM order_request
-                        WHERE active = 1;";
+                        WHERE active = 1 AND order_ID IS NULL;";
   $activeRequestsResult = mysqli_query($link, $activeRequestsSql);
   $activeRequests = mysqli_fetch_array($activeRequestsResult);
   if(!$activeRequestsResult){
@@ -45,7 +45,7 @@
   // Query to find all active requests
   $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code, request_price
                  FROM order_request
-                 WHERE active = 1
+                 WHERE active = 1 AND order_ID IS NULL
                  ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
                           CASE WHEN timeframe = 'This week' then 1 else 2 end;";
   $requestResult = mysqli_query($link, $requestSql);
@@ -440,14 +440,14 @@
               </div>
               <div class='modal-footer'>
                 <div class='btn-group' style='float:left;'>
-  			            <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-  			              Edit <span class='caret'></span>
-  			            </button>
-  			            <ul class='dropdown-menu' role='menu'>
-  			              <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
-  			              <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
-  			            </ul>
-  			        </div>
+                    <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                      Edit <span class='caret'></span>
+                    </button>
+                    <ul class='dropdown-menu' role='menu'>
+                      <li><a href='../Views/purchaseOrderReceived.php'>Edit received info</a></li>
+                      <li><a href='../Views/addOrderItem.php'>Edit PO</a></li>
+                    </ul>
+                </div>
                 <button type='button' onclick='printoutInfo(".$deliveredRow[0].")' class='btn btn-primary' style='float:left; margin-left:5px;'>Printout</button>
                 <a href='../Views/viewAllImages.php' class='btn btn-primary' style='float:left'>View Scan</a>
                 <button type='button' class='btn' data-dismiss='modal'>Close</button>
