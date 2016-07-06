@@ -106,36 +106,45 @@ function editSample(sampleID, element){
 }
 
 function editAnalysisEquipment(eqID, form){
-	//var name = $(element).parent().find("#eq_name").val();
-	//var comment = $(element).parent().find("#eq_comment").val();
-
+	var errorMessage = "";
 	var name = $(form).find("#eq_name").val();
 	var comment = $(form).find("#eq_comment").val();
-	
 	var propertyIDs = [];
+	var propertyNames = [];
+
+	if (!name){
+		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
+	}
+
 	for (i = 0; i < form.elements["prop_ID"].length; i++){
 		propertyIDs.push(form.elements["prop_ID"][i].value);
+		propertyName = form.elements["prop_name"][i].value;
+		if(!propertyName){
+			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
+		}
+		else{
+			propertyNames.push(name);
+		}
 	}
 
-	var propertyNames = [];
-	for (i = 0; i < form.elements["prop_name"].length; i++){
-		propertyNames.push(form.elements["prop_name"][i].value);
-	}
-
-	$.ajax({
-		url: "../UpdatePHP/editAnalysisEquipment.php",
-		type: "POST",
-		data: {
-			eqID : eqID,
-			name : name,
-			comment : comment
-		},
-		success: function(data, status, xhr){
-			console.log(data);
+	if(errorMessage){
+		$(form).find("#error_message").html(errorMessage);
+	}  else{
+		$.ajax({
+			url: "../UpdatePHP/editAnalysisEquipment.php",
+			type: "POST",
+			data: {
+				eqID : eqID,
+				name : name,
+				comment : comment
+			},
+			success: function(data, status, xhr){
+				console.log(data);
 			//window.location.reload(true);
 			editAnalysisEqProperty(propertyIDs, propertyNames, eqID)
 		}
 	})
+	}
 }
 
 function deleteAnalysisEquipment(eqID){
@@ -154,25 +163,25 @@ function deleteAnalysisEquipment(eqID){
   			}
   		})
   	}
- }
+  }
 
- function editAnalysisEqProperty(propertyIDs, propertyNames, eqID){
-	 $.ajax({
-	 	url: "../UpdatePHP/editAnalysisEqProperty.php",
-	 	type: "POST",
-	 	data: {
-	 		propertyIDs : propertyIDs,
-	 		propertyNames : propertyNames,
-	 		eqID : eqID
-	 	},
-	 	success: function(data, status, xhr){
-	 		console.log(data);
-	 		window.location.reload(true);
-	 	}
-	 })
-}
+  function editAnalysisEqProperty(propertyIDs, propertyNames, eqID){
+  	$.ajax({
+  		url: "../UpdatePHP/editAnalysisEqProperty.php",
+  		type: "POST",
+  		data: {
+  			propertyIDs : propertyIDs,
+  			propertyNames : propertyNames,
+  			eqID : eqID
+  		},
+  		success: function(data, status, xhr){
+  			console.log(data);
+  			window.location.reload(true);
+  		}
+  	})
+  }
 
-function deleteAnalysisEqProperty(propID){
+  function deleteAnalysisEqProperty(propID){
   	// Display a confirmation popup window before proceeding.
   	var answer = confirm("Are you sure you want to delete this property?");
   	if (answer === true){
@@ -188,4 +197,4 @@ function deleteAnalysisEqProperty(propID){
   			}
   		})
   	}
- }
+  }
