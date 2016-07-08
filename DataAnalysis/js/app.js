@@ -12,20 +12,24 @@ function logout(){
 
 function addSample(){
 	var sampleSetID = $('#sample_set_ID').val();
-	// if(sampleSetID === ""){
-	// 	sampleSetID = -1;
-	// }
-	var sampleName = $('#sample_name').val();
+	var sampleSetDate = $('#sample_set_date').val()
+
+	if(sampleSetDate){
+		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
+		sampleSetDate = sampleSetDate.replace(/-/g,"").substring(2,8);
+	}
+
 	var sampleMaterial = $('#sample_material').val();
 	var sampleComment = $('#sample_comment').val();
+
 	$.ajax({
 		url: "../InsertPHP/addSample.php",
 		type: "POST",
 		data: {
-			sampleName : sampleName,
+			sampleSetID : sampleSetID,
+			sampleSetDate : sampleSetDate,
 			sampleMaterial : sampleMaterial,
-			sampleComment : sampleComment,
-			sampleSetID : sampleSetID
+			sampleComment : sampleComment
 		},
 		success: function(data, status, xhr){
 			console.log(data);
