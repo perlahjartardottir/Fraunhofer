@@ -42,14 +42,12 @@ $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
   <?php include '../header.php'; ?>
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <div class='container'>
-    <div id='error_messsage'></div>
     <div class='row well well-lg'>
-      <h5>Only the date field is required, the rest can be added later.</h5>
       <h5>The sample set name is on the format "CCD-YYMMDD-XX". XX is a running number from 01 and is reset every day.</h5>
     </div>
     <div class='row well well-lg'>
-      <h3>Add a new sample</h3>
-      <form>
+      <h3 class='custom_heading'>Add a new sample</h4>
+      <form role='form'>
     <!-- <div class='col-md-4 form-group'>
       <label>Employee: </label>
       <input type='text' list='employees' name='employeeList' id='employeeList' value='' class='col-md-12 form-control'>
@@ -75,28 +73,34 @@ $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
     <div class='col-md-6 form-group'>
       <label>Material: </label>
       <input type='text' id='sample_material' class='form-control'>
-    </div>
-    
-      <?php 
-      if($sampleSetID === (string)-1){
+    </div> 
+              <?php 
+      if($sampleSetID === "-1"){
         echo "
-        <div class='col-md-6 form-group'>
+        <div class='col-md-6'>
         <label>Sample set name: </label>
-        <h5>CCD - </h5>
+        <div>
+        <p class='sample_set_name'>CCD - </p>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-        <input type='date' id='sample_set_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYMMDD'>
-        <h5> - XX </h5>
+        <input type='date' id='sample_set_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYMMDD'>
+        <p class='sample_set_name'> - XX </p>
+        </div>
       </div>
       ";
     }
+    else{
+      echo"
+      <div class='col-md-6'>
+      </div>";
+    }
     ?>
-
     <div class='col-md-6 form-group'>
       <label>Comment: </label>
       <textarea id='sample_comment' class='form-control' rows='4'></textarea>
     </div>
-
-    <button type='button' class='btn btn-primary col-md-2' onclick='addSample() '>Add</button>
+    <div class='col-md-12'>
+    <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button>
+    </div>
   </form>
 </div>
 <!-- SelectPHP/showSamplesInSet.php-->

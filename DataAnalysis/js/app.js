@@ -85,73 +85,79 @@ function deleteSample(sampleID){
 	}
 }
 
-function editSample(sampleID, element){
-	// Because we are fetching information from a modal, we need to use "this" or "element"
-	// to find the correct modal.
-	// parent() is modal-footer
-	// parent().prev() is modal-body
-	var name = $(element).parent().prev().find("#sample_name").val();
-	var material = $(element).parent().prev().find("#sample_material").val();
-	var comment = $(element).parent().prev().find("#sample_comment").val();
-	$.ajax({
-		url: "../UpdatePHP/editSample.php",
-		type: "POST",
-		data: {
-			sampleID : sampleID,
-			name : name,
-			material : material,
-			comment : comment
-		},
-		success: function(data, status, xhr){
-			console.log(data);
-			window.location.reload(true);
-		}
-	})
-}
-
-function editAnalysisEquipment(eqID, form){
+function editSample(sampleID, form){
 	var errorMessage = "";
-	var name = $(form).find("#eq_name").val();
-	var comment = $(form).find("#eq_comment").val();
-	var propertyIDs = [];
-	var propertyNames = [];
-
+	var name = $(form).find("#sample_name").val();
 	if (!name){
 		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
 	}
-
-	for (i = 0; i < form.elements["prop_ID"].length; i++){
-		propertyIDs.push(form.elements["prop_ID"][i].value);
-		propertyName = form.elements["prop_name"][i].value;
-		if(!propertyName){
-			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
-		}
-		else{
-			propertyNames.push(name);
-		}
-	}
-
+	
+	var material = $(form).find("#sample_material").val();
+	var comment = $(form).find("#sample_comment").val();
+	
 	if(errorMessage){
 		$(form).find("#error_message").html(errorMessage);
 	}  else{
 		$.ajax({
-			url: "../UpdatePHP/editAnalysisEquipment.php",
+			url: "../UpdatePHP/editSample.php",
 			type: "POST",
 			data: {
-				eqID : eqID,
+				sampleID : sampleID,
 				name : name,
+				material : material,
 				comment : comment
 			},
 			success: function(data, status, xhr){
 				console.log(data);
+				window.location.reload(true);
+			}
+		})
+	}
+	}
+
+	function editAnalysisEquipment(eqID, form){
+		var errorMessage = "";
+		var name = $(form).find("#eq_name").val();
+		var comment = $(form).find("#eq_comment").val();
+		var propertyIDs = [];
+		var propertyNames = [];
+
+		if (!name){
+			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
+		}
+
+		for (i = 0; i < form.elements["prop_ID"].length; i++){
+			propertyIDs.push(form.elements["prop_ID"][i].value);
+			propertyName = form.elements["prop_name"][i].value;
+			if(!propertyName){
+				errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
+			}
+			else{
+				propertyNames.push(name);
+			}
+		}
+
+		if(errorMessage){
+			$(form).find("#error_message").html(errorMessage);
+		}  else{
+			$.ajax({
+				url: "../UpdatePHP/editAnalysisEquipment.php",
+				type: "POST",
+				data: {
+					eqID : eqID,
+					name : name,
+					comment : comment
+				},
+				success: function(data, status, xhr){
+					console.log(data);
 			//window.location.reload(true);
 			editAnalysisEqProperty(propertyIDs, propertyNames, eqID)
 		}
 	})
+		}
 	}
-}
 
-function deleteAnalysisEquipment(eqID){
+	function deleteAnalysisEquipment(eqID){
   	// Display a confirmation popup window before proceeding.
   	var answer = confirm("Are you sure you want to deactive this equipment?");
   	if (answer === true){
