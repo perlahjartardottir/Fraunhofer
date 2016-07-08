@@ -19,7 +19,7 @@ function addSample(){
 		sampleSetDate = sampleSetDate.replace(/-/g,"").substring(2,8);
 	}
 
-	var sampleMaterial = $('#sample_material').val();
+	var sampleMaterial = $('#material-hidden').val();
 	var sampleComment = $('#sample_comment').val();
 
 	$.ajax({
@@ -91,7 +91,7 @@ function editSample(sampleID, form){
 	if (!name){
 		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
 	}
-	
+
 	var material = $(form).find("#sample_material").val();
 	var comment = $(form).find("#sample_comment").val();
 	

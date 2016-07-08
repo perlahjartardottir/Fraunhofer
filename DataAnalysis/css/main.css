@@ -35,7 +35,7 @@ input[name = prop_name] {
 }
 
 /* addSample.php: To change the format of the date field */
-/* Based on: code by pmucha, date 7/7/16, http://stackoverflow.com/questions/7372038/is-there-any-way-to-change-input-type-date-format */
+/* Based on: http://stackoverflow.com/a/31162426 */
 input {
     position: relative;
     width: 100px; height: 34px;
