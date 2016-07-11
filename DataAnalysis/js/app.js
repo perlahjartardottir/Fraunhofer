@@ -22,6 +22,8 @@ function addSample(){
 	var sampleMaterial = $('#material-hidden').val();
 	var sampleComment = $('#sample_comment').val();
 
+	var sampleFile = $('#sample_file').val();
+
 	$.ajax({
 		url: "../InsertPHP/addSample.php",
 		type: "POST",
@@ -29,12 +31,13 @@ function addSample(){
 			sampleSetID : sampleSetID,
 			sampleSetDate : sampleSetDate,
 			sampleMaterial : sampleMaterial,
-			sampleComment : sampleComment
+			sampleComment : sampleComment,
+
+			sampleFile : sampleFile
 		},
 		success: function(data, status, xhr){
 			console.log(data);
 			window.location.reload(true);
-
 		}
 	});
 }
