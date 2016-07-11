@@ -23,9 +23,10 @@ if($sampleSetID !== "-1"){
      <table class='table table-responsive' style='width:92%;'>
       <thead>
         <tr>
-          <th class='span4'>Sample name</th>
-          <th class='span2'>Material</th>
-          <th class='span6'>Comment</th>
+          <th>Sample name</th>
+          <th>Material</th>
+          <th>Comment</th>
+          <th>Pictue</th>
         </tr>
       </thead>
       <tbody>";
@@ -36,6 +37,7 @@ if($sampleSetID !== "-1"){
            <td><a data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</a></td>
            <td>".$row[2]."</td>
            <td>".$row[3]."</td>
+           <td>Picture</td>
          </tr>";
        }
        echo"
