@@ -56,6 +56,7 @@ function showSamplesInSet(sampleSetID){
 	})
 }
 
+// To display samples in set at addSample.php
 function showSamplesInSetAndRefresh(sampleSetID){
 	$.ajax({
 		url: "../SelectPHP/showSamplesInSet.php",
@@ -211,3 +212,19 @@ function editSample(sampleID, form){
   		})
   	}
   }
+  // Update combo box at analyze.php
+  function updateSamplesInSet(){
+	sampleSetID = $("#sample_set_ID").val();
+
+	$.ajax({
+		url: "../UpdatePHP/samplesInSetComboBox.php",
+		type: "POST",
+		data: {
+			sampleSetID : sampleSetID
+		},
+		success: function(data,status, xhr){
+			$("#samples_in_set").html(data);
+			
+		}
+	})
+}

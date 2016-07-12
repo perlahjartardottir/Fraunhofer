@@ -50,7 +50,7 @@
           <button type='button' class='btn btn-primary col-md-12'>Process</button>
         </div>
         <div class='col-md-2'>
-          <button type='button' class='btn btn-primary col-md-12'>Analyze</button>
+          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='analyze.php'">Analyze</button>
         </div>
         <div class='col-md-2'>
           <button type='button' class='btn btn-primary col-md-12'>Search</button>

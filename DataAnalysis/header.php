@@ -9,16 +9,18 @@ session_start();
 $user = $_SESSION["username"];
 
 // find his level of security
-$secsql = "SELECT security_level
+$secSql = "SELECT security_level
            FROM employee
            WHERE employee_name = '$user'";
-$secResult = mysqli_query($link, $secsql);
+$secResult = mysqli_query($link, $secSql);
 
 while($row = mysqli_fetch_array($secResult)){
-  $user_sec_lvl = $row[0];
+  $securityLevel = $row[0];
 }
-$user_sec_lvl = str_split($user_sec_lvl);
-$user_sec_lvl = $user_sec_lvl[2];
+$securityLevel = str_split($securityLevel);
+$securityLevel = $securityLevel[2];
+
+$_SESSION["securityLevelDA"] = $securityLevel;
 
 ?>
 
