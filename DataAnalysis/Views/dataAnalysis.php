@@ -29,25 +29,10 @@
     echo "<a href='../../Login/login.php'>Login Page</a></br>";
     die("You don't have the privileges to view this site.");
   }
-  // $processEquipmentSql = "SELECT prcs_eq_ID, prcs_eq_name
-  // FROM process_equipment
-  // WHERE prcs_eq_active = TRUE;";
-  // $processEquipmentResult = mysqli_query($link, $processEquipmentSql);
-
-  // $analysisEquipmentSql = "SELECT anlys_eq_ID, anlys_eq_name, anlys_eq_comment
-  // FROM anlys_equipment
-  // WHERE anlys_eq_active = TRUE;";
-  // $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
 
   $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
   FROM sample_set
-  ORDER BY sample_set_ID DESC LIMIT 3;";
-
-
-  // $recentSamplesSql = "SELECT sample_ID, sample_name
-  // FROM sample
-  // ORDER BY sample_ID DESC LIMIT 10;";
-  // $recentSamplesResult = mysqli_query($link, $recentSamplesSql);
+  ORDER BY sample_set_ID DESC LIMIT 5;";
 
   ?>
   <title>Fraunhofer CCD</title>
@@ -101,7 +86,7 @@
     while ($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)) {
       echo"
       <table id='front_table' class='table table-borderless col-md-12'>
-        <h4 class='center_heading'>".$sampleSetRow[1]."</h4>
+        <h4 class='center_heading'><a href='addSample.php?id=".$sampleSetRow[0]."'>".$sampleSetRow[1]."</a></h4>
         <tbody>";
 
       $samplesInSetSql = "SELECT sample_ID, sample_name
@@ -113,7 +98,7 @@
       while($sampleRow = mysqli_fetch_array($samplesInSetResult)){
         echo"
         <tr >
-          <td class='col-md-4'>".$sampleRow[1]."</td>
+          <td><a data-toggle='modal' data-target='#".$sampleRow[0]."'>".$sampleRow[1]."</a></td>
           <td class='col-md-4 text-center'>Coating</td>
           <td class='col-md-4 text-center'>Thickness</td>
         </tr>";
@@ -128,4 +113,9 @@
     </div>
   </div>
 </div>
+<script>
+      $(document).ready(function(){
+       <?php $_SESSION["sampleSetID"] = "-1"; ?>;
+     });
+</script>
 </body>

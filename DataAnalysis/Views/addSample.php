@@ -21,7 +21,10 @@ if($securityLevel < 2){
   die("You don't have the privileges to view this site.");
 }
 
-// Find the current chosen sampleID
+// If the user has chosen to view a specific set when entering page. 
+if(isset($_GET['id'])) {
+  $_SESSION["sampleSetID"] = $_GET['id'] ;
+}
 $sampleSetID = $_SESSION["sampleSetID"];
 
 // $allemployeeSql = "SELECT employee_ID, employee_name
