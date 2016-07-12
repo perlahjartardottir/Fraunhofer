@@ -9,6 +9,10 @@
     /*text-align: center;*/
 }
 
+.center_heading{
+    text-align: center;
+}
+
 .sample_set_name {
     float: left;
     margin-left: 5px;
@@ -16,6 +20,14 @@
 
 p.sample_set_name {
     padding: 6px 0px;
+}
+
+#front_table.table-borderless tbody tr td{
+    border: none;
+}
+
+#front_table.table{
+    margin-bottom: 40px;
 }
 
 /* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */

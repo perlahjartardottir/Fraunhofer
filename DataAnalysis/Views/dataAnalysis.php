@@ -39,10 +39,15 @@
   // WHERE anlys_eq_active = TRUE;";
   // $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
 
-  $recentSamplesSql = "SELECT sample_ID, sample_name
-  FROM sample
-  ORDER BY sample_ID DESC LIMIT 10;";
-  $recentSamplesResult = mysqli_query($link, $recentSamplesSql);
+  $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+  FROM sample_set
+  ORDER BY sample_set_ID DESC LIMIT 3;";
+
+
+  // $recentSamplesSql = "SELECT sample_ID, sample_name
+  // FROM sample
+  // ORDER BY sample_ID DESC LIMIT 10;";
+  // $recentSamplesResult = mysqli_query($link, $recentSamplesSql);
 
   ?>
   <title>Fraunhofer CCD</title>
@@ -67,113 +72,60 @@
         </div>
         <div class='col-md-2 btn-group'>
           <button type='button' class='btn btn-primary' onclick="location.href='overview.php'">Overview</button>
-           <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
-              <span class='caret'></span>
-              <span class='sr-only'>Toggle Dropdown</span>
-            </button>
-            <ul class='dropdown-menu' role='menu'>
-              <li><a href='viewAnalysisEquipment.php'>Analysis equipment</a></li>
-              <li><a href='../../Tooling/Views/viewAllMachines.php'>Process equipment</a></li>
-            </ul>
-            </div>
+          <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
+            <span class='caret'></span>
+            <span class='sr-only'>Toggle Dropdown</span>
+          </button>
+          <ul class='dropdown-menu' role='menu'>
+            <li><a href='viewAnalysisEquipment.php'>Analysis equipment</a></li>
+            <li><a href='../../Tooling/Views/viewAllMachines.php'>Process equipment</a></li>
+          </ul>
         </div>
       </div>
     </div>
+
     <div class='col-md-12'>
-     <!-- <h4 >Recent Samples</h4>
-      <table class='table table-responsive'>
-        <thead>
+      <h2 class='custom_heading center_heading'>Sample sets</h2>
+      <table id='front_table' class='table table-borderless col-md-12'>
+         <thead>
           <tr>
-            <th>Name</th>
+            <th class='col-md-4'>Name</th>
+            <th class='col-md-4 text-center'>Coating</th>
+            <th class='col-md-4 text-center'>Thickness</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <? while($sampleRow = mysqli_fetch_array($recentSamplesResult)){
-              echo"
-              <tr>
-               <td><a href='#' data-toggle='modal' data-target='#".$sampleRow[0]."'>".$sampleRow[1]."</a><td>
-               </tr>";
-             }
-             ?>
-           </tr>
-         </tbody>
-       </table>
-       </div>-->
-    <!--<div class='col-md-4'>
-      <h4>Process Equipment</h4>
-      <table class='table table-responsive'>
-        <thead>
-          <tr>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          while($processEqRow = mysqli_fetch_array($processEquipmentResult)){
-            echo"
-            <tr>
-             <td><a href='#' data-toggle='modal' data-target='#".$processEqRow[0]."'>".$processEqRow[1]."</a><td>
-             </tr>";
-           }
-           ?>
-         </tbody>
-       </table>
-     </div>
-     <div class='col-md-4'>
-      <h4>Analysis Equipment <button type='button' id='newAnalysisEq' class='btn btn-success' onclick="location.href=''"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></h4>
-      <table class='table table-responsive'>
-        <thead>
-          <tr>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          while($analysisEqRow = mysqli_fetch_array($analysisEquipmentResult)){
-            echo"
-            <tr>
-              <td><a href='#' onclick='' data-toggle='modal' data-target='#".$analysisEqRow[0]."'>".$analysisEqRow[1]."</a></td>
-            </tr>";
-          }
-          ?>
-        </tbody>
+        <tbody></tbody>
       </table>
-    </div>-->
-    <?php
-
-
-    $analysisEquipmentResult = mysqli_query($link, $analysisEquipmentSql);
-    while($analysisEqRow = mysqli_fetch_array($analysisEquipmentResult)){
+    <?
+    $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
+    while ($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)) {
       echo"
-      <div class='modal fade' id='".$analysisEqRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$analysisEqRow[0]."' aria-hidden='true'>
-        <div class='modal-dialog'>
-          <div class='modal-content col-md-12'>
-            <div class='modal-header'>
-              <center><h3>".$analysisEqRow[1]."</h3></center>
-            </div>
-            <div class='modal-body'>
-              <form>
-                <div class='col-md-6'>
-                  <label>Name</label>
-                  <input type='text' id='analaysisEqName' value='".$analysisEqRow[1]."' class='form-control'>
-                </div>
-                <div class='col-md-6'>
-                  <label>Comment</label>
-                  <textarea value='".$analysisEqRow[2]."' class='form-control'></textarea> 
-                </div>
-              </form>
-            </div>
-            <div class='modal-footer'>
-              <button type='button' class='btn btn-success' onclick=''>Edit</button>
-              <button type='button' class='btn btn-danger' onclick=''>Delete</button>
-              <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
-            </div>
-          </div>
-        </div>
-      </div>";
+      <table id='front_table' class='table table-borderless col-md-12'>
+        <h4 class='center_heading'>".$sampleSetRow[1]."</h4>
+        <tbody>";
+
+      $samplesInSetSql = "SELECT sample_ID, sample_name
+      FROM sample
+      WHERE sample_set_ID = '$sampleSetRow[0]'
+      ORDER BY sample_ID;";
+      $samplesInSetResult = mysqli_query($link, $samplesInSetSql);
+
+      while($sampleRow = mysqli_fetch_array($samplesInSetResult)){
+        echo"
+        <tr >
+          <td class='col-md-4'>".$sampleRow[1]."</td>
+          <td class='col-md-4 text-center'>Coating</td>
+          <td class='col-md-4 text-center'>Thickness</td>
+        </tr>";
+      }
+      echo"
+        </tbody>
+      </table>";
     }
     ?>
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>
 </body>
-</html>

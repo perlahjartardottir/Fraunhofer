@@ -52,7 +52,7 @@ $materialsResult = mysqli_query($link, $materialsSql);
       <h5>XX is a running number from 01 and is reset every day.</h5>
     </div>
     <div class='row well well-lg'>
-      <h3 class='custom_heading'>Add a new sample</h4>
+      <h3 class='custom_heading'>Add a new sample</h3>
         <form role='form'>
     <!-- <div class='col-md-4 form-group'>
       <label>Employee: </label>
@@ -115,12 +115,12 @@ $materialsResult = mysqli_query($link, $materialsSql);
     <div class='col-md-6'>
     </div>
     <div class='col-md-6'>
-      <label>Picture: </label>
+      <label>Picture: (No functionality) </label>
       <br>
       <label class="btn btn-default btn-file">Choose File
-        <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#upload-file-info").html($(this).val());'>
+        <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
       </label>
-      <span id="upload-file-info"></span>
+      <span id="sample_file_path"></span>
     </div>  
     <div class='col-md-12'>
       <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button>

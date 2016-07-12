@@ -19,7 +19,7 @@ $sampleSetName= mysqli_fetch_row(mysqli_query($link, $sampleSetNameSql))[0];
 if($sampleSetID !== "-1"){
   echo"
   <div class='row well well-lg'>
-    <h3 class='custom_heading'>".$sampleSetName."</h4>
+    <h3 class='custom_heading'>".$sampleSetName."</h3>
      <table class='table table-responsive' style='width:92%;'>
       <thead>
         <tr>
@@ -74,7 +74,7 @@ if($sampleSetID !== "-1"){
 
             </div>
             <div class='modal-footer'>
-              <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Edit</button>
+              <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button>
               <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].")' ></button>
               <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
             </div>

@@ -43,10 +43,13 @@
       <div class='col-md-12'>
         <h2>Analysis Equipment</h2>
         <table class='col-md-12'>
+        <thead>
           <tr>
             <th>Name</th>
             <th>Comment</th>
           </tr>
+          </thead>
+          <tbody>
           <?php
           while($row = mysqli_fetch_array($analysisEqResult)){
             echo "<tr>
@@ -55,6 +58,7 @@
           </tr>";
         }
         ?>
+        </tbody>
       </table>
     </div>
   </div>
