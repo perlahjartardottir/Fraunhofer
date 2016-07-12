@@ -43,7 +43,7 @@ if($sampleSetID !== "-1"){
        echo"
      </tbody>
    </table>
-   <button type='button' class='btn btn-primary' onclick=location.href='dataAnalysis.php' style='float:right'>Analyze</button>
+   <button type='button' class='btn btn-primary' onclick=location.href='analyze.php' style='float:right'>Analyze</button>
    <button type='button' class='btn btn-primary' onclick=location.href='dataAnalysis.php' style='float:right'>Process</button>
  </div>";
 

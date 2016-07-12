@@ -117,51 +117,51 @@ function editSample(sampleID, form){
 			}
 		})
 	}
+}
+
+function editAnalysisEquipment(eqID, form){
+	var errorMessage = "";
+	var name = $(form).find("#eq_name").val();
+	var comment = $(form).find("#eq_comment").val();
+	var propertyIDs = [];
+	var propertyNames = [];
+
+	if (!name){
+		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
 	}
 
-	function editAnalysisEquipment(eqID, form){
-		var errorMessage = "";
-		var name = $(form).find("#eq_name").val();
-		var comment = $(form).find("#eq_comment").val();
-		var propertyIDs = [];
-		var propertyNames = [];
-
-		if (!name){
-			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
+	for (i = 0; i < form.elements["prop_ID"].length; i++){
+		propertyIDs.push(form.elements["prop_ID"][i].value);
+		propertyName = form.elements["prop_name"][i].value;
+		if(!propertyName){
+			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
 		}
-
-		for (i = 0; i < form.elements["prop_ID"].length; i++){
-			propertyIDs.push(form.elements["prop_ID"][i].value);
-			propertyName = form.elements["prop_name"][i].value;
-			if(!propertyName){
-				errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
-			}
-			else{
-				propertyNames.push(name);
-			}
+		else{
+			propertyNames.push(name);
 		}
+	}
 
-		if(errorMessage){
-			$(form).find("#error_message").html(errorMessage);
-		}  else{
-			$.ajax({
-				url: "../UpdatePHP/editAnalysisEquipment.php",
-				type: "POST",
-				data: {
-					eqID : eqID,
-					name : name,
-					comment : comment
-				},
-				success: function(data, status, xhr){
-					console.log(data);
+	if(errorMessage){
+		$(form).find("#error_message").html(errorMessage);
+	}  else{
+		$.ajax({
+			url: "../UpdatePHP/editAnalysisEquipment.php",
+			type: "POST",
+			data: {
+				eqID : eqID,
+				name : name,
+				comment : comment
+			},
+			success: function(data, status, xhr){
+				console.log(data);
 			//window.location.reload(true);
 			editAnalysisEqProperty(propertyIDs, propertyNames, eqID)
 		}
 	})
-		}
 	}
+}
 
-	function deleteAnalysisEquipment(eqID){
+function deleteAnalysisEquipment(eqID){
   	// Display a confirmation popup window before proceeding.
   	var answer = confirm("Are you sure you want to deactive this equipment?");
   	if (answer === true){
@@ -214,17 +214,37 @@ function editSample(sampleID, form){
   }
   // Update combo box at analyze.php
   function updateSamplesInSet(){
-	sampleSetID = $("#sample_set_ID").val();
+  	sampleSetID = $("#sample_set_ID").val();
+
+  	$.ajax({
+  		url: "../SelectPHP/samplesInSetComboBox.php",
+  		type: "POST",
+  		data: {
+  			sampleSetID : sampleSetID
+  		},
+  		success: function(data,status, xhr){
+  			$("#samples_in_set").html(data);
+
+  		}
+  	})
+  }
+
+
+function showSampleInfo(){
+	sampleID = $("#sample_ID").val();
+	console.log(sampleID);
 
 	$.ajax({
-		url: "../UpdatePHP/samplesInSetComboBox.php",
+		url: "../SelectPHP/sampleInfo.php",
 		type: "POST",
 		data: {
-			sampleSetID : sampleSetID
+			sampleID : sampleID
 		},
 		success: function(data,status, xhr){
-			$("#samples_in_set").html(data);
+			$("#sample_info").html(data);
 			
 		}
 	})
 }
+
+

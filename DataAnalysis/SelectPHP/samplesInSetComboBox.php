@@ -11,7 +11,7 @@ $sampleSetID = mysqli_real_escape_string($link, $_POST["sampleSetID"]);
 
       echo"
          <label>Sample: </label>
-         <select class='form-control' onchange='' id='sample_set_ID' style='width:auto;'>
+         <select id='sample_ID' class='form-control' onchange='showSampleInfo()' style='width:auto;'>
             <option value='-1'>Choose a sample</option>";
             while($row = mysqli_fetch_array($samplesInSetResult)){
               echo "<option value='".$row[0]."'>".$row[1]."</option>";
