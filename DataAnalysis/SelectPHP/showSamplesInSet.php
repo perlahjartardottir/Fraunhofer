@@ -56,6 +56,9 @@ if($sampleSetID !== "-1"){
       <div class='modal-content '>
         <form role='form'>
           <div class='modal-header'>
+            <div class='col-md-12'>
+              <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
+            </div>
             <center><h3>".$sampleRow[1]."</h3></center>
           </div>
           <div class='modal-body'>
@@ -74,9 +77,8 @@ if($sampleSetID !== "-1"){
 
             </div>
             <div class='modal-footer'>
-              <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button>
               <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].")' ></button>
-              <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+              <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button> 
             </div>
           </form>
         </div>

@@ -34,6 +34,7 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src='../js/app.js'></script>
+<script src='../js/analysis.js'></script>
 <script src='../js/bootstrap.js'></script>
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">

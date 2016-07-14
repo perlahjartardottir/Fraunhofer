@@ -8,7 +8,7 @@
   session_start();
 
   // For when entering addsample.php
-  $_SESSION["sampleSetID"] = "-1";
+  //$_SESSION["sampleSetID"] = "-1";
   // Find the current user
   $user = $_SESSION["username"];
   // Find his level of security
@@ -36,7 +36,9 @@
 
   ?>
   <title>Fraunhofer CCD</title>
-  <link href='../css/bootstrap.min.css' rel='stylesheet'>
+  <style>
+
+  </style>
 </head>
 <body>
   <?php include "../header.php";?>
@@ -47,7 +49,7 @@
           <button type='button' class='btn btn-primary col-md-12' onclick="location.href='addSample.php'">Add sample</button>
         </div>
         <div class='col-md-2'>
-          <button type='button' class='btn btn-primary col-md-12'>Process</button>
+          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='process.php'">Process</button>
         </div>
         <div class='col-md-2'>
           <button type='button' class='btn btn-primary col-md-12' onclick="location.href='analyze.php'">Analyze</button>
@@ -72,15 +74,15 @@
     <div class='col-md-12'>
       <h2 class='custom_heading center_heading'>Sample sets</h2>
       <table id='front_table' class='table table-borderless col-md-12'>
-         <thead>
-          <tr>
-            <th class='col-md-4'>Name</th>
-            <th class='col-md-4 text-center'>Coating</th>
-            <th class='col-md-4 text-center'>Thickness</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+       <thead>
+        <tr>
+          <th class='col-md-4'>Name</th>
+          <th class='col-md-4 text-center'>Coating</th>
+          <th class='col-md-4 text-center'>Thickness</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
     <?
     $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
     while ($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)) {
@@ -89,33 +91,45 @@
         <h4 class='center_heading'><a href='addSample.php?id=".$sampleSetRow[0]."'>".$sampleSetRow[1]."</a></h4>
         <tbody>";
 
-      $samplesInSetSql = "SELECT sample_ID, sample_name
-      FROM sample
-      WHERE sample_set_ID = '$sampleSetRow[0]'
-      ORDER BY sample_ID;";
-      $samplesInSetResult = mysqli_query($link, $samplesInSetSql);
+          $samplesInSetSql = "SELECT sample_ID, sample_name
+          FROM sample
+          WHERE sample_set_ID = '$sampleSetRow[0]'
+          ORDER BY sample_ID;";
+          $samplesInSetResult = mysqli_query($link, $samplesInSetSql);
 
-      while($sampleRow = mysqli_fetch_array($samplesInSetResult)){
-        echo"
-        <tr >
-          <td><a data-toggle='modal' data-target='#".$sampleRow[0]."'>".$sampleRow[1]."</a></td>
-          <td class='col-md-4 text-center'>Coating</td>
-          <td class='col-md-4 text-center'>Thickness</td>
-        </tr>";
-      }
-      echo"
+          while($sampleRow = mysqli_fetch_array($samplesInSetResult)){
+            echo"
+            <tr >
+              <td><a onclick='loadAndShowSampleModal(".$sampleRow[0].")'>".$sampleRow[1]."</a></td>
+              <td class='col-md-4 text-center'>Coating</td>
+              <td class='col-md-4 text-center'>Thickness</td>
+            </tr>";
+          }
+          echo"
         </tbody>
       </table>";
     }
     ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  </tbody>
+</table>
+<div id="sample_modal" class="modal"></div>
+</div>
+
+</div>
 </div>
 <script>
-      $(document).ready(function(){
-       <?php $_SESSION["sampleSetID"] = "-1"; ?>;
-     });
+
+  var modal = document.getElementById('sample_modal');
+  function loadAndShowSampleModal(sampleID){
+    loadSampleModal(sampleID);
+    modal.style.display = "block";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
 </script>
 </body>

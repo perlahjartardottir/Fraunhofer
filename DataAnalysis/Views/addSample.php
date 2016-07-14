@@ -173,6 +173,7 @@ $materialsResult = mysqli_query($link, $materialsSql);
 
     // Make the dropdown list select the currently chosen sample set on refresh.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+    console.log($("#sample_set_ID").val(<?php echo $sampleSetID; ?>));
 
   </script>
 </body>

@@ -98,6 +98,7 @@ function editSample(sampleID, form){
 
 	var material = $(form).find("#sample_material").val();
 	var comment = $(form).find("#sample_comment").val();
+	var params = $(form).find("")
 	
 	if(errorMessage){
 		$(form).find("#error_message").html(errorMessage);
@@ -119,132 +120,20 @@ function editSample(sampleID, form){
 	}
 }
 
-function editAnalysisEquipment(eqID, form){
-	var errorMessage = "";
-	var name = $(form).find("#eq_name").val();
-	var comment = $(form).find("#eq_comment").val();
-	var propertyIDs = [];
-	var propertyNames = [];
-
-	if (!name){
-		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
-	}
-
-	for (i = 0; i < form.elements["prop_ID"].length; i++){
-		propertyIDs.push(form.elements["prop_ID"][i].value);
-		propertyName = form.elements["prop_name"][i].value;
-		if(!propertyName){
-			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
-		}
-		else{
-			propertyNames.push(name);
-		}
-	}
-
-	if(errorMessage){
-		$(form).find("#error_message").html(errorMessage);
-	}  else{
+function loadSampleModal(sampleID){
 		$.ajax({
-			url: "../UpdatePHP/editAnalysisEquipment.php",
-			type: "POST",
-			data: {
-				eqID : eqID,
-				name : name,
-				comment : comment
-			},
-			success: function(data, status, xhr){
-				console.log(data);
-			//window.location.reload(true);
-			editAnalysisEqProperty(propertyIDs, propertyNames, eqID)
-		}
-	})
-	}
-}
-
-function deleteAnalysisEquipment(eqID){
-  	// Display a confirmation popup window before proceeding.
-  	var answer = confirm("Are you sure you want to deactive this equipment?");
-  	if (answer === true){
-  		$.ajax({
-  			url: "../DeletePHP/deleteAnalysisEquipment.php",
-  			type: "POST",
-  			data: {
-  				eqID : eqID,
-  			},
-  			success: function(data, status, xhr){
-  				console.log(data);
-  				window.location.reload(true);
-  			}
-  		})
-  	}
-  }
-
-  function editAnalysisEqProperty(propertyIDs, propertyNames, eqID){
-  	$.ajax({
-  		url: "../UpdatePHP/editAnalysisEqProperty.php",
-  		type: "POST",
-  		data: {
-  			propertyIDs : propertyIDs,
-  			propertyNames : propertyNames,
-  			eqID : eqID
-  		},
-  		success: function(data, status, xhr){
-  			console.log(data);
-  			window.location.reload(true);
-  		}
-  	})
-  }
-
-  function deleteAnalysisEqProperty(propID){
-  	// Display a confirmation popup window before proceeding.
-  	var answer = confirm("Are you sure you want to delete this property?");
-  	if (answer === true){
-  		$.ajax({
-  			url: "../DeletePHP/deleteAnalysisEqProperty.php",
-  			type: "POST",
-  			data: {
-  				propID : propID,
-  			},
-  			success: function(data, status, xhr){
-  				console.log(data);
-  				window.location.reload(true);
-  			}
-  		})
-  	}
-  }
-  // Update combo box at analyze.php
-  function updateSamplesInSet(){
-  	sampleSetID = $("#sample_set_ID").val();
-
-  	$.ajax({
-  		url: "../SelectPHP/samplesInSetComboBox.php",
-  		type: "POST",
-  		data: {
-  			sampleSetID : sampleSetID
-  		},
-  		success: function(data,status, xhr){
-  			$("#samples_in_set").html(data);
-
-  		}
-  	})
-  }
-
-
-function showSampleInfo(){
-	sampleID = $("#sample_ID").val();
-	console.log(sampleID);
-
-	$.ajax({
-		url: "../SelectPHP/sampleInfo.php",
+		url: "../SelectPHP/sampleModalFP.php",
 		type: "POST",
 		data: {
 			sampleID : sampleID
 		},
-		success: function(data,status, xhr){
-			$("#sample_info").html(data);
+		success: function(data, status, xhr){
+			$("#sample_modal").html(data);
 			
 		}
 	})
 }
+
+
 
 

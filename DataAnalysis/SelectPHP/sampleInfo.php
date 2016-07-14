@@ -1,7 +1,9 @@
 <?
 include '../../connection.php';
+session_start();
 
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
+$_SESSION["sampleID"] = $sampleID;
 
       $sampleSql = "SELECT sample_name, sample_material, sample_comment
       FROM sample
