@@ -1,14 +1,17 @@
 <?php
 include '../../connection.php';
+session_start();
 
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 
-
-$sql = "SELECT sample_name, ss.sample_set_name, sample_material, sample_comment
+$sql = "SELECT sample_name, ss.sample_set_name, sample_material, sample_comment, ss.sample_set_ID
 FROM sample s, sample_set ss
 WHERE s.sample_set_ID = ss.sample_set_ID AND sample_ID = '$sampleID';";
 $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
+
+$_SESSION["sampleID"] = $sampleID;
+$_SESSION["sampleSetID"] = $row[4];
 
 echo"
  <div class='modal-dialog'>
@@ -27,7 +30,7 @@ echo"
             </div>
             <div class='modal-footer'>
               <button type='button' class='btn btn-primary col-md-3' style='float:left;'>Process</button>
-              <button type='button' class='btn btn-primary col-md-3' onclick='location.href=\"analyze.php?id=".$sampleID."\"''>Analyze</button>
+              <button type='button' class='btn btn-primary col-md-3' onclick='location.href=\"analyze.php\"'>Analyze</button>
               
             </div>
         </div>

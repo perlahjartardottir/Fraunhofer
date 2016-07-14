@@ -3,19 +3,10 @@ include '../../connection.php';
 session_start();
 
 $securityLevel = $_SESSION["securityLevelDA"];
-
-// TO DO: SET SESSION SAMPLE ID AND HIDE PROP_EQ_DIV
-
-//If the user has chosen to analyze a specific sample
-if(isset($_GET['id'])) {
-  $_SESSION["sampleID"] = $_GET['id'] ;
-}
-else{
-  $_SESSION["sampleID"] = "186";
-}
-
 $sampleID = $_SESSION["sampleID"];
 $sampleSetID = $_SESSION["sampleSetID"];
+$propID = $_SESSION["propID"];
+$eqID = $_SESSION["eqID"];
 
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
@@ -84,7 +75,7 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
               while($equipmentRow = mysqli_fetch_array($equipmentResult)){
                 echo"
                 <tr>
-                  <td><a onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].")'>".$equipmentRow[1]."</a></td>
+                  <td><a onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",this.form)'>".$equipmentRow[1]."</a></td>
                 </tr>";
               }
               echo"
@@ -108,14 +99,16 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
 </div>
 <script>
   $(document).ready(function(){
-    updateSamplesInSet(<?php echo $_SESSION[$sampleSetID]; ?>);
-    showSampleInfo();
-    //showAnlysResultForm(<?php echo $_SESSION[$propID]; ?> , <?php echo $_SESSION[$eqID]; ?>)
-  })
 
-  // Make the combo box select the currently chosen sample set.
-  $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+    updateSamplesInSet(<?php echo $sampleSetID; ?>);
+    
+    if(<?php echo $propID; ?> && <?php echo $eqID; ?>){
+        showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
+      }
+    })
 
-  
+    // Make the combo box select the currently chosen sample set.
+    $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+ 
 </script>
 </body>

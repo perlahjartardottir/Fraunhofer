@@ -24,7 +24,6 @@ $sampleID = $_SESSION["sampleID"];
           </select>
           <script>
           $('#sample_ID').val(".$sampleID.")
-          console.log($('#sample_ID').val(".$sampleID."));
           </script>";
 
 ?>

@@ -118,17 +118,21 @@ function deleteAnalysisEquipment(eqID){
      sampleID : sampleID
    },
    success: function(data,status, xhr){
-     $("#sample_info").html(data);			
+     $("#sample_info").html(data);
+     window.location.reload(true);		
    }
  })
  }
 
- function showAnlysResultForm(propID, eqID){
+ function showAnlysResultForm(propID, eqID, form){
+   sampleID = $(form).find('#sample_ID').val();
+   console.log($(form).find('#sample_ID'));
 
    $.ajax({
     url: "../SelectPHP/anlysResultForm.php",
     type: "POST",
     data: {
+     sampleID : sampleID,
      propID : propID,
      eqID : eqID 
    },
@@ -139,7 +143,7 @@ function deleteAnalysisEquipment(eqID){
  })
  }
 
- function addAnlysResult(EqPropID, form){
+ function addAnlysResult(eqPropID, form){
   errorMessage = "";
   sampleID = $(form).find('#sample_ID').val();
   if(sampleID === "-1"){
@@ -160,8 +164,6 @@ function deleteAnalysisEquipment(eqID){
     }
   }
 
-
-
   if(errorMessage){
     $(form).find("#error_message").html(errorMessage);
   }  else{
@@ -170,7 +172,7 @@ function deleteAnalysisEquipment(eqID){
       type: "POST",
       data: {
         sampleID : sampleID,
-        EqPropID : EqPropID,
+        eqPropID : eqPropID,
         result : result,
         comment : comment,
         params : params
