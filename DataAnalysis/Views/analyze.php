@@ -75,7 +75,7 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
               while($equipmentRow = mysqli_fetch_array($equipmentResult)){
                 echo"
                 <tr>
-                  <td><a onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",this.form)'>".$equipmentRow[1]."</a></td>
+                  <td><a name='eq_link' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",this.form)'>".$equipmentRow[1]."</a></td>
                 </tr>";
               }
               echo"
@@ -106,6 +106,17 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
         showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
       }
     })
+
+
+  var bootstrapBlue = "#337AB7";
+  var bootstrapDarkBlue = "#23527C";
+  var bootstrapPurple = "#5E4485";
+
+  $("td a").click(function () { 
+      $("td a").css("color", bootstrapBlue);
+      $(this).css("color", bootstrapPurple);
+      $(this).css("text-decoration", "underline");
+    });
 
     // Make the combo box select the currently chosen sample set.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
