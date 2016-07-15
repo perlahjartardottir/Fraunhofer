@@ -44,7 +44,8 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
           </select>
         </div>
         <div id='samples_in_set' class='col-md-4 form-group'></div>
-        <div id='sample_info' class='col-md-4 form-group'></div>
+        <div id='sample_info' class='col-md-4 form-group'>
+        </div>
       </div>
 
       <div class='col-md-12'>
@@ -75,8 +76,9 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
               while($equipmentRow = mysqli_fetch_array($equipmentResult)){
                 echo"
                 <tr>
-                  <td><a name='eq_link' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",this.form)'>".$equipmentRow[1]."</a></td>
+                  <td><a id='".$equipmentRow[0].$propertyRow[0]."' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",".$sampleID.",this.form)'>".$equipmentRow[1]."</a></td>
                 </tr>";
+
               }
               echo"
             </tbody>
@@ -98,6 +100,11 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
   </form>
 </div>
 <script>
+
+  var bootstrapBlue = "#337AB7";
+  var bootstrapDarkBlue = "#23527C";
+  var bootstrapPurple = "#5E4485";
+
   $(document).ready(function(){
 
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
@@ -105,18 +112,21 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
     if(<?php echo $propID; ?> && <?php echo $eqID; ?>){
         showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
       }
+
+    // Color the equipment link that is chosen.
+    $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
+    $("#<?php echo $eqID.$propID; ?>").css("text-decoration", "underline");
+
     })
 
+    // Color the equipment the user chose. 
+    $("td a").click(function () { 
+        $("td a").css("color", bootstrapBlue);
+        $("td a").css("text-decoration", "none");
+        $(this).css("color", bootstrapPurple);
+        $(this).css("text-decoration", "underline");
 
-  var bootstrapBlue = "#337AB7";
-  var bootstrapDarkBlue = "#23527C";
-  var bootstrapPurple = "#5E4485";
-
-  $("td a").click(function () { 
-      $("td a").css("color", bootstrapBlue);
-      $(this).css("color", bootstrapPurple);
-      $(this).css("text-decoration", "underline");
-    });
+      });
 
     // Make the combo box select the currently chosen sample set.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)

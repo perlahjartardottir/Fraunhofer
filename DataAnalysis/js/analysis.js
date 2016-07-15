@@ -104,11 +104,12 @@ function deleteAnalysisEquipment(eqID){
   		success: function(data,status, xhr){
   			$("#samples_in_set").html(data);
 
+
   		}
   	})
   }
 
-  function showSampleInfo(sampleIDC){
+  function showSampleInfo(){
    sampleID = $("#sample_ID").val();
 
    $.ajax({
@@ -124,9 +125,8 @@ function deleteAnalysisEquipment(eqID){
  })
  }
 
- function showAnlysResultForm(propID, eqID, form){
-   sampleID = $(form).find('#sample_ID').val();
-   console.log($(form).find('#sample_ID'));
+ function showAnlysResultForm(propID, eqID, sampleID, form){
+   //sampleID = $(form).find('#sample_ID').val();
 
    $.ajax({
     url: "../SelectPHP/anlysResultForm.php",
