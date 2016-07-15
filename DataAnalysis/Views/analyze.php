@@ -71,7 +71,8 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
             <tbody>";
               $equipmentSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name
               FROM anlys_equipment e, anlys_eq_prop a
-              WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = '$propertyRow[0]';";
+              WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = '$propertyRow[0]' AND e.anlys_eq_active = TRUE
+              ORDER BY e.anlys_eq_name;";
               $equipmentResult = mysqli_query($link, $equipmentSql);
               while($equipmentRow = mysqli_fetch_array($equipmentResult)){
                 echo"

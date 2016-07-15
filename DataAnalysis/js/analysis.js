@@ -74,8 +74,9 @@ function deleteAnalysisEquipment(eqID){
   	})
   }
 
-  function deleteAnalysisEqProperty(propID){
-  	// Display a confirmation popup window before proceeding.
+  function deleteAnalysisEqProperty(propID, form){
+  	var errorMessage = "";
+    // Display a confirmation popup window before proceeding.
   	var answer = confirm("Are you sure you want to delete this property?");
   	if (answer === true){
   		$.ajax({
@@ -86,7 +87,14 @@ function deleteAnalysisEquipment(eqID){
   			},
   			success: function(data, status, xhr){
   				console.log(data);
-  				window.location.reload(true);
+          if(data.substring(0,5) === "Error"){
+            errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+            "Property cannot be deleted because there is analysis data depending on it.</div>";
+            $(form).find("#error_message").html(errorMessage);
+          }
+          else{
+  				  window.location.reload(true);
+          }
   			}
   		})
   	}

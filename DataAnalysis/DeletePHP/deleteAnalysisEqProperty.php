@@ -8,7 +8,7 @@ WHERE anlys_prop_ID = '$propID';";
 $result= mysqli_query($link, $sql);
 
 if(!$result){
-	die("Could not delete property ".mysqli_error($link));
+	die("Error: ".mysqli_error($link));
 }
 
 mysqli_close($link);
