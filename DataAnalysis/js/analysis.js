@@ -16,17 +16,17 @@ function editAnalysisEquipment(eqID, form){
   }
   else{
    for (i = 0; i < form.elements["prop_ID"].length; i++){
-    propertyIDs.push(form.elements["prop_ID"][i].value);
-    propertyName = form.elements["prop_name"][i].value;
-    console.log("in for: " + propertyName);
-    if(!propertyName){
-     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
-   }
-   else{
-     propertyNames.push(propertyName);
-   }
- }
-}
+      propertyIDs.push(form.elements["prop_ID"][i].value);
+      propertyName = form.elements["prop_name"][i].value;
+      console.log("in for: " + propertyName);
+      if(!propertyName){
+       errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
+      }
+      else{
+       propertyNames.push(propertyName);
+      }
+    }
+  }
 
 if(errorMessage){
   $(form).find("#error_message").html(errorMessage);
@@ -40,10 +40,10 @@ if(errorMessage){
     comment : comment
   },
   success: function(data, status, xhr){
-    console.log(data);
-    editAnalysisEqProperty(propertyIDs, propertyNames, eqID);
-  }
-})
+      console.log(data);
+      editAnalysisEqProperty(propertyIDs, propertyNames, eqID);
+    }
+  })
 }
 }
 
@@ -96,7 +96,7 @@ function deleteAnalysisEquipment(eqID){
       },
       success: function(data, status, xhr){
         console.log(data);
-        if(data.substring(0,6) === "Error2"){
+        if(data.substring(0,5) === "Error"){
           errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
           "Property cannot be deleted because there is analysis data depending on it.</div>";
           $(form).find("#error_message").html(errorMessage);
@@ -120,6 +120,8 @@ function deleteAnalysisEquipment(eqID){
   		},
   		success: function(data,status, xhr){
   			$("#samples_in_set").html(data);
+
+
   		}
   	})
   }
