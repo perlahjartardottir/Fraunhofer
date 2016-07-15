@@ -29,6 +29,16 @@
   if (!$analysisInactiveEqResult){
    die("Database query failed: " . mysql_error());
  }
+
+  $allEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID, p.anlys_prop_name
+  FROM anlys_equipment e, anlys_eq_prop a, anlys_property p
+  WHERE e.anlys_eq_ID = a.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
+  GROUP BY e.anlys_eq_ID
+  ORDER BY e.anlys_eq_name;";
+  $allEqResult = mysqli_query($link, $allEqSql);
+  if (!$allEqResult){
+   die("Database query failed: " . mysql_error());
+ }
  ?>
 
  <head>
@@ -64,7 +74,9 @@
       </div>
     </div>
 
-      <div class='col-md-12 row well well-lg'>
+    <!-- Inactive equipment-->
+    <div class='row well well-lg'>
+      <div class='col-md-12'>
         <h3 class='custom_heading center_heading'>Inactive Analysis Equipment</h2>
           <table id='front_table' class='table table-borderless col-md-12'>
             <thead>
@@ -89,11 +101,9 @@
       </div>
   </div>
 
-
   <?php
   // Modal window to edit analysis equipment.
-  $analysisEqResult2 = mysqli_query($link, $analysisEqSql);
-  while($row = mysqli_fetch_array($analysisEqResult2)){  
+  while($row = mysqli_fetch_array($allEqResult)){  
     echo "
     <div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
       <div class='modal-dialog'>
@@ -119,7 +129,7 @@
               $propCounter = 1;
               $analysisPropertySql = "SELECT p.anlys_prop_ID, p.anlys_prop_name
               FROM anlys_property p, anlys_eq_prop a
-              WHERE p.anlys_prop_ID = a.anlys_prop_ID AND a.anlys_eq_prop_id = '$row[0]';";
+              WHERE p.anlys_prop_ID = a.anlys_prop_ID AND a.anlys_eq_id = '$row[0]';";
               $analysisPropertyResult = mysqli_query($link, $analysisPropertySql);
               while($propRow = mysqli_fetch_array($analysisPropertyResult)){
                 echo " 
@@ -128,7 +138,7 @@
                  <br>
                  <input type='hidden' name='prop_ID' value='".$propRow[0]."'>
                  <input type='text' name='prop_name' value='".$propRow[1]." 'class='col-md-8'>
-                 <button type='button' class='btn btn-danger glyphicon glyphicon-trash'' onclick='deleteAnalysisEqProperty(".$propRow[0].",this.form)'></button>
+                 <button type='button' class='btn btn-danger glyphicon glyphicon-trash'' onclick='deleteAnalysisEqProperty(".$propRow[0].",".$row[0].",this.form)'></button>
                </div>";
 
                $propCounter++;
@@ -140,7 +150,7 @@
            </div>
 
            <div class='modal-footer'>
-           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].",this.form)'></button>
+              <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].",this.form)'></button>
              <button type='button' class='btn btn-success' onclick='editAnalysisEquipment(".$row[0].",this.form)'>Save</button>
            </div>
          </form>
