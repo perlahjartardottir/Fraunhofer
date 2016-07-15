@@ -33,6 +33,16 @@ p.sample_set_name {
     margin-bottom: 40px;
 }
 
+/*Analyze.php: make average style same as in table.*/
+#res_avg{
+
+    /*font-weight: bold;*/
+    font-size: medium;
+    font-variant: normal;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+}
+
 /* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */
 input[name = prop_name] {
     height: 34px;

@@ -101,9 +101,29 @@
             echo"
             <tr >
               <td><a onclick='loadAndShowSampleModal(".$sampleRow[0].")'>".$sampleRow[1]."</a></td>
-              <td class='col-md-4 text-center'>Coating</td>
-              <td class='col-md-4 text-center'>Thickness</td>
-            </tr>";
+              <td class='col-md-4 text-center'>Coating</td>";
+
+              $thicknessSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
+              FROM anlys_result
+              WHERE sample_ID = '$sampleRow[0]' AND anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
+              FROM anlys_eq_prop
+              WHERE anlys_prop_ID = '1')
+              GROUP BY anlys_eq_prop_ID
+              ORDER BY anlys_res_ID DESC
+              LIMIT 1;";
+              $thicknessResult = mysqli_query($link, $thicknessSql);
+              $thicknessRow = mysqli_fetch_row($thicknessResult);
+              if($thicknessRow[0]){
+                echo"
+                  <td class='col-md-4 text-center'>".$thicknessRow[0]."</td>";
+              }
+              else{
+                echo"
+                  <td class='col-md-4 text-center'>N/A</td>";
+              }
+
+            echo"  
+              </tr>";
           }
           echo"
         </tbody>

@@ -92,7 +92,7 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
         <div id='res_div'></div>
       </div>
       <div class='col-md-12'>
-        <h4 class='custom_heading'>4. Calculate average</h4>
+        <h4 class='custom_heading'>4. Display averages?</h4>
         <div id='aveg_div'></div>
       </div>
 

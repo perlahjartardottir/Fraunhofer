@@ -23,11 +23,6 @@ $sampleID = $_SESSION["sampleID"];
            echo"
           </select>
           <script>
-          function showInfoAndRefresh(){
-            
-            window.location.reload(true);
-            showSampleInfo();
-          }
           $('#sample_ID').val(".$sampleID.")
           </script>";
 
