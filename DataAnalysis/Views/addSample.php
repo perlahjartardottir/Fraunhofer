@@ -26,6 +26,9 @@ if(isset($_GET['id'])) {
   $_SESSION["sampleSetID"] = $_GET['id'] ;
 }
 $sampleSetID = $_SESSION["sampleSetID"];
+if(!$sampleSetID){
+  $sampleSetID = "-1";
+}
 
 // $allemployeeSql = "SELECT employee_ID, employee_name
 // FROM employee

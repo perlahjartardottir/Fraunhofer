@@ -77,7 +77,7 @@ if($sampleSetID !== "-1"){
 
             </div>
             <div class='modal-footer'>
-              <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].")' ></button>
+              <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].",this.form)' ></button>
               <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button> 
             </div>
           </form>

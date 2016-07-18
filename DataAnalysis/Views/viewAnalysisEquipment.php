@@ -77,8 +77,8 @@
     <!-- Inactive equipment-->
     <div class='row well well-lg'>
       <div class='col-md-12'>
-        <h3 class='custom_heading center_heading'>Inactive Analysis Equipment</h2>
-          <table id='front_table' class='table table-borderless col-md-12'>
+        <h3 class='custom_heading center_heading text-muted'>Inactive Analysis Equipment</h2>
+          <table id='front_table' class='table table-borderless col-md-12 text-muted'>
             <thead>
               <tr>
                 <th>Name</th>

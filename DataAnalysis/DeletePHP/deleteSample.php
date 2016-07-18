@@ -10,7 +10,7 @@ WHERE sample_ID = '$sampleID';";
 $deleteSampleResult = mysqli_query($link, $deleteSampleSql);
 
 if(!$deleteSampleResult){
-	die("Could not delete sample: ".mysqli_error($link));
+	die("Error: ".mysqli_error($link));
 }
 
 if(mysql_affected_rows($link) === 0){

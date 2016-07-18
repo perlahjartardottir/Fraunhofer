@@ -4,9 +4,21 @@ session_start();
 
 $securityLevel = $_SESSION["securityLevelDA"];
 $sampleID = $_SESSION["sampleID"];
+if(!$sampleID){
+  $sampleID = "-1";
+}
 $sampleSetID = $_SESSION["sampleSetID"];
+if(!$sampleSetID){
+  $sampleSetID = "-1";
+}
 $propID = $_SESSION["propID"];
+if(!$propID){
+  $propID = "-1";
+}
 $eqID = $_SESSION["eqID"];
+if(!$eqID){
+  $eqID = "-1";
+}
 
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
@@ -33,7 +45,7 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
       <div id='sample_div' class='col-md-12'>
         <h4 class='custom_heading'>1. Choose a sample</h4>
         <div class='col-md-4 form-group'>
-          <label>Sample set: </label>
+          <label>Sample set: <?php echo $sampleSetID ?></label>
           <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSet()' style='width:auto;'>
             <option value='-1'>Choose a set</option>
             <?
@@ -79,7 +91,6 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
                 <tr>
                   <td><a id='".$equipmentRow[0].$propertyRow[0]."' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",".$sampleID.",this.form)'>".$equipmentRow[1]."</a></td>
                 </tr>";
-
               }
               echo"
             </tbody>
@@ -109,10 +120,6 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
   $(document).ready(function(){
 
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
-    
-    if(<?php echo $propID; ?> && <?php echo $eqID; ?>){
-        showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
-      }
 
     // Color the equipment link that is chosen.
     $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
@@ -131,6 +138,12 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
 
     // Make the combo box select the currently chosen sample set.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+
+    if(<?php echo $propID; ?>){
+      if(<?php echo $eqID; ?>){
+        showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
+      }
+    }
  
 </script>
 </body>

@@ -8,6 +8,8 @@ $_SESSION["propID"] = $propID;
 $eqID = mysqli_real_escape_string($link, $_POST["eqID"]);
 $_SESSION["eqID"] = $eqID;
 
+if($propID !== "-1" && $eqID !== "-1"){
+
 $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3
 FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
 WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
@@ -93,4 +95,5 @@ if($avgRow[0]){
       return s.replace(/^.*[\\\/]/, '');
     }
   </script>";
-  ?>
+}
+?>
