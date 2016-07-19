@@ -54,11 +54,11 @@ $materialsResult = mysqli_query($link, $materialsSql);
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <div class='container'>
     <div class='row well well-lg'>
-      <h5>The sample set name is on the format "CCD-YYMMDD-XX".</h5>
-      <h5>XX is a running number from 01 and is reset every day.</h5>
+      <h5>The sample set name is on the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
+      <h5>Samples can be edited in the overview table below the form.</h5>
     </div>
     <div class='row well well-lg'>
-      <h3 class='custom_heading'>Add a new sample</h3>
+      <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>
         <form role='form'>
     <!-- <div class='col-md-4 form-group'>
       <label>Employee: </label>
@@ -71,7 +71,8 @@ $materialsResult = mysqli_query($link, $materialsSql);
         ?>
       </datalist>
     </div>-->
-    <div class='col-md-6 form-group'>
+    <div class='col-md-6'>
+    <div class='col-md-12 form-group'>
       <label>Sample set: </label>
       <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
         <option value='-1'>New</option>
@@ -81,24 +82,13 @@ $materialsResult = mysqli_query($link, $materialsSql);
         }
         ?>
       </select>
-    </div>
-    <div class='col-md-6 form-group'>
-      <label>Material: </label>
-      <input list="materials" id='material' class='col-md-12 form-control'>
-      <datalist id="materials">
-        <?
-        while($row = mysqli_fetch_array($materialsResult)){
-          echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
-        }
-        ?>
-      </datalist>
-      <input type="hidden" name="material" id="material-hidden">
+      
     </div> 
     <?php 
     if($sampleSetID === "-1"){
       echo "
       <div class='col-md-6'>
-        <label>Sample set name: </label>
+        <label>When was the sample initialized? </label>
         <div>
           <p class='sample_set_name'>CCD - </p>
           <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
@@ -114,20 +104,34 @@ $materialsResult = mysqli_query($link, $materialsSql);
       </div>";
     }
     ?>
-    <div class='col-md-6 form-group'>
-      <label>Comment: </label>
+    </div> <!-- Sample -->
+    <div class='col-md-6'>
+    <div class='col-md-12 form-group'>
+    <label for='material' >Material: </label>
+      <input list="materials" id='material' class='col-md-12 form-control'>
+      <datalist id="materials">
+        <?
+        while($row = mysqli_fetch_array($materialsResult)){
+          echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
+        }
+        ?>
+      </datalist>
+      <input type="hidden" name="material" id="material-hidden">
+      </div>
+      <div class='col-md-12 form-group'>
+      <label for='sample_comment'>Comment: </label>
       <textarea id='sample_comment' class='form-control' rows='4'></textarea>
-    </div>
-    <div class='col-md-6'>
-    </div>
-    <div class='col-md-6'>
+      </div>
+      <div class='col-md-12 form-group'>
       <label>Picture: (No functionality) </label>
       <br>
       <label class="btn btn-default btn-file">Choose File
         <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
       </label>
       <span id="sample_file_path"></span>
-    </div>  
+      </div>
+    </div> <!-- Details -->
+    </div>
     <div class='col-md-12'>
       <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button>
     </div>
