@@ -87,22 +87,25 @@ $materialsResult = mysqli_query($link, $materialsSql);
     <?php 
     if($sampleSetID === "-1"){
       echo "
-      <div class='col-md-6'>
+      <div class='col-md-12 form-group'>
         <label>When was the sample initialized? </label>
         <div>
-          <p class='sample_set_name'>CCD - </p>
           <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-          <input type='date' id='sample_set_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYMMDD'>
-          <p class='sample_set_name'> - XX </p>
+          <input type='date' id='sample_set_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
         </div>
       </div>
       ";
-    }
-    else{
-      echo"
-      <div class='col-md-6'>
-      </div>";
-    }
+    
+  echo"
+    <div class='col-md-12 form-group'>
+    <label>Sample set name: </label>
+    <br>
+    <p class='sample_set_name'>CCD - </p>
+    <span id='sample_set_date_echo'></span>
+    <p class='sample_set_name'> - XX </p>
+    </div>";
+  }
+
     ?>
     </div> <!-- Sample -->
     <div class='col-md-6'>
@@ -129,6 +132,7 @@ $materialsResult = mysqli_query($link, $materialsSql);
         <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
       </label>
       <span id="sample_file_path"></span>
+
       </div>
     </div> <!-- Details -->
     </div>
@@ -144,6 +148,7 @@ $materialsResult = mysqli_query($link, $materialsSql);
 </div>
 <script>
 
+// Format the date input.
   $("#sample_set_date").on("change", function() {
     this.setAttribute(
       "data-date",
@@ -151,6 +156,17 @@ $materialsResult = mysqli_query($link, $materialsSql);
       .format( this.getAttribute("data-date-format"))
       )
   }).trigger("change")
+
+  // Format the displayed set name. 
+  // $("#sample_set_date_echo").on("change", function() {
+  //   sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
+  //   $("#sample_set_date_echo").html(sampleSetDate);
+  // }).trigger("change")
+
+
+
+
+
 
   // So user can input text as well as choose from a datalist. 
   // http://stackoverflow.com/a/29882539

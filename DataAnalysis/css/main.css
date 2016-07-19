@@ -17,8 +17,7 @@
 }
 
 .sample_set_name {
-    float: left;
-    margin-left: 5px;
+    display: inline-block;
 }
 
 p.sample_set_name {
