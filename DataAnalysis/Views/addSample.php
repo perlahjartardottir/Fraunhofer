@@ -44,6 +44,10 @@ $materialsSql = "SELECT DISTINCT(sample_material)
 FROM sample;";
 $materialsResult = mysqli_query($link, $materialsSql);
 
+$sampleSetNameSql = "SELECT sample_set_name
+FROM sample_set
+WHERE sample_set_ID = '$sampleSetID';";
+
 ?>
 
 <head>
@@ -59,7 +63,7 @@ $materialsResult = mysqli_query($link, $materialsSql);
     </div>
     <div class='row well well-lg'>
       <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>
-        <form role='form'>
+      <form role='form'>
     <!-- <div class='col-md-4 form-group'>
       <label>Employee: </label>
       <input type='text' list='employees' name='employeeList' id='employeeList' value='' class='col-md-12 form-control'>
@@ -72,70 +76,97 @@ $materialsResult = mysqli_query($link, $materialsSql);
       </datalist>
     </div>-->
     <div class='col-md-6'>
-    <div class='col-md-12 form-group'>
-      <label>Sample set: </label>
-      <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
-        <option value='-1'>New</option>
-        <?
-        while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
-          echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
-        }
-        ?>
-      </select>
-      
-    </div> 
-    <?php 
-    if($sampleSetID === "-1"){
-      echo "
       <div class='col-md-12 form-group'>
-        <label>When was the sample initialized? </label>
-        <div>
-          <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-          <input type='date' id='sample_set_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
+        <label>Choose a set: </label>
+        <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
+          <option value='-1'>New</option>
+          <?
+          while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
+            echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
+          }
+          ?>
+        </select>
+        
+      </div> 
+      <?php
+    // Adding to a new set.
+      if($sampleSetID === "-1"){
+        echo "
+        <div class='col-md-12 form-group'>
+          <label>When was the sample initialized? </label>
+          <div>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
+            <input type='date' id='sample_set_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
+          </div>
         </div>
-      </div>
-      ";
-    
-  echo"
-    <div class='col-md-12 form-group'>
-    <label>Sample set name: </label>
-    <br>
-    <p class='sample_set_name'>CCD - </p>
-    <span id='sample_set_date_echo'></span>
-    <p class='sample_set_name'> - XX </p>
-    </div>";
-  }
+        <div class='col-md-12 form-group'>
+          <label>Sample set name: </label>
+          <br>
+          <p class='sample_set_name'>CCD - </p>
+          <span id='sample_set_date_echo'></span>
+          <p class='sample_set_name'> - XX </p>
+        </div>
+        <div class='col-md-12 form-group'>
+          <label>Sample name: </label>
+          <br>
+          <p class='sample_set_name'>CCD - </p>
+          <span id='sample_set_date_echo_name'></span>
+          <p class='sample_set_name'> - XX - 01</p>
+        </div>";
+      }
+  // Adding to existing set.
+      else{
+        $sampleSetNameResult = mysqli_query($link,$sampleSetNameSql);
+        $sampleSetNameRow = mysqli_fetch_row($sampleSetNameResult);
+        $sampleSetName = $sampleSetNameRow[0];
 
-    ?>
+    // Format: CCD-YYMMDD-XX-NN
+        $latestSampleNumberSql = "SELECT COUNT(sample_id)
+        FROM sample
+        WHERE sample_set_ID = '$sampleSetID';";
+        $latestSampleNumberResult = mysqli_query($link, $latestSampleNumberSql);
+        $latestSampleNumberRow = mysqli_fetch_row($latestSampleNumberResult);
+        $latestSampleNumber = $latestSampleNumberRow[0];
+        $sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
+        $sampleName = $sampleSetName."-".$sampleNumber;
+
+        echo"
+        <div class='col-md-12 form-group'>
+          <label>Sample name: </label>
+          <br>
+          <p>".$sampleName."</p>
+        </div>";
+      }
+
+      ?>
     </div> <!-- Sample -->
     <div class='col-md-6'>
-    <div class='col-md-12 form-group'>
-    <label for='material' >Material: </label>
-      <input list="materials" id='material' class='col-md-12 form-control'>
-      <datalist id="materials">
-        <?
-        while($row = mysqli_fetch_array($materialsResult)){
-          echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
-        }
-        ?>
-      </datalist>
-      <input type="hidden" name="material" id="material-hidden">
+      <div class='col-md-12 form-group'>
+        <label for='material' >Material: </label>
+        <input list="materials" id='material' class='col-md-12 form-control'>
+        <datalist id="materials">
+          <?
+          while($row = mysqli_fetch_array($materialsResult)){
+            echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
+          }
+          ?>
+        </datalist>
+        <input type="hidden" name="material" id="material-hidden">
       </div>
       <div class='col-md-12 form-group'>
-      <label for='sample_comment'>Comment: </label>
-      <textarea id='sample_comment' class='form-control' rows='4'></textarea>
+        <label for='sample_comment'>Comment: </label>
+        <textarea id='sample_comment' class='form-control' rows='4'></textarea>
       </div>
       <div class='col-md-12 form-group'>
-      <label>Picture: (No functionality) </label>
-      <br>
-      <label class="btn btn-default btn-file">Choose File
-        <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
-      </label>
-      <span id="sample_file_path"></span>
+        <label>Picture: (No functionality) </label>
+        <br>
+        <label class="btn btn-default btn-file">Choose File
+          <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
+        </label>
+        <span id="sample_file_path"></span>
 
       </div>
     </div> <!-- Details -->
-    </div>
     <div class='col-md-12'>
       <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button>
     </div>
@@ -149,19 +180,21 @@ $materialsResult = mysqli_query($link, $materialsSql);
 <script>
 
 // Format the date input.
-  $("#sample_set_date").on("change", function() {
-    this.setAttribute(
-      "data-date",
-      moment(this.value, "YYYY-MM-DD")
-      .format( this.getAttribute("data-date-format"))
-      )
-  }).trigger("change")
+$("#sample_set_date").on("change", function() {
+  this.setAttribute(
+    "data-date",
+    moment(this.value, "YYYY-MM-DD")
+    .format( this.getAttribute("data-date-format"))
+    )
+}).trigger("change")
 
   // Format the displayed set name. 
-  // $("#sample_set_date_echo").on("change", function() {
-  //   sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
-  //   $("#sample_set_date_echo").html(sampleSetDate);
-  // }).trigger("change")
+  $("#sample_set_date_echo").on("change", function() {
+    sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
+    $("#sample_set_date_echo").html(sampleSetDate);
+    $("#sample_set_date_echo_name").html(sampleSetDate);
+  }).trigger("change")
+
 
 
 
@@ -172,21 +205,21 @@ $materialsResult = mysqli_query($link, $materialsSql);
   // http://stackoverflow.com/a/29882539
   $('input[list]').on('input', function(e) {
     var $input = $(e.target),
-        $options = $('#' + $input.attr('list') + ' option'),
-        $hiddenInput = $('#' + $input.attr('id') + '-hidden'),
-        label = $input.val();
+    $options = $('#' + $input.attr('list') + ' option'),
+    $hiddenInput = $('#' + $input.attr('id') + '-hidden'),
+    label = $input.val();
 
     $hiddenInput.val(label);
 
     for(var i = 0; i < $options.length; i++) {
-        var $option = $options.eq(i);
+      var $option = $options.eq(i);
 
-        if($option.text() === label) {
-            $hiddenInput.val( $option.attr('data-value') );
-            break;
-        }
+      if($option.text() === label) {
+        $hiddenInput.val( $option.attr('data-value') );
+        break;
+      }
     }
-});
+  });
 
       // Show the samples in the sample set on refresh.
       $(document).ready(function(){

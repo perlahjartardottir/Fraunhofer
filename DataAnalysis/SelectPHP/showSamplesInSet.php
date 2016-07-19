@@ -26,7 +26,7 @@ if($sampleSetID !== "-1"){
           <th>Sample name</th>
           <th>Material</th>
           <th>Comment</th>
-          <th>Pictue</th>
+          <th>Picture</th>
         </tr>
       </thead>
       <tbody>";
@@ -43,6 +43,7 @@ if($sampleSetID !== "-1"){
        echo"
      </tbody>
    </table>
+    <button type='button' class='btn btn-primary' onclick=location.href='sampleOverview.php' style='float:right'>Sample Overview</button>
    <button type='button' class='btn btn-primary' onclick=location.href='analyze.php' style='float:right'>Analyze</button>
    <button type='button' class='btn btn-primary' onclick=location.href='dataAnalysis.php' style='float:right'>Process</button>
  </div>";
@@ -79,6 +80,7 @@ if($sampleSetID !== "-1"){
             <div class='modal-footer'>
               <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].",this.form)' ></button>
               <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button> 
+
             </div>
           </form>
         </div>
