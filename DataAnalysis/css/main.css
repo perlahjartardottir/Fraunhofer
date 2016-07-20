@@ -52,7 +52,7 @@ input[name = prop_name], input[name = prop_unit]{
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 
-}*/
+}
 
 /* addSample.php & analyze.php: To change the format of the date field */
 /* Based on: http://stackoverflow.com/a/31162426 */

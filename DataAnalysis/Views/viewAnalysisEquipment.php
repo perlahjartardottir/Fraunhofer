@@ -30,7 +30,7 @@
    die("Database query failed: " . mysql_error());
  }
 
-  $allEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID, p.anlys_prop_name
+  $allEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID
   FROM anlys_equipment e, anlys_eq_prop a, anlys_property p
   WHERE e.anlys_eq_ID = a.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
   GROUP BY e.anlys_eq_ID
@@ -64,7 +64,18 @@
               while($row = mysqli_fetch_array($analysisEqResult)){
                 echo "<tr>
                 <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</a></td>
-                <td>".$row[4]."</td>
+                <td>";
+                // Get all properties for this equipment.
+                $propNamesSql = "SELECT p.anlys_prop_ID, p.anlys_prop_name
+                FROM anlys_property p, anlys_eq_prop a
+                WHERE p.anlys_prop_ID = a.anlys_prop_ID AND a.anlys_eq_ID = '$row[0]'
+                ORDER BY p.anlys_prop_name;";
+                $propNamesResult = mysqli_query($link, $propNamesSql);
+                while($propNamesRow = mysqli_fetch_array($propNamesResult)){
+                  echo "<p>".$propNamesRow[1]."</p>";
+                }
+                echo"
+                </td>
                 <td>".$row[2]."</td>
               </tr>";
             }
@@ -91,7 +102,18 @@
               while($row = mysqli_fetch_array($analysisInactiveEqResult)){
                 echo "<tr>
                 <td><a href='#' data-toggle='modal' data-target='#".$row[0]."'>".$row[1]."</a></td>
-                <td>".$row[4]."</td>
+                <td>";
+                // Get all properties for this equipment.
+                $propNamesSql = "SELECT p.anlys_prop_ID, p.anlys_prop_name
+                FROM anlys_property p, anlys_eq_prop a
+                WHERE p.anlys_prop_ID = a.anlys_prop_ID AND a.anlys_eq_ID = '$row[0]'
+                ORDER BY p.anlys_prop_name;";
+                $propNamesResult = mysqli_query($link, $propNamesSql);
+                while($propNamesRow = mysqli_fetch_array($propNamesResult)){
+                  echo "<p>".$propNamesRow[1]."</p>";
+                }
+                echo"
+                </td>
                 <td>".$row[2]."</td>
               </tr>";
             }
