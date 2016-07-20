@@ -1,6 +1,21 @@
--- ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
--- ALTER TABLE anlys_eq_prop CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
--- 
+
+CREATE TABLE sample_set(
+	sample_set_ID INT AUTO_INCREMENT,
+    sample_set_name VARCHAR(50),
+    PRIMARY KEY (sample_set_ID)
+);
+
+CREATE TABLE sample(
+	sample_ID INT AUTO_INCREMENT,
+    sample_set_ID INT,
+	sample_name VARCHAR(50),
+	sample_material VARCHAR(50),
+	sample_comment VARCHAR(2000),
+	sample_picture MEDIUMBLOB,
+	PRIMARY KEY(sample_ID),
+    FOREIGN KEY(sample_set_ID) REFERENCES sample_set(sample_set_ID)
+);
+
 CREATE TABLE anlys_equipment(
 	anlys_eq_ID INT AUTO_INCREMENT,
     anlys_eq_name VARCHAR(50),
@@ -82,4 +97,7 @@ CREATE TABLE anlys_result(
     FOREIGN KEY (anlys_eq_prop_ID) REFERENCES anlys_eq_prop(anlys_eq_prop_ID)
 );
 
-ALTER TABLE anlys_eq_prop ADD anlys_eq_prop_unit VARCHAR(20);
+-- ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+-- ALTER TABLE anlys_eq_prop CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+-- ALTER TABLE anlys_result CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+-- ALTER TABLE sample CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;

@@ -173,6 +173,8 @@ function deleteAnalysisEquipment(eqID){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propertyNameCut+".</div>";
   }
   comment = $(form).find('#res_comment').val();
+  date = $(form).find('#res_date').val();
+  console.log(date);
 
   params = [];
   if(form.elements["res_params"]){
@@ -192,9 +194,11 @@ function deleteAnalysisEquipment(eqID){
         eqPropID : eqPropID,
         result : result,
         comment : comment,
+        date : date,
         params : params
       },
       success: function(data,status, xhr){
+       console.log(data);
        window.location.reload();
      }
    })

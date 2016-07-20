@@ -24,7 +24,7 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 
 ?>
 
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="en">
 <link href='../css/header.css' rel='stylesheet'>

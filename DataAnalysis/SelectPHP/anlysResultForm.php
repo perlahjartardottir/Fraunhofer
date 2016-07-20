@@ -10,14 +10,14 @@ $_SESSION["eqID"] = $eqID;
 
 if($propID !== "-1" && $eqID !== "-1"){
 
-$propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3
+$propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
 FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
 WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
 AND p.anlys_prop_ID = '$propID' AND e.anlys_eq_ID = '$eqID';";
 $propertyResult = mysqli_query($link, $propertySql);
 $propertyRow = mysqli_fetch_array($propertyResult);
 
-$resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_1, anlys_res_2, anlys_res_3
+$resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_1, anlys_res_2, anlys_res_3, anlys_res_date
 FROM anlys_result
 WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
 ORDER BY anlys_res_ID;";
@@ -35,10 +35,10 @@ if($propID !== "3"){
 
 echo"
 
-          <label>When was the sample initialized? </label>
+          <label>Date:</label>
           <div>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-            <input type='date' id='anlys_res_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
+            <input type='date' id='res_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
           </div>
 
 
@@ -69,9 +69,15 @@ echo"
 <table class='table table-responsive' style='width:92%;'>
   <thead>
     <tr>
-      <th>Property</th>
       <th>Equipment</th>
-      <th>Result</th>
+      <th>Date</th>
+      <th>".$propertyRow[1]."";
+      // If the property has units display it.
+      if($propertyRow[6]){
+        echo " (".$propertyRow[6].")";
+      }
+      echo"
+      </th
       <th>Comment</th>
     </tr>
   </thead>
@@ -80,8 +86,8 @@ echo"
     while($resultRow = mysqli_fetch_array($resultsResult)){
       echo"
       <tr>
-        <td>".$propertyRow[1]."</td>
         <td>".$propertyRow[2]."</td>
+        <td>".$resultRow[5]."</td>
         <td>".$resultRow[0]."</td>
         <td>".$resultRow[1]."</td>
       </tr>";
@@ -109,7 +115,7 @@ if($avgRow[0]){
     }
 
     // Format the date input.
-    $('#anlys_res_date').on('change', function() {
+    $('#res_date').on('change', function() {
       this.setAttribute(
         'data-date',
         moment(this.value, 'YYYY-MM-DD')
