@@ -34,6 +34,14 @@ if($propID !== "3"){
 }
 
 echo"
+
+          <label>When was the sample initialized? </label>
+          <div>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
+            <input type='date' id='anlys_res_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
+          </div>
+
+
   <label>Comment:</label>
   <input type='text' id='res_comment' value='' class='form-control'>
   <label>Add file: (No functionality)</label>
@@ -93,14 +101,22 @@ if($avgRow[0]){
     <p id='res_avg'><strong>Average: </strong>".$avgRow[0]."</p>";
 }
 
-
-
   echo"
   <script>
-      // Trime the filepath to only the file name. 
+    // Trime the filepath to only the file name. 
     function getFileName(s) {
       return s.replace(/^.*[\\\/]/, '');
     }
+
+    // Format the date input.
+    $('#anlys_res_date').on('change', function() {
+      this.setAttribute(
+        'data-date',
+        moment(this.value, 'YYYY-MM-DD')
+        .format( this.getAttribute('data-date-format'))
+        )
+    }).trigger('change')
+
   </script>";
 }
 ?>

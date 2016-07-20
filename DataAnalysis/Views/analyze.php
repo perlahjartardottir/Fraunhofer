@@ -139,6 +139,8 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
         showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
       }
     }
+
+
  
 </script>
 </body>
