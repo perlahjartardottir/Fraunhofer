@@ -45,7 +45,7 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
       <div id='sample_div' class='col-md-12'>
         <h4 class='custom_heading'>1. Choose a sample</h4>
         <div class='col-md-4 form-group'>
-          <label>Sample set: <?php echo $sampleSetID ?></label>
+          <label>Sample set:</label>
           <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSet()' style='width:auto;'>
             <option value='-1'>Choose a set</option>
             <?
@@ -103,11 +103,6 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
         <h4 class='custom_heading'>3. Enter results</h4>
         <div id='res_div'></div>
       </div>
-      <div class='col-md-12'>
-        <h4 class='custom_heading'>4. Display averages?</h4>
-        <div id='aveg_div'></div>
-      </div>
-
     </div>
   </form>
 </div>

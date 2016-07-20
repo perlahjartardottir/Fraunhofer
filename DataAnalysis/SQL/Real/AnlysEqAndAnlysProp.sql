@@ -65,37 +65,16 @@ WHERE anlys_eq_prop_ID = 5;
 
 CREATE TABLE anlys_result(
 	anlys_res_ID INT AUTO_INCREMENT,
+    sample_ID INT,
+    anlys_eq_prop_ID INT,
     anlys_res_result DOUBLE,
+    anlys_res_date INT,
     anlys_res_comment VARCHAR(2000),
-    anlys_file MEDIUMBLOB,
+    anlys_res_file MEDIUMBLOB,
     anlys_res_1 DOUBLE,	-- Result of anlys_param_1 --
     anlys_res_2 DOUBLE, -- Result of anlys_param_2 --
     anlys_res_3 DOUBLE, -- Result of anlys_param_3 --
-    PRIMARY KEY(anlys_res_ID)
-);
-
-CREATE TABLE anlys_average(
-	anlys_aveg_ID INT AUTO_INCREMENT,
-    anlys_aveg_result DOUBLE,
-    anlys_res_ID_1 INT,
-    anlys_res_ID_2 INT,
-    anlys_res_ID_3 INT,
-    anlys_res_ID_4 INT,
-    anlys_res_ID_5 INT,
-    PRIMARY KEY(anlys_aveg_ID),
-    FOREIGN KEY(anlys_res_ID_1) REFERENCES anlys_result(anlys_res_ID),
-    FOREIGN KEY(anlys_res_ID_2) REFERENCES anlys_result(anlys_res_ID),
-    FOREIGN KEY(anlys_res_ID_3) REFERENCES anlys_result(anlys_res_ID),
-    FOREIGN KEY(anlys_res_ID_4) REFERENCES anlys_result(anlys_res_ID),
-    FOREIGN KEY(anlys_res_ID_5) REFERENCES anlys_result(anlys_res_ID)
-);
-
-CREATE TABLE anlalysis(
-	anlys_ID INT AUTO_INCREMENT,
-    sample_ID INT,
-    anlys_aveg_ID INT,
-    PRIMARY KEY(anlys_ID),
+    PRIMARY KEY(anlys_res_ID),
     FOREIGN KEY(sample_ID) REFERENCES sample(sample_ID),
-    FOREIGN KEY(anlys_aveg_ID) REFERENCES anlys_average(anlys_aveg_ID)
+    FOREIGN KEY (anlys_eq_prop_ID) REFERENCES anlys_eq_prop(anlys_eq_prop_ID)
 );
-    

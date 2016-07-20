@@ -24,9 +24,16 @@ ORDER BY anlys_res_ID;";
 $resultsResult = mysqli_query($link, $resultsSql);
 
 echo"
-<div class='form-group col-md-6'>
-  <label id='property_name'>".$propertyRow[1].":</label>
-  <input type='text' id='res_res' value='' class='form-control'>
+<div class='form-group col-md-6'>";
+
+// Don't display property name if the property is overview. 
+if($propID !== "3"){
+  echo"
+    <label id='property_name'>".$propertyRow[1].":</label>
+  <input type='text' id='res_res' value='' class='form-control'>";
+}
+
+echo"
   <label>Comment:</label>
   <input type='text' id='res_comment' value='' class='form-control'>
   <label>Add file: (No functionality)</label>

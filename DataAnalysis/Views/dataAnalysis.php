@@ -35,10 +35,8 @@
   ORDER BY sample_set_ID DESC LIMIT 5;";
 
   ?>
-  <title>Fraunhofer CCD</title>
-  <style>
-
-  </style>
+<head>
+<title>Fraunhofer CCD</title>
 </head>
 <body>
   <?php include "../header.php";?>
@@ -49,7 +47,7 @@
           <button type='button' class='btn btn-primary col-md-12' onclick="location.href='addSample.php'">Add sample</button>
         </div>
         <div class='col-md-2'>
-          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='process.php'">Process</button>
+          <button type='button' class='btn btn-primary col-md-12' onclick="location.href=''">Process</button>
         </div>
         <div class='col-md-2'>
           <button type='button' class='btn btn-primary col-md-12' onclick="location.href='analyze.php'">Analyze</button>

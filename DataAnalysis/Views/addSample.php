@@ -86,7 +86,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           }
           ?>
         </select>
-        
+
       </div> 
       <?php
     // Adding to a new set.
@@ -151,7 +151,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           }
           ?>
         </datalist>
-        <input type="hidden" name="material" id="material-hidden">
+        <input type='hidden' name='material' id='material-hidden'>
       </div>
       <div class='col-md-12 form-group'>
         <label for='sample_comment'>Comment: </label>
@@ -196,26 +196,22 @@ $("#sample_set_date").on("change", function() {
   }).trigger("change")
 
 
-
-
-
-
-
   // So user can input text as well as choose from a datalist. 
   // http://stackoverflow.com/a/29882539
+
   $('input[list]').on('input', function(e) {
-    var $input = $(e.target),
-    $options = $('#' + $input.attr('list') + ' option'),
-    $hiddenInput = $('#' + $input.attr('id') + '-hidden'),
-    label = $input.val();
+    var input = $(e.target),
+    options = $('#' + input.attr('list') + ' option'),
+    hiddenInput = $('#' + input.attr('id') + '-hidden'),
+    label = input.val();
 
-    $hiddenInput.val(label);
+    hiddenInput.val(label);
 
-    for(var i = 0; i < $options.length; i++) {
-      var $option = $options.eq(i);
+    for(var i = 0; i < options.length; i++) {
+      var option = options.eq(i);
 
-      if($option.text() === label) {
-        $hiddenInput.val( $option.attr('data-value') );
+      if(option.text() === label) {
+        hiddenInput.val( option.attr('data-value') );
         break;
       }
     }
@@ -229,7 +225,6 @@ $("#sample_set_date").on("change", function() {
 
     // Make the dropdown list select the currently chosen sample set on refresh.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
-    console.log($("#sample_set_ID").val(<?php echo $sampleSetID; ?>));
 
   </script>
 </body>

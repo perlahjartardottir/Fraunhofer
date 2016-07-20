@@ -20,10 +20,6 @@
     display: inline-block;
 }
 
-p.sample_set_name {
-    padding: 6px 0px;
-}
-
 #front_table.table-borderless tbody tr td{
     border: none;
 }

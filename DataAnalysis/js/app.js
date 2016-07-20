@@ -103,7 +103,10 @@ function editSample(sampleID, form){
 		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
 	}
 
-	var material = $(form).find("#sample_material").val();
+	var material = $(form).find("#material_edit-hidden").val();
+	console.log(material);
+	var sampleMaterial = $('#material_edit-hidden').val();
+	console.log(sampleMaterial);
 	var comment = $(form).find("#sample_comment").val();
 	var params = $(form).find("")
 	
