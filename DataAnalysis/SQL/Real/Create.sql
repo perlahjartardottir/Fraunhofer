@@ -37,8 +37,7 @@ CREATE TABLE anlys_property(
         CONSTRAINT uniq_prop_name UNIQUE (anlys_prop_name)
 );
 
--- ALTER TABLE anlys_property
--- ADD CONSTRAINT uniq_prop_name UNIQUE (anlys_prop_name);
+ALTER TABLE anlys_property ADD anlys_prop_active BOOLEAN;
 
 INSERT INTO anlys_property(anlys_prop_name) VALUES
 			("Thickness"), ("Roughness"), ("Color"), ("Adhesion"), 

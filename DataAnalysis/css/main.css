@@ -39,10 +39,10 @@
 }
 
 /* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */
-input[name = prop_name] {
+input[name = prop_name], input[name = prop_unit]{
     height: 34px;
     padding: 6px 12px;
-    font-size: 14px;
+    margin-bottom: 15px;    font-size: 14px;
     line-height: 1.42857143;
     color: #555;
     background-color: #fff;
@@ -52,9 +52,9 @@ input[name = prop_name] {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 
-}
+}*/
 
-/* addSample.php: To change the format of the date field */
+/* addSample.php & analyze.php: To change the format of the date field */
 /* Based on: http://stackoverflow.com/a/31162426 */
 input {
     position: relative;

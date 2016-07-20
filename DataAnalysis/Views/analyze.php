@@ -26,7 +26,8 @@ ORDER BY sample_set_ID DESC LIMIT 10;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
 $propertiesSql = "SELECT anlys_prop_ID, anlys_prop_name
-FROM anlys_property;";
+FROM anlys_property
+WHERE anlys_prop_active = TRUE;";
 $propertiesResult = mysqli_query($link, $propertiesSql);
 
 ?>

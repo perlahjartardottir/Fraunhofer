@@ -4,6 +4,7 @@ function editAnalysisEquipment(eqID, form){
 	var comment = $(form).find("#eq_comment").val();
 	var propertyIDs = [];
 	var propertyNames = [];
+  var propertyUnits = [];
 
 	if (!name){
 		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
@@ -13,12 +14,13 @@ function editAnalysisEquipment(eqID, form){
   if(!form.elements["prop_ID"].length){
     propertyIDs.push(form.elements["prop_ID"].value);
     propertyNames.push(form.elements["prop_name"].value);
+    propertyUnits.push(form.elements["prop_unit"].value);
   }
   else{
    for (i = 0; i < form.elements["prop_ID"].length; i++){
       propertyIDs.push(form.elements["prop_ID"][i].value);
+      propertyUnits.push(form.elements["prop_unit"][i].value);
       propertyName = form.elements["prop_name"][i].value;
-      console.log("in for: " + propertyName);
       if(!propertyName){
        errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
       }
@@ -41,19 +43,20 @@ if(errorMessage){
   },
   success: function(data, status, xhr){
       console.log(data);
-      editAnalysisEqProperty(propertyIDs, propertyNames, eqID);
+      editAnalysisEqProperty(propertyIDs, propertyNames, propertyUnits, eqID);
     }
   })
 }
 }
 
-function editAnalysisEqProperty(propertyIDs, propertyNames, eqID){
+function editAnalysisEqProperty(propertyIDs, propertyNames, propertyUnits, eqID){
   $.ajax({
     url: "../UpdatePHP/editAnalysisEqProperty.php",
     type: "POST",
     data: {
       propertyIDs : propertyIDs,
       propertyNames : propertyNames,
+      propertyUnits : propertyUnits,
       eqID : eqID
     },
     success: function(data, status, xhr){
@@ -96,7 +99,7 @@ function deleteAnalysisEquipment(eqID){
       },
       success: function(data, status, xhr){
         console.log(data);
-        if(data.substring(0,5) === "Error"){
+        if(data.substring(0,6) === "Error1"){
           errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
           "Property cannot be deleted because there is analysis data depending on it.</div>";
           $(form).find("#error_message").html(errorMessage);

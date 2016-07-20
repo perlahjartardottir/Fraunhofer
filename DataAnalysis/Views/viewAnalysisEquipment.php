@@ -127,7 +127,7 @@
               </div>
               <center><h3>Properties</h3></center>";
               $propCounter = 1;
-              $analysisPropertySql = "SELECT p.anlys_prop_ID, p.anlys_prop_name
+              $analysisPropertySql = "SELECT p.anlys_prop_ID, p.anlys_prop_name, a.anlys_eq_prop_unit
               FROM anlys_property p, anlys_eq_prop a
               WHERE p.anlys_prop_ID = a.anlys_prop_ID AND a.anlys_eq_id = '$row[0]';";
               $analysisPropertyResult = mysqli_query($link, $analysisPropertySql);
@@ -137,7 +137,8 @@
                  <label>Property ".$propCounter.":</label>
                  <br>
                  <input type='hidden' name='prop_ID' value='".$propRow[0]."'>
-                 <input type='text' name='prop_name' value='".$propRow[1]." 'class='col-md-8'>
+                 <input type='text' name='prop_name' value='".$propRow[1]."' class='col-md-6'>
+                 <input type='text' name='prop_unit' value='".$propRow[2]."'class='col-md-2' placeholder='Unit'>
                  <button type='button' class='btn btn-danger glyphicon glyphicon-trash'' onclick='deleteAnalysisEqProperty(".$propRow[0].",".$row[0].",this.form)'></button>
                </div>";
 
@@ -167,7 +168,8 @@
     "<label>New property:</label>"+
     "<br>"+
     "<input type='hidden' name='prop_ID' value='-1'>"+
-    "<input type='text' id='new_prop_name' name='prop_name' size='35'>"+
+    "<input type='text' id='new_prop_name' name='prop_name' class='col-md-6' placeholder='Name'>"+
+    "<input type='text' name='prop_unit' value='' class='col-md-2' placeholder='Unit'>"+
     "<button type='button'  class='btn btn-danger glyphicon glyphicon-trash' onclick='hideDiv(this)'></button>"+
     "</div>";
 
