@@ -51,39 +51,22 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
       <div id='error_message'></div>
       <div id='sample_div' class='col-md-12'>
         <h4 class='custom_heading'>1. Choose a sample</h4>
-<!--         <div class='col-md-4 form-group'>
-          <label>Sample set:</label>
-          <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSet()' style='width:auto;'>
+        <div class='col-md-4 form-group'>
+          <label>Set:</label>
+          <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh()' style='width:auto;'>
             <option value='-1'>Choose a set</option>
             <?
-            // while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
-            //   echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
-            //}
+            while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
+              echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
+            }
             ?>
           </select>
         </div>
         <div id='samples_in_set' class='col-md-4 form-group'></div>
-        <div id='sample_info' class='col-md-4 form-group'>
-        </div>
-      </div>
- -->
-
-      <div class='col-md-4 form-group'>
-        <label>Set:</label>
-        <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh()' style='width:auto;'>
-          <option value='-1'>Choose a set</option>
-          <?
-          while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
-            echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
-          }
-          ?>
-        </select>
-      </div>
-      <div id='samples_in_set' class='col-md-4 form-group'></div>
-      <!-- <div id='sample_info' class='col-md-4 form-group'></div> -->
-      <div class='col-md-4 form-group'>
-        <p><strong>Material: </strong><?php echo $sampleInfoRow[1]; ?></p>
-        <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
+        <!-- <div id='sample_info' class='col-md-4 form-group'></div> -->
+        <div class='col-md-4 form-group'>
+          <p><strong>Material: </strong><?php echo $sampleInfoRow[1]; ?></p>
+          <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
         </div>
       </div>
 
@@ -100,29 +83,32 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
           </div>
           <div class='col-md-12'>"; 
           }
-          echo"
-          <table class='col-md-".$colSize."'>
-            <thead>
-              <tr>
-                <th>".$propertyRow[1]."</th>
-              </tr>
-            </thead>
-            <tbody>";
-              $equipmentSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name
-              FROM anlys_equipment e, anlys_eq_prop a
-              WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = '$propertyRow[0]' AND e.anlys_eq_active = TRUE
-              ORDER BY e.anlys_eq_name;";
-              $equipmentResult = mysqli_query($link, $equipmentSql);
-              while($equipmentRow = mysqli_fetch_array($equipmentResult)){
-                echo"
+          $equipmentSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name
+          FROM anlys_equipment e, anlys_eq_prop a
+          WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = '$propertyRow[0]' AND e.anlys_eq_active = TRUE
+          ORDER BY e.anlys_eq_name;";
+          $eqResult = mysqli_query($link, $equipmentSql);
+          if(mysqli_fetch_array($eqResult)){
+            echo"
+            <table class='col-md-".$colSize."'>
+              <thead>
                 <tr>
-                  <td><a id='".$equipmentRow[0].$propertyRow[0]."' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",".$sampleID.",this.form)'>".$equipmentRow[1]."</a></td>
-                </tr>";
-              }
-              echo"
-            </tbody>
-          </table>";
-          $tableCounter++;
+                  <th>".$propertyRow[1]."</th>
+                </tr>
+              </thead>
+              <tbody>";
+                $equipmentResult = mysqli_query($link, $equipmentSql);
+                while($equipmentRow = mysqli_fetch_array($equipmentResult)){
+                  echo"
+                  <tr>
+                    <td><a id='".$equipmentRow[0].$propertyRow[0]."' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",".$sampleID.",this.form)'>".$equipmentRow[1]."</a></td>
+                  </tr>";
+                }
+                echo"
+              </tbody>
+            </table>";
+            $tableCounter++;
+          }
         }
         ?>
       </div>
@@ -147,16 +133,16 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
     $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
     $("#<?php echo $eqID.$propID; ?>").css("text-decoration", "underline");
 
-    })
+  })
 
     // Color the equipment the user chose. 
     $("td a").click(function () { 
-        $("td a").css("color", bootstrapBlue);
-        $("td a").css("text-decoration", "none");
-        $(this).css("color", bootstrapPurple);
-        $(this).css("text-decoration", "underline");
+      $("td a").css("color", bootstrapBlue);
+      $("td a").css("text-decoration", "none");
+      $(this).css("color", bootstrapPurple);
+      $(this).css("text-decoration", "underline");
 
-      });
+    });
 
     // Make the combo box select the currently chosen sample set.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
@@ -168,6 +154,6 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
     }
 
 
- 
-</script>
+
+  </script>
 </body>
