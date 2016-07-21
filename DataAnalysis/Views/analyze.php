@@ -25,6 +25,12 @@ FROM sample_set
 ORDER BY sample_set_ID DESC LIMIT 10;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
+$sampleInfoSql = "SELECT sample_name, sample_material, sample_comment
+FROM sample
+WHERE sample_ID = '$sampleID';";
+$sampleInfoResult = mysqli_query($link, $sampleInfoSql);
+$sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
+
 $propertiesSql = "SELECT anlys_prop_ID, anlys_prop_name
 FROM anlys_property
 WHERE anlys_prop_active = TRUE;";
@@ -45,19 +51,39 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
       <div id='error_message'></div>
       <div id='sample_div' class='col-md-12'>
         <h4 class='custom_heading'>1. Choose a sample</h4>
-        <div class='col-md-4 form-group'>
+<!--         <div class='col-md-4 form-group'>
           <label>Sample set:</label>
           <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSet()' style='width:auto;'>
             <option value='-1'>Choose a set</option>
             <?
-            while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
-              echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
-            }
+            // while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
+            //   echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
+            //}
             ?>
           </select>
         </div>
         <div id='samples_in_set' class='col-md-4 form-group'></div>
         <div id='sample_info' class='col-md-4 form-group'>
+        </div>
+      </div>
+ -->
+
+      <div class='col-md-4 form-group'>
+        <label>Set:</label>
+        <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh()' style='width:auto;'>
+          <option value='-1'>Choose a set</option>
+          <?
+          while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
+            echo "<option value='".$sampleSetRow[0]."'>".$sampleSetRow[1]."</option>";
+          }
+          ?>
+        </select>
+      </div>
+      <div id='samples_in_set' class='col-md-4 form-group'></div>
+      <!-- <div id='sample_info' class='col-md-4 form-group'></div> -->
+      <div class='col-md-4 form-group'>
+        <p><strong>Material: </strong><?php echo $sampleInfoRow[1]; ?></p>
+        <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
         </div>
       </div>
 
@@ -72,7 +98,7 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
           if($tableCounter % $numTablesPerRow === 0){
             echo"
           </div>
-          <div class='col-md-12'>";
+          <div class='col-md-12'>"; 
           }
           echo"
           <table class='col-md-".$colSize."'>

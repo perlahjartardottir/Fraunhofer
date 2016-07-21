@@ -140,6 +140,65 @@ function loadSampleModal(sampleID){
 	})
 }
 
+  function updateSamplesInSet(){
+  	sampleSetID = $("#sample_set_ID").val();
+
+  	$.ajax({
+  		url: "../SelectPHP/samplesInSetComboBox.php",
+  		type: "POST",
+  		data: {
+  			sampleSetID : sampleSetID
+  		},
+  		success: function(data,status, xhr){
+  			$("#samples_in_set").html(data);
+  		}
+  	})
+  }
+
+  // Update combo box at analyze.php
+  function updateSamplesInSetAndRefresh(){
+  	sampleSetID = $("#sample_set_ID").val();
+
+  	$.ajax({
+  		url: "../SelectPHP/samplesInSetComboBox.php",
+  		type: "POST",
+  		data: {
+  			sampleSetID : sampleSetID
+  		},
+  		success: function(data,status, xhr){
+  			setSampleID();
+  			$("#samples_in_set").html(data);
+  			window.location.reload(true);
+  		}
+  	})
+  }
+
+  function setSampleID(){
+  	sampleID = $("#sample_ID").val();
+  	$.ajax({
+  		url: "../UpdatePHP/setSampleID.php",
+  		type: "POST",
+  		data: {
+  			sampleSetID : sampleSetID
+  		},
+  		success: function(data,status, xhr){
+  			
+  		}
+  	})
+  }
+  function setSampleIDAndRefresh(){
+  	sampleID = $("#sample_ID").val();
+  	$.ajax({
+  		url: "../UpdatePHP/setSampleID.php",
+  		type: "POST",
+  		data: {
+  			sampleSetID : sampleSetID
+  		},
+  		success: function(data,status, xhr){
+  			window.location.reload(true);
+  		}
+  	})
+  }
 
 
 
