@@ -88,7 +88,7 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
       </div>
 
       <div class='col-md-12'>
-        <h4 id='prop_eq_div' class='custom_heading'>2. Choose a property and equipment</h4>
+        <h4 id='prop_eq_div' class='custom_heading'>2. Choose a coating property and equipment</h4>
         <?php
       // For easy changing of layout of tables.
         $numTablesPerRow = 4;

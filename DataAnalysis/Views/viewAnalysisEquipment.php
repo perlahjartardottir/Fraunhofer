@@ -55,7 +55,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Property</th>
+                <th>Coating property</th>
                 <th>Comment</th>
               </tr>
             </thead>
@@ -93,7 +93,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Property</th>
+                <th>Coating property</th>
                 <th>Comment</th>
               </tr>
             </thead>
@@ -156,7 +156,7 @@
               while($propRow = mysqli_fetch_array($analysisPropertyResult)){
                 echo " 
                 <div class='form-group'>
-                 <label>Property ".$propCounter.":</label>
+                 <label>Coating property ".$propCounter.":</label>
                  <br>
                  <input type='hidden' name='prop_ID' value='".$propRow[0]."'>
                  <input type='text' name='prop_name' value='".$propRow[1]."' class='col-md-6'>
@@ -187,7 +187,7 @@
   var divCounter = 1;
   function addProp(elem){  
     newProp = "<div id='new_prop_"+divCounter+"' class='form-group'>"+
-    "<label>New property:</label>"+
+    "<label>New coating property:</label>"+
     "<br>"+
     "<input type='hidden' name='prop_ID' value='-1'>"+
     "<input type='text' id='new_prop_name' name='prop_name' class='col-md-6' placeholder='Name'>"+
