@@ -17,7 +17,7 @@ AND p.anlys_prop_ID = '$propID' AND e.anlys_eq_ID = '$eqID';";
 $propertyResult = mysqli_query($link, $propertySql);
 $propertyRow = mysqli_fetch_array($propertyResult);
 
-$resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_1, anlys_res_2, anlys_res_3, anlys_res_date
+$resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3
 FROM anlys_result
 WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
 ORDER BY anlys_res_ID;";
@@ -75,7 +75,14 @@ echo"
       }
       echo"
       </th>
-      <th>Comment</th>
+      <th>Comment</th>";
+      for($i = 3; $i < 6; $i++){
+        if($propertyRow[$i]){
+          echo"
+            <th>".$propertyRow[$i]."</th>";
+        }
+      }
+    echo"
     </tr>
   </thead>
   <tbody>";
@@ -84,9 +91,21 @@ echo"
       echo"
       <tr>
         <td>".$propertyRow[2]."</td>
-        <td>".$resultRow[5]."</td>
+        <td>".$resultRow[2]."</td>
         <td>".$resultRow[0]."</td>
-        <td>".$resultRow[1]."</td>
+        <td>".$resultRow[1]."</td>";
+        for($i = 3; $i < 6; $i++){
+        if($propertyRow[$i]){
+            echo"
+              <td>";
+            if($resultRow[$i]){
+              echo $resultRow[$i];
+            }
+            echo"
+            </td>";
+        }
+      }
+      echo"
       </tr>";
     }
     echo"

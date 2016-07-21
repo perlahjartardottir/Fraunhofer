@@ -37,6 +37,12 @@ WHERE sample_ID = '$sampleID';";
 $sampleInfoResult = mysqli_query($link, $sampleInfoSql);
 $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 
+$anlysAverageSql = "SELECT r.anlys_eq_prop_ID, e.anlys_eq_name, p.anlys_prop_name, TRUNCATE(AVG(r.anlys_res_result), 3)
+FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
+WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
+a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
+GROUP BY r.anlys_eq_prop_ID;";
+$anlysAverageResult = mysqli_query($link, $anlysAverageResult);
 ?>
 
 <head>
@@ -48,8 +54,9 @@ $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 	<div class="container">
 		<div class='row well well-lg'>
 			<div class='col-md-12'>
-			<h3 class='custom_heading center_heading'>Sample overview</h3>
-			<div class='col-md-4 form-group'>
+       <h2 id='sample_overview_heading' class='custom_heading center_heading'>Sample overview</h2>
+       <div class='col-md-4 form-group'>
+       <!-- Set combo box -->
         <label>Set:</label>
         <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh()' style='width:auto;'>
           <option value='-1'>Choose a set</option>
@@ -60,20 +67,29 @@ $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
           ?>
         </select>
       </div>
+       <!-- Sample combo box -->
       <div id='samples_in_set' class='col-md-4 form-group'></div>
-      <!-- <div id='sample_info' class='col-md-4 form-group'></div> -->
+      <!-- Sample info -->
       <div class='col-md-4 form-group'>
         <p><strong>Material: </strong><?php echo $sampleInfoRow[1]; ?></p>
         <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
-        </div>
       </div>
     </div>
+    <div class='col-md-12'>
+      <h3 class='custom_heading center_heading'>Analysis</h3>
+    <?
+      while($averageRow = mysqli_fetch_array($anlysAverageResult)){
+        echo"";
+      }
+    ?>
+    </div>
+  </div>
 
-			</div>
-		</div>
-	</div>
-  <script>
-    $(document).ready(function(){
+</div>
+</div>
+</div>
+<script>
+  $(document).ready(function(){
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
   })
     // Make the combo box select the currently chosen set adn sample.

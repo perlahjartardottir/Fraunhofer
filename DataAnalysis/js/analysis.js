@@ -111,23 +111,6 @@ function deleteAnalysisEquipment(eqID){
     })
     }
   }
-  // Update combo box at analyze.php
-  function updateSamplesInSet(){
-  	sampleSetID = $("#sample_set_ID").val();
-
-  	$.ajax({
-  		url: "../SelectPHP/samplesInSetComboBox.php",
-  		type: "POST",
-  		data: {
-  			sampleSetID : sampleSetID
-  		},
-  		success: function(data,status, xhr){
-  			$("#samples_in_set").html(data);
-
-
-  		}
-  	})
-  }
 
   function showSampleInfo(){
    sampleID = $("#sample_ID").val();
@@ -180,9 +163,10 @@ function deleteAnalysisEquipment(eqID){
   console.log(date);
 
   params = [];
-  if(form.elements["res_params"]){
-    for (i = 0; i < form.elements["res_params"].length; i++){
-      params.push(form.elements["res_params"][i].value);
+  if(form.elements["res_param"]){
+    for (i = 0; i < form.elements["res_param"].length; i++){
+      params.push(form.elements["res_param"][i].value);
+      console.log(form.elements["res_param"][i].value);
     }
   }
 

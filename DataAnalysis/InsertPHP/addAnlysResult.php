@@ -9,9 +9,18 @@ $comment = mysqli_real_escape_string($link, $_POST["comment"]);
 $date = mysqli_real_escape_string($link, $_POST["date"]);
 $params = $_POST["params"];
 $param1 = $param2 = $param3 = "";
-for($i = 1; $i <= count($params); $i++){
-	$param1 = mysqli_real_escape_string($link, $params[$i]);
+for($i = 0; $i < count($params); $i++){
+	if($i === 0){
+		$param1 = mysqli_real_escape_string($link, $params[$i]);
+	}
+	else if($i === 1){
+		$param2 = mysqli_real_escape_string($link, $params[$i]);
+	}
+	else if($i === 2){
+		$param3 = mysqli_real_escape_string($link, $params[$i]);
+	}
 }
+echo "\nparam1: ".$param1." param2: ".$param2;
 $sql = "INSERT INTO anlys_result(sample_ID, anlys_eq_prop_ID, anlys_res_result, anlys_res_comment,
 			anlys_res_1, anlys_res_2, anlys_res_3, anlys_res_date) VALUES
 			('$sampleID','$eqPropID','$result','$comment','$param1','$param2','$param3','$date');";

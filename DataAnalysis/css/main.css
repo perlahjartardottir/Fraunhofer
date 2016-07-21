@@ -11,6 +11,9 @@
     margin: 20px 0px;
     /*text-align: center;*/
 }
+h2[id="sample_overview_heading"]{
+    margin-bottom: 50px;
+}
 
 .center_heading{
     text-align: center;
