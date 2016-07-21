@@ -27,12 +27,12 @@ echo"
               <p><strong>Material: </strong>".$row[2]."</p>
               <p></p>
               <p><strong>Comment: </strong>".$row[3]."</p>            
-            </div>
-            <div class='modal-footer'>
-              <button type='button' class='btn btn-primary col-md-3' style='float:left;'>Process</button>
-              <button type='button' class='btn btn-primary col-md-3' onclick='location.href=\"analyze.php\"'>Analyze</button>
-              
-            </div>
+          </div>
+          <div class='modal-footer'>    
+              <button type='button' class='btn btn-primary' >Process</button>
+              <button type='button' class='btn btn-primary' onclick='location.href=\"analyze.php\"'>Analyze</button>
+              <button type='button' class='btn btn-primary' onclick='location.href=\"sampleOverview.php\"' >Sample Overview</button>
+          </div>
         </div>
       </div>
     </div>";

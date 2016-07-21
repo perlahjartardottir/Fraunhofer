@@ -8,11 +8,11 @@
 
   $securityLevel = $_SESSION["securityLevelDA"];
 
-  // // if the user security level is not high enough we kill the page and give him a link to the log in page
-  // if($securityLevel < 4){
-  //   echo "<a href='../../Login/login.php'>Login Page</a></br>";
-  //   die("You don't have the privileges to view this site.");
-  // } 
+  // if the user security level is not high enough we kill the page and give him a link to the log in page
+  if($securityLevel < 2){
+    echo "<a href='../../Login/login.php'>Login Page</a></br>";
+    die("You don't have the privileges to view this site.");
+  } 
 
   ?>
 
@@ -22,6 +22,12 @@
 <body>
   <?php include '../header.php';?>
   <div class="container">
+
+      <div class='row well well-lg'>
+      <div class='col-md-12'>
+        <h3>... Warning! Construction Area ...</h3>
+        </div>
+      </div>
   <!--Analysis Equipment-->
     <div class='row well well-lg'>
       <div class='col-md-12'>
@@ -45,11 +51,11 @@
         <div class='btn-group'>
           <?php
           if($securityLevel > 3){
-            echo "<a href='../../Tooling/Views/addNewMachine.php' class='btn btn-success btn-lg'>Add new process equipment</a>";
+            echo "<a href='' class='btn btn-success btn-lg'>Add new process equipment</a>";
           }
           ?>
           <div class='btn-group'>
-            <a href='../../Tooling/Views/ViewAllMachines.php' class='btn btn-primary btn-lg'>View all process equipment</a>
+            <a href='' class='btn btn-primary btn-lg'>View all process equipment</a>
           </div>
         </div>
       </div>
