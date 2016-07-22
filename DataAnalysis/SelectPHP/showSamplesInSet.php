@@ -48,7 +48,7 @@ if($sampleSetID !== "-1"){
    </table>
     <button type='button' class='btn btn-primary' onclick=location.href='sampleOverview.php' style='float:right'>Sample Overview</button>
    <button type='button' class='btn btn-primary' onclick=location.href='analyze.php' style='float:right'>Analyze</button>
-   <button type='button' class='btn btn-primary' onclick=location.href='dataAnalysis.php' style='float:right'>Process</button>
+   <button type='button' class='btn btn-primary'  style='float:right'>Process</button>
  </div>";
 
  // Modal window to edit samples.
