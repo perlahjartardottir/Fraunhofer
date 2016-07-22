@@ -35,7 +35,7 @@ if($securityLevel < 2){
           <button type='button' class='btn btn-primary col-md-12' onclick="location.href='analyze.php'">Analyze</button>
         </div>
         <div class='col-md-2'>
-          <button type='button' class='btn btn-primary col-md-12'>Search</button>
+          <button type='button' class='btn btn-primary col-md-12' onclick="location.href='search.php'">Search</button>
         </div>
         <div class='col-md-2 btn-group'>
           <button type='button' class='btn btn-primary' onclick="location.href='overview.php'">Overview</button>

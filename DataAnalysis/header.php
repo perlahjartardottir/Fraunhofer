@@ -36,6 +36,7 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 <!-- For formating input date -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
 <script src='../js/app.js'></script>
+<script src='../js/sample.js'></script>
 <script src='../js/analysis.js'></script>
 <script src='../js/bootstrap.js'></script>
 <div class="navbar navbar-default navbar-static-top">
@@ -56,7 +57,7 @@ $_SESSION["securityLevelDA"] = $securityLevel;
     <div class="collapse navbar-collapse navHeaderCollapse">
         <ul class='navbar-right btn-group' role='group'>
           <a href='../../Tooling/Views/feedback.php' class='btn btn-primary headerbutton active' role='button'>Comment</a>
-          <a href='https://github.com/Freyr12/Fraunhofer/tree/master/DataAnalysis' target='_blank' class='btn btn-primary headerbutton active' role='button'>?</a>
+          <a href='https://github.com/perlahj/Fraunhofer/tree/master/DataAnalysis' target='_blank' class='btn btn-primary headerbutton active' role='button'>?</a>
           <a onclick='logout()' class='btn btn-danger headerbutton active' role='button'>Logout</a>
         </ul>
     </div>
