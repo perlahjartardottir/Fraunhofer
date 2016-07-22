@@ -49,6 +49,9 @@ h2[id="sample_overview_heading"]{
     font-style: normal;
     color: -internal-quirk-inherit;
 }
+#search_thickness_label{
+    padding-left: 0px;
+}
 
 /* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */
 input[name = prop_name], input[name = prop_unit]{
