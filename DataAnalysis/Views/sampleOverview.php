@@ -42,7 +42,8 @@ FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
 WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
 a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
 GROUP BY r.anlys_eq_prop_ID;";
-$anlysAverageResult = mysqli_query($link, $anlysAverageResult);
+$anlysAverageResult = mysqli_query($link, $anlysAverageSql);
+
 ?>
 
 <head>
@@ -57,7 +58,7 @@ $anlysAverageResult = mysqli_query($link, $anlysAverageResult);
        <h2 id='sample_overview_heading' class='custom_heading center_heading'>Sample overview</h2>
        <div class='col-md-4 form-group'>
        <!-- Set combo box -->
-        <label>Set:</label>
+        <label>Set:<?php echo $sampleSetID;?>  <?php echo $sampleID;?></label>
         <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh()' style='width:auto;'>
           <option value='-1'>Choose a set</option>
           <?
@@ -75,16 +76,33 @@ $anlysAverageResult = mysqli_query($link, $anlysAverageResult);
         <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
       </div>
     </div>
-    <div class='col-md-12'>
-      <h3 class='custom_heading center_heading'>Analysis</h3>
+    <div class='col-md-8'>
+      <h3 class='custom_heading'>Analysis</h3>
+      <table class='table table-responsive'>
+      <thead>
+      <th >Coating</th>
+      <th>Coating property</th>
+      <th class='text-left'>Average</th>
+      <th>Equipment</th>
+      </thead>
+      <tbody>
     <?
+      
       while($averageRow = mysqli_fetch_array($anlysAverageResult)){
-        echo"";
+        echo"
+          <tr>
+            <td>Coating</td>
+            <td>".$averageRow[2]."</td>
+            <td><a onclick='displayAnlysResultTable(".$sampleID.",".$averageRow[0].")'>".$averageRow[3]."</a></td>
+            <td>".$averageRow[1]."</td>
+          </tr>";
       }
     ?>
+    </tbody>
+    </table>
     </div>
+    <div id='anlys_result_table' class='col-md-12'></div>
   </div>
-
 </div>
 </div>
 </div>
@@ -92,8 +110,8 @@ $anlysAverageResult = mysqli_query($link, $anlysAverageResult);
   $(document).ready(function(){
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
   })
-    // Make the combo box select the currently chosen set adn sample.
+    // Make the combo box select the currently chosen set and sample.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
-    $('#sample_ID').val(<?php echo $sampleID; ?>);
+    
   </script>
 </body>

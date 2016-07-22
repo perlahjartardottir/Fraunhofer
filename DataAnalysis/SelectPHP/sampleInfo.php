@@ -14,5 +14,4 @@ $_SESSION["sampleID"] = $sampleID;
       echo "
         <p><strong>Material: </strong>".$row[1]."</p>
         <p><strong>Comment: </strong>".$row[2]."</p>";
-
 ?>

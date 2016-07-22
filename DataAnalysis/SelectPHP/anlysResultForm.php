@@ -120,7 +120,7 @@ $avgRow = mysqli_fetch_row($avgResult);
 // Only display calculations if there are any results. 
 if($avgRow[0]){
   echo"
-    <p id='res_avg'><strong>Average: </strong>".$avgRow[0]."</p>";
+    <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>";
 }
 
   echo"

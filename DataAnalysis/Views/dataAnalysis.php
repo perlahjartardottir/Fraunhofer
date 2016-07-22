@@ -1,5 +1,3 @@
-<!-- In this view we only display some parts if the security level is high enough -->
-<!-- This is the front page -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,28 +5,12 @@
   include "../../connection.php";
   session_start();
 
-  // For when entering addsample.php
-  //$_SESSION["sampleSetID"] = "-1";
-  // Find the current user
-  $user = $_SESSION["username"];
-  // Find his level of security
-  $secsql = "SELECT security_level
-  FROM employee
-  WHERE employee_name = '$user'";
-  $secResult = mysqli_query($link, $secsql);
-  while($row = mysqli_fetch_array($secResult)){
-    $SecurityLevel = $row[0];
-  }
-  // Get the third digit from the security level since that digit represents the
-  // security level of the data analysis database
-  $SecurityLevel = str_split($SecurityLevel);
-  $SecurityLevel = $SecurityLevel[2];
-
-  // if the user security level is not high enough we kill the page and give him a link to the log in page
-  if($SecurityLevel < 2){
-    echo "<a href='../../Login/login.php'>Login Page</a></br>";
-    die("You don't have the privileges to view this site.");
-  }
+$securityLevel = $_SESSION["securityLevelDA"];
+// iI the user security level is not high enough we kill the page and give him a link to the log in page.
+if($securityLevel < 2){
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
+  die("You don't have the privileges to view this site.");
+}
 
   $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
   FROM sample_set

@@ -32,9 +32,18 @@ h2[id="sample_overview_heading"]{
 }
 
 /*Analyze.php: make average style same as in table.*/
-#res_avg{
+.table_style_text{
 
     /*font-weight: bold;*/
+    font-size: medium;
+    font-variant: normal;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+}
+
+.table_style_text_bold{
+
+    font-weight: bold;
     font-size: medium;
     font-variant: normal;
     font-style: normal;

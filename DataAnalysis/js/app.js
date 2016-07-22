@@ -166,33 +166,36 @@ function loadSampleModal(sampleID){
   			sampleSetID : sampleSetID
   		},
   		success: function(data,status, xhr){
-  			setSampleID();
+  			
   			$("#samples_in_set").html(data);
+
   			window.location.reload(true);
+  			setSampleID();
   		}
   	})
   }
 
   function setSampleID(){
   	sampleID = $("#sample_ID").val();
+  	console.log("settings sampleID: "+sampleID);
   	$.ajax({
   		url: "../UpdatePHP/setSampleID.php",
   		type: "POST",
   		data: {
-  			sampleSetID : sampleSetID
+  			sampleID : sampleID
   		},
   		success: function(data,status, xhr){
-  			
   		}
   	})
   }
   function setSampleIDAndRefresh(){
   	sampleID = $("#sample_ID").val();
+  	console.log("settings sampleID: "+sampleID);
   	$.ajax({
   		url: "../UpdatePHP/setSampleID.php",
   		type: "POST",
   		data: {
-  			sampleSetID : sampleSetID
+  			sampleID : sampleID
   		},
   		success: function(data,status, xhr){
   			window.location.reload(true);
@@ -200,5 +203,20 @@ function loadSampleModal(sampleID){
   	})
   }
 
+  function displayAnlysResultTable(sampleID, eqPropID){
+  	console.log("sampleID: "+sampleID);
+  	console.log("eqPropID: "+eqPropID);
+  	$.ajax({
+  		url: "../SelectPHP/anlysResultTable.php",
+  		type: "POST",
+  		data: {
+  			sampleID : sampleID,
+  			eqPropID : eqPropID
+  		},
+  		success: function(data,status, xhr){
+  			$("#anlys_result_table").html(data);
+  		}
+  	})
+  }
 
 
