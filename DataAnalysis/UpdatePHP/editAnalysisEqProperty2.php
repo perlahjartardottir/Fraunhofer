@@ -39,10 +39,12 @@ for($i = 0; $i < count($IDs); $i++){
 		$sql = "UPDATE anlys_property
 		SET anlys_prop_name = '$name'
 		WHERE anlys_prop_ID = '$propID';";
-
 		$result = mysqli_query($link, $sql);
+		
+		// This property already exists
 		if(!$result){
-			die("Could not update analysis property name: ".mysqli_error($link));
+
+			echo("Could not update analysis property name: ".mysqli_error($link));
 		}
 		// Update unit in anlys_eq_prop
 		$unitSql = "UPDATE anlys_eq_prop
@@ -50,7 +52,7 @@ for($i = 0; $i < count($IDs); $i++){
 		WHERE anlys_eq_ID = '$eqID' AND anlys_prop_ID = '$propID';";
 		$unitResult = mysqli_query($link, $unitSql);
 		if(!$unitResult){
-			die("Could not update analysis property: ".mysqli_error($link));
+			die("Could not update anlys eq property: ".mysqli_error($link));
 		}
 
 	}

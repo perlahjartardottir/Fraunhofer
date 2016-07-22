@@ -9,20 +9,22 @@ session_start();
 $user = $_SESSION["username"];
 
 // find his level of security
-$secsql = "SELECT security_level
+$secSql = "SELECT security_level
            FROM employee
            WHERE employee_name = '$user'";
-$secResult = mysqli_query($link, $secsql);
+$secResult = mysqli_query($link, $secSql);
 
 while($row = mysqli_fetch_array($secResult)){
-  $user_sec_lvl = $row[0];
+  $securityLevel = $row[0];
 }
-$user_sec_lvl = str_split($user_sec_lvl);
-$user_sec_lvl = $user_sec_lvl[2];
+$securityLevel = str_split($securityLevel);
+$securityLevel = $securityLevel[2];
+
+$_SESSION["securityLevelDA"] = $securityLevel;
 
 ?>
 
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="en">
 <link href='../css/header.css' rel='stylesheet'>
@@ -31,7 +33,10 @@ $user_sec_lvl = $user_sec_lvl[2];
 <link href='/css/jquery-ui.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!-- For formating input date -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
 <script src='../js/app.js'></script>
+<script src='../js/analysis.js'></script>
 <script src='../js/bootstrap.js'></script>
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">

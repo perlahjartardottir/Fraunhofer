@@ -12,25 +12,32 @@ function logout(){
 
 function addSample(){
 	var sampleSetID = $('#sample_set_ID').val();
-	// if(sampleSetID === ""){
-	// 	sampleSetID = -1;
-	// }
-	var sampleName = $('#sample_name').val();
-	var sampleMaterial = $('#sample_material').val();
+	var sampleSetDate = $('#sample_set_date').val()
+
+	if(sampleSetDate){
+		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
+		sampleSetDate = sampleSetDate.replace(/-/g,"").substring(2,8);
+	}
+
+	var sampleMaterial = $('#material-hidden').val();
 	var sampleComment = $('#sample_comment').val();
+
+	var sampleFile = $('#sample_file').val();
+
 	$.ajax({
 		url: "../InsertPHP/addSample.php",
 		type: "POST",
 		data: {
-			sampleName : sampleName,
+			sampleSetID : sampleSetID,
+			sampleSetDate : sampleSetDate,
 			sampleMaterial : sampleMaterial,
 			sampleComment : sampleComment,
-			sampleSetID : sampleSetID
+
+			sampleFile : sampleFile
 		},
 		success: function(data, status, xhr){
 			console.log(data);
 			window.location.reload(true);
-
 		}
 	});
 }
@@ -49,6 +56,7 @@ function showSamplesInSet(sampleSetID){
 	})
 }
 
+// To display samples in set at addSample.php
 function showSamplesInSetAndRefresh(sampleSetID){
 	$.ajax({
 		url: "../SelectPHP/showSamplesInSet.php",
@@ -63,7 +71,8 @@ function showSamplesInSetAndRefresh(sampleSetID){
 	})
 }
 
-function deleteSample(sampleID){	
+function deleteSample(sampleID, form){	
+	var errorMessage = "";
 	// Display a confirmation popup window before proceeding.
 	var r = confirm("Are you sure you want to delete this sample?");
 	if (r === true){
@@ -74,6 +83,42 @@ function deleteSample(sampleID){
 				sampleID : sampleID
 			},
 			success: function(data, status, xhr){
+			if(data.substring(0,5) === "Error"){
+          		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+          		"Samples that have been analysed or processed cannot be deleted.</div>";
+          		$(form).find("#error_message").html(errorMessage);
+          	}
+          	else{
+				window.location.reload(true);
+          	}
+			}
+		})
+	}
+}
+
+function editSample(sampleID, form){
+	var errorMessage = "";
+	var name = $(form).find("#sample_name").val();
+	if (!name){
+		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
+	}
+
+	var material = $('#material_edit-hidden').val();
+	var comment = $(form).find("#sample_comment").val();
+	
+	if(errorMessage){
+		$(form).find("#error_message").html(errorMessage);
+	}  else{
+		$.ajax({
+			url: "../UpdatePHP/editSample.php",
+			type: "POST",
+			data: {
+				sampleID : sampleID,
+				name : name,
+				material : material,
+				comment : comment
+			},
+			success: function(data, status, xhr){
 				console.log(data);
 				window.location.reload(true);
 			}
@@ -81,120 +126,97 @@ function deleteSample(sampleID){
 	}
 }
 
-function editSample(sampleID, element){
-	// Because we are fetching information from a modal, we need to use "this" or "element"
-	// to find the correct modal.
-	// parent() is modal-footer
-	// parent().prev() is modal-body
-	var name = $(element).parent().prev().find("#sample_name").val();
-	var material = $(element).parent().prev().find("#sample_material").val();
-	var comment = $(element).parent().prev().find("#sample_comment").val();
-	$.ajax({
-		url: "../UpdatePHP/editSample.php",
+function loadSampleModal(sampleID){
+		$.ajax({
+		url: "../SelectPHP/sampleModalFP.php",
 		type: "POST",
 		data: {
-			sampleID : sampleID,
-			name : name,
-			material : material,
-			comment : comment
+			sampleID : sampleID
 		},
 		success: function(data, status, xhr){
-			console.log(data);
-			window.location.reload(true);
+			$("#sample_modal").html(data);
+			
 		}
 	})
 }
 
-function editAnalysisEquipment(eqID, form){
-	var errorMessage = "";
-	var name = $(form).find("#eq_name").val();
-	var comment = $(form).find("#eq_comment").val();
-	var propertyIDs = [];
-	var propertyNames = [];
+  function updateSamplesInSet(){
+  	sampleSetID = $("#sample_set_ID").val();
 
-	if (!name){
-		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
-	}
-
-	for (i = 0; i < form.elements["prop_ID"].length; i++){
-		propertyIDs.push(form.elements["prop_ID"][i].value);
-		propertyName = form.elements["prop_name"][i].value;
-		if(!propertyName){
-			errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
-		}
-		else{
-			propertyNames.push(name);
-		}
-	}
-
-	if(errorMessage){
-		$(form).find("#error_message").html(errorMessage);
-	}  else{
-		$.ajax({
-			url: "../UpdatePHP/editAnalysisEquipment.php",
-			type: "POST",
-			data: {
-				eqID : eqID,
-				name : name,
-				comment : comment
-			},
-			success: function(data, status, xhr){
-				console.log(data);
-			//window.location.reload(true);
-			editAnalysisEqProperty(propertyIDs, propertyNames, eqID)
-		}
-	})
-	}
-}
-
-function deleteAnalysisEquipment(eqID){
-  	// Display a confirmation popup window before proceeding.
-  	var answer = confirm("Are you sure you want to deactive this equipment?");
-  	if (answer === true){
-  		$.ajax({
-  			url: "../DeletePHP/deleteAnalysisEquipment.php",
-  			type: "POST",
-  			data: {
-  				eqID : eqID,
-  			},
-  			success: function(data, status, xhr){
-  				console.log(data);
-  				window.location.reload(true);
-  			}
-  		})
-  	}
-  }
-
-  function editAnalysisEqProperty(propertyIDs, propertyNames, eqID){
   	$.ajax({
-  		url: "../UpdatePHP/editAnalysisEqProperty.php",
+  		url: "../SelectPHP/samplesInSetComboBox.php",
   		type: "POST",
   		data: {
-  			propertyIDs : propertyIDs,
-  			propertyNames : propertyNames,
-  			eqID : eqID
+  			sampleSetID : sampleSetID
   		},
-  		success: function(data, status, xhr){
-  			console.log(data);
+  		success: function(data,status, xhr){
+  			$("#samples_in_set").html(data);
+  		}
+  	})
+  }
+
+  // Update combo box at analyze.php
+  function updateSamplesInSetAndRefresh(){
+  	sampleSetID = $("#sample_set_ID").val();
+
+  	$.ajax({
+  		url: "../SelectPHP/samplesInSetComboBox.php",
+  		type: "POST",
+  		data: {
+  			sampleSetID : sampleSetID
+  		},
+  		success: function(data,status, xhr){
+  			
+  			$("#samples_in_set").html(data);
+
+  			window.location.reload(true);
+  			setSampleID();
+  		}
+  	})
+  }
+
+  function setSampleID(){
+  	sampleID = $("#sample_ID").val();
+  	console.log("settings sampleID: "+sampleID);
+  	$.ajax({
+  		url: "../UpdatePHP/setSampleID.php",
+  		type: "POST",
+  		data: {
+  			sampleID : sampleID
+  		},
+  		success: function(data,status, xhr){
+  		}
+  	})
+  }
+  function setSampleIDAndRefresh(){
+  	sampleID = $("#sample_ID").val();
+  	console.log("settings sampleID: "+sampleID);
+  	$.ajax({
+  		url: "../UpdatePHP/setSampleID.php",
+  		type: "POST",
+  		data: {
+  			sampleID : sampleID
+  		},
+  		success: function(data,status, xhr){
   			window.location.reload(true);
   		}
   	})
   }
 
-  function deleteAnalysisEqProperty(propID){
-  	// Display a confirmation popup window before proceeding.
-  	var answer = confirm("Are you sure you want to delete this property?");
-  	if (answer === true){
-  		$.ajax({
-  			url: "../DeletePHP/deleteAnalysisEqProperty.php",
-  			type: "POST",
-  			data: {
-  				propID : propID,
-  			},
-  			success: function(data, status, xhr){
-  				console.log(data);
-  				window.location.reload(true);
-  			}
-  		})
-  	}
+  function displayAnlysResultTable(sampleID, eqPropID){
+  	console.log("sampleID: "+sampleID);
+  	console.log("eqPropID: "+eqPropID);
+  	$.ajax({
+  		url: "../SelectPHP/anlysResultTable.php",
+  		type: "POST",
+  		data: {
+  			sampleID : sampleID,
+  			eqPropID : eqPropID
+  		},
+  		success: function(data,status, xhr){
+  			$("#anlys_result_table").html(data);
+  		}
+  	})
   }
+
+

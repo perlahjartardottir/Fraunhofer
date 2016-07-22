@@ -14,3 +14,7 @@ CREATE TABLE sample(
 	PRIMARY KEY(sample_ID),
     FOREIGN KEY(sample_set_ID) REFERENCES sample_set(sample_set_ID)
 );
+
+ALTER TABLE sample MODIFY sample_name VARCHAR(50);
+
+ALTER TABLE sample_set MODIFY sample_set_name VARCHAR(50);
