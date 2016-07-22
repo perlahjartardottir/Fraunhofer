@@ -2,8 +2,8 @@
 include '../../connection.php';
 session_start();
 
-$sampleID = $_SESSION["sampleID"];
-$eqPropID = mysqli_real_escape_string($link, $_POST["$eqPropID"]);
+$sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
+$eqPropID = mysqli_real_escape_string($link, $_POST["eqPropID"]);
 
 $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
 FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
@@ -14,7 +14,7 @@ $propertyRow = mysqli_fetch_row($propertyResult);
 
 $resultsSql = "SELECT anlys_res_result, anlys_res_date, anlys_res_comment, anlys_res_1, anlys_res_2, anlys_res_3
 FROM anlys_result
-WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '5'
+WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID'
 ORDER BY anlys_res_ID;";
 $resultsResult = mysqli_query($link, $resultsSql);
 
