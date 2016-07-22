@@ -6,9 +6,9 @@ function editAnalysisEquipment(eqID, form){
 	var propertyNames = [];
   var propertyUnits = [];
 
-	if (!name){
-		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
-	}
+  if (!name){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
+  }
 
   // It is not an array of elements
   if(!form.elements["prop_ID"].length){
@@ -18,17 +18,17 @@ function editAnalysisEquipment(eqID, form){
   }
   else{
    for (i = 0; i < form.elements["prop_ID"].length; i++){
-      propertyIDs.push(form.elements["prop_ID"][i].value);
-      propertyUnits.push(form.elements["prop_unit"][i].value);
-      propertyName = form.elements["prop_name"][i].value;
-      if(!propertyName){
-       errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
-      }
-      else{
-       propertyNames.push(propertyName);
-      }
-    }
-  }
+    propertyIDs.push(form.elements["prop_ID"][i].value);
+    propertyUnits.push(form.elements["prop_unit"][i].value);
+    propertyName = form.elements["prop_name"][i].value;
+    if(!propertyName){
+     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
+   }
+   else{
+     propertyNames.push(propertyName);
+   }
+ }
+}
 
 if(errorMessage){
   $(form).find("#error_message").html(errorMessage);
@@ -42,10 +42,10 @@ if(errorMessage){
     comment : comment
   },
   success: function(data, status, xhr){
-      console.log(data);
-      editAnalysisEqProperty(propertyIDs, propertyNames, propertyUnits, eqID);
-    }
-  })
+    console.log(data);
+    editAnalysisEqProperty(propertyIDs, propertyNames, propertyUnits, eqID);
+  }
+})
 }
 }
 
@@ -190,5 +190,20 @@ function deleteAnalysisEquipment(eqID){
      }
    })
   }
+}
 
+function displayAnlysResultTable(sampleID, eqPropID){
+  console.log("sampleID: "+sampleID);
+  console.log("eqPropID: "+eqPropID);
+  $.ajax({
+    url: "../SelectPHP/anlysResultTable.php",
+    type: "POST",
+    data: {
+      sampleID : sampleID,
+      eqPropID : eqPropID
+    },
+    success: function(data,status, xhr){
+      $("#anlys_result_table").html(data);
+    }
+  })
 }
