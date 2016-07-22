@@ -42,7 +42,7 @@ FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
 WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
 a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
 GROUP BY r.anlys_eq_prop_ID;";
-$anlysAverageResult = mysqli_query($link, $anlysAverageSql);
+
 
 ?>
 
@@ -76,8 +76,14 @@ $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
         <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
       </div>
     </div>
+    <!-- Analysis -->
     <div class='col-md-8'>
       <h3 class='custom_heading'>Analysis</h3>
+      <?
+      $anlysResult = mysqli_query($link, $anlysAverageSql);
+      if(mysqli_fetch_array($anlysResult)){
+
+      echo"
       <table class='table table-responsive'>
       <thead>
       <th >Coating</th>
@@ -85,9 +91,8 @@ $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
       <th class='text-left'>Average</th>
       <th>Equipment</th>
       </thead>
-      <tbody>
-    <?
-      
+      <tbody>";
+      $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
       while($averageRow = mysqli_fetch_array($anlysAverageResult)){
         echo"
           <tr>
@@ -97,11 +102,19 @@ $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
             <td>".$averageRow[1]."</td>
           </tr>";
       }
-    ?>
+    echo"
     </tbody>
-    </table>
+    </table>";
+    }
+    else{
+      echo"<p class='table_style_text'>This sample has not been analysed.</p>";
+    }
+    ?>
     </div>
     <div id='anlys_result_table' class='col-md-12'></div>
+    <!-- Process -->
+    <div class='col-md-8'>
+    <h3 class='custom_heading'>Process</h3>
   </div>
 </div>
 </div>
