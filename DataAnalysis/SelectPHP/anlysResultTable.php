@@ -23,7 +23,7 @@ echo"
 
 </div>
 <table class='table table-responsive'>
-<caption>Detailed analysis results for: ".$propertyRow[2]."</caption>
+<caption>Analysis results for: ".$propertyRow[2]."</caption>
   <thead>
     <tr>
       <th>Date</th>

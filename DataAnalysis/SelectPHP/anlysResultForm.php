@@ -34,18 +34,24 @@ while ($row = mysqli_fetch_row($noPropResultResult)){
 }
 
 
+// The result form.
 echo"
 <div class='form-group col-md-6'>";
 
 // Don't display property name if the property is overview or roughness. 
 if(!in_array($propID, $noPropResult)){
   echo"
-    <label id='property_name'>".$propertyRow[1].":</label>
-  <input type='text' id='res_res' value='' class='form-control'>";
+    <label id='property_name'>".$propertyRow[1];
+      // If the property has units display it.
+      if($propertyRow[6]){
+        echo " (".$propertyRow[6].")";
+      }
+      echo":</label>
+    <input type='text' id='res_res' value='' class='form-control'>";
 }
 
 echo"
-  <label>Date:".count($noPropResult)."</label>
+  <label>Date:</label>
   <div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
     <input type='date' id='res_date' class='custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
@@ -73,55 +79,7 @@ echo"
 </div>";
 
 echo"
-<h5 class='custom_heading'>".$sampleSetName."</h5>
-<table class='table table-responsive' style='width:92%;'>
-  <thead>
-    <tr>
-      <th>Equipment</th>
-      <th>Date</th>
-      <th>".$propertyRow[1]."";
-      // If the property has units display it.
-      if($propertyRow[6]){
-        echo " (".$propertyRow[6].")";
-      }
-      echo"
-      </th>
-      <th>Comment</th>";
-      for($i = 3; $i < 6; $i++){
-        if($propertyRow[$i]){
-          echo"
-            <th>".$propertyRow[$i]."</th>";
-        }
-      }
-    echo"
-    </tr>
-  </thead>
-  <tbody>";
-
-    while($resultRow = mysqli_fetch_array($resultsResult)){
-      echo"
-      <tr>
-        <td>".$propertyRow[2]."</td>
-        <td>".$resultRow[2]."</td>
-        <td>".$resultRow[0]."</td>
-        <td>".$resultRow[1]."</td>";
-        for($i = 3; $i < 6; $i++){
-        if($propertyRow[$i]){
-            echo"
-              <td>";
-            if($resultRow[$i]){
-              echo $resultRow[$i];
-            }
-            echo"
-            </td>";
-        }
-      }
-      echo"
-      </tr>";
-    }
-    echo"
-  </tbody>
-</table>";
+   <div id='anlys_result_table' class='col-md-12'></div>";
 
 $avgSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
 FROM anlys_result
@@ -131,11 +89,17 @@ $avgRow = mysqli_fetch_row($avgResult);
 // Only display calculations if there are any results. 
 if($avgRow[0]){
   echo"
-    <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>";
+  <div class='col-md-6'>
+    <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>
+  </div>";
 }
 
-  echo"
+echo"
   <script>
+
+  $(document).ready(function(){
+    displayAnlysResultTable(".$sampleID.",".$propertyRow[0].");
+  })
     // Trime the filepath to only the file name. 
     function getFileName(s) {
       return s.replace(/^.*[\\\/]/, '');
@@ -149,6 +113,8 @@ if($avgRow[0]){
         .format( this.getAttribute('data-date-format'))
         )
     }).trigger('change')
+
+    displayAnlysResultTable(sampleID, eqPropID)
 
   </script>";
 }

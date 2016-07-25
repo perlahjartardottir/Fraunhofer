@@ -34,7 +34,8 @@ $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 
 $propertiesSql = "SELECT anlys_prop_ID, anlys_prop_name
 FROM anlys_property
-WHERE anlys_prop_active = TRUE;";
+WHERE anlys_prop_active = TRUE
+ORDER BY anlys_prop_name;";
 $propertiesResult = mysqli_query($link, $propertiesSql);
 
 ?>

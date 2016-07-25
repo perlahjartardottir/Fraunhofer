@@ -148,21 +148,32 @@ function deleteAnalysisEquipment(eqID){
 
  function addAnlysResult(eqPropID, form){
   errorMessage = "";
+  sampleID = "";
+  propertyName = "";
+  result = "";
+  comment = "";
+  date = "";
+  params = [];
+
   sampleID = $(form).find('#sample_ID').val();
   if(sampleID === "-1"){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
   }
-  result = $(form).find('#res_res').val();
-  propertyName = $(form).find('#property_name')[0].innerText;
-  propertyNameCut = propertyName.substring(0, (propertyName.length - 1));
-  if(result === ""){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propertyNameCut+".</div>";
+
+  if($(form).find('#property_name')[0]){
+      propertyName = $(form).find('#property_name')[0].innerText;
+      propertyName = propertyName.substring(0, (propertyName.length - 1));
+      result = $(form).find('#res_res').val();
+      if(result === ""){
+        errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propertyName+".</div>";
+      }
   }
+
+
   comment = $(form).find('#res_comment').val();
   date = $(form).find('#res_date').val();
   console.log(date);
 
-  params = [];
   if(form.elements["res_param"]){
     for (i = 0; i < form.elements["res_param"].length; i++){
       params.push(form.elements["res_param"][i].value);
@@ -186,6 +197,7 @@ function deleteAnalysisEquipment(eqID){
       },
       success: function(data,status, xhr){
        console.log(data);
+       //displayAnlysResultTable(sampleID, eqPropID);
        window.location.reload();
      }
    })
