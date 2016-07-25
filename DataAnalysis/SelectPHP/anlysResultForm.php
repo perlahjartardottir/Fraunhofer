@@ -23,18 +23,29 @@ WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
 ORDER BY anlys_res_ID;";
 $resultsResult = mysqli_query($link, $resultsSql);
 
+// Find the property ID  of overview and display. 
+$noPropResultSql = "SELECT anlys_prop_ID
+FROM anlys_property
+WHERE anlys_prop_name LIKE 'Overview' OR anlys_prop_name LIKE 'Roughness';";
+$noPropResultResult= (mysqli_query($link, $noPropResultSql));
+$noPropResult = [];
+while ($row = mysqli_fetch_row($noPropResultResult)){
+  array_push($noPropResult, $row[0]);
+}
+
+
 echo"
 <div class='form-group col-md-6'>";
 
-// Don't display property name if the property is overview. 
-if($propID !== "3"){
+// Don't display property name if the property is overview or roughness. 
+if(!in_array($propID, $noPropResult)){
   echo"
     <label id='property_name'>".$propertyRow[1].":</label>
   <input type='text' id='res_res' value='' class='form-control'>";
 }
 
 echo"
-  <label>Date:</label>
+  <label>Date:".count($noPropResult)."</label>
   <div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
     <input type='date' id='res_date' class='custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
