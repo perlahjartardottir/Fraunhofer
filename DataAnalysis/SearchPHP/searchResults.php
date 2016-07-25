@@ -95,7 +95,3 @@ $result = mysqli_query($link, $sql);
     modal.style.display = "block";
   }
  </script>
-
-
-
-

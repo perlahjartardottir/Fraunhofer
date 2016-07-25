@@ -2,6 +2,7 @@
 include '../../connection.php';
 session_start();
 
+
 $securityLevel = $_SESSION["securityLevelDA"];
 $sampleID = $_SESSION["sampleID"];
 if(!$sampleID){
