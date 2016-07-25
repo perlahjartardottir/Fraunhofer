@@ -37,7 +37,7 @@ echo"
   <label>Date:</label>
   <div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-    <input type='date' id='res_date' class='sample_set_name' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
+    <input type='date' id='res_date' class='custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
   </div>
   <label>Comment:</label>
   <input type='text' id='res_comment' value='' class='form-control'>

@@ -28,19 +28,19 @@ if($securityLevel< 2){
         </div>
         <div class='col-md-12 form-group'>
           <label id='search_thickness_label' class='col-md-12'>Thickness: </label>
-          <input type="text" id='begin_thickness' class='col-md-6' placeholder='Min' onkeyup='displaySearchResults()' />
-          <input type="text" id='end_thickness' class='col-md-6' placeholder='Max' onkeyup='displaySearchResults()' />
+          <input type="number" id='min_thickness' class='col-md-6' placeholder='Min' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_thickness' class='col-md-6' placeholder='Max' onkeyup='displaySearchResults()' />
         </div>
         <div class='col-md-12 form-group'>
           <label>Sample date from:</label>
-          <input type="date" id='begin_date' class='form-control' onchange='displaySearchResults()'/>
+          <input type="date" id='begin_date' class='form-control' onchange='displaySearchResults()' />
         </div>
         <div class='col-md-12 form-group'>
           <label>Sample date to:</label>
           <input type="date" id='end_date' class='form-control' onchange='displaySearchResults()'/>
         </div>
       </form>
-    </div>
+      </div>
 
     <!-- SearchPHP/searchResults.php -->
     <div class="col-md-8 col-md-offset-1">
@@ -51,11 +51,9 @@ if($securityLevel< 2){
     <script type="text/javascript">
     $(document).ready(function(){
       displaySearchResults();
-      $('input[type=date]').each(function() {
-        if  (this.type != 'date' ) $(this).datepicker({
-          dateFormat: 'yy-mm-dd'
-        });
-      });
     });
+
+
+
   </script>
 </body>

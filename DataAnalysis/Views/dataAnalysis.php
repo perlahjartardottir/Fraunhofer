@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php
-  include "../../connection.php";
-  session_start();
+<?php
+include "../../connection.php";
+include "../header.php";
+session_start();
 
 $securityLevel = $_SESSION["securityLevelDA"];
 // iI the user security level is not high enough we kill the page and give him a link to the log in page.
@@ -14,14 +15,13 @@ if($securityLevel < 2){
 
   $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
   FROM sample_set
-  ORDER BY sample_set_ID DESC LIMIT 5;";
+  ORDER BY sample_set_ID DESC LIMIT 10;";
 
   ?>
 <head>
 <title>Fraunhofer CCD</title>
 </head>
 <body>
-  <?php include "../header.php";?>
   <div class="container">
     <div class='row well well-lg'>
       <div class='col-md-12 col-md-offset-1'>

@@ -54,7 +54,7 @@ h2[id="sample_overview_heading"]{
 }
 
 /* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */
-input[name = prop_name], input[name = prop_unit]{
+.custom_date input[name = prop_name], .custom_date input[name = prop_unit]{
     height: 34px;
     padding: 6px 12px;
     margin-bottom: 15px;    font-size: 14px;
@@ -71,7 +71,7 @@ input[name = prop_name], input[name = prop_unit]{
 
 /* addSample.php & analyze.php: To change the format of the date field */
 /* Based on: http://stackoverflow.com/a/31162426 */
-input {
+.custom_date input {
     position: relative;
     width: 100px; height: 34px;
     height: 34px;
@@ -87,7 +87,7 @@ input {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
-input:before {
+.custom_date input:before {
     position: absolute;
     top: 0px; left: 6px;
     content: attr(data-date);
@@ -95,11 +95,11 @@ input:before {
     color: black;
 }
 
-input::-webkit-datetime-edit, input::-webkit-inner-spin-button, input::-webkit-clear-button {
+.custom_date input::-webkit-datetime-edit, .custom_date input::-webkit-inner-spin-button, .custom_date input::-webkit-clear-button {
     display: none;
 }
 
-input::-webkit-calendar-picker-indicator {
+.custom_date input::-webkit-calendar-picker-indicator {
     position: absolute;
     top: 10px;
     right: 0;
