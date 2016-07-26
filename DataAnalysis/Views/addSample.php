@@ -1,27 +1,15 @@
 <?php
 include '../../connection.php';
 session_start();
-// Find the current user.
-$user = $_SESSION["username"];
-// Find his level of security.
-$secsql = "SELECT security_level, employee_ID
-FROM employee
-WHERE employee_name = '$user'";
-$secResult = mysqli_query($link, $secsql);
 
-while($row = mysqli_fetch_array($secResult)){
-  $securityLevel = $row[0];
-  $employee_ID = $row[1];
-}
-$securityLevel = str_split($securityLevel);
-$securityLevel = $securityLevel[1];
+$securityLevel = $_SESSION["securityLevelDA"];
 // If the user security level is not high enough we kill the page and give him a link to the log in page.
 if($securityLevel < 2){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
 
-// If the user has chosen to view a specific set when entering page. 
+// If the user has chosen to view a specific set at front page.
 if(isset($_GET['id'])) {
   $_SESSION["sampleSetID"] = $_GET['id'] ;
 }
@@ -222,6 +210,24 @@ $("#sample_set_date").on("change", function() {
        var sampleSetID = <?php echo $sampleSetID; ?>;
        showSamplesInSet(sampleSetID);
      });
+
+      // Check if the user enters with a set that exists in the dropd down. 
+      var exists = false;
+      $('#sample_set_ID option').each(function(){
+          if (this.value == '<?php echo $sampleSetID; ?>') {
+              exists = true;
+          }
+      });
+      // If the down does not contain the set, add it to the drop down. 
+      if(!exists){
+        <?
+          $sampleSetName = mysqli_fetch_row(mysqli_query($link,$sampleSetNameSql))[0];
+        ?>
+        $('#sample_set_ID').append($('<option>', {
+            value: <?php echo $sampleSetID; ?>,
+            text: '<?php echo $sampleSetName; ?>'
+        }));
+      }
 
     // Make the dropdown list select the currently chosen sample set on refresh.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)

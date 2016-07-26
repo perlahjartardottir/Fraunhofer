@@ -28,7 +28,8 @@ echo"
               <p></p>
               <p><strong>Comment: </strong>".$row[3]."</p>            
           </div>
-          <div class='modal-footer'>    
+          <div class='modal-footer'>
+              <button type='button' class='btn btn-success' onclick='location.href=\"addSample.php\"'>Edit</button>    
               <button type='button' class='btn btn-primary' >Process</button>
               <button type='button' class='btn btn-primary' onclick='location.href=\"analyze.php\"'>Analyze</button>
               <button type='button' class='btn btn-primary' onclick='location.href=\"sampleOverview.php\"' >Sample Overview</button>

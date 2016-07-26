@@ -38,6 +38,10 @@ WHERE anlys_prop_active = TRUE
 ORDER BY anlys_prop_name;";
 $propertiesResult = mysqli_query($link, $propertiesSql);
 
+$sampleSetNameSql = "SELECT sample_set_name
+FROM sample_set
+WHERE sample_set_ID = '$sampleSetID';";
+
 ?>
 
 <head>
@@ -145,6 +149,24 @@ $propertiesResult = mysqli_query($link, $propertiesSql);
       $(this).css("text-decoration", "underline");
 
     });
+
+      // Check if the user enters with a set that exists in the dropd down. 
+      var exists = false;
+      $('#sample_set_ID option').each(function(){
+          if (this.value == '<?php echo $sampleSetID; ?>') {
+              exists = true;
+          }
+      });
+      // If the down does not contain the set, add it to the drop down. 
+      if(!exists){
+        <?
+          $sampleSetName = mysqli_fetch_row(mysqli_query($link,$sampleSetNameSql))[0];
+        ?>
+        $('#sample_set_ID').append($('<option>', {
+            value: <?php echo $sampleSetID; ?>,
+            text: '<?php echo $sampleSetName; ?>'
+        }));
+      }
 
     // Make the combo box select the currently chosen sample set.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)

@@ -37,7 +37,7 @@ WHERE sample_ID = '$sampleID';";
 $sampleInfoResult = mysqli_query($link, $sampleInfoSql);
 $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 
-$anlysAverageSql = "SELECT r.anlys_eq_prop_ID, e.anlys_eq_name, p.anlys_prop_name, TRUNCATE(AVG(r.anlys_res_result), 3)
+$anlysAverageSql = "SELECT r.anlys_eq_prop_ID, e.anlys_eq_name, p.anlys_prop_name, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult
 FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
 WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
 a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
@@ -98,7 +98,16 @@ GROUP BY r.anlys_eq_prop_ID;";
           <tr>
             <td>Coating</td>
             <td>".$averageRow[2]."</td>
-            <td><a onclick='displayAnlysResultTable(".$sampleID.",".$averageRow[0].")'>".$averageRow[3]."</a></td>
+            <td><a onclick='displayAnlysResultTable(".$sampleID.",".$averageRow[0].")'>";
+            if($averageRow[avegResult] != 0){
+              echo $averageRow[avegResult];
+            }
+            // If we cannot display the average e.g. for overview and roughness. 
+            else{
+              echo "N/A";
+            }
+            echo"
+            </a></td>
             <td>".$averageRow[1]."</td>
           </tr>";
       }

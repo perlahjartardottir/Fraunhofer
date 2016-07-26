@@ -23,7 +23,7 @@ if($securityLevel< 2){
           <input type="text" id='sample_name' class='form-control' onkeyup='displaySearchResults()' />
         </div>
         <div class='col-md-12 form-group'>
-          <label>Coating: </label>
+          <label>Coating: (No functionality)</label>
           <input type="text" id='' class='form-control' onkeyup='displaySearchResults()' />
         </div>
         <div class='col-md-12 form-group'>
