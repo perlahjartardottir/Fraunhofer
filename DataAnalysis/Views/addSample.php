@@ -51,7 +51,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div>
     <div class='row well well-lg'>
       <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>
-      <form role='form'>
+      <form role='form' action="../InsertPHP/addSample.php" method="post" enctype="multipart/form-data">
     <!-- <div class='col-md-4 form-group'>
       <label>Employee: </label>
       <input type='text' list='employees' name='employeeList' id='employeeList' value='' class='col-md-12 form-control'>
@@ -156,7 +156,8 @@ WHERE sample_set_ID = '$sampleSetID';";
       </div>
     </div> <!-- Details -->
     <div class='col-md-12'>
-      <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button>
+      <!-- <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button> -->
+      <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add</button>
     </div>
   </form>
 </div>

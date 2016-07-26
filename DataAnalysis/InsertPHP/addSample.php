@@ -2,11 +2,11 @@
 include '../../connection.php';
 session_start();
 
-$sampleSetID = mysqli_real_escape_string($link, $_POST['sampleSetID']);
-$sampleSetDate = mysqli_real_escape_string($link, $_POST['sampleSetDate']);
-$sampleMaterial = mysqli_real_escape_string($link, $_POST['sampleMaterial']);
-$sampleComment = mysqli_real_escape_string($link, $_POST['sampleComment']);
-$sampleName = "";
+// $sampleSetID = mysqli_real_escape_string($link, $_POST['sampleSetID']);
+// $sampleSetDate = mysqli_real_escape_string($link, $_POST['sampleSetDate']);
+// $sampleMaterial = mysqli_real_escape_string($link, $_POST['sampleMaterial']);
+// $sampleComment = mysqli_real_escape_string($link, $_POST['sampleComment']);
+// $sampleName = "";
 
  // $fileName = $_FILES['sampleFile']['name'];
  // $tmpName  = $_FILES['sampleFile']['tmp_name'];
@@ -15,6 +15,12 @@ $sampleName = "";
  // $fp = fopen($tmpName, 'r');
  // $content = fread($fp, filesize($tmpName));
  // fclose($fp);
+
+$sampleSetID = mysqli_real_escape_string($link, $_POST['#sample_set_ID']);
+$sampleSetDate = mysqli_real_escape_string($link, $_POST['#sample_set_date']);
+$sampleMaterial = mysqli_real_escape_string($link, $_POST['#material-hidden']);
+$sampleComment = mysqli_real_escape_string($link, $_POST['#sample_comment']);
+$sampleName = "";
 
 // If it is a new sample set.
 if($sampleSetID === '-1'){ 

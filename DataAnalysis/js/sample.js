@@ -54,7 +54,10 @@ function showSamplesInSetAndRefresh(sampleSetID){
 		},
 		success: function(data, status, xhr){
 			$("#samples_in_set").html(data);
-			window.location.reload(true);
+			// window.location.reload(true);
+			// Clear the id, since we have set the sampleSet session ID. 
+			window.location.href="../Views/addSample.php";
+
 		}
 	})
 }
