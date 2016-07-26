@@ -44,6 +44,10 @@ WHERE sample_set_ID = '$sampleSetID';";
 <body>
   <?php include '../header.php'; ?>
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
+  <?php
+
+?>
+
   <div class='container'>
     <div class='row well well-lg'>
       <h5>The sample set name is on the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
@@ -51,7 +55,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div>
     <div class='row well well-lg'>
       <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>
-      <form role='form' action="../InsertPHP/addSample.php" method="post" enctype="multipart/form-data">
+      <form role='form' action='../InsertPHP/addSample.php' method="post" enctype="multipart/form-data">
     <!-- <div class='col-md-4 form-group'>
       <label>Employee: </label>
       <input type='text' list='employees' name='employeeList' id='employeeList' value='' class='col-md-12 form-control'>
@@ -66,7 +70,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     <div class='col-md-6'>
       <div class='col-md-12 form-group'>
         <label>Choose a set: </label>
-        <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' style='width:auto;'>
+        <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' name='sample_set_ID' style='width:auto;'>
           <option value='-1'>New</option>
           <?
           while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
@@ -84,21 +88,21 @@ WHERE sample_set_ID = '$sampleSetID';";
           <label>When was the sample initialized? </label>
           <div>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-            <input type='date' id='sample_set_date' class='sample_set_name custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
+            <input type='date' id='sample_set_date' name='sample_set_date' class='sample_set_name custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
           </div>
         </div>
         <div class='col-md-12 form-group'>
           <label>Sample set name: </label>
           <br>
           <p class='sample_set_name'>CCD - </p>
-          <span id='sample_set_date_echo'></span>
+          <span id='sample_set_date_echo' name='sample_set_date_echo'></span>
           <p class='sample_set_name'> - XX </p>
         </div>
         <div class='col-md-12 form-group'>
           <label>Sample name: </label>
           <br>
           <p class='sample_set_name'>CCD - </p>
-          <span id='sample_set_date_echo_name'></span>
+          <span id='sample_set_date_echo_name' name='sample_set_date_echo'></span>
           <p class='sample_set_name'> - XX - 01</p>
         </div>";
       }
@@ -143,15 +147,17 @@ WHERE sample_set_ID = '$sampleSetID';";
       </div>
       <div class='col-md-12 form-group'>
         <label for='sample_comment'>Comment: </label>
-        <textarea id='sample_comment' class='form-control' rows='4'></textarea>
+        <textarea id='sample_comment' name='sample_comment' class='form-control' rows='4'></textarea>
       </div>
       <div class='col-md-12 form-group'>
-        <label>Picture: (No functionality) </label>
+<!--         <label>Picture: (No functionality) </label>
         <br>
         <label class="btn btn-default btn-file">Choose File
           <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
         </label>
-        <span id="sample_file_path"></span>
+        <span id="sample_file_path"></span> -->
+
+        <input type="file" name="fileToUpload" id="fileToUpload">
 
       </div>
     </div> <!-- Details -->
