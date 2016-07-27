@@ -115,6 +115,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           <label>Sample name: </label>
           <br>
           <p>".$sampleName."</p>
+          <input type='hidden' id='sample_name' name='sample_name' value='".$sampleName."'>
         </div>";
       }
 
@@ -181,46 +182,46 @@ $("#sample_set_date").on("change", function(){
 
 }).trigger("change")
 
-  // So user can input text as well as choose from a datalist. 
-  // http://stackoverflow.com/a/29882539
-  $('input[list]').on('input', function(e) {
-    var input = $(e.target),
-    options = $('#' + input.attr('list') + ' option'),
-    hiddenInput = $('#' + input.attr('id') + '-hidden'),
-    label = input.val();
+// So user can input text as well as choose from a datalist. 
+// http://stackoverflow.com/a/29882539
+$('input[list]').on('input', function(e) {
+  var input = $(e.target),
+  options = $('#' + input.attr('list') + ' option'),
+  hiddenInput = $('#' + input.attr('id') + '-hidden'),
+  label = input.val();
 
-    hiddenInput.val(label);
+  hiddenInput.val(label);
 
-    for(var i = 0; i < options.length; i++) {
-      var option = options.eq(i);
+  for(var i = 0; i < options.length; i++) {
+    var option = options.eq(i);
 
-      if(option.text() === label) {
-        hiddenInput.val( option.attr('data-value') );
-        break;
-      }
+    if(option.text() === label) {
+      hiddenInput.val( option.attr('data-value') );
+      break;
     }
-  });
+  }
+});
 
-      // Check if the user enters with a set that exists in the dropd down. 
-      var exists = false;
-      $('#sample_set_ID option').each(function(){
-          if (this.value == '<?php echo $sampleSetID; ?>') {
-              exists = true;
-          }
-      });
-      // If the down does not contain the set, add it to the drop down. 
-      if(!exists){
-        <?
-          $sampleSetName = mysqli_fetch_row(mysqli_query($link,$sampleSetNameSql))[0];
-        ?>
-        $('#sample_set_ID').append($('<option>', {
-            value: <?php echo $sampleSetID; ?>,
-            text: '<?php echo $sampleSetName; ?>'
-        }));
-      }
+// Check if the user enters with a set that exists in the dropd down. 
+var exists = false;
+$('#sample_set_ID option').each(function(){
+    if (this.value == '<?php echo $sampleSetID; ?>') {
+        exists = true;
+    }
+});
+// If the down does not contain the set, add it to the drop down. 
+if(!exists){
+  <?
+    $sampleSetName = mysqli_fetch_row(mysqli_query($link,$sampleSetNameSql))[0];
+  ?>
+  $('#sample_set_ID').append($('<option>', {
+      value: <?php echo $sampleSetID; ?>,
+      text: '<?php echo $sampleSetName; ?>'
+  }));
+}
 
-    // Make the dropdown list select the currently chosen sample set on refresh.
-    $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+// Make the dropdown list select the currently chosen sample set on refresh.
+$("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
 
   </script>
 </body>

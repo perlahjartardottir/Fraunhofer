@@ -6,7 +6,8 @@ $sampleSetID = $_POST['sample_set_ID'];
 $sampleSetDate = $_POST['sample_set_date'];
 $sampleMaterial = $_POST['material'];
 $sampleComment = $_POST['sample_comment'];
-$sampleName = "";
+$sampleSetName = "";
+$sampleName = $_POST['sample_name'];
 
 if($sampleSetDate){
 	$sampleSetDate = substr(str_replace("-", "", $sampleSetDate), 2, 6);
@@ -55,28 +56,10 @@ if($sampleSetDate){
 //     }
 // }
 // If it is a new sample set.
+
 if($sampleSetID === '-1'){ 
 
-	// Construct the sample set name. Format: CCD-YYMMDD-XX
-	$latestSampleSetNameSql = "SELECT sample_set_name
-	FROM sample_set
-	WHERE sample_set_ID = (SELECT MAX(s.sample_set_ID)
-	FROM sample_set s);";
-	$latestSampleSetNameResult = mysqli_query($link, $latestSampleSetNameSql);
-	$latestSampleSetNameRow = mysqli_fetch_array($latestSampleSetNameResult);
-	$latestSampleSetName = $latestSampleSetNameRow[0];
-	$latestSampleSetDate = substr($latestSampleSetName, 4, 6);
-	$latestSampleSetNumber = substr($latestSampleSetName, 12, 2);
-	$sampleSetNumber = 1;
-
-	// If this is not the first sample set today increase number.
-	if($latestSampleSetDate === $sampleSetDate){
-		$sampleSetNumber = $latestSampleSetNumber + 1;
-	}
-	
-	// Format the XX part.
-	$sampleSetNumber = str_pad($sampleSetNumber, 2, '0', STR_PAD_LEFT);
-	$sampleSetName = "CCD-".$sampleSetDate."-".$sampleSetNumber;
+	$sampleSetName = $_POST["sample_set_name"];
 
 	// Insert the set.
 	$sampleSetSql = "INSERT INTO sample_set(sample_set_name)
@@ -87,30 +70,6 @@ if($sampleSetID === '-1'){
 	if($sampleSetResult){
 		$sampleSetID = mysqli_insert_id($link);
 	}
-
-	$sampleName = $sampleSetName."-01";
-
-}
-else{
-
-// Get the latest sample from the chosen sample set.
-$sampleSetNameSql = "SELECT sample_set_name
-FROM sample_set
-WHERE sample_set_ID = '$sampleSetID';";
-$sampleSetNameResult = mysqli_query($link, $sampleSetNameSql);
-$sampleSetNameRow = mysqli_fetch_row($sampleSetNameResult);
-$sampleSetName = $sampleSetNameRow[0];
-
-// Format: CCD-YYMMDD-XX-NN
-$latestSampleNumberSql = "SELECT COUNT(sample_id)
-FROM sample
-WHERE sample_set_ID = '$sampleSetID';";
-$latestSampleNumberResult = mysqli_query($link, $latestSampleNumberSql);
-$latestSampleNumberRow = mysqli_fetch_row($latestSampleNumberResult);
-$latestSampleNumber = $latestSampleNumberRow[0];
-$sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
-$sampleName = $sampleSetName."-".$sampleNumber;
-
 
 }
 

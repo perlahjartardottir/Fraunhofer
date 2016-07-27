@@ -13,11 +13,13 @@ $sampleSetNumber = str_pad($sampleSetNumber, 2, '0', STR_PAD_LEFT);
 echo"
 	<label>Set name: </label>
 	<br>
-	<p id='sample_set_name' name='sample_set_name'class='sample_set_name'>CCD-".$sampleSetDate."-".$sampleSetNumber."</p>
+	<p class='sample_set_name'>CCD-".$sampleSetDate."-".$sampleSetNumber."</p>
+	<input type='hidden' id='sample_set_name' name='sample_set_name' value='CCD-".$sampleSetDate."-".$sampleSetNumber."'>
 	<br>
 	<label>Sample name: </label>
 	<br>
-	<p id='sample_name' name='sample_name' class='sample_set_name'>CCD-".$sampleSetDate."-".$sampleSetNumber."-01</p>";
+	<p class='sample_set_name'>CCD-".$sampleSetDate."-".$sampleSetNumber."-01</p>
+	<input type='hidden' id='sample_name' name='sample_name' value='CCD-".$sampleSetDate."-".$sampleSetNumber."-01'>";
 
 mysqli_close($link);
 ?>
