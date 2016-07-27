@@ -4,11 +4,12 @@ session_start();
 
 $securityLevel = $_SESSION["securityLevelDA"];
 
-// if the user security level is not high enough we kill the page and give him a link to the log in page
+// If the user security level is not high enough we kill the page and give him a link to the log in page.
 if($securityLevel < 2){
-	echo "<a href='../../Login/login.php'>Login Page</a></br>";
-	die("You don't have the privileges to view this site.");
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
+  die("You don't have the privileges to view this site.");
 }
+
 $sampleSetID = $_SESSION["sampleSetID"];
 if(!$sampleSetID){
   $sampleSetID = "-1";
@@ -44,6 +45,7 @@ a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
 GROUP BY r.anlys_eq_prop_ID;";
 
 
+
 ?>
 
 <head>
@@ -58,7 +60,7 @@ GROUP BY r.anlys_eq_prop_ID;";
        <h2 id='sample_overview_heading' class='custom_heading center_heading'>Sample overview</h2>
        <div class='col-md-4 form-group'>
        <!-- Set combo box -->
-        <label>Set:<?php echo $sampleSetID;?>  <?php echo $sampleID;?></label>
+        <label>Set:</label>
         <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh()' style='width:auto;'>
           <option value='-1'>Choose a set</option>
           <?
@@ -124,6 +126,8 @@ GROUP BY r.anlys_eq_prop_ID;";
     <!-- Process -->
     <div class='col-md-8'>
     <h3 class='custom_heading'>Process</h3>
+      <p class='table_style_text'>This sample has not been processed.</p>
+
   </div>
 </div>
 </div>

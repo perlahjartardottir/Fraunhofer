@@ -2,13 +2,13 @@
   include '../../connection.php';
   session_start();
 
-  $securityLevel = $_SESSION["securityLevelDA"];
+ $securityLevel = $_SESSION["securityLevelDA"];
 
-  // if the user security level is not high enough we kill the page and give him a link to the log in page
-  if($securityLevel < 4){
-    echo "<a href='../../Login/login.php'>Login Page</a></br>";
-    die("You don't have the privileges to view this site.");
-  } 
+  // If the user security level is not high enough we kill the page and give him a link to the log in page.
+if($securityLevel < 2){
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
+  die("You don't have the privileges to view this site.");
+}
 
   $analysisEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID, p.anlys_prop_name
   FROM anlys_equipment e, anlys_eq_prop a, anlys_property p
@@ -39,6 +39,7 @@
   if (!$allEqResult){
    die("Database query failed: " . mysql_error());
  }
+
  ?>
 
  <head>
