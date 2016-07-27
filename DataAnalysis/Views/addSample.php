@@ -93,25 +93,7 @@ WHERE sample_set_ID = '$sampleSetID';";
             <input type='date' id='sample_set_date' name='sample_set_date' class='sample_set_name custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
           </div>
         </div>
-        <div class='col-md-12 form-group'>
-          <label>Set name: </label>
-          <br>
-          <p class='sample_set_name'>CCD - </p>
-          <span id='sample_set_date_echo' name='sample_set_date_echo'></span>
-          <p class='sample_set_name'> - XX </p>
-        </div>
-        <div class='col-md-12 form-group'>
-          <label>Sample name: </label>
-          <br>
-          <p class='sample_set_name'>CCD - </p>
-          <span id='sample_set_date_echo_name' name='sample_set_date_echo'></span>
-          <p class='sample_set_name'> - XX - 01</p>
-        </div>
-        <div class='col-md-12 form-group'>
-          <label>Set name new: </label>
-          <br>
-          <p id='sample_set_name_new' class='sample_set_name'></p>
-        </div>";
+        <div id='sample_set_name_div' class='col-md-12 form-group'></div>";
       }
   // Adding to existing set.
       else{
@@ -182,33 +164,47 @@ WHERE sample_set_ID = '$sampleSetID';";
 </div>
 <script>
 
+// Show the samples in the sample set on refresh.
+$(document).ready(function(){
+ var sampleSetID = <?php echo $sampleSetID; ?>;
+ showSamplesInSet(sampleSetID);
+});
+
 // Format the date input.
-$("#sample_set_date").on("change", function() {
+$("#sample_set_date").on("change", function(){
   this.setAttribute(
     "data-date",
     moment(this.value, "YYYY-MM-DD")
     .format( this.getAttribute("data-date-format"))
-    )
+    );
+    sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
+    console.log(sampleSetDate);
+    $("#sample_set_date_echo").html(sampleSetDate);
+    $("#sample_set_date_echo_name").html(sampleSetDate);
+    getSampleSetName(sampleSetDate);
+
 }).trigger("change")
+
+
 
   // When new date is selected it is sent to sample_set_date_echo.
   // On change we display a new set and sample name. 
-  $("#sample_set_date_echo").on("change", function() {
-    sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
-    $("#sample_set_date_echo").html(sampleSetDate);
-    $("#sample_set_date_echo_name").html(sampleSetDate);
-    setSampleSetDate(sampleSetDate);
-    <?
-      $sampleSetDate = $_SESSION["sampleSetDate"];
-      $sampleSetNumberSql = "SELECT count(sample_set_ID)
-      FROM sample_set
-      WHERE MID(sample_set_name, 5, 6) = '$sampleSetDate';";
-      $sampleSetNumber = mysqli_fetch_row(mysqli_query($link, $sampleSetNumberSql))[0] + 1;
-      $sampleSetNumber = str_pad($sampleSetNumber, 2, '0', STR_PAD_LEFT);
-    ?>
-    sampleSetNumber = <?echo $sampleSetDate;?>;
-    $("#sample_set_name_new").html(sampleSetNumber);
-  }).trigger("change")
+  // $("#sample_set_date_echo").on("change", function() {
+  //   sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
+  //   $("#sample_set_date_echo").html(sampleSetDate);
+  //   $("#sample_set_date_echo_name").html(sampleSetDate);
+  //   setSampleSetDate(sampleSetDate);
+  //   <?
+  //     $sampleSetDate = $_SESSION["sampleSetDate"];
+  //     $sampleSetNumberSql = "SELECT count(sample_set_ID)
+  //     FROM sample_set
+  //     WHERE MID(sample_set_name, 5, 6) = '$sampleSetDate';";
+  //     $sampleSetNumber = mysqli_fetch_row(mysqli_query($link, $sampleSetNumberSql))[0] + 1;
+  //     $sampleSetNumber = str_pad($sampleSetNumber, 2, '0', STR_PAD_LEFT);
+  //   ?>
+  //   sampleSetNumber = <?echo $sampleSetDate;?>;
+  //   $("#sample_set_name_new").html(sampleSetNumber);
+  // }).trigger("change")
 
 
   // So user can input text as well as choose from a datalist. 
@@ -231,12 +227,6 @@ $("#sample_set_date").on("change", function() {
       }
     }
   });
-
-      // Show the samples in the sample set on refresh.
-      $(document).ready(function(){
-       var sampleSetID = <?php echo $sampleSetID; ?>;
-       showSamplesInSet(sampleSetID);
-     });
 
       // Check if the user enters with a set that exists in the dropd down. 
       var exists = false;

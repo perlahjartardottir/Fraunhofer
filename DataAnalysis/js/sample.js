@@ -194,8 +194,6 @@ function loadSampleModal(sampleID){
   	})
   }
   function setSampleSetDate(sampleSetDate){
-  	sampleID = $("#sample_ID").val();
-  	console.log("settings sampleID: "+sampleID);
   	$.ajax({
   		url: "../UpdatePHP/setSampleSetDate.php",
   		type: "POST",
@@ -203,6 +201,20 @@ function loadSampleModal(sampleID){
   			sampleSetDate : sampleSetDate
   		},
   		success: function(data,status, xhr){
+  			console.log(data);
+  		}
+  	})
+  }
+
+  function getSampleSetName(sampleSetDate){
+  	  	$.ajax({
+  		url: "../SelectPHP/getSampleSetName.php",
+  		type: "POST",
+  		data: {
+  			sampleSetDate : sampleSetDate
+  		},
+  		success: function(data,status, xhr){
+  			$("#sample_set_name_div").html(data);
   		}
   	})
   }
