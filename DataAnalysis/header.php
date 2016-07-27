@@ -5,10 +5,10 @@
 <?php
 include '../connection.php';
 session_start();
-// find the current user
+// Find the current user.
 $user = $_SESSION["username"];
 
-// find his level of security
+// Find his level of security.
 $secSql = "SELECT security_level
            FROM employee
            WHERE employee_name = '$user'";

@@ -1,34 +1,34 @@
-function addSample(){
-	var sampleSetID = $('#sample_set_ID').val();
-	var sampleSetDate = $('#sample_set_date').val()
+// function addSample(){
+// 	var sampleSetID = $('#sample_set_ID').val();
+// 	var sampleSetDate = $('#sample_set_date').val()
 
-	if(sampleSetDate){
-		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
-		sampleSetDate = sampleSetDate.replace(/-/g,"").substring(2,8);
-	}
+// 	if(sampleSetDate){
+// 		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
+// 		sampleSetDate = sampleSetDate.replace(/-/g,"").substring(2,8);
+// 	}
 
-	var sampleMaterial = $('#material-hidden').val();
-	var sampleComment = $('#sample_comment').val();
+// 	var sampleMaterial = $('#material-hidden').val();
+// 	var sampleComment = $('#sample_comment').val();
 
-	var sampleFile = $('#sample_file').val();
+// 	var sampleFile = $('#sample_file').val();
 
-	$.ajax({
-		url: "../InsertPHP/addSample.php",
-		type: "POST",
-		data: {
-			sampleSetID : sampleSetID,
-			sampleSetDate : sampleSetDate,
-			sampleMaterial : sampleMaterial,
-			sampleComment : sampleComment,
+// 	$.ajax({
+// 		url: "../InsertPHP/addSample.php",
+// 		type: "POST",
+// 		data: {
+// 			sampleSetID : sampleSetID,
+// 			sampleSetDate : sampleSetDate,
+// 			sampleMaterial : sampleMaterial,
+// 			sampleComment : sampleComment,
 
-			sampleFile : sampleFile
-		},
-		success: function(data, status, xhr){
-			console.log(data);
-			window.location.reload(true);
-		}
-	});
-}
+// 			sampleFile : sampleFile
+// 		},
+// 		success: function(data, status, xhr){
+// 			console.log(data);
+// 			window.location.reload(true);
+// 		}
+// 	});
+// }
 
 function showSamplesInSet(sampleSetID){
 	$.ajax({
@@ -126,6 +126,20 @@ function loadSampleModal(sampleID){
 		},
 		success: function(data, status, xhr){
 			$("#sample_modal").html(data);
+			
+		}
+	})
+}
+
+function loadSampleModalEdit(sampleID){
+		$.ajax({
+		url: "../SelectPHP/sampleModalEdit.php",
+		type: "POST",
+		data: {
+			sampleID : sampleID
+		},
+		success: function(data, status, xhr){
+			$("#sample_modal_edit").html(data);
 			
 		}
 	})
