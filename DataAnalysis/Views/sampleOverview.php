@@ -116,7 +116,7 @@ GROUP BY r.anlys_eq_prop_ID;";
     </table>";
     }
     else{
-      echo"<p class='table_style_text'>This sample has not been analysed.</p>";
+      echo"<p class='table_style_text'>This sample has not been analyzed.</p>";
     }
     ?>
     </div>
