@@ -193,22 +193,10 @@ function loadSampleModal(sampleID){
   		}
   	})
   }
-  function setSampleSetDate(sampleSetDate){
-  	$.ajax({
-  		url: "../UpdatePHP/setSampleSetDate.php",
-  		type: "POST",
-  		data: {
-  			sampleSetDate : sampleSetDate
-  		},
-  		success: function(data,status, xhr){
-  			console.log(data);
-  		}
-  	})
-  }
 
-  function getSampleSetName(sampleSetDate){
+  function getNewSampleSetName(sampleSetDate){
   	  	$.ajax({
-  		url: "../SelectPHP/getSampleSetName.php",
+  		url: "../SelectPHP/getNewSampleSetName.php",
   		type: "POST",
   		data: {
   			sampleSetDate : sampleSetDate

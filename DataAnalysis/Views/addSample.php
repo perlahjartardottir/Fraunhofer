@@ -83,8 +83,6 @@ WHERE sample_set_ID = '$sampleSetID';";
       <?php
     // Adding to a new set.
       if($sampleSetID === "-1"){
-
-
         echo "
         <div class='col-md-12 form-group'>
           <label>When was the sample initialized? </label>
@@ -146,7 +144,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
         </label>
         <span id="sample_file_path"></span> -->
-
+        <label>Picture: (No functionality) </label>
         <input type="file" name="fileToUpload" id="fileToUpload">
 
       </div>
@@ -179,37 +177,12 @@ $("#sample_set_date").on("change", function(){
     );
     sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
     console.log(sampleSetDate);
-    $("#sample_set_date_echo").html(sampleSetDate);
-    $("#sample_set_date_echo_name").html(sampleSetDate);
-    getSampleSetName(sampleSetDate);
+    getNewSampleSetName(sampleSetDate);
 
 }).trigger("change")
 
-
-
-  // When new date is selected it is sent to sample_set_date_echo.
-  // On change we display a new set and sample name. 
-  // $("#sample_set_date_echo").on("change", function() {
-  //   sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
-  //   $("#sample_set_date_echo").html(sampleSetDate);
-  //   $("#sample_set_date_echo_name").html(sampleSetDate);
-  //   setSampleSetDate(sampleSetDate);
-  //   <?
-  //     $sampleSetDate = $_SESSION["sampleSetDate"];
-  //     $sampleSetNumberSql = "SELECT count(sample_set_ID)
-  //     FROM sample_set
-  //     WHERE MID(sample_set_name, 5, 6) = '$sampleSetDate';";
-  //     $sampleSetNumber = mysqli_fetch_row(mysqli_query($link, $sampleSetNumberSql))[0] + 1;
-  //     $sampleSetNumber = str_pad($sampleSetNumber, 2, '0', STR_PAD_LEFT);
-  //   ?>
-  //   sampleSetNumber = <?echo $sampleSetDate;?>;
-  //   $("#sample_set_name_new").html(sampleSetNumber);
-  // }).trigger("change")
-
-
   // So user can input text as well as choose from a datalist. 
   // http://stackoverflow.com/a/29882539
-
   $('input[list]').on('input', function(e) {
     var input = $(e.target),
     options = $('#' + input.attr('list') + ' option'),
