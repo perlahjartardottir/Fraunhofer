@@ -193,5 +193,19 @@ function loadSampleModal(sampleID){
   		}
   	})
   }
+  function setSampleSetDate(sampleSetDate){
+  	sampleID = $("#sample_ID").val();
+  	console.log("settings sampleID: "+sampleID);
+  	$.ajax({
+  		url: "../UpdatePHP/setSampleSetDate.php",
+  		type: "POST",
+  		data: {
+  			sampleSetDate : sampleSetDate
+  		},
+  		success: function(data,status, xhr){
+  		}
+  	})
+  }
+
 
 
