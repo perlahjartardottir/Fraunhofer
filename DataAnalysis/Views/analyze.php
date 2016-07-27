@@ -122,6 +122,9 @@ WHERE sample_set_ID = '$sampleSetID';";
         <h4 class='custom_heading'>3. Enter results</h4>
         <div id='res_div'></div>
       </div>
+      <div class='col-md-12'>
+        <button type='button' class='btn btn-primary' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
+      </div>
     </div>
   </form>
 </div>
