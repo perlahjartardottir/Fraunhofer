@@ -23,11 +23,11 @@ h2[id="sample_overview_heading"]{
     display: inline-block;
 }
 
-#front_table.table-borderless tbody tr td{
+#front_table.table-borderless tbody tr td, #all_anlys_eq_table.table-borderless tbody tr td{
     border: none;
 }
 
-#front_table.table{
+#front_table.table, #all_anlys_eq_table.table{
     margin-bottom: 40px;
 }
 

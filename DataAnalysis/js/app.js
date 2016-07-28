@@ -43,3 +43,19 @@ function displaySearchResults(){
 		}
 	})
 }
+
+function displaySampleResults(){
+	$('#sample_results').html();
+	var sampleSetName = $("#sample_set_name").val();
+
+	$.ajax({
+		url : "../searchPHP/samplesFP.php",
+		type : "POST",
+		data : {
+			sampleSetName : sampleSetName,
+		},
+		success : function(data, status, xhr){
+			$("#sample_results").html(data);
+		}
+	})
+}

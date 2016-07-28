@@ -52,7 +52,7 @@ if($securityLevel < 2){
     <div class='row well well-lg'>
       <div class='col-md-12'>
         <h3 class='custom_heading center_heading'>Analysis Equipment</h2>
-          <table id='front_table' class='table table-borderless col-md-12'>
+          <table id='all_anlys_eq_table' class='table table-borderless col-md-12'>
             <thead>
               <tr>
                 <th>Name</th>
