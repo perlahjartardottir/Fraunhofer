@@ -142,6 +142,8 @@ WHERE sample_set_ID = '$sampleSetID';";
     $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
     $("#<?php echo $eqID.$propID; ?>").css("text-decoration", "underline");
 
+    $("#nav_analyze").button('toggle');
+
   })
 
     // Color the equipment the user chose. 

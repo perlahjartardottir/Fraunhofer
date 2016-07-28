@@ -18,14 +18,17 @@ if(!$sampleSetID){
   $sampleSetID = "-1";
 }
 
+
 // $allemployeeSql = "SELECT employee_ID, employee_name
 // FROM employee
 // ORDER BY employee_name ASC;";
 // $allemployeeResult = mysqli_query($link, $allemployeeSql);
 
+$numberOfSamplesToDisplay = 20;
+
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
-ORDER BY sample_set_ID DESC LIMIT 10;";
+ORDER BY sample_set_ID DESC LIMIT $numberOfSamplesToDisplay;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
 $materialsSql = "SELECT DISTINCT(sample_material)
@@ -145,6 +148,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
         </label>
         <span id="sample_file_path"></span> -->
+        <div id='sample_picture_error_message'><? echo $errorMessage; ?></div>
         <label>Picture: (No functionality) </label>
         <input type="file" name="fileToUpload" id="fileToUpload">
 
@@ -167,6 +171,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 $(document).ready(function(){
  var sampleSetID = <?php echo $sampleSetID; ?>;
  showSamplesInSet(sampleSetID);
+ $("#nav_addSample").button("toggle");
 });
 
 // Format the date input.

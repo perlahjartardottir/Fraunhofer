@@ -23,7 +23,7 @@ if($securityLevel < 2){
 </head>
 <body>
   <div class="container">
-    <div class='row well well-lg'>
+    <!-- <div class='row well well-lg'>
       <div class='col-md-12 col-md-offset-1'>
         <div class='col-md-2'>
           <button type='button' class='btn btn-primary col-md-12' onclick="location.href='addSample.php'">Add sample</button>
@@ -49,7 +49,7 @@ if($securityLevel < 2){
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class='col-md-12'>
       <h2 class='custom_heading center_heading'>Sample sets</h2>
@@ -118,6 +118,10 @@ if($securityLevel < 2){
 </div>
 </div>
 <script>
+
+  $(document).ready(function(){
+    $("#nav_home").button('toggle');
+  })
 
   var modal = document.getElementById('sample_modal');
   function loadAndShowSampleModal(sampleID){

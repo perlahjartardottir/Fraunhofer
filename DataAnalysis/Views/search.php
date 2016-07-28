@@ -51,6 +51,7 @@ if($securityLevel< 2){
     <script type="text/javascript">
     $(document).ready(function(){
       displaySearchResults();
+      $("#nav_search").button('toggle');
     });
 
 
