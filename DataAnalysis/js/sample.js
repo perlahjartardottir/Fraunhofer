@@ -117,15 +117,18 @@ function editSample(sampleID, form){
 	}
 }
 
-function loadSampleModal(sampleID){
+function loadSampleModal(sampleSetID, sampleID){
 		$.ajax({
 		url: "../SelectPHP/sampleModalFP.php",
 		type: "POST",
 		data: {
+			sampleSetID : sampleSetID,
 			sampleID : sampleID
 		},
 		success: function(data, status, xhr){
 			$("#sample_modal").html(data);
+			setSampleSetID(sampleSetID);
+			setSampleID(sampleID);
 			
 		}
 	})
@@ -145,9 +148,10 @@ function loadSampleModalEdit(sampleID){
 	})
 }
 
-  function updateSamplesInSet(){
-  	sampleSetID = $("#sample_set_ID").val();
-
+  function updateSamplesInSet(sampleSetID){
+  	if(sampleSetID === undefined){
+  		sampleSetID = $("#sample_set_ID").val();
+  	}
   	$.ajax({
   		url: "../SelectPHP/samplesInSetComboBox.php",
   		type: "POST",
@@ -180,9 +184,11 @@ function loadSampleModalEdit(sampleID){
   	})
   }
 
-  function setSampleID(){
-  	sampleID = $("#sample_ID").val();
-  	console.log("settings sampleID: "+sampleID);
+  function setSampleID(sampleID){
+  	if(sampleID === undefined){
+  		sampleID = $("#sample_ID").val();
+  	}
+  	console.log("setSampleID: "+sampleID);
   	$.ajax({
   		url: "../UpdatePHP/setSampleID.php",
   		type: "POST",
@@ -190,6 +196,7 @@ function loadSampleModalEdit(sampleID){
   			sampleID : sampleID
   		},
   		success: function(data,status, xhr){
+  			console.log(data);
   		}
   	})
   }
@@ -204,6 +211,19 @@ function loadSampleModalEdit(sampleID){
   		},
   		success: function(data,status, xhr){
   			window.location.reload(true);
+  		}
+  	})
+  }
+    function setSampleSetID(sampleSetID){
+  	console.log("settings sampleSetID: "+sampleSetID);
+  	$.ajax({
+  		url: "../UpdatePHP/setSampleSetID.php",
+  		type: "POST",
+  		data: {
+  			sampleSetID : sampleSetID
+  		},
+  		success: function(data,status, xhr){
+  			console.log(data);
   		}
   	})
   }

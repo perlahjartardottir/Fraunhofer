@@ -21,9 +21,11 @@ if(!$sampleID){
 }
 
 
+$numberOfSamplesToDisplay = 20;
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
-ORDER BY sample_set_ID DESC LIMIT 10;";
+ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSamplesToDisplay;";
+$recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
 $samplesInSetSql = "SELECT sample_ID, sample_name
@@ -44,7 +46,9 @@ WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID 
 a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
 GROUP BY r.anlys_eq_prop_ID;";
 
-
+$sampleSetNameSql = "SELECT sample_set_name
+FROM sample_set
+WHERE sample_set_ID = '$sampleSetID';";
 
 ?>
 
@@ -61,7 +65,7 @@ GROUP BY r.anlys_eq_prop_ID;";
        <div class='col-md-4 form-group'>
        <!-- Set combo box -->
         <label>Set:</label>
-        <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh()' style='width:auto;'>
+        <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh(this.value)' style='width:auto;'>
           <option value='-1'>Choose a set</option>
           <?
           while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){
@@ -136,8 +140,28 @@ GROUP BY r.anlys_eq_prop_ID;";
   $(document).ready(function(){
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
   })
-    // Make the combo box select the currently chosen set and sample.
-    $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+
+// Check if the user enters with a set that exists in the dropd down. 
+var exists = false;
+$('#sample_set_ID option').each(function(){
+    if (this.value == '<?php echo $sampleSetID; ?>') {
+        exists = true;
+    }
+});
+// If the down does not contain the set, add it to the drop down. 
+if(!exists){
+  <?
+    $sampleSetName = mysqli_fetch_row(mysqli_query($link,$sampleSetNameSql))[0];
+  ?>
+  $('#sample_set_ID').append($('<option>', {
+      value: <?php echo $sampleSetID; ?>,
+      text: '<?php echo $sampleSetName; ?>'
+  }));
+}
+
+// Make the dropdown list select the currently chosen sample set on refresh.
+$("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+console.log("sampleOverview, sampleSetID"+<?php echo $sampleSetID; ?>);
     
   </script>
 </body>

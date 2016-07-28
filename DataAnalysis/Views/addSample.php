@@ -27,7 +27,7 @@ $numberOfSamplesToDisplay = 20;
 
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
-ORDER BY sample_set_ID DESC LIMIT $numberOfSamplesToDisplay;";
+ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSamplesToDisplay;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
 $materialsSql = "SELECT DISTINCT(sample_material)
@@ -72,7 +72,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     <div class='col-md-6'>
       <div class='col-md-12 form-group'>
         <label>Choose a set: </label>
-        <select class='form-control' onchange='showSamplesInSetAndRefresh(this.value)' id='sample_set_ID' name='sample_set_ID' style='width:auto;'>
+        <select id='sample_set_ID' name='sample_set_ID' class='form-control' onchange='showSamplesInSetAndRefresh(this.value)'  style='width:auto;'>
           <option value='-1'>New</option>
           <?
           while($sampleSetRow = mysqli_fetch_array($recentSampleSetsResult)){

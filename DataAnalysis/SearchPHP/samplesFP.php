@@ -41,7 +41,7 @@ ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSamplesToDisplay;";
           while($sampleRow = mysqli_fetch_array($samplesInSetResult)){
             echo"
             <tr >
-              <td><a onclick='loadAndShowSampleModal(".$sampleRow[0].")'>".$sampleRow[1]."</a></td>
+              <td><a onclick='loadAndShowSampleModal(".$sampleSetRow[0].",".$sampleRow[0].")'>".$sampleRow[1]."</a></td>
               <td class='col-md-4 text-center'>Coating</td>";
 
               $thicknessSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
@@ -77,8 +77,9 @@ ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSamplesToDisplay;";
 </div>
 <script>
   var modal = document.getElementById('sample_modal');
-  function loadAndShowSampleModal(sampleID){
-    loadSampleModal(sampleID);
+  // When user clicks a sample name we set the sampleSetId and sampleID SESSION variables. 
+  function loadAndShowSampleModal(sampleSetID, sampleID){
+    loadSampleModal(sampleSetID, sampleID);
     modal.style.display = "block";
   }
   // When the user clicks anywhere outside of the modal, close it
