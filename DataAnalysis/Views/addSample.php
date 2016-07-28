@@ -18,13 +18,12 @@ if(!$sampleSetID){
   $sampleSetID = "-1";
 }
 
-$numberOfSamplesToDisplay = 20;
-
 // $allemployeeSql = "SELECT employee_ID, employee_name
 // FROM employee
 // ORDER BY employee_name ASC;";
 // $allemployeeResult = mysqli_query($link, $allemployeeSql);
 
+$numberOfSamplesToDisplay = 20;
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
 ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSamplesToDisplay;";

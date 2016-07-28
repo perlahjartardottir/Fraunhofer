@@ -23,23 +23,22 @@ WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
 ORDER BY anlys_res_ID;";
 $resultsResult = mysqli_query($link, $resultsSql);
 
-// Find the property ID  of overview and display. 
+// Find the ID of properties where we don't need a number input field for anlys_result.
 $noPropResultSql = "SELECT anlys_prop_ID
 FROM anlys_property
-WHERE anlys_prop_name LIKE 'Overview' OR anlys_prop_name LIKE 'Roughness';";
+WHERE anlys_prop_name LIKE 'Overview' OR anlys_prop_name LIKE 'Roughness' OR anlys_prop_name LIKE 'Reflectance' OR anlys_prop_name LIKE 'Transparency OR anlys_prop_name LIKE 'Atomic composition';";
 $noPropResultResult= (mysqli_query($link, $noPropResultSql));
 $noPropResult = [];
 while ($row = mysqli_fetch_row($noPropResultResult)){
   array_push($noPropResult, $row[0]);
 }
 
-
 // The result form.
 echo"
 <div class='col-md-12'>
 <div class='form-group col-md-6'>";
 
-// Don't display property name if the property is overview or roughness. 
+// Only display the anlys_result field for certain properties
 if(!in_array($propID, $noPropResult)){
   echo"
     <label id='property_name'>".$propertyRow[1];
@@ -48,7 +47,7 @@ if(!in_array($propID, $noPropResult)){
         echo " (".$propertyRow[6].")";
       }
       echo":</label>
-    <input type='text' id='res_res' value='' class='form-control'>";
+    <input type='number' id='res_res' value='' class='form-control'>";
 }
 
 echo"
