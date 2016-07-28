@@ -34,18 +34,6 @@ if($securityLevel < 2){
     displaySampleResults();
   })
 
-  var modal = document.getElementById('sample_modal');
-  function loadAndShowSampleModal(sampleID){
-    loadSampleModal(sampleID);
-    modal.style.display = "block";
-  }
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
-
  $('#sample_set_name').tooltip()
 
 </script>

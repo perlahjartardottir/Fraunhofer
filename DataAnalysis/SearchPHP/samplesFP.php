@@ -9,7 +9,7 @@ $numberOfSamplesToDisplay = 20;
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
 WHERE sample_set_name LIKE '$sampleSetName'
-ORDER BY sample_set_ID DESC LIMIT $numberOfSamplesToDisplay;";
+ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSamplesToDisplay;";
 
 ?>
     <div class='col-md-12'>
@@ -75,3 +75,16 @@ ORDER BY sample_set_ID DESC LIMIT $numberOfSamplesToDisplay;";
 </table>
 <div id="sample_modal" class="modal"></div>
 </div>
+<script>
+  var modal = document.getElementById('sample_modal');
+  function loadAndShowSampleModal(sampleID){
+    loadSampleModal(sampleID);
+    modal.style.display = "block";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  </script>
