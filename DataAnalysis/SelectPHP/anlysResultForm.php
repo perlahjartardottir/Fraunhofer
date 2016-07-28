@@ -36,6 +36,7 @@ while ($row = mysqli_fetch_row($noPropResultResult)){
 
 // The result form.
 echo"
+<div class='col-md-12'>
 <div class='form-group col-md-6'>";
 
 // Don't display property name if the property is overview or roughness. 
@@ -65,9 +66,8 @@ echo"
   </label>
   <span id='sample_file_path'></span>
   <br>
-  <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$propertyRow[0].",this.form)' style='float:right'>Add</button>
-</div>
-<div class='form-group col-md-6'>";
+  </div>
+  <div class='form-group col-md-6'>";
   for($i = 3; $i < 6; $i++){
    if($propertyRow[$i]){
      echo"
@@ -76,6 +76,10 @@ echo"
    }
  }
  echo"
+  </div>
+</div>
+<div class='col-md-6'>
+  <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$propertyRow[0].",this.form)' style='float:right'>Add</button>
 </div>";
 
 echo"
@@ -113,8 +117,6 @@ echo"
         .format( this.getAttribute('data-date-format'))
         )
     }).trigger('change')
-
-    displayAnlysResultTable(sampleID, eqPropID)
 
   </script>";
 }
