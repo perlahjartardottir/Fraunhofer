@@ -146,16 +146,14 @@ function deleteAnalysisEquipment(eqID){
  })
  }
 
- function addAnlysResult(eqPropID, form){
+ function addAnlysResult(sampleID, eqPropID, form){
   errorMessage = "";
-  sampleID = "";
   propertyName = "";
   result = "";
   comment = "";
   date = "";
   params = [];
 
-  sampleID = $(form).find('#sample_ID').val();
   if(sampleID === "-1"){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
   }
@@ -169,10 +167,8 @@ function deleteAnalysisEquipment(eqID){
       }
   }
 
-
   comment = $(form).find('#res_comment').val();
   date = $(form).find('#res_date').val();
-  console.log(date);
 
   if(form.elements["res_param"]){
     for (i = 0; i < form.elements["res_param"].length; i++){

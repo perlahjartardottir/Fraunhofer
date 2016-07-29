@@ -141,8 +141,8 @@ WHERE sample_set_ID = '$sampleSetID';";
 
     $("#nav_analyze").button('toggle');
     // Color the equipment link that is chosen.
-    // $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
-    // $("#<?php echo $eqID.$propID; ?>").css("text-decoration", "underline");
+    $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
+    $("#<?php echo $eqID.$propID; ?>").css("text-decoration", "underline");
 
   })
 
@@ -175,6 +175,12 @@ WHERE sample_set_ID = '$sampleSetID';";
 
     // Make the combo box select the currently chosen sample set.
     $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+
+    if(<?php echo $propID; ?>){
+      if(<?php echo $eqID; ?>){
+        showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
+      }
+    }    
 
 
   </script>

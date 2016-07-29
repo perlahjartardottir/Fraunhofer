@@ -114,15 +114,15 @@ if($propID !== "-1" && $eqID !== "-1"){
       </div>
     </div>
     <div class='col-md-12'>
-      <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$propertyRow[0].",this.form)' style='float:right'>Add</button>
+      <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$sampleID.",".$propertyRow[0].",this.form)' style='float:right'>Add</button>
     </div>
-    </form>";
+  </form>";
 
-    echo"
-    <div id='anlys_result_table' class='col-md-12'></div>";
+  echo"
+  <div id='anlys_result_table' class='col-md-12'></div>";
 
     // Only display averages where there is a res_res field except for Adhesion.
-    if(!in_array($propID, $noPropResult) && $propID !== '4'){
+  if(!in_array($propID, $noPropResult) && $propID !== '4'){
     $avgSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
     FROM anlys_result
     WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]';";
@@ -130,32 +130,36 @@ if($propID !== "-1" && $eqID !== "-1"){
     $avgRow = mysqli_fetch_row($avgResult);
 // Only display calculations if there are any results. 
     // if($avgRow[0]){
-      echo"
-      <div class='col-md-6'>
-        <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>
-      </div>";
+    echo"
+    <div class='col-md-6'>
+      <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>
+    </div>";
     //}
   }
 }
 ?>
-    <script>
+<script>
 
-      $(document).ready(function(){
-        displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
-      })
+  $(document).ready(function(){
+    displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
+})
+
+
+
+
     // Trime the filepath to only the file name. 
-      function getFileName(s) {
-        return s.replace(/^.*[\\\/]/, '');
-      }
+    function getFileName(s) {
+      return s.replace(/^.*[\\\/]/, '');
+    }
 
     // Format the date input.
-      $('#res_date').on('change', function() {
-        this.setAttribute(
+    $('#res_date').on('change', function() {
+      this.setAttribute(
         'data-date',
         moment(this.value, 'YYYY-MM-DD')
         .format( this.getAttribute('data-date-format'))
         )
-      }).trigger('change')
+    }).trigger('change')
 
       // When user clicks res_res field when using thickness & Calotte Grinder calculate the thickness. 
       function calcCGThickness(){
@@ -170,5 +174,7 @@ if($propID !== "-1" && $eqID !== "-1"){
       $("#res_calc_R").blur(function(){
         calcCGThickness();
       })
+
+
 
     </script>
