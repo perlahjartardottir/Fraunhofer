@@ -8,6 +8,8 @@ $_SESSION["propID"] = $propID;
 $eqID = mysqli_real_escape_string($link, $_POST["eqID"]);
 $_SESSION["eqID"] = $eqID;
 $eqPropID = "-1";
+$noPropResult = [];
+$propsWithAnlysResults = [];
 
 if($propID !== "-1" && $eqID !== "-1"){
 
@@ -30,18 +32,50 @@ if($propID !== "-1" && $eqID !== "-1"){
   FROM anlys_property
   WHERE anlys_prop_name LIKE 'Overview' OR anlys_prop_name LIKE 'Roughness' OR anlys_prop_name LIKE 'Reflectance' OR anlys_prop_name LIKE 'Transparency' OR anlys_prop_name LIKE 'Atomic composition';";
   $noPropResultResult= (mysqli_query($link, $noPropResultSql));
-  $noPropResult = [];
   while ($row = mysqli_fetch_row($noPropResultResult)){
     array_push($noPropResult, $row[0]);
   }
+
+$employeeInitialsSql = "SELECT employee_ID, employee_name,
+  CONCAT_WS('',
+    SUBSTRING(employee_name, 1, 1),
+    CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>2 THEN
+      LEFT(SUBSTRING_INDEX(employee_name, ' ', -3), 1)
+    END,
+    CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>1 THEN
+      LEFT(SUBSTRING_INDEX(employee_name, ' ', -2), 1)
+    END,
+    CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>0 THEN
+      LEFT(SUBSTRING_INDEX(employee_name, ' ', -1), 1)
+    END) as initials
+FROM employee
+ORDER BY initials, employee_name;";
+$employeeInitialsResult = mysqli_query($link, $employeeInitialsSql);
+
+$user = $_SESSION["username"];
+$userIDSql = "SELECT employee_ID
+           FROM employee
+           WHERE employee_name = '$user'";
+$userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
+
 
 // The result form.
   echo"
   <form class='col-md-12'>
     <div class='form-group row'>
       <label class='col-xs-2 col-form-label'>Date:</label>
-      <div class='col-md-3'>
+      <div class='col-md-4'>
         <input type='date' id='res_date' class='custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
+      </div>
+      <label class='col-xs-2 col-form-label'>Employee:</label>
+      <div class='col-md-4'>
+        <select id='employee_initials' class='form-control'>";
+            while($row = mysqli_fetch_row($employeeInitialsResult)){
+              echo "<option value='".$row[0]."'>".$row[2]."</option>";
+            }
+      echo"
+       </select>
+       <span id='employee_name' class='table_style_text'></span>
       </div>
     </div>";
 
@@ -144,9 +178,6 @@ if($propID !== "-1" && $eqID !== "-1"){
     displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
 })
 
-
-
-
     // Trime the filepath to only the file name. 
     function getFileName(s) {
       return s.replace(/^.*[\\\/]/, '');
@@ -175,6 +206,6 @@ if($propID !== "-1" && $eqID !== "-1"){
         calcCGThickness();
       })
 
-
+      $("#employee_initials").val(<?php echo $userID; ?>);
 
     </script>

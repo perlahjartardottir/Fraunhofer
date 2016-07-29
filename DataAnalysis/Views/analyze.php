@@ -2,7 +2,6 @@
 include '../../connection.php';
 session_start();
 
-
 $securityLevel = $_SESSION["securityLevelDA"];
 $sampleID = $_SESSION["sampleID"];
 if(!$sampleID){
@@ -22,6 +21,8 @@ if(!$eqID){
 }
 
 $numberOfSamplesToDisplay = 20;
+$eqWithAnlysResults = [];
+
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
 ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSamplesToDisplay;";
@@ -43,10 +44,23 @@ $sampleSetNameSql = "SELECT sample_set_name
 FROM sample_set
 WHERE sample_set_ID = '$sampleSetID';";
 
+// $eqWithAnlysResultsSql = "SELECT DISTINCT(CONCAT(a.anlys_eq_ID, a.anlys_prop_ID))
+// FROM anlys_result r, sample s, anlys_eq_prop a
+// WHERE r.sample_ID = s.sample_ID AND r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$sampleID';";
+// $eqWithAnlysResultsResult = mysqli_query($link, $eqWithAnlysResultsSql);
+// while ($row = mysqli_fetch_row($eqWithAnlysResultsResult)){
+//     array_push($eqWithAnlysResults, $row[0]);
+// }
+
 ?>
 
 <head>
   <title>Fraunhofer CCD</title>
+  <script>
+      var bootstrapBlue = "#337AB7";
+      var bootstrapDarkBlue = "#23527C";
+      var bootstrapPurple = "#5E4485";
+  </script>
 </head>
 <body>
   <?php include '../header.php'; ?>
@@ -110,6 +124,14 @@ WHERE sample_set_ID = '$sampleSetID';";
                   <tr>
                     <td><a id='".$equipmentRow[0].$propertyRow[0]."' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",".$sampleID.",this.form)'>".$equipmentRow[1]."</a></td>
                   </tr>";
+                  // Color the eq that has analysis results for the chosen sample. 
+                  // if(in_array($equipmentRow[0].$propertyRow[0], $eqWithAnlysResults)){
+                  //   echo"
+                  //     <script>
+                  //         console.log('coloring eq with results');
+                  //         $('#".$equipmentRow[0].$propertyRow[0]."').css('color', bootstrapPurple);
+                  //     </script>";
+                  // }
                 }
                 echo"
               </tbody>
@@ -130,10 +152,6 @@ WHERE sample_set_ID = '$sampleSetID';";
   </form>
 </div>
 <script>
-
-  var bootstrapBlue = "#337AB7";
-  var bootstrapDarkBlue = "#23527C";
-  var bootstrapPurple = "#5E4485";
 
   $(document).ready(function(){
 
@@ -180,7 +198,7 @@ WHERE sample_set_ID = '$sampleSetID';";
       if(<?php echo $eqID; ?>){
         showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
       }
-    }    
+    } 
 
 
   </script>

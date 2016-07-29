@@ -1,4 +1,4 @@
-.btn {
+.btn.btn-success, .btn.btn-danger, .btn.btn-primary {
     margin-bottom: 0px;
     margin-left: 5px;
 }
@@ -38,6 +38,10 @@ input[type=number]{
 
 input[type=date]{
     width: 155px;
+}
+#employee_initials {
+    width: 85px;
+    display: inline;
 } 
 
 /*Analyze.php: make average style same as in table.*/
