@@ -96,6 +96,11 @@ CREATE TABLE anlys_result(
     FOREIGN KEY (anlys_eq_prop_ID) REFERENCES anlys_eq_prop(anlys_eq_prop_ID)
 );
 
+ALTER TABLE anlys_result ADD employee_ID INT;
+ALTER TABLE anlys_result ADD CONSTRAINT FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID);
+
+
+
 ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_eq_prop CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_result CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;

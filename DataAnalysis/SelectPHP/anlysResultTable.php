@@ -12,7 +12,7 @@ AND a.anlys_eq_prop_ID = '$eqPropID'";
 $propertyResult = mysqli_query($link, $propertySql);
 $propertyRow = mysqli_fetch_row($propertyResult);
 
-$resultsSql = "SELECT anlys_res_result, anlys_res_date, anlys_res_comment, anlys_res_1, anlys_res_2, anlys_res_3
+$resultsSql = "SELECT anlys_res_result, anlys_res_date, anlys_res_comment, anlys_res_1, anlys_res_2, anlys_res_3, employee_ID
 FROM anlys_result
 WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID'
 ORDER BY anlys_res_ID;";
@@ -27,6 +27,7 @@ echo"
   <thead>
     <tr>
       <th>Date</th>
+      <th>Employee</th>
       <th>".$propertyRow[1];
       // If the property has units display it.
       if($propertyRow[6]){
@@ -47,9 +48,27 @@ echo"
   <tbody>";
 
     while($resultRow = mysqli_fetch_array($resultsResult)){
+
+    $employeeInitialsSql = "SELECT 
+      CONCAT_WS('',
+        SUBSTRING(employee_name, 1, 1),
+        CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>2 THEN
+          LEFT(SUBSTRING_INDEX(employee_name, ' ', -3), 1)
+        END,
+        CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>1 THEN
+          LEFT(SUBSTRING_INDEX(employee_name, ' ', -2), 1)
+        END,
+        CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>0 THEN
+          LEFT(SUBSTRING_INDEX(employee_name, ' ', -1), 1)
+        END) as initials
+    FROM employee
+    WHERE employee_ID = '$resultRow[6]';";
+    $employeeInitials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
+
       echo"
       <tr>
         <td>".$resultRow[1]."</td>
+        <td>".$employeeInitials."</td>
         <td>".$resultRow[0]."</td>
         <td>".$resultRow[2]."</td>";
         for($i = 3; $i < 6; $i++){
