@@ -82,7 +82,7 @@ if($propID !== "-1" && $eqID !== "-1"){
     </div>";
   }
 
-// Only couple of properties have anlys_result field. 
+// Only couple of properties have res_res field. 
   if(!in_array($propID, $noPropResult)){
     echo"
     <div class='form-group row'>
@@ -113,7 +113,7 @@ if($propID !== "-1" && $eqID !== "-1"){
         <span id='sample_file_path' class='table_style_text'></span>
       </div>
     </div>
-    <div class='col-md-6'>
+    <div class='col-md-12'>
       <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$propertyRow[0].",this.form)' style='float:right'>Add</button>
     </div>
     </form>";
@@ -121,7 +121,7 @@ if($propID !== "-1" && $eqID !== "-1"){
     echo"
     <div id='anlys_result_table' class='col-md-12'></div>";
 
-    // Only display averages where there is a anlys_result field except for Adhesion.
+    // Only display averages where there is a res_res field except for Adhesion.
     if(!in_array($propID, $noPropResult) && $propID !== '4'){
     $avgSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
     FROM anlys_result
@@ -157,8 +157,18 @@ if($propID !== "-1" && $eqID !== "-1"){
         )
       }).trigger('change')
 
+      // When user clicks res_res field when using thickness & Calotte Grinder calculate the thickness. 
       function calcCGThickness(){
-
+        var d = $("#res_calc_d").val();
+        var D = $("#res_calc_D").val();
+        var R = $("#res_calc_R").val();
+        var h = (Math.sqrt((Math.pow(R,2)-(Math.pow(d,2)))) - Math.sqrt((Math.pow(R,2)-(Math.pow(D,2)))))/2;
+        $("#res_res").val(h.toFixed(3));
       }
+
+      // If user does not click the res_res field, on previous input field blur, calculate results. 
+      $("#res_calc_R").blur(function(){
+        calcCGThickness();
+      })
 
     </script>
