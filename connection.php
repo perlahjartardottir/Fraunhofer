@@ -8,4 +8,7 @@ if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
 
+// Change character set to utf8, for special characters like μ and °.
+mysqli_set_charset($link,"utf8");
+
 ?>
