@@ -21,9 +21,10 @@ if(!$eqID){
   $eqID = "-1";
 }
 
+$numberOfSamplesToDisplay = 20;
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
-ORDER BY sample_set_ID DESC LIMIT 10;";
+ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSamplesToDisplay;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
 $sampleInfoSql = "SELECT sample_name, sample_material, sample_comment

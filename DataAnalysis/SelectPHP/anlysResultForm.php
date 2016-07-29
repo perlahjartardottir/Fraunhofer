@@ -7,6 +7,7 @@ $propID = mysqli_real_escape_string($link, $_POST["propID"]);
 $_SESSION["propID"] = $propID;
 $eqID = mysqli_real_escape_string($link, $_POST["eqID"]);
 $_SESSION["eqID"] = $eqID;
+$eqPropID = "-1";
 
 if($propID !== "-1" && $eqID !== "-1"){
 
@@ -16,6 +17,7 @@ if($propID !== "-1" && $eqID !== "-1"){
   AND p.anlys_prop_ID = '$propID' AND e.anlys_eq_ID = '$eqID';";
   $propertyResult = mysqli_query($link, $propertySql);
   $propertyRow = mysqli_fetch_array($propertyResult);
+  $eqPropID = $propertyRow[0];
 
   $resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3
   FROM anlys_result
@@ -91,7 +93,7 @@ if($propID !== "-1" && $eqID !== "-1"){
         }
         echo":</label>
         <div class='col-md-2'>
-          <input type='number' id='res_res' class='form-control' value=''>
+          <input type='number' id='res_res' class='form-control' value='' onclick='calcCGThickness()'>
         </div>
       </div>";
     }
@@ -104,41 +106,42 @@ if($propID !== "-1" && $eqID !== "-1"){
       <div class='col-md-1'>
       </div>
       <label class='col-xs-2 col-form-label'>File: (No functionality) </label>
-      <div class='col-md-2'>
-        <label class='btn btn-default btn-file'>Choose File
+      <div class='col-md-4'>
+        <label class='btn btn-default btn-file'>Browse...
           <input type='file' id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));'>
         </label>
-        <span id='sample_file_path'></span>
+        <span id='sample_file_path' class='table_style_text'></span>
       </div>
     </div>
     <div class='col-md-6'>
       <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$propertyRow[0].",this.form)' style='float:right'>Add</button>
-    </div>";
+    </div>
+    </form>";
 
     echo"
     <div id='anlys_result_table' class='col-md-12'></div>";
 
-    // Only display averages for thickness and roughness.
-    if($propID === '1' || $propID === '2'){
+    // Only display averages where there is a anlys_result field except for Adhesion.
+    if(!in_array($propID, $noPropResult) && $propID !== '4'){
     $avgSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
     FROM anlys_result
     WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]';";
     $avgResult = mysqli_query($link, $avgSql);
     $avgRow = mysqli_fetch_row($avgResult);
 // Only display calculations if there are any results. 
-    if($avgRow[0]){
+    // if($avgRow[0]){
       echo"
       <div class='col-md-6'>
         <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>
       </div>";
-    }
+    //}
   }
-
-    echo"
+}
+?>
     <script>
 
       $(document).ready(function(){
-        displayAnlysResultTable(".$sampleID.",".$propertyRow[0].");
+        displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
       })
     // Trime the filepath to only the file name. 
       function getFileName(s) {
@@ -154,6 +157,8 @@ if($propID !== "-1" && $eqID !== "-1"){
         )
       }).trigger('change')
 
-    </script>";
-  }
-  ?>
+      function calcCGThickness(){
+
+      }
+
+    </script>
