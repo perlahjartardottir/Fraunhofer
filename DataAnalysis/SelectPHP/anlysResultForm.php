@@ -10,113 +10,150 @@ $_SESSION["eqID"] = $eqID;
 
 if($propID !== "-1" && $eqID !== "-1"){
 
-$propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
-FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
-WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
-AND p.anlys_prop_ID = '$propID' AND e.anlys_eq_ID = '$eqID';";
-$propertyResult = mysqli_query($link, $propertySql);
-$propertyRow = mysqli_fetch_array($propertyResult);
+  $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
+  FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
+  WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
+  AND p.anlys_prop_ID = '$propID' AND e.anlys_eq_ID = '$eqID';";
+  $propertyResult = mysqli_query($link, $propertySql);
+  $propertyRow = mysqli_fetch_array($propertyResult);
 
-$resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3
-FROM anlys_result
-WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
-ORDER BY anlys_res_ID;";
-$resultsResult = mysqli_query($link, $resultsSql);
+  $resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3
+  FROM anlys_result
+  WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
+  ORDER BY anlys_res_ID;";
+  $resultsResult = mysqli_query($link, $resultsSql);
 
 // Find the ID of properties where we don't need a number input field for anlys_result.
-$noPropResultSql = "SELECT anlys_prop_ID
-FROM anlys_property
-WHERE anlys_prop_name LIKE 'Overview' OR anlys_prop_name LIKE 'Roughness' OR anlys_prop_name LIKE 'Reflectance' OR anlys_prop_name LIKE 'Transparency OR anlys_prop_name LIKE 'Atomic composition';";
-$noPropResultResult= (mysqli_query($link, $noPropResultSql));
-$noPropResult = [];
-while ($row = mysqli_fetch_row($noPropResultResult)){
-  array_push($noPropResult, $row[0]);
-}
+  $noPropResultSql = "SELECT anlys_prop_ID
+  FROM anlys_property
+  WHERE anlys_prop_name LIKE 'Overview' OR anlys_prop_name LIKE 'Roughness' OR anlys_prop_name LIKE 'Reflectance' OR anlys_prop_name LIKE 'Transparency' OR anlys_prop_name LIKE 'Atomic composition';";
+  $noPropResultResult= (mysqli_query($link, $noPropResultSql));
+  $noPropResult = [];
+  while ($row = mysqli_fetch_row($noPropResultResult)){
+    array_push($noPropResult, $row[0]);
+  }
 
 // The result form.
-echo"
-<div class='col-md-12'>
-<div class='form-group col-md-6'>";
-
-// Only display the anlys_result field for certain properties
-if(!in_array($propID, $noPropResult)){
   echo"
-    <label id='property_name'>".$propertyRow[1];
-      // If the property has units display it.
-      if($propertyRow[6]){
-        echo " (".$propertyRow[6].")";
-      }
-      echo":</label>
-    <input type='number' id='res_res' value='' class='form-control'>";
-}
+  <form class='col-md-12'>
+    <div class='form-group row'>
+      <label class='col-xs-2 col-form-label'>Date:</label>
+      <div class='col-md-3'>
+        <input type='date' id='res_date' class='custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
+      </div>
+    </div>";
 
-echo"
-  <label>Date:</label>
-  <div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-    <input type='date' id='res_date' class='custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
-  </div>
-  <label>Comment:</label>
-  <input type='text' id='res_comment' value='' class='form-control'>
-  <label>Add file: (No functionality)</label>
-  <br>
-  <label class='btn btn-default btn-file'>Choose File
-    <input type='file' id='res_file' name='sample_file' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));' style='display: none;'>
-  </label>
-  <span id='sample_file_path'></span>
-  <br>
-  </div>
-  <div class='form-group col-md-6'>";
-  for($i = 3; $i < 6; $i++){
-   if($propertyRow[$i]){
-     echo"
-     <label>".$propertyRow[$i].":</label>
-     <input type='text' name='res_param' class='form-control'>";
-   }
- }
- echo"
-  </div>
-</div>
-<div class='col-md-6'>
-  <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$propertyRow[0].",this.form)' style='float:right'>Add</button>
-</div>";
-
-echo"
-   <div id='anlys_result_table' class='col-md-12'></div>";
-
-$avgSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
-FROM anlys_result
-WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]';";
-$avgResult = mysqli_query($link, $avgSql);
-$avgRow = mysqli_fetch_row($avgResult);
-// Only display calculations if there are any results. 
-if($avgRow[0]){
-  echo"
-  <div class='col-md-6'>
-    <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>
-  </div>";
-}
-
-echo"
-  <script>
-
-  $(document).ready(function(){
-    displayAnlysResultTable(".$sampleID.",".$propertyRow[0].");
-  })
-    // Trime the filepath to only the file name. 
-    function getFileName(s) {
-      return s.replace(/^.*[\\\/]/, '');
+// If Thickness & Calotte Grinder.
+    if($propID === '1' && $eqID === '7'){
+  // h=(sqrt(r2-d2)-sqrt(r2-D2))
+      echo"
+      <div class='form-group row'>
+        <label class='col-xs-2 col-form-label'>Inner diameter (&#181;m): </label>
+        <div class='col-md-2'>
+          <input type='number' id='res_calc_d' class='form-control' value='' >
+        </div>
+        <label class='col-xs-2 col-form-label'>Outer diamter (&#181;m): </label>
+        <div class='col-md-2'>
+          <input type='number' id='res_calc_D' class='form-control' value='' >
+        </div>
+        <label class='col-xs-2 col-form-label'>Radius of ball (&#181;m): </label>
+        <div class='col-md-2'>
+          <input type='number' id='res_calc_R' class='form-control' value='25400'>
+        </div>
+      </div>";
     }
 
+// Display param 1 - 3 if there are any. 
+    if($propertyRow[3]){
+      echo"
+      <div class='form-group row'>";
+        for($i = 3; $i < 6; $i++){
+         if($propertyRow[$i]){
+           echo"
+           <label class='col-xs-2 col-form-label'>".$propertyRow[$i].":</label>
+           <div class='col-md-2'>
+            <input type='number' name='res_param' class='form-control'>
+          </div>";
+        }
+      }
+      echo"
+    </div>";
+  }
+
+// Only couple of properties have anlys_result field. 
+  if(!in_array($propID, $noPropResult)){
+    echo"
+    <div class='form-group row'>
+      <label id='property_name' class='col-xs-2 col-form-label'>".$propertyRow[1];
+      // If the property has units display it.
+        if($propertyRow[6]){
+          echo " (".$propertyRow[6].")";
+        }
+        echo":</label>
+        <div class='col-md-2'>
+          <input type='number' id='res_res' class='form-control' value=''>
+        </div>
+      </div>";
+    }
+    echo"
+    <div class='form-group row'>
+      <label class='col-xs-2 col-form-label'>Comment:</label>
+      <div class='col-md-3'>
+        <textarea  id='res_comment' class='form-control' value=''></textarea>
+      </div>
+      <div class='col-md-1'>
+      </div>
+      <label class='col-xs-2 col-form-label'>File: (No functionality) </label>
+      <div class='col-md-2'>
+        <label class='btn btn-default btn-file'>Choose File
+          <input type='file' id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));'>
+        </label>
+        <span id='sample_file_path'></span>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$propertyRow[0].",this.form)' style='float:right'>Add</button>
+    </div>";
+
+    echo"
+    <div id='anlys_result_table' class='col-md-12'></div>";
+
+    // Only display averages for thickness and roughness.
+    if($propID === '1' || $propID === '2'){
+    $avgSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
+    FROM anlys_result
+    WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]';";
+    $avgResult = mysqli_query($link, $avgSql);
+    $avgRow = mysqli_fetch_row($avgResult);
+// Only display calculations if there are any results. 
+    if($avgRow[0]){
+      echo"
+      <div class='col-md-6'>
+        <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>
+      </div>";
+    }
+  }
+
+    echo"
+    <script>
+
+      $(document).ready(function(){
+        displayAnlysResultTable(".$sampleID.",".$propertyRow[0].");
+      })
+    // Trime the filepath to only the file name. 
+      function getFileName(s) {
+        return s.replace(/^.*[\\\/]/, '');
+      }
+
     // Format the date input.
-    $('#res_date').on('change', function() {
-      this.setAttribute(
+      $('#res_date').on('change', function() {
+        this.setAttribute(
         'data-date',
         moment(this.value, 'YYYY-MM-DD')
         .format( this.getAttribute('data-date-format'))
         )
-    }).trigger('change')
+      }).trigger('change')
 
-  </script>";
-}
-?>
+    </script>";
+  }
+  ?>

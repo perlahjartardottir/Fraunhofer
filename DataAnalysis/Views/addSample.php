@@ -89,7 +89,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           <label>When was the sample initialized? </label>
           <div>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-            <input type='date' id='sample_set_date' name='sample_set_date' class='sample_set_name custom_date' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
+            <input type='date' id='sample_set_date' name='sample_set_date' class='sample_set_name custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
           </div>
         </div>
         <div id='sample_set_name_div' class='col-md-12 form-group'></div>";

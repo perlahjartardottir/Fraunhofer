@@ -31,6 +31,15 @@ h2[id="sample_overview_heading"]{
     margin-bottom: 40px;
 }
 
+/* anlysResultForm.php */
+input[type=number]{
+    width: 155px;
+} 
+
+input[type=date]{
+    width: 155px;
+} 
+
 /*Analyze.php: make average style same as in table.*/
 .table_style_text{
 
