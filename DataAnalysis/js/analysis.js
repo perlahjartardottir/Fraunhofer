@@ -148,10 +148,11 @@ function deleteAnalysisEquipment(eqID){
 
  function addAnlysResult(sampleID, eqPropID, form){
   errorMessage = "";
-  propertyName = "";
-  result = "";
-  comment = "";
+  employee = "";
   date = "";
+  result = "";
+  propertyName = "";
+  comment = "";
   params = [];
 
   if(sampleID === "-1"){
@@ -169,6 +170,7 @@ function deleteAnalysisEquipment(eqID){
 
   comment = $(form).find('#res_comment').val();
   date = $(form).find('#res_date').val();
+  employee = $(form).find('#employee_initials').val();
 
   if(form.elements["res_param"]){
     for (i = 0; i < form.elements["res_param"].length; i++){
@@ -189,7 +191,8 @@ function deleteAnalysisEquipment(eqID){
         result : result,
         comment : comment,
         date : date,
-        params : params
+        params : params,
+        employee : employee
       },
       success: function(data,status, xhr){
        console.log(data);

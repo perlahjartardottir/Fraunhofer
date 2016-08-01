@@ -68,10 +68,9 @@ INSERT INTO anlys_eq_prop(anlys_eq_ID, anlys_prop_ID) VALUES
         (4,6),(5,7),(5,8),(6,9),(6,10),
         (11,11),(12,12);
 
--- Add parameters to the Calotte grinder. 
-UPDATE anlys_eq_prop
-SET anlys_param_1 = 'Revolutions', anlys_param_2 = 'Angle'
-WHERE anlys_eq_prop_ID = 5;
+-- If we should calculate averages for this pair of eq and prop.
+ALTER TABLE anlys_eq_prop
+ADD anlys_aveg BOOLEAN;
 
 -- INSERT INTO anlys_property(anlys_prop_name, anlys_eq_ID) VALUES
 -- 			("Roughness", 1), ("Roughness", 8), ("Thickness", 1), ("Thickness", 11),
@@ -99,9 +98,23 @@ CREATE TABLE anlys_result(
 ALTER TABLE anlys_result ADD employee_ID INT;
 ALTER TABLE anlys_result ADD CONSTRAINT FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID);
 
+CREATE TABLE process(
+	prcs_ID INT AUTO_INCREMENT,
+    sample_ID INT,
+    employee_ID INT,
+	anlys_res_date DATE,
+    prcs_coating VARCHAR(50),
+    prcs_position VARCHAR(50),
+    prcs_rotation VARCHAR(50),
+    prcs_comment VARCHAR (2000),
+	PRIMARY KEY(prcs_ID),
+    FOREIGN KEY(sample_ID) REFERENCES sample(sample_ID),
+    FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID)
+);
 
 
 ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_eq_prop CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_result CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE sample CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER TABLE process CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;

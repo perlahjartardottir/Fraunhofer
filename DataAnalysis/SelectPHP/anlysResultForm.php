@@ -64,11 +64,11 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
   <form class='col-md-12'>
     <div class='form-group row'>
       <label class='col-xs-2 col-form-label'>Date:</label>
-      <div class='col-md-4'>
+      <div class='col-md-2'>
         <input type='date' id='res_date' class='custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
       </div>
       <label class='col-xs-2 col-form-label'>Employee:</label>
-      <div class='col-md-4'>
+      <div class='col-md-2'>
         <select id='employee_initials' class='form-control'>";
             while($row = mysqli_fetch_row($employeeInitialsResult)){
               echo "<option value='".$row[0]."'>".$row[2]."</option>";
@@ -134,10 +134,8 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     echo"
     <div class='form-group row'>
       <label class='col-xs-2 col-form-label'>Comment:</label>
-      <div class='col-md-3'>
+      <div class='col-md-2'>
         <textarea  id='res_comment' class='form-control' value=''></textarea>
-      </div>
-      <div class='col-md-1'>
       </div>
       <label class='col-xs-2 col-form-label'>File: (No functionality) </label>
       <div class='col-md-4'>
@@ -178,10 +176,10 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
 })
 
-    // Trime the filepath to only the file name. 
-    function getFileName(s) {
-      return s.replace(/^.*[\\\/]/, '');
-    }
+    // // Trime the filepath to only the file name. 
+    // function getFileName(s) {
+    //   return s.replace(/^.*[\\\/]/, '');
+    // }
 
     // Format the date input.
     $('#res_date').on('change', function() {
@@ -206,6 +204,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         calcCGThickness();
       })
 
+      // Make tge dropdown list select the currently logged in user.
       $("#employee_initials").val(<?php echo $userID; ?>);
 
     </script>

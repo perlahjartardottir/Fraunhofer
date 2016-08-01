@@ -56,7 +56,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 
 <head>
 	<title>Fraunhofer CCD</title>
-	<link href='../css/bootstrap.min.css' rel='stylesheet'>
+<!-- 	<link href='../css/bootstrap.min.css' rel='stylesheet'> -->
 </head>
 <body>
 	<?php include '../header.php';?>
@@ -165,5 +165,5 @@ if(!exists){
 // Make the dropdown list select the currently chosen sample set on refresh.
 $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
     
-  </script>
+</script>
 </body>

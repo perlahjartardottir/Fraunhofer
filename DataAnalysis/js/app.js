@@ -8,6 +8,11 @@ function logout(){
 });
 }
 
+// Trime the filepath to only the file name. 
+function getFileName(s) {
+  return s.replace(/^.*[\\\/]/, '');
+}
+
 function displaySearchResults(){
 	$('#search_results').html();
 	var sampleName = $("#sample_name").val();

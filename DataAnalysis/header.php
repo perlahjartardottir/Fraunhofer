@@ -38,6 +38,7 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 <script src='../js/app.js'></script>
 <script src='../js/sample.js'></script>
 <script src='../js/analysis.js'></script>
+<script src='../js/process.js'></script>
 <script src='../js/bootstrap.js'></script>
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
@@ -73,7 +74,7 @@ $_SESSION["securityLevelDA"] = $securityLevel;
       <div class=' btn-group col-md-12' data-toggle='buttons'>
           <button type='button' id='nav_home' class='btn btn-primary col-md-2' onclick="location.href='dataAnalysis.php'">Home</button>
           <button type='button' id='nav_addSample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
-          <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href=''">Process</button>
+          <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href='process.php'">Process</button>
           <button type='button' id='nav_analyze' class='btn btn-primary col-md-2' onclick="location.href='analyze.php'">Analyze</button>
           <button type='button' id='nav_search' class='btn btn-primary col-md-2' onclick="location.href='search.php'">Search</button>
           <button type='button' id='nav_overview' class='btn btn-primary col-md-2' onclick="location.href='overview.php'">Overview</button>
