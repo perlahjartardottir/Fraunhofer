@@ -1,6 +1,8 @@
 <?php
 include '../../connection.php';
+include '../GlobalsPHP/properties.php';
 session_start();
+
 
 $securityLevel = $_SESSION["securityLevelDA"];
 
@@ -40,7 +42,7 @@ WHERE sample_ID = '$sampleID';";
 $sampleInfoResult = mysqli_query($link, $sampleInfoSql);
 $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 
-$anlysAverageSql = "SELECT r.anlys_eq_prop_ID, e.anlys_eq_name, p.anlys_prop_name, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult
+$anlysAverageSql = "SELECT r.anlys_eq_prop_ID, e.anlys_eq_name, p.anlys_prop_name, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_aveg as dispAveg, COUNT(r.anlys_res_ID) as numberOfResults, r.anlys_res_result as singleResult
 FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
 WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
 a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
@@ -84,7 +86,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div>
     <!-- Analysis -->
     <div class='col-md-8'>
-      <h3 class='custom_heading'>Analysis</h3>
+      <h3 class='custom_heading'>Analysis (under construction) </h3>
       <?
       $anlysResult = mysqli_query($link, $anlysAverageSql);
       if(mysqli_fetch_array($anlysResult)){
@@ -92,31 +94,32 @@ WHERE sample_set_ID = '$sampleSetID';";
       echo"
       <table class='table table-responsive'>
       <thead>
-      <th >Coating</th>
-      <th>Coating property</th>
-      <th class='text-left'>Average</th>
-      <th>Equipment</th>
+        <th>Coating</th>
+        <th>Coating property</th>
+        <th class='text-left'>Measurement</th>
+        <th>Equipment</th>
       </thead>
       <tbody>";
       $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
-      while($averageRow = mysqli_fetch_array($anlysAverageResult)){
+      while($row = mysqli_fetch_array($anlysAverageResult)){
         echo"
           <tr>
             <td>Coating</td>
-            <td>".$averageRow[2]."</td>
-            <td><a onclick='displayAnlysResultTable(".$sampleID.",".$averageRow[0].")'>";
-            if($averageRow[avegResult] != 0){
-              echo $averageRow[avegResult];
+            <td>".$row[2]."</td>
+            <td><a onclick='displayAnlysResultTable(".$sampleID.",".$row[0].")'>";
+            // If this eqprop should display avegs and the aveg is not 0.
+            if($row[avegResult] != 0 && $row['dispAveg']){
+              echo $row[avegResult];
             }
-            // If we cannot display the average e.g. for overview and roughness. 
             else{
               echo "N/A";
             }
             echo"
             </a></td>
-            <td>".$averageRow[1]."</td>
+            <td>".$row[1]."</td>
           </tr>";
-      }
+        }
+      
     echo"
     </tbody>
     </table>";
@@ -161,7 +164,6 @@ if(!exists){
 
 // Make the dropdown list select the currently chosen sample set on refresh.
 $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
-console.log("sampleOverview, sampleSetID"+<?php echo $sampleSetID; ?>);
     
   </script>
 </body>

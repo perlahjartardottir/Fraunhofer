@@ -201,6 +201,13 @@ function deleteAnalysisEquipment(eqID){
 }
 
 function displayAnlysResultTable(sampleID, eqPropID){
+  
+  // If we are already displaying the results, hide them. 
+  if(!$('#anlys_result_table').is(':empty')) {
+    $("#anlys_result_table").html("");
+  }
+  else{
+
   console.log("sampleID: "+sampleID);
   console.log("eqPropID: "+eqPropID);
   $.ajax({
@@ -214,4 +221,5 @@ function displayAnlysResultTable(sampleID, eqPropID){
       $("#anlys_result_table").html(data);
     }
   })
+}
 }
