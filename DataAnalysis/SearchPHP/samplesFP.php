@@ -41,22 +41,35 @@ ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSamplesToDisplay;";
           while($sampleRow = mysqli_fetch_array($samplesInSetResult)){
             echo"
             <tr >
-              <td><a onclick='loadAndShowSampleModal(".$sampleSetRow[0].",".$sampleRow[0].")'>".$sampleRow[1]."</a></td>
-              <td class='col-md-4 text-center'>Coating</td>";
+              <td><a onclick='loadAndShowSampleModal(".$sampleSetRow[0].",".$sampleRow[0].")'>".$sampleRow[1]."</a></td>";
 
-              $thicknessSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
-              FROM anlys_result
-              WHERE sample_ID = '$sampleRow[0]' AND anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
-              FROM anlys_eq_prop
-              WHERE anlys_prop_ID = '1')
-              GROUP BY anlys_eq_prop_ID
-              ORDER BY anlys_res_ID DESC
+              $coatingSql = "SELECT prcs_coating
+              FROM process
+              WHERE sample_ID = '$sampleRow[0]';";
+              $coating = mysqli_fetch_row(mysqli_query($link, $coatingSql))[0];
+              if($coating){
+              echo"
+              <td class='col-md-4 text-center'>".$coating."</td>";
+              }
+              else{
+                echo"
+                <td class='col-md-4 text-center'>N/A</td>";
+              }
+
+              // Get thickness results for each sample. The results are sorted by equipment: Calotte Grinder, Dektak, AFM
+              $thicknessSql = "SELECT  r.anlys_res_result, a.anlys_eq_prop_unit
+              FROM anlys_result r, anlys_eq_prop a
+              WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$sampleRow[0]' AND a.anlys_eq_prop_ID IN (SELECT aa.anlys_eq_prop_ID
+              FROM anlys_eq_prop aa
+              WHERE aa.anlys_prop_ID = '1')
+              GROUP BY r.anlys_eq_prop_ID
+              ORDER BY r.anlys_eq_prop_ID = 5 DESC, r.anlys_eq_prop_ID = 3 DESC, r.anlys_eq_prop_ID = 25 DESC
               LIMIT 1;";
               $thicknessResult = mysqli_query($link, $thicknessSql);
               $thicknessRow = mysqli_fetch_row($thicknessResult);
               if($thicknessRow[0]){
                 echo"
-                  <td class='col-md-4 text-center'>".$thicknessRow[0]."</td>";
+                  <td class='col-md-4 text-center'>".$thicknessRow[0]." ".$thicknessRow[1]."</td>";
               }
               else{
                 echo"
