@@ -30,7 +30,7 @@ echo"
           </div>
           <div class='modal-footer'>
               <button type='button' class='btn btn-success' onclick='location.href=\"addSample.php\"'>Edit</button>    
-              <button type='button' class='btn btn-primary' >Process</button>
+              <button type='button' class='btn btn-primary' onclick='location.href=\"process.php\"'>Process</button>
               <button type='button' class='btn btn-primary' onclick='location.href=\"analyze.php\"'>Analyze</button>
               <button type='button' class='btn btn-primary' onclick='location.href=\"sampleOverview.php\"' >Sample Overview</button>
           </div>
