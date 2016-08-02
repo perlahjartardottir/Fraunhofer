@@ -69,9 +69,8 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 
     <!-- Toolbar -->
     <div class='row well well-lg'>
-    <div class="container">
-  
-      <div class=' btn-group col-md-12' data-toggle='buttons'>
+    <div class="container nav_bar_lower">
+      <div class='btn-group col-md-12 nav_bar_lower' data-toggle='buttons'>
           <button type='button' id='nav_home' class='btn btn-primary col-md-2' onclick="location.href='dataAnalysis.php'">Home</button>
           <button type='button' id='nav_addSample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
           <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href='process.php'">Process</button>
@@ -89,8 +88,3 @@ $_SESSION["securityLevelDA"] = $securityLevel;
         </div>
       </div>
     </div>
-    <script>
-    // $(".btn.btn-primary.col-md-2").click(function(){
-    //   this.button('toggle');
-    // })
-    </script>

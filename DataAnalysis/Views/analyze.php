@@ -67,7 +67,8 @@ WHERE sample_set_ID = '$sampleSetID';";
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <div class='container'>
   </form>
-  <div class='row well well-lg col-md-12'>
+  <div class='row well well-lg'>
+  <div class='col-md-12'>
     <form role='form'>
       <div id='error_message'></div>
       <div id='sample_div' class='col-md-12'>
