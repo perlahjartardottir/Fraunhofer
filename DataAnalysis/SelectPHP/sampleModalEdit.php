@@ -61,11 +61,15 @@ echo"
 </div>";
 
 //Material: So user can both choose from datalist and enter text. 
-echo"
+?>
 <script>
 
 $('#material_edit-hidden').val(document.getElementById('material_edit').value);
 console.log(document.getElementById('material_edit').value);
+
+  document.getElementById('close_modal').onclick = function(){
+    modal.style.display = 'none';
+    }
 
   $('input[list]').on('input', function(e) {
     var input = $(e.target),
@@ -85,4 +89,3 @@ console.log(document.getElementById('material_edit').value);
     }
   });
   </script>";
-?>

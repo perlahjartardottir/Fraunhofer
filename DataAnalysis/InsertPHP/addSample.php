@@ -91,8 +91,11 @@ $_SESSION["sampleSetID"] = $sampleSetID;
 $sql = "INSERT INTO sample(sample_set_ID, sample_name, sample_material, sample_comment)
 VALUES ('$sampleSetID', '$sampleName', '$sampleMaterial', '$sampleComment');";
 $result = mysqli_query($link, $sql);
-
-if(!$result){
+if($result){
+		$sampleID = mysqli_insert_id($link);
+		$_SESSION['sampleID'] = $sampleID;
+}
+else{
 	mysqli_error($link);
 }
 

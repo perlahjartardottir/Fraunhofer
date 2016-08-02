@@ -33,6 +33,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
       <th>Date</th>
       <th>Employee</th>
       <th>Coating</th>
+      <th>Equipment</th>
       <th>Position</th>
       <th>Rotation</th>
       <th>Comment</th>
@@ -65,6 +66,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
         <td>".$row['date']."</td>
         <td>".$employeeInitials."</td>
         <td>".$row['coating']."</td>
+        <td>Eq</td>
         <td>".$row['position']."</td>
         <td>".$row['rotation']."</td>
         <td>".$row['comment']."</td>

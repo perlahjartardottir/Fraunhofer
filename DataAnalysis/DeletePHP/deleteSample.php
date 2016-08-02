@@ -17,6 +17,9 @@ if(mysql_affected_rows($link) === 0){
 	die("Could not delete sample (affected rows are 0): ".mysqli_error($link));
 }
 else{
+
+	// We have successfully deleted the sample.
+	$_SESSION['sampleID'] = '-1';
 	
 	// Find how many samples are left in the set.
 	$allSamplesInSetSql = "SELECT sample_ID
@@ -44,11 +47,13 @@ else{
 		if(mysql_affected_rows($link) === 0){
 			die("Could not delete sample set (affected rows are 0): ".mysqli_error($link));
 		}
+		// We have successfully deleted the sampleSet. 
+		$_SESSION["sampleSetID"] = "-1";
 	}
 }
 
 
-$_SESSION["sampleSetID"] = "-1";
+header('Location: ../Views/addSample.php?id='.$sampleSetID);
 
 mysqli_close($link);
 ?>

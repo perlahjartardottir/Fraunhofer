@@ -49,6 +49,11 @@ FROM employee
 ORDER BY initials, employee_name;";
 $employeeInitialsResult = mysqli_query($link, $employeeInitialsSql);
 
+$prcsEquipementSql = "SELECT prcs_eq_ID, prcs_eq_name, prcs_eq_acronym
+FROM prcs_equipment
+WHERE prcs_eq_active = TRUE;";
+$prcsEquipementResult = mysqli_query($link, $prcsEquipementSql);
+
 $user = $_SESSION["username"];
 $userIDSql = "SELECT employee_ID
            FROM employee
@@ -123,9 +128,21 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         </div>
     </div>
     <div class='form-group row'>
+      <label class='col-xs-2 col-form-label'>Equipment: </label>
+      <div class='col-md-2'>
+        <select id='prcsEqAcronyms' class='form-control'>
+          <?
+          while($row = mysqli_fetch_row($prcsEquipementResult)){
+            echo "<option value='".$row[0]."'>".$row[2]."</option>";
+          }
+        ?>
+        </select>
+      </div>
+    </div>
+    <div class='form-group row'>
       <label class='col-xs-2 col-form-label'>Comment:</label>
       <div class='col-md-2'>
-        <textarea  id='prcs_comment' name='prcs_comment' class='form-control' value=''></textarea>
+        <textarea  id='prcs_comment' name='prcs_comment' class='form-control custom_comment' value=''></textarea>
     </div>
     <label class='col-xs-2 col-form-label'>File: (No functionality) </label>
     <div class='col-md-4'>

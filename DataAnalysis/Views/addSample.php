@@ -137,7 +137,7 @@ WHERE sample_set_ID = '$sampleSetID';";
       </div>
       <div class='col-md-12 form-group'>
         <label for='sample_comment'>Comment: </label>
-        <textarea id='sample_comment' name='sample_comment' class='form-control' rows='4'></textarea>
+        <textarea id='sample_comment' name='sample_comment' class='form-control'></textarea>
       </div>
       <div class='col-md-12 form-group'>
 <!--         <label>Picture: (No functionality) </label>

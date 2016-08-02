@@ -44,13 +44,13 @@ input[type=number]{
 input[type=date]{
     width: 155px;
 }
-textarea.form-control{
+textarea.form-control.custom_heading{
     width: 155px;
 }
-#employee_initials {
+/*#employee_initials {
     width: 85px;
     display: inline;
-} 
+} */
 
 /*Analyze.php: make average style same as in table.*/
 .table_style_text{

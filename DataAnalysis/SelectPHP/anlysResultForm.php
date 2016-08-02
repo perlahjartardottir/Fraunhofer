@@ -135,7 +135,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     <div class='form-group row'>
       <label class='col-xs-2 col-form-label'>Comment:</label>
       <div class='col-md-2'>
-        <textarea  id='res_comment' class='form-control' value=''></textarea>
+        <textarea id='res_comment' class='form-control custom_comment' value=''></textarea>
       </div>
       <label class='col-xs-2 col-form-label'>File: (No functionality) </label>
       <div class='col-md-4'>

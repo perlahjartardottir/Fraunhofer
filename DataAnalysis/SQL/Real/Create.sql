@@ -73,9 +73,10 @@ INSERT INTO anlys_eq_prop(anlys_eq_ID, anlys_prop_ID) VALUES
 -- If we should calculate averages for this pair of eq and prop.
 ALTER TABLE anlys_eq_prop ADD anlys_aveg BOOLEAN;
 ALTER TABLE anlys_eq_prop ADD anlys_eq_prop_unit VARCHAR(50);
-ALTER TABLE anlys_eq_prop ADD anlys_res_1_unit VARCHAR(50);
-ALTER TABLE anlys_eq_prop ADD anlys_res_2_unit VARCHAR(50);
-ALTER TABLE anlys_eq_prop ADD anlys_res_3_unit VARCHAR(50);
+ALTER TABLE anlys_eq_prop ADD anlys_param_1_unit VARCHAR(50);
+ALTER TABLE anlys_eq_prop ADD anlys_param_2_unit VARCHAR(50);
+ALTER TABLE anlys_eq_prop ADD anlys_param_3_unit VARCHAR(50);
+
 
 -- INSERT INTO anlys_property(anlys_prop_name, anlys_eq_ID) VALUES
 -- 			("Roughness", 1), ("Roughness", 8), ("Thickness", 1), ("Thickness", 11),
@@ -117,6 +118,23 @@ CREATE TABLE process(
     FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID)
 );
 
+CREATE TABLE prcs_equipment(
+	prcs_eq_ID INT AUTO_INCREMENT,
+	prcs_eq_name VARCHAR(50),
+	prcs_eq_acronym VARCHAR(20),
+	prcs_eq_comment VARCHAR(2000),
+	prcs_eq_active BOOLEAN,
+	PRIMARY KEY(prcs_eq_ID)
+);
+
+ALTER TABLE prcs_equipment ADD CONSTRAINT uniq_prcs_eq_acronym UNIQUE (prcs_eq_acronym);
+
+INSERT INTO prcs_equipment(prcs_eq_name, prcs_eq_acronym, prcs_eq_active) VALUES
+			('PVD Coating Chamber K1', 'K1', TRUE),
+            ('PVD Coating Chamber K2', 'K2', TRUE),
+            ('PVD Coating Chamber LA', 'LA', TRUE),
+            ('PVD Coating Chamber PVD75', 'PVD75', TRUE);
+            
 
 ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_eq_prop CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
