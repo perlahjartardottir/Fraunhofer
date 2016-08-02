@@ -43,9 +43,12 @@ ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSamplesToDisplay;";
             <tr >
               <td><a onclick='loadAndShowSampleModal(".$sampleSetRow[0].",".$sampleRow[0].")'>".$sampleRow[1]."</a></td>";
 
+              // Get the latest coating for the sample. 
               $coatingSql = "SELECT prcs_coating
               FROM process
-              WHERE sample_ID = '$sampleRow[0]';";
+              WHERE sample_ID = '$sampleRow[0]'
+              ORDER BY prcs_ID DESC
+              LIMIT 1;";
               $coating = mysqli_fetch_row(mysqli_query($link, $coatingSql))[0];
               if($coating){
               echo"

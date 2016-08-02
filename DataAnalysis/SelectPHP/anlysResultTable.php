@@ -5,7 +5,7 @@ session_start();
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 $eqPropID = mysqli_real_escape_string($link, $_POST["eqPropID"]);
 
-$propertySql = "SELECT a.anlys_eq_prop_ID as eqPropID, p.anlys_prop_name as propName, e.anlys_eq_name as eqName, a.anlys_param_1 as res1, a.anlys_param_2 as res2, a.anlys_param_3 as res3, a.anlys_eq_prop_unit as unit, a.anlys_prop_ID as propID, a.anlys_aveg as dispAveg
+$propertySql = "SELECT a.anlys_eq_prop_ID as eqPropID, p.anlys_prop_name as propName, e.anlys_eq_name as eqName, a.anlys_param_1 as param1, a.anlys_param_2 as param2, a.anlys_param_3 as param3, a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit, a.anlys_eq_prop_unit as unit, a.anlys_prop_ID as propID, a.anlys_aveg as dispAveg
 FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
 WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
 AND a.anlys_eq_prop_ID = '$eqPropID'";
@@ -19,27 +19,37 @@ ORDER BY anlys_res_ID;";
 $resultsResult = mysqli_query($link, $resultsSql);
 
 echo"
-<div class='col-md-12'>
 
+<!-- For displayAnlysResultTable to know what div is being displayed -->
+<input type='text' id='eqPropID_hidden' value='".$eqPropID."'>
+
+<div class='col-md-12'>
 </div>
 <table class='table table-responsive'>
-<caption>Analysis results for: ".$propertyRow[2]."</caption>
+<caption>Analysis results for: ".$propertyRow['propName']."</caption>
   <thead>
     <tr>
       <th>Date</th>
-      <th>Employee</th>
-      <th>".$propertyRow[1];
+      <th>Employee</th>";
+      // Only display anlys_res_result if we should calc average or if it has units e.g. adhesion.
+      if($propertyRow[dispAveg] || $propertyRow['unit']){
+              echo"
+      <th>".$propertyRow['propName'];
       // If the property has units display it.
-      if($propertyRow[6]){
-        echo " (".$propertyRow[6].")";
+      if($propertyRow['unit']){
+        echo " (".$propertyRow['unit'].")";
       }
       echo"
-      </th>
+      </th>";
+      }
+
+
+      echo"
       <th>Comment</th>";
       for($i = 3; $i < 6; $i++){
         if($propertyRow[$i]){
           echo"
-            <th>".$propertyRow[$i]."</th>";
+            <th>".$propertyRow[$i]." (".$propertyRow[$i + 3].")</th>";
         }
       }
     echo"
@@ -68,8 +78,12 @@ echo"
       echo"
       <tr>
         <td>".$resultRow[1]."</td>
-        <td>".$employeeInitials."</td>
-        <td>".$resultRow[0]."</td>
+        <td>".$employeeInitials."</td>";
+      if($propertyRow[dispAveg] || $propertyRow['unit']){
+        echo"
+        <td>".$resultRow[0]."</td>";
+      }
+      echo"
         <td>".$resultRow[2]."</td>";
         for($i = 3; $i < 6; $i++){
         if($propertyRow[$i]){
@@ -89,16 +103,15 @@ echo"
   </tbody>
 </table>";
 
-if($propertyRow['dispAveg'] === TRUE){
-  $avegSql = "SELECT TRUNCATE(AVG(anlys_result), 3) as avegResult
+if($propertyRow['dispAveg']){
+  $avegSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
     FROM anlys_result
     WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID'
     GROUP BY anlys_eq_prop_ID;";
-    $avegResult = mysqli_fetch_array(mysqli_query($link, $avegSql))[0];
+    $avegResult = mysqli_fetch_row(mysqli_query($link, $avegSql))[0];
 
     echo"
-      <p class='table_style_text_bold'>Average: </p><p class='table_style_text'>".$avegResult."</p>";
-
+      <p class='table_style_text'><span class='table_style_text_bold'>Average: </span>".$avegResult." ".$propertyRow['unit']."</p>";
 }
 // If the property is roughness.
 if($propertyRow['propID'] === '2'){
@@ -111,7 +124,7 @@ if($propertyRow['propID'] === '2'){
     $rz = $roughnessRow['avegResParam2'];
 
     echo"
-      <p class='table_style_text_bold'>Average: </p><p class='table_style_text'>Ra: ".$ra." Rz: ".$rz."</p>";
+      <p class='table_style_text_bold'>Average: </p><p class='table_style_text'>Ra: ".$ra." ".$propertyRow['param1unit'].", Rz: ".$rz." ".$propertyRow['param2unit']."</p>";
 }
 
 ?>

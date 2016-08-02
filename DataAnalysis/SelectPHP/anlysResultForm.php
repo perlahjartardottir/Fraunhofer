@@ -152,22 +152,6 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
   echo"
   <div id='anlys_result_table' class='col-md-12'></div>";
-
-    // Only display averages where there is a res_res field except for Adhesion.
-  if(!in_array($propID, $noPropResult) && $propID !== '4'){
-    $avgSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
-    FROM anlys_result
-    WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]';";
-    $avgResult = mysqli_query($link, $avgSql);
-    $avgRow = mysqli_fetch_row($avgResult);
-// Only display calculations if there are any results. 
-    // if($avgRow[0]){
-    echo"
-    <div class='col-md-6'>
-      <p class='table_style_text'><strong>Average: </strong>".$avgRow[0]."</p>
-    </div>";
-    //}
-  }
 }
 ?>
 <script>

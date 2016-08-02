@@ -59,8 +59,10 @@ CREATE TABLE anlys_eq_prop(
         CONSTRAINT uniq_eq_prop UNIQUE (anlys_eq_ID, anlys_prop_ID)
 );
 
--- ALTER TABLE anlys_eq_prop
--- ADD CONSTRAINT uniq_eq_prop UNIQUE (anlys_eq_ID, anlys_prop_ID);
+ALTER TABLE anlys_eq_prop
+ADD CONSTRAINT uniq_eq_prop UNIQUE (anlys_eq_ID, anlys_prop_ID);
+
+
 
 INSERT INTO anlys_eq_prop(anlys_eq_ID, anlys_prop_ID) VALUES
 		(1,2),(8,2),(1,1),(11,1),(7,1),
@@ -69,8 +71,11 @@ INSERT INTO anlys_eq_prop(anlys_eq_ID, anlys_prop_ID) VALUES
         (11,11),(12,12);
 
 -- If we should calculate averages for this pair of eq and prop.
-ALTER TABLE anlys_eq_prop
-ADD anlys_aveg BOOLEAN;
+ALTER TABLE anlys_eq_prop ADD anlys_aveg BOOLEAN;
+ALTER TABLE anlys_eq_prop ADD anlys_eq_prop_unit VARCHAR(50);
+ALTER TABLE anlys_eq_prop ADD anlys_res_1_unit VARCHAR(50);
+ALTER TABLE anlys_eq_prop ADD anlys_res_2_unit VARCHAR(50);
+ALTER TABLE anlys_eq_prop ADD anlys_res_3_unit VARCHAR(50);
 
 -- INSERT INTO anlys_property(anlys_prop_name, anlys_eq_ID) VALUES
 -- 			("Roughness", 1), ("Roughness", 8), ("Thickness", 1), ("Thickness", 11),
@@ -102,7 +107,7 @@ CREATE TABLE process(
 	prcs_ID INT AUTO_INCREMENT,
     sample_ID INT,
     employee_ID INT,
-	anlys_res_date DATE,
+	prcs_date DATE,
     prcs_coating VARCHAR(50),
     prcs_position VARCHAR(50),
     prcs_rotation VARCHAR(50),

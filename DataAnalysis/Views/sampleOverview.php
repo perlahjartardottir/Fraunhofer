@@ -43,7 +43,7 @@ $sampleInfoResult = mysqli_query($link, $sampleInfoSql);
 $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 
 $anlysAverageSql = "SELECT r.anlys_eq_prop_ID as eqPropID, e.anlys_eq_ID as eqID, e.anlys_eq_name as eqName, p.anlys_prop_ID as propID,
-                    a.anlys_eq_prop_unit as unit, p.anlys_prop_name as propName, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_aveg as dispAveg, COUNT(r.anlys_res_ID) as numberOfResults, r.anlys_res_result as singleResult
+                    a.anlys_eq_prop_unit as unit, p.anlys_prop_name as propName, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_aveg as dispAveg, COUNT(r.anlys_res_ID) as numberOfResults, r.anlys_res_result as singleResult, a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit
 FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
 WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
 a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
@@ -120,7 +120,7 @@ WHERE sample_set_ID = '$sampleSetID';";
             else if($row['propID'] == '2'){
               $roughnessSql = "SELECT TRUNCATE(AVG(anlys_res_1), 3) as avegResParam1, TRUNCATE(AVG(anlys_res_2), 3) as avegResParam2
               FROM anlys_result
-              WHERE sample_ID = '1' AND anlys_eq_prop_ID = '2'
+              WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = $row[0]
               GROUP BY anlys_eq_prop_ID;";
               $roughnessRow = mysqli_fetch_array(mysqli_query($link, $roughnessSql));
               $ra = $roughnessRow[0];
@@ -128,7 +128,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 
               // TO DO: UNITS!
 
-              echo "Ra:".$ra." Rz:".$rz;
+              echo "Ra: ".$ra." ".$row['param1unit'].", Rz: ".$rz." ".$row['param2unit'];
             }
             else{
               echo "N/A";

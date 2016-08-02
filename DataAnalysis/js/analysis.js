@@ -205,14 +205,15 @@ function deleteAnalysisEquipment(eqID){
 
 function displayAnlysResultTable(sampleID, eqPropID){
   
-  // If we are already displaying the results, hide them. 
-  if(!$('#anlys_result_table').is(':empty')) {
+  // If the anlys result table is already being dislayed, hide it. 
+  if($('#anlys_result_table').find('#eqPropID_hidden').val() == eqPropID) {
     $("#anlys_result_table").html("");
   }
   else{
 
   console.log("sampleID: "+sampleID);
   console.log("eqPropID: "+eqPropID);
+
   $.ajax({
     url: "../SelectPHP/anlysResultTable.php",
     type: "POST",
