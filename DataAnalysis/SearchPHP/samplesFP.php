@@ -60,7 +60,7 @@ ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSamplesToDisplay;";
               }
 
               // Get thickness results for each sample. The results are sorted by equipment: Calotte Grinder, Dektak, AFM
-              $thicknessSql = "SELECT  r.anlys_res_result, a.anlys_eq_prop_unit
+              $thicknessSql = "SELECT  TRUNCATE(AVG(anlys_res_result), 3), a.anlys_eq_prop_unit
               FROM anlys_result r, anlys_eq_prop a
               WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$sampleRow[0]' AND a.anlys_eq_prop_ID IN (SELECT aa.anlys_eq_prop_ID
               FROM anlys_eq_prop aa
