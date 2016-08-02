@@ -5,12 +5,12 @@ session_start();
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 $eqPropID = mysqli_real_escape_string($link, $_POST["eqPropID"]);
 
-$propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
+$propertySql = "SELECT a.anlys_eq_prop_ID as eqPropID, p.anlys_prop_name as propName, e.anlys_eq_name as eqName, a.anlys_param_1 as res1, a.anlys_param_2 as res2, a.anlys_param_3 as res3, a.anlys_eq_prop_unit as unit, a.anlys_prop_ID as propID, a.anlys_aveg as dispAveg
 FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
 WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
 AND a.anlys_eq_prop_ID = '$eqPropID'";
 $propertyResult = mysqli_query($link, $propertySql);
-$propertyRow = mysqli_fetch_row($propertyResult);
+$propertyRow = mysqli_fetch_array($propertyResult);
 
 $resultsSql = "SELECT anlys_res_result, anlys_res_date, anlys_res_comment, anlys_res_1, anlys_res_2, anlys_res_3, employee_ID
 FROM anlys_result
@@ -88,5 +88,30 @@ echo"
     echo"
   </tbody>
 </table>";
+
+if($propertyRow['dispAveg'] === TRUE){
+  $avegSql = "SELECT TRUNCATE(AVG(anlys_result), 3) as avegResult
+    FROM anlys_result
+    WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID'
+    GROUP BY anlys_eq_prop_ID;";
+    $avegResult = mysqli_fetch_array(mysqli_query($link, $avegSql))[0];
+
+    echo"
+      <p class='table_style_text_bold'>Average: </p><p class='table_style_text'>".$avegResult."</p>";
+
+}
+// If the property is roughness.
+if($propertyRow['propID'] === '2'){
+    $roughnessSql = "SELECT TRUNCATE(AVG(anlys_res_1), 3) as avegResParam1, TRUNCATE(AVG(anlys_res_2), 3) as avegResParam2
+    FROM anlys_result
+    WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID'
+    GROUP BY anlys_eq_prop_ID;";
+    $roughnessRow = mysqli_fetch_array(mysqli_query($link, $roughnessSql));
+    $ra = $roughnessRow['avegResParam1'];
+    $rz = $roughnessRow['avegResParam2'];
+
+    echo"
+      <p class='table_style_text_bold'>Average: </p><p class='table_style_text'>Ra: ".$ra." Rz: ".$rz."</p>";
+}
 
 ?>
