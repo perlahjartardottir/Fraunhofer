@@ -71,6 +71,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         <div class='row well well-lg'>
             <!-- 1. Choose sample -->
             <div class='col-md-12'>
+              <div id='error_message'></div>
                 <h4 class='custom_heading'>1. Choose a sample</h4>
                 <div class='col-md-4 form-group'>
                  <!-- Set combo box -->
@@ -130,7 +131,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     <div class='form-group row'>
       <label class='col-xs-2 col-form-label'>Equipment: </label>
       <div class='col-md-2'>
-        <select id='prcsEqAcronyms' class='form-control'>
+        <select id='prcs_eq_acronyms' class='form-control'>
           <?
           while($row = mysqli_fetch_row($prcsEquipementResult)){
             echo "<option value='".$row[0]."'>".$row[2]."</option>";
@@ -152,12 +153,12 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       <span id='sample_file_path' class='table_style_text'></span>
   </div>
 </div>
-  <button type='button' class='btn btn-primary col-md-2' onclick='addProcess("<? echo $sampleID; ?>",this.form)' style='float:right'>Add</button>
+  <button type='button' class='btn btn-primary col-md-2' onclick='addProcess("<? echo $sampleID; ?>",this.form)' style='float:right;'>Add</button>
 </form>
 </div>
 <div id='process_table' class='col-md-12'></div>
   <div class='col-md-12'>
-    <button type='button' class='btn btn-primary' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
+    <button type='button' id='prcs_sample_overview_btn' class='btn btn-primary col-md-2' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
   </div>
 </div>
 </div>

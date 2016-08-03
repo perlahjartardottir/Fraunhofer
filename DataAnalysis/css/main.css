@@ -8,6 +8,10 @@
     margin-left: 5px;
 }
 
+#prcs_sample_overview_btn.btn.btn-primary {
+    margin-top: 10px;
+}
+
 /*.modal-footer .btn{
     margin-bottom: 5px;
 }*/

@@ -145,9 +145,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         <span id='sample_file_path' class='table_style_text'></span>
       </div>
     </div>
-    <div class='col-md-12'>
       <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$sampleID.",".$propertyRow[0].",this.form)' style='float:right'>Add</button>
-    </div>
   </form>";
 
   echo"

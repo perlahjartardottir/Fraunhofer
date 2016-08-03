@@ -147,7 +147,7 @@ WHERE sample_set_ID = '$sampleSetID';";
         <div id='res_div'></div>
       </div>
       <div class='col-md-12'>
-        <button type='button' class='btn btn-primary' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
+        <button type='button' class='btn btn-primary col-md-2' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
       </div>
     </div>
   </form>

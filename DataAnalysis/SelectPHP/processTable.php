@@ -17,7 +17,7 @@ $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 // ORDER BY anlys_res_ID;";
 // $resultsResult = mysqli_query($link, $resultsSql);
 
-$sql = "SELECT prcs_ID, employee_ID as employee, prcs_date as date, prcs_coating as coating, prcs_position as position,
+$sql = "SELECT prcs_ID, employee_ID as employee, prcs_date as date, prcs_coating as coating, prcs_eq_ID as eqID, prcs_position as position,
     prcs_rotation as rotation, prcs_comment as comment
 FROM process
 WHERE sample_ID = '$sampleID'
@@ -66,7 +66,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
         <td>".$row['date']."</td>
         <td>".$employeeInitials."</td>
         <td>".$row['coating']."</td>
-        <td>Eq</td>
+        <td>".$row['eqID']."</td>
         <td>".$row['position']."</td>
         <td>".$row['rotation']."</td>
         <td>".$row['comment']."</td>

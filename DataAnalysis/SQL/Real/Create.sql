@@ -104,6 +104,7 @@ CREATE TABLE anlys_result(
 ALTER TABLE anlys_result ADD employee_ID INT;
 ALTER TABLE anlys_result ADD CONSTRAINT FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID);
 
+
 CREATE TABLE process(
 	prcs_ID INT AUTO_INCREMENT,
     sample_ID INT,
@@ -117,6 +118,9 @@ CREATE TABLE process(
     FOREIGN KEY(sample_ID) REFERENCES sample(sample_ID),
     FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID)
 );
+
+ALTER TABLE process ADD prcs_eq_ID INT;
+ALTER TABLE process ADD CONSTRAINT FOREIGN KEY(prcs_eq_ID) REFERENCES prcs_equipment(prcs_eq_ID);
 
 CREATE TABLE prcs_equipment(
 	prcs_eq_ID INT AUTO_INCREMENT,

@@ -14,9 +14,19 @@ function addProcess(sampleID, form){
   date = $(form).find('#prcs_date').val();
   employee = $(form).find('#employee_initials').val();
   coating = $(form).find('#prcs_coating').val();
+  console.log(coating);
+  equipment = $(form).find('#prcs_eq_acronyms').val();
+  console.log(equipment);
   position = $(form).find('#prcs_position').val();
+  console.log(rotation);
   rotation = $(form).find('#prcs_rotation').val();
+  console.log(rotation);
   comment = $(form).find('#prcs_comment').val();
+  console.log(comment);
+
+  if(!coating){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: coating.</div>";
+  }
 
   if(errorMessage){
     $(form).find("#error_message").html(errorMessage);
@@ -29,6 +39,7 @@ function addProcess(sampleID, form){
         date : date, 
         employee : employee,
         coating : coating,
+        equipment : equipment,
         position : position,
         rotation : rotation,
         comment : comment

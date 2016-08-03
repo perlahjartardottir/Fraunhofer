@@ -52,7 +52,7 @@ else{
 	}
 }
 
-
+// There can be no echo before this call, otherwise the redirect will not work. 
 header('Location: ../Views/addSample.php?id='.$sampleSetID);
 
 mysqli_close($link);
