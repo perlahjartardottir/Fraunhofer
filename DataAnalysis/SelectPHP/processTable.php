@@ -17,10 +17,10 @@ $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 // ORDER BY anlys_res_ID;";
 // $resultsResult = mysqli_query($link, $resultsSql);
 
-$sql = "SELECT prcs_ID, employee_ID as employee, prcs_date as date, prcs_coating as coating, prcs_eq_ID as eqID, prcs_position as position,
-    prcs_rotation as rotation, prcs_comment as comment
-FROM process
-WHERE sample_ID = '$sampleID'
+$sql = "SELECT p.prcs_ID, p.employee_ID as employee, p.prcs_date as date, p.prcs_coating as coating, p.prcs_eq_ID as eqID, p.prcs_position as position,
+    p.prcs_rotation as rotation, p.prcs_comment as comment, e.prcs_eq_acronym as eqAcronym
+FROM process p, prcs_equipment e
+WHERE p.prcs_eq_ID = e.prcs_eq_ID AND sample_ID = '$sampleID'
 ORDER BY prcs_date DESC;";
 $result = mysqli_query($link, $sql);
 
@@ -66,7 +66,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
         <td>".$row['date']."</td>
         <td>".$employeeInitials."</td>
         <td>".$row['coating']."</td>
-        <td>".$row['eqID']."</td>
+        <td>".$row['eqAcronym']."</td>
         <td>".$row['position']."</td>
         <td>".$row['rotation']."</td>
         <td>".$row['comment']."</td>
