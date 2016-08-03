@@ -10,7 +10,7 @@ function logout(){
 
 // Trime the filepath to only the file name. 
 function getFileName(s) {
-  return s.replace(/^.*[\\\/]/, '');
+	return s.replace(/^.*[\\\/]/, '');
 }
 
 function displaySearchResults(){
@@ -18,10 +18,10 @@ function displaySearchResults(){
 	var sampleName = $("#sample_name").val();
 	var minThickness = $("#min_thickness").val();
 	var maxThickness = $("#max_thickness").val();
-  	var beginDate = $('#begin_date').val();
-  	var endDate  = $('#end_date').val();
+	var beginDate = $('#begin_date').val();
+	var endDate  = $('#end_date').val();
 
-  	if(beginDate){
+	if(beginDate){
 		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
 		beginDate = beginDate.replace(/-/g,"").substring(2,8);
 	}
@@ -29,9 +29,6 @@ function displaySearchResults(){
 		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
 		beginDate = beginDate.replace(/-/g,"").substring(2,8);
 	}
-
-  	console.log(minThickness);
-  	console.log(maxThickness);
 
 	$.ajax({
 		url : "../searchPHP/searchResults.php",
@@ -63,4 +60,43 @@ function displaySampleResults(){
 			$("#sample_results").html(data);
 		}
 	});
+}
+
+function addFeedback(form){
+	errorMessage = "";
+	user = $(form).find("#feedback_user").val();
+	console.log(user);
+	date = $(form).find("#feedback_date").val();
+	console.log(date);
+	errorLocation = $(form).find("#feedback_location").val();
+	console.log(errorLocation);
+	sample = $(form).find("#feedback_sample").val();
+	console.log(sample);
+	description = $(form).find("#feedback_description").val();
+	console.log(description);
+
+	if(!description){
+		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
+	}
+	if(errorMessage){
+		$(form).find("#error_message").html(errorMessage);
+	} 
+	else{
+		$.ajax({
+			url : "../insertPHP/addFeedback.php",
+			type : "POST",
+			data : {
+				user : user,
+				date : date,
+				errorLocation : errorLocation,
+				sample : sample,
+				description : description
+			},
+			success : function(data, status, xhr){
+				successMessage = "<div class='alert alert-success fade in row well-lg'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Thank you for your feedback!</div>";
+				$("#success_message").html(successMessage);
+
+			}
+		});
+	}
 }

@@ -3,6 +3,13 @@ include '../../connection.php';
 session_start();
 
 $securityLevel = $_SESSION["securityLevelDA"];
+
+// If the user security level is not high enough we kill the page and give him a link to the log in page.
+if($securityLevel < 2){
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
+  die("You don't have the privileges to view this site.");
+}
+
 $sampleID = $_SESSION["sampleID"];
 if(!$sampleID){
   $sampleID = "-1";

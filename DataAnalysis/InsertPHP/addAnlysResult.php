@@ -26,7 +26,7 @@ $sql = "INSERT INTO anlys_result(sample_ID, anlys_eq_prop_ID, anlys_res_result, 
 			anlys_res_1, anlys_res_2, anlys_res_3, anlys_res_date, employee_ID) VALUES
 			('$sampleID','$eqPropID','$result','$comment','$param1','$param2','$param3','$date','$employee');";
 $result = mysqli_query($link, $sql);
-if(!result){
+if(!$result){
 	die("Could not add analysis result: ".mysqli_error($link));
 }
 

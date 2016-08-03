@@ -1,5 +1,11 @@
 .username{
     font-weight: bold;
+    margin-left: 5px;
+}
+
+.header_btn{
+
+    margin-top: 10px;
 }
 
 ul.navbar-brand{
@@ -18,6 +24,10 @@ ul.navbar-brand{
 
 #prcs_sample_overview_btn.btn.btn-primary {
     margin-top: 10px;
+}
+
+#feedback_form{
+    margin-top: 50px;
 }
 
 /*.modal-footer .btn{

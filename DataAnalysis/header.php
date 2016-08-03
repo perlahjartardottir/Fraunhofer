@@ -27,7 +27,6 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="en">
-<link href='../css/header.css' rel='stylesheet'>
 <link href='../css/main.css' rel='stylesheet'>
 <link href='/css/bootstrap.min.css' rel='stylesheet'>
 <link href='/css/jquery-ui.min.css' rel='stylesheet'>
@@ -35,54 +34,35 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <!-- For formating input date -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
+
 <script src='../js/app.js'></script>
 <script src='../js/sample.js'></script>
 <script src='../js/analysis.js'></script>
 <script src='../js/process.js'></script>
 <script src='../js/bootstrap.js'></script>
 
-<!-- <div class="navbar navbar-default navbar-static-top"> -->
-
-<!--     <div class="navbar-header">
-      <div class='navbar-brand collapse navbar-collapse navHeaderCollapse'>
-      <ul>
-        <a href='../../Views/menu.php'>Menu</a>
-        <a href='../../Views/editProfile.php'><strong><?php echo $_SESSION["username"];?></strong></a>
-        </ul>
-      </div>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div> -->
-    <div class="navbar navbar-default collapse navbar-collapse navHeaderCollapse navbar-static-top">
+<div class="navbar navbar-default collapse navbar-collapse navHeaderCollapse navbar-static-top">
   <div class="container">
-      <ul class='navbar-brand navbar-left'>
-        <a href='../../Views/menu.php'>Menu</a>
-        <a href='../../Views/editProfile.php' class='username'><?php echo $_SESSION["username"];?></a>
-      </ul>
-      <ul class='navbar-right btn-group' role='group'>
-        <a href='../../DataAnalysis/Views/feedback.php' class='btn btn-primary headerbutton ' role='button'>Comment</a>
-        <!--           <a href='https://github.com/perlahj/Fraunhofer/tree/master/DataAnalysis' target='_blank' class='btn btn-primary headerbutton active' role='button'>?</a> -->
-        <a onclick='logout()' class='btn btn-danger headerbutton active' role='button'>Logout</a>
-      </ul>
-    </div>
-
+    <ul class='navbar-brand navbar-left'>
+      <a href='../../Views/menu.php'>Menu</a>
+      <a href='../../Views/editProfile.php' class='username'><?php echo $_SESSION["username"];?></a>
+    </ul>
+    <ul class='navbar-right btn-group' data-toggle='buttons' >
+      <button type='button' id='nav_comment' onclick="location.href='feedback.php'"class='btn btn-primary header_btn ' role='button'>Comment</button>
+      <button type='button' class='btn btn-danger header_btn' onclick='logout()'>Logout</button>
+    </ul>
   </div>
-
-<!-- </div> -->
+</div>
 
 <!-- Toolbar -->
-<!-- <div class='row well well-lg'> -->
-  <div class="container nav_bar_lower">
-    <div class='btn-group col-md-12 nav_bar_lower' data-toggle='buttons'>
-      <button type='button' id='nav_home' class='btn btn-primary col-md-2' onclick="location.href='dataAnalysis.php'">Home</button>
-      <button type='button' id='nav_addSample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
-      <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href='process.php'">Process</button>
-      <button type='button' id='nav_analyze' class='btn btn-primary col-md-2' onclick="location.href='analyze.php'">Analyze</button>
-      <button type='button' id='nav_search' class='btn btn-primary col-md-2' onclick="location.href='search.php'">Search</button>
-      <button type='button' id='nav_overview' class='btn btn-primary col-md-2' onclick="location.href='overview.php'">Overview</button>
+<div class="container nav_bar_lower">
+  <div class='btn-group col-md-12 nav_bar_lower' data-toggle='buttons'>
+    <button type='button' id='nav_home' class='btn btn-primary col-md-2' onclick="location.href='dataAnalysis.php'">Home</button>
+    <button type='button' id='nav_addSample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
+    <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href='process.php'">Process</button>
+    <button type='button' id='nav_analyze' class='btn btn-primary col-md-2' onclick="location.href='analyze.php'">Analyze</button>
+    <button type='button' id='nav_search' class='btn btn-primary col-md-2' onclick="location.href='search.php'">Search</button>
+    <button type='button' id='nav_overview' class='btn btn-primary col-md-2' onclick="location.href='overview.php'">Overview</button>
 <!--           <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
             <span class='caret'></span>
             <span class='sr-only'>Toggle Dropdown</span>
@@ -91,30 +71,7 @@ $_SESSION["securityLevelDA"] = $securityLevel;
             <li><a href='viewAnalysisEquipment.php'>Analysis equipment</a></li>
             <li><a href='../../Tooling/Views/viewAllMachines.php'>Process equipment</a></li>
           </ul> -->
-</div>
- </div>
-<!--     </div>  -->
-
-
-<!--     <nav class="navbar navbar-default">
-      <div class="container nav_bar_lower">
-        <div class="collapse navbar-collapse nav_collapse nav_bar_lower">
-          <ul class='btn-group nav nav-justified' role='group'>
-            <button type='button' id='nav_home' class='btn btn-primary col-md-2' onclick="location.href='dataAnalysis.php'">Home</button>
-            <button type='button' id='nav_addSample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
-            <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href='process.php'">Process</button>
-            <button type='button' id='nav_analyze' class='btn btn-primary col-md-2' onclick="location.href='analyze.php'">Analyze</button>
-            <button type='button' id='nav_search' class='btn btn-primary col-md-2' onclick="location.href='search.php'">Search</button>
-            <button type='button' id='nav_overview' class='btn btn-primary col-md-2' onclick="location.href='overview.php'">Overview</button>
-          </ul>
         </div>
-
       </div>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav_collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </nav> -->
 
 

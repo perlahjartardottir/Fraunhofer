@@ -21,7 +21,7 @@ $resultsResult = mysqli_query($link, $resultsSql);
 echo"
 
 <!-- For displayAnlysResultTable to know what div is being displayed -->
-<input type='text' id='eqPropID_hidden' value='".$eqPropID."'>
+<input type='hidden' id='eqPropID_hidden' value='".$eqPropID."'>
 
 <div class='col-md-12'>
 </div>

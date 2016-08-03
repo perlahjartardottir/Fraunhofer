@@ -139,6 +139,16 @@ INSERT INTO prcs_equipment(prcs_eq_name, prcs_eq_acronym, prcs_eq_active) VALUES
             ('PVD Coating Chamber LA', 'LA', TRUE),
             ('PVD Coating Chamber PVD75', 'PVD75', TRUE);
             
+CREATE TABLE da_feedback(
+	fdbk_ID INT AUTO_INCREMENT,
+	employee_ID INT,
+	fdbk_date DATE,
+	fdbk_description VARCHAR(10000),
+    fdbk_location VARCHAR(512),
+    fdbk_sample VARCHAR(200),
+	PRIMARY KEY(fdbk_ID),
+	FOREIGN KEY (employee_ID) REFERENCES employee(employee_ID)
+);
 
 ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_eq_prop CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
