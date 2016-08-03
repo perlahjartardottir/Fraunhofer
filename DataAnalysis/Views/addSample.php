@@ -52,7 +52,7 @@ WHERE sample_set_ID = '$sampleSetID';";
   <div class='container'>
     <div class='row well well-lg'>
       <h5>The sample set name is on the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
-      <h5>Samples can be edited in the overview table below the form.</h5>
+      <h5>Samples can be edited or deleted in the overview table below the form.</h5>
     </div>
     <div class='row well well-lg'>
       <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>

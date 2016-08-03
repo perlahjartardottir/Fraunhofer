@@ -1,6 +1,14 @@
-.nav_bar_lower.col-md-12, .nav_bar_lower.container{
+.username{
+    font-weight: bold;
+}
+
+ul.navbar-brand{
+    margin-bottom: 0px;
+}
+.nav_bar_lower.col-md-12, .nav_bar_lower.container, .navbar-collapse.nav_bar_lower{
     padding-left: 0px;
     padding-right: 0px;
+    margin-bottom: 10px;
 }
 
 .btn.btn-success, .btn.btn-danger, .btn.btn-primary {
@@ -59,7 +67,6 @@ textarea.form-control.custom_heading{
 /*Analyze.php: make average style same as in table.*/
 .table_style_text{
 
-    /*font-weight: bold;*/
     font-size: medium;
     font-variant: normal;
     font-style: normal;
