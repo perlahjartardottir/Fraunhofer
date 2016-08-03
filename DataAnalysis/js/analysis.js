@@ -11,16 +11,16 @@ function editAnalysisEquipment(eqID, form){
   }
 
   // It is not an array of elements
-  if(!form.elements["prop_ID"].length){
-    propertyIDs.push(form.elements["prop_ID"].value);
-    propertyNames.push(form.elements["prop_name"].value);
-    propertyUnits.push(form.elements["prop_unit"].value);
+  if(!form.elements.prop_ID.length){
+    propertyIDs.push(form.elements.prop_ID.value);
+    propertyNames.push(form.elements.prop_name.value);
+    propertyUnits.push(form.elements.prop_unit.value);
   }
   else{
-   for (i = 0; i < form.elements["prop_ID"].length; i++){
-    propertyIDs.push(form.elements["prop_ID"][i].value);
-    propertyUnits.push(form.elements["prop_unit"][i].value);
-    propertyName = form.elements["prop_name"][i].value;
+   for (i = 0; i < form.elements.prop_ID.length; i++){
+    propertyIDs.push(form.elements.prop_ID[i].value);
+    propertyUnits.push(form.elements.prop_unit[i].value);
+    propertyName = form.elements.prop_name[i].value;
     if(!propertyName){
      errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Property name</div>";
    }
@@ -45,7 +45,7 @@ if(errorMessage){
     console.log(data);
     editAnalysisEqProperty(propertyIDs, propertyNames, propertyUnits, eqID);
   }
-})
+});
 }
 }
 
@@ -63,7 +63,7 @@ function editAnalysisEqProperty(propertyIDs, propertyNames, propertyUnits, eqID)
       console.log(data);
       window.location.reload(true);
     }
-  })
+  });
 }
 
 function deleteAnalysisEquipment(eqID){
@@ -80,7 +80,7 @@ function deleteAnalysisEquipment(eqID){
   				console.log(data);
   				window.location.reload(true);
   			}
-  		})
+  		});
   	}
   }
 
@@ -108,7 +108,7 @@ function deleteAnalysisEquipment(eqID){
           window.location.reload(true);
         }
       }
-    })
+    });
     }
   }
 
@@ -125,7 +125,7 @@ function deleteAnalysisEquipment(eqID){
      $("#sample_info").html(data);
      window.location.reload(true);		
    }
- })
+ });
  }
 
  function showAnlysResultForm(propID, eqID, sampleID, form){
@@ -143,7 +143,7 @@ function deleteAnalysisEquipment(eqID){
      $("#res_div").html(data);
 
    }
- })
+ });
  }
 
  function addAnlysResult(sampleID, eqPropID, form){
@@ -172,10 +172,10 @@ function deleteAnalysisEquipment(eqID){
   date = $(form).find('#res_date').val();
   employee = $(form).find('#employee_initials').val();
 
-  if(form.elements["res_param"]){
-    for (i = 0; i < form.elements["res_param"].length; i++){
-      params.push(form.elements["res_param"][i].value);
-      console.log(form.elements["res_param"][i].value);
+  if(form.elements.res_param){
+    for (i = 0; i < form.elements.res_param.length; i++){
+      params.push(form.elements.res_param[i].value);
+      console.log(form.elements.res_param[i].value);
     }
   }
 
@@ -199,7 +199,7 @@ function deleteAnalysisEquipment(eqID){
        //displayAnlysResultTable(sampleID, eqPropID);
        window.location.reload();
      }
-   })
+   });
   }
 }
 
@@ -224,6 +224,6 @@ function displayAnlysResultTable(sampleID, eqPropID){
     success: function(data,status, xhr){
       $("#anlys_result_table").html(data);
     }
-  })
+  });
 }
 }

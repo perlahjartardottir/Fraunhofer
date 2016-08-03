@@ -49,7 +49,7 @@ function addProcess(sampleID, form){
        //displayAnlysResultTable(sampleID, eqPropID);
        window.location.reload();
      }
-   })
+   });
   }
 }
 
@@ -72,6 +72,6 @@ function displayProcessTable(sampleID){
     success: function(data,status, xhr){
       $("#process_table").html(data);
     }
-  })
+  });
 }
 }

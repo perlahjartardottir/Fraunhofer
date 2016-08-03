@@ -46,7 +46,7 @@ function displaySearchResults(){
 		success : function(data, status, xhr){
 			$("#search_results").html(data);
 		}
-	})
+	});
 }
 
 function displaySampleResults(){
@@ -62,5 +62,5 @@ function displaySampleResults(){
 		success : function(data, status, xhr){
 			$("#sample_results").html(data);
 		}
-	})
+	});
 }

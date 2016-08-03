@@ -41,7 +41,7 @@ function showSamplesInSet(sampleSetID){
 			$("#samples_in_set").html(data);
 			
 		}
-	})
+	});
 }
 
 // To display samples in set at addSample.php
@@ -59,7 +59,7 @@ function showSamplesInSetAndRefresh(sampleSetID){
 			window.location.href="../Views/addSample.php";
 
 		}
-	})
+	});
 }
 
 function deleteSample(sampleID, form){	
@@ -83,7 +83,7 @@ function deleteSample(sampleID, form){
 				window.location.reload(true);
           	}
 			}
-		})
+		});
 	}
 }
 
@@ -113,7 +113,7 @@ function editSample(sampleID, form){
 				console.log(data);
 				window.location.reload(true);
 			}
-		})
+		});
 	}
 }
 
@@ -131,7 +131,7 @@ function loadSampleModal(sampleSetID, sampleID){
 			setSampleID(sampleID);
 			
 		}
-	})
+	});
 }
 
 function loadSampleModalEdit(sampleID){
@@ -145,7 +145,7 @@ function loadSampleModalEdit(sampleID){
 			$("#sample_modal_edit").html(data);
 			
 		}
-	})
+	});
 }
 
   function updateSamplesInSet(sampleSetID){
@@ -161,7 +161,7 @@ function loadSampleModalEdit(sampleID){
   		success: function(data,status, xhr){
   			$("#samples_in_set").html(data);
   		}
-  	})
+  	});
   }
 
   // Update combo box at analyze.php
@@ -181,7 +181,7 @@ function loadSampleModalEdit(sampleID){
   			window.location.reload(true);
   			setSampleID();
   		}
-  	})
+  	});
   }
 
   function setSampleID(sampleID){
@@ -198,7 +198,7 @@ function loadSampleModalEdit(sampleID){
   		success: function(data,status, xhr){
   			console.log(data);
   		}
-  	})
+  	});
   }
   function setSampleIDAndRefresh(){
   	sampleID = $("#sample_ID").val();
@@ -212,7 +212,7 @@ function loadSampleModalEdit(sampleID){
   		success: function(data,status, xhr){
   			window.location.reload(true);
   		}
-  	})
+  	});
   }
     function setSampleSetID(sampleSetID){
   	console.log("settings sampleSetID: "+sampleSetID);
@@ -225,7 +225,7 @@ function loadSampleModalEdit(sampleID){
   		success: function(data,status, xhr){
   			console.log(data);
   		}
-  	})
+  	});
   }
 
   function getNewSampleSetName(sampleSetDate){
@@ -238,7 +238,7 @@ function loadSampleModalEdit(sampleID){
   		success: function(data,status, xhr){
   			$("#sample_set_name_div").html(data);
   		}
-  	})
+  	});
   }
 
 
