@@ -5,7 +5,8 @@ session_start();
 $sql = "SELECT f.fdbk_ID as fdbkID, f.employee_ID as employeeID, e.employee_name as employeeName,
 f.fdbk_date as date, f.fdbk_location as location, f.fdbk_sample as sample, f.fdbk_description as description
 FROM da_feedback f, employee e
-WHERE f.employee_ID = e.employee_ID;";
+WHERE f.employee_ID = e.employee_ID
+ORDER BY f.fdbk_ID DESC;";
 $result = mysqli_query($link, $sql);
 
 

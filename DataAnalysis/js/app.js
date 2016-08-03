@@ -95,6 +95,7 @@ function addFeedback(form){
 			success : function(data, status, xhr){
 				successMessage = "<div class='alert alert-success fade in row well-lg'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Thank you for your feedback!</div>";
 				$("#success_message").html(successMessage);
+				showFeedback();
 
 			}
 		});
