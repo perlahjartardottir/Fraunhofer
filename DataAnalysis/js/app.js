@@ -100,3 +100,16 @@ function addFeedback(form){
 		});
 	}
 }
+
+function showFeedback(){
+	$.ajax({
+		url: "../SelectPHP/showFeedback.php",
+		type: "POST",
+		data: {
+		},
+		success: function(data,status, xhr){
+			$("#all_feedback").html(data);
+			
+		}
+	});
+}

@@ -59,10 +59,12 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 				</div>
 			</form>
 		</div>
+		<div id='all_feedback'></div>
 	</div>
 	<script>
 
 		$(document).ready(function(){
 			$("#nav_comment").button('toggle');
+			showFeedback();
 		})
 	</script>
