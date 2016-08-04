@@ -63,11 +63,11 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
   echo"
   <form class='col-md-12'>
     <div class='form-group row'>
-      <label class='col-xs-2 col-form-label'>Date:</label>
+      <label class='col-md-2 col-form-label'>Date:</label>
       <div class='col-md-2'>
         <input type='date' id='res_date' class='custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
       </div>
-      <label class='col-xs-2 col-form-label'>Employee:</label>
+      <label class='col-md-2 col-form-label'>Employee:</label>
       <div class='col-md-2'>
         <select id='employee_initials' class='form-control'>";
             while($row = mysqli_fetch_row($employeeInitialsResult)){
@@ -84,15 +84,15 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
   // h=(sqrt(r2-d2)-sqrt(r2-D2))
       echo"
       <div class='form-group row'>
-        <label class='col-xs-2 col-form-label'>Inner diameter (&#181;m): </label>
+        <label class='col-md-2 col-form-label'>Inner diameter (&#181;m): </label>
         <div class='col-md-2'>
           <input type='number' id='res_calc_d' class='form-control' value='' >
         </div>
-        <label class='col-xs-2 col-form-label'>Outer diamter (&#181;m): </label>
+        <label class='col-md-2 col-form-label'>Outer diamter (&#181;m): </label>
         <div class='col-md-2'>
           <input type='number' id='res_calc_D' class='form-control' value='' >
         </div>
-        <label class='col-xs-2 col-form-label'>Radius of ball (&#181;m): </label>
+        <label class='col-md-2 col-form-label'>Radius of ball (&#181;m): </label>
         <div class='col-md-2'>
           <input type='number' id='res_calc_R' class='form-control' value='25400'>
         </div>
@@ -106,7 +106,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         for($i = 3; $i < 6; $i++){
          if($propertyRow[$i]){
            echo"
-           <label class='col-xs-2 col-form-label'>".$propertyRow[$i].":</label>
+           <label class='col-md-2 col-form-label'>".$propertyRow[$i].":</label>
            <div class='col-md-2'>
             <input type='number' name='res_param' class='form-control'>
           </div>";
@@ -120,7 +120,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
   if(!in_array($propID, $noPropResult)){
     echo"
     <div class='form-group row'>
-      <label id='property_name' class='col-xs-2 col-form-label'>".$propertyRow[1];
+      <label id='property_name' class='col-md-2 col-form-label'>".$propertyRow[1];
       // If the property has units display it.
         if($propertyRow[6]){
           echo " (".$propertyRow[6].")";

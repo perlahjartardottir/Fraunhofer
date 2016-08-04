@@ -63,6 +63,7 @@ ALTER TABLE anlys_eq_prop
 ADD CONSTRAINT uniq_eq_prop UNIQUE (anlys_eq_ID, anlys_prop_ID);
 -- ALTER TABLE anlys_eq_prop MODIFY anlys_eq_ID INT NOT NULL;
 -- ALTER TABLE anlys_eq_prop MODIFY anlys_prop_ID INT NOT NULL;
+-- ALTER TABLE anlys_eq_prop MODIFY anlys_aveg BOOLEAN NOT NULL;
 
 
 

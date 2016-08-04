@@ -6,7 +6,7 @@ $resID = mysqli_real_escape_string($link, $_POST["resID"]);
 $eqPropID = mysqli_real_escape_string($link, $_POST["eqPropID"]);
 
 $propertySql = "SELECT p.anlys_prop_name as propName, e.anlys_eq_name as eqName, a.anlys_eq_prop_unit as unit, a.anlys_param_1 as param1, a.anlys_param_2 as param2, a.anlys_param_3 as param3,
-a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit, a.anlys_aveg as dispAveg
+a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit, a.anlys_aveg as dispAveg, a.anlys_eq_prop_ID as eqPropID
 FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
 WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
 AND a.anlys_eq_prop_ID = '$eqPropID';";
@@ -25,15 +25,15 @@ echo"
         <div class='col-md-12'>
           <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
         </div>
-        <h3 class='center_heading'>".$propertyRow['propName']." - ".$propertyRow['eqName']."</h3>
+        <h3 class='center_heading'>".$propertyRow['propName']." - ".$propertyRow['eqName']." (Not ready)</h3>
       </div>
       <div class='modal-body'>
-        <div id='error_message'></div>";
+        <div id='error_message_edit'></div>";
         // If we use the anlys_result field
         if($propertyRow['dispAveg'] || $propertyRow['propName'] == 'Adhesion'){
           echo"
           <div class='form-group'>
-            <label>".$propertyRow['propName'];
+            <label id='anlys_res_prop_name'>".$propertyRow['propName'];
               if($propertyRow['unit']){
                 echo"
                 (".$propertyRow['unit'].")";
@@ -65,11 +65,11 @@ echo"
         echo"
         <div class='form-group'>
           <label>Comment</label>
-          <textarea id='anlys_res_comment' class='form-control'>Comment</textarea> 
+          <textarea id='anlys_res_comment' class='form-control'>".$resultRow['comment']."</textarea> 
         </div>
         <div class='modal-footer'>
           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnlysResult(".$resID.")'></button>
-          <button type='button' class='btn btn-success' onclick='editAnlysResult(".$resID.",this.form,".$propertyRow['dispAveg'].",".$propertyRow['eqPropID'].",".$propertyRow['propName'].")'>Save</button> 
+          <button type='button' class='btn btn-success' onclick='editAnlysResult(".$resID.",this.form")'>Save</button> 
         </div>
       </form>
     </div>

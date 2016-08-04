@@ -243,19 +243,22 @@ function loadAnlysResultModalEdit(resID, eqPropID){
   });
 }
 
-function editAnlysResult(resID, form, dispAveg, eqPropID, propName){
+function editAnlysResult(resID, form){
   var errorMessage = "";
   var result = "";
   var paramRes1 = "";
   var paramRes2 = "";
   var paramRes3 = "";
   var comment = "";
+  var propName = "";
   
   result = $(form).find("#anlys_res_result").val();
   paramRes1 = $(form).find("#anlys_res_param_1").val();
   paramRes2 = $(form).find("#anlys_res_param_2").val();
   paramRes3 = $(form).find("#anlys_res_param_3").val();
   comment = $(form).find("#anlys_res_comment").val();
+  console.log($(form).find("#anlys_res_prop_name"));
+  propName = $(form).find("#anlys_res_prop_name").text();
   
   // If we are using the anlys_result field it cannot be left empty.
   if(result === ""){
@@ -263,7 +266,7 @@ function editAnlysResult(resID, form, dispAveg, eqPropID, propName){
   }
 
   if(errorMessage){
-    $(form).find("#error_message").html(errorMessage);
+    $(form).find("#error_message_edit").html(errorMessage);
   }  else{
     $.ajax({
       url: "../UpdatePHP/editAnalysisResult.php",
@@ -278,7 +281,7 @@ function editAnlysResult(resID, form, dispAveg, eqPropID, propName){
       },
       success: function(data, status, xhr){
         console.log(data);
-        window.location.reload();
+        window.location.reload(true);
       }
     });
   }

@@ -115,21 +115,21 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
           </div>
         </div>
         <div class='form-group row'>
-          <label class='col-xs-2 col-form-label'>Coating: </label>
+          <label class='col-md-2 col-form-label'>Coating: </label>
           <div class='col-md-2'>
             <input type='text' id='prcs_coating' name='prcs_coating' class='form-control' value=''>
           </div>
-          <label class='col-xs-2 col-form-label'>Position: </label>
+          <label class='col-md-2 col-form-label'>Position: </label>
           <div class='col-md-2'>
             <input type='text' id='prcs_position' name='prcs_position' class='form-control' value=''>
           </div>
-          <label class='col-xs-2 col-form-label'>Rotation: </label>
+          <label class='col-md-2 col-form-label'>Rotation: </label>
           <div class='col-md-2'>
             <input type='number' id='prcs_rotation' name='prcs_rotation' class='form-control' value=''>
           </div>
         </div>
         <div class='form-group row'>
-          <label class='col-xs-2 col-form-label'>Equipment: </label>
+          <label class='col-md-2 col-form-label'>Equipment: </label>
           <div class='col-md-2'>
             <select id='prcs_eq_acronyms' class='form-control'>
               <?
@@ -141,11 +141,11 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
           </div>
         </div>
         <div class='form-group row'>
-          <label class='col-xs-2 col-form-label'>Comment:</label>
+          <label class='col-md-2 col-form-label'>Comment:</label>
           <div class='col-md-2'>
             <textarea  id='prcs_comment' name='prcs_comment' class='form-control custom_comment' value=''></textarea>
           </div>
-          <label class='col-xs-2 col-form-label'>File: (No functionality) </label>
+          <label class='col-md-2 col-form-label'>File: (No functionality) </label>
           <div class='col-md-4'>
             <label class='btn btn-default btn-file'>Browse...
               <input type='file' id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$("#sample_file_path").html(getFileName($(this).val()));'>
