@@ -61,6 +61,8 @@ CREATE TABLE anlys_eq_prop(
 
 ALTER TABLE anlys_eq_prop
 ADD CONSTRAINT uniq_eq_prop UNIQUE (anlys_eq_ID, anlys_prop_ID);
+-- ALTER TABLE anlys_eq_prop MODIFY anlys_eq_ID INT NOT NULL;
+-- ALTER TABLE anlys_eq_prop MODIFY anlys_prop_ID INT NOT NULL;
 
 
 
@@ -103,6 +105,8 @@ CREATE TABLE anlys_result(
 
 ALTER TABLE anlys_result ADD employee_ID INT;
 ALTER TABLE anlys_result ADD CONSTRAINT FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID);
+-- ALTER TABLE anlys_result MODIFY sample_ID INT NOT NULL;
+-- ALTER TABLE anlys_result MODIFY anlys_eq_prop_ID INT NOT NULL;
 
 
 CREATE TABLE process(
@@ -120,7 +124,8 @@ CREATE TABLE process(
 );
 
 ALTER TABLE process ADD prcs_eq_ID INT;
-ALTER TABLE process ADD CONSTRAINT FOREIGN KEY(prcs_eq_ID) REFERENCES prcs_equipment(prcs_eq_ID);
+-- ALTER TABLE process ADD CONSTRAINT FOREIGN KEY(prcs_eq_ID) REFERENCES prcs_equipment(prcs_eq_ID);
+-- ALTER TABLE process MODIFY sample_ID INT NOT NULL;
 
 CREATE TABLE prcs_equipment(
 	prcs_eq_ID INT AUTO_INCREMENT,
@@ -132,6 +137,7 @@ CREATE TABLE prcs_equipment(
 );
 
 ALTER TABLE prcs_equipment ADD CONSTRAINT uniq_prcs_eq_acronym UNIQUE (prcs_eq_acronym);
+
 
 INSERT INTO prcs_equipment(prcs_eq_name, prcs_eq_acronym, prcs_eq_active) VALUES
 			('PVD Coating Chamber K1', 'K1', TRUE),
@@ -146,6 +152,8 @@ CREATE TABLE da_feedback(
 	fdbk_description VARCHAR(10000),
     fdbk_location VARCHAR(512),
     fdbk_sample VARCHAR(200),
+    fdbk_resolved BOOLEAN,
+    fdbk_dev_comment VARCHAR(10000),
 	PRIMARY KEY(fdbk_ID),
 	FOREIGN KEY (employee_ID) REFERENCES employee(employee_ID)
 );

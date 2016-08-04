@@ -77,4 +77,9 @@ echo"
   </tbody>
 </table>";
 }
+else{
+  echo"
+   <p class='table_style_text'>This sample has not been processed.</p>";
+}
 
+?>

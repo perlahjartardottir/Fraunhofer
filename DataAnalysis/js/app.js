@@ -76,7 +76,7 @@ function addFeedback(form){
 	console.log(description);
 
 	if(!description){
-		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
+		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please add a description.</div>";
 	}
 	if(errorMessage){
 		$(form).find("#error_message").html(errorMessage);
@@ -95,6 +95,8 @@ function addFeedback(form){
 			success : function(data, status, xhr){
 				successMessage = "<div class='alert alert-success fade in row well-lg'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Thank you for your feedback!</div>";
 				$("#success_message").html(successMessage);
+				$("#feedback_form").trigger('reset');
+				
 				showFeedback();
 
 			}

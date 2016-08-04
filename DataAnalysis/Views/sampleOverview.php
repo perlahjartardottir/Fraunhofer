@@ -87,7 +87,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div>
     <!-- Analysis -->
     <div class='col-md-8'>
-      <h3 class='custom_heading'>Analysis (under construction)</h3>
+      <h3 class='custom_heading'>Analysis</h3>
       <?
       $anlysResult = mysqli_query($link, $anlysAverageSql);
       if(mysqli_fetch_array($anlysResult)){
@@ -152,7 +152,6 @@ WHERE sample_set_ID = '$sampleSetID';";
     <!-- Process -->
     <div class='col-md-8'>
     <h3 class='custom_heading'>Process (under construction)</h3>
-      <p class='table_style_text'>This sample has not been processed.</p>
   </div>
   <div id='process_table' class='col-md-12'></div>
 </div>

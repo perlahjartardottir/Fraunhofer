@@ -63,8 +63,28 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 	</div>
 	<script>
 
-		$(document).ready(function(){
-			$("#nav_comment").button('toggle');
-			showFeedback();
-		})
+	// Refreshes the page automatically after 2 minutes if the user is inactive.
+    var idleTime = 0;
+    $(document).ready(function () {
+
+    	$("#nav_comment").button('toggle');
+		showFeedback();
+
+        //Increment the idle time counter every minute.
+        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        //Zero the idle timer on mouse movement.
+        $(this).mousemove(function (e) {
+            idleTime = 0;
+        });
+        $(this).keypress(function (e) {
+            idleTime = 0;
+        });
+    });
+    function timerIncrement() {
+        idleTime = idleTime + 1;
+        if(idleTime > 2) {
+            window.location.reload();
+        }
+    }
 	</script>
