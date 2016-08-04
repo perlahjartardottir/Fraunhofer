@@ -153,7 +153,9 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
             <span id='sample_file_path' class='table_style_text'></span>
           </div>
         </div>
-        <button type='button' class='btn btn-primary col-md-2' onclick='addProcess("<? echo $sampleID; ?>",this.form)' style='float:right;'>Add</button>
+        <div class='form-group row'>
+          <button type='button' class='btn btn-primary col-md-2' onclick='addProcess("<? echo $sampleID; ?>",this.form)' style='float:right;'>Add</button>
+        </div>
       </form>
     </div>
     <div id='process_table' class='col-md-12'></div>

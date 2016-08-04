@@ -133,11 +133,11 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     }
     echo"
     <div class='form-group row'>
-      <label class='col-xs-2 col-form-label'>Comment:</label>
+      <label class='col-md-2 col-form-label'>Comment:</label>
       <div class='col-md-2'>
         <textarea id='res_comment' class='form-control custom_comment' value=''></textarea>
       </div>
-      <label class='col-xs-2 col-form-label'>File: (No functionality) </label>
+      <label class='col-md-2 col-form-label'>File: (No functionality) </label>
       <div class='col-md-4'>
         <label class='btn btn-default btn-file'>Browse...
           <input type='file' id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));'>
@@ -145,7 +145,9 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         <span id='sample_file_path' class='table_style_text'></span>
       </div>
     </div>
-      <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$sampleID.",".$propertyRow[0].",this.form)' style='float:right'>Add</button>
+      <div class='form-group row'>
+        <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$sampleID.",".$propertyRow[0].",this.form)' style='float:right'>Add</button>
+      </div>
   </form>";
 
   echo"

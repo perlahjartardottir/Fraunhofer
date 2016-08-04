@@ -44,7 +44,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 					<label class='col-xs-2 col-form-label'>Sample:</label>
 					<div class='col-md-6'>
 						<input type="text" id='feedback_sample' class="form-control">
-						<span class='help-block'>Does it involve a particular sample or set?</span>
+						<span class='help-block'>Does it involve particular samples or sets?</span>
 					</div>
 				</div>
 				<div class='form-group row'>

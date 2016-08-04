@@ -227,3 +227,63 @@ function displayAnlysResultTable(sampleID, eqPropID){
   });
 }
 }
+
+function loadAnlysResultModalEdit(resID, eqPropID){
+    $.ajax({
+    url: "../SelectPHP/anlysResultModalEdit.php",
+    type: "POST",
+    data: {
+      resID : resID,
+      eqPropID : eqPropID
+    },
+    success: function(data, status, xhr){
+      $("#anlys_result_modal_edit").html(data);
+      
+    }
+  });
+}
+
+function editAnlysResult(resID, form, dispAveg, eqPropID, propName){
+  var errorMessage = "";
+  var result = "";
+  var paramRes1 = "";
+  var paramRes2 = "";
+  var paramRes3 = "";
+  var comment = "";
+  
+  result = $(form).find("#anlys_res_result").val();
+  paramRes1 = $(form).find("#anlys_res_param_1").val();
+  paramRes2 = $(form).find("#anlys_res_param_2").val();
+  paramRes3 = $(form).find("#anlys_res_param_3").val();
+  comment = $(form).find("#anlys_res_comment").val();
+  
+  // If we are using the anlys_result field it cannot be left empty.
+  if(result === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propName+".</div>";
+  }
+
+  if(errorMessage){
+    $(form).find("#error_message").html(errorMessage);
+  }  else{
+    $.ajax({
+      url: "../UpdatePHP/editAnalysisResult.php",
+      type: "POST",
+      data: {
+        resID : resID,
+        result : result,
+        paramRes1 : paramRes1,
+        paramRes2 : paramRes2,
+        paramRes3 : paramRes3,
+        comment : comment
+      },
+      success: function(data, status, xhr){
+        console.log(data);
+        window.location.reload();
+      }
+    });
+  }
+}
+
+function deleteAnlysResult(resID){
+  console.log(resID);
+}

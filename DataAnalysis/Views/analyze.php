@@ -73,7 +73,6 @@ WHERE sample_set_ID = '$sampleSetID';";
   <?php include '../header.php'; ?>
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <div class='container'>
-  </form>
   <div class='row well well-lg'>
   <div class='col-md-12'>
     <form role='form'>
@@ -156,10 +155,12 @@ WHERE sample_set_ID = '$sampleSetID';";
       <div class='col-md-12'>
         <button type='button' class='btn btn-primary col-md-2' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
       </div>
-    </div>
   </form>
 </div>
+</div>
+</div>
 <script>
+
 
   $(document).ready(function(){
 
@@ -206,7 +207,14 @@ WHERE sample_set_ID = '$sampleSetID';";
       if(<?php echo $eqID; ?>){
         showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
       }
-    } 
+    }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
 
 
   </script>
