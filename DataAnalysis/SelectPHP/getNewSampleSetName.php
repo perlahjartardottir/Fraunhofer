@@ -4,22 +4,51 @@ include '../../connection.php';
 
 $sampleSetDate = mysqli_real_escape_string($link, $_POST['sampleSetDate']);
 
-$sampleSetNumberSql = "SELECT count(sample_set_ID)
+$sampleSetNumberSql = "SELECT MAX(MID(sample_set_name, 12,2))
 FROM sample_set
 WHERE MID(sample_set_name, 5, 6) = '$sampleSetDate';";
 $sampleSetNumber = mysqli_fetch_row(mysqli_query($link, $sampleSetNumberSql))[0] + 1;
-$sampleSetNumber = str_pad($sampleSetNumber, 2, '0', STR_PAD_LEFT);
+
+$samplesOfTheDaySql = "SELECT sample_set_ID, sample_set_name
+FROM sample_set
+WHERE MID(sample_set_name, 5, 6) = '$sampleSetDate';";
+$samplesOfTheDayResult = mysqli_query($link, $samplesOfTheDaySql);
+
+if(mysqli_fetch_row($samplesOfTheDayResult)){
+	echo"
+	<label>Sets initialized on this day:</label>";
+
+	$samplesOfTheDayResult = mysqli_query($link, $samplesOfTheDaySql);
+	while($row = mysqli_fetch_row($samplesOfTheDayResult)){
+		echo"
+		<div class='form-group'>
+			<a class='sample_set_name' value='".$row[0]."'>".$row[1]."</a>
+		</div>";
+	}
+}
 
 echo"
+<div class='form-group'>
 	<label>Set name: </label>
-	<br>
-	<p class='sample_set_name'>CCD-".$sampleSetDate."-".$sampleSetNumber."</p>
-	<input type='hidden' id='sample_set_name' name='sample_set_name' value='CCD-".$sampleSetDate."-".$sampleSetNumber."'>
-	<br>
+	<p class='sample_set_name'>CCD-".$sampleSetDate."-</p><input type='number' id='sample_set_number' name='sample_set_number' class='form-control' style='display: inline-block;' min='1' max='99' value='$sampleSetNumber'></p>
+</div>
+<div class='form-group'>
 	<label>Sample name: </label>
-	<br>
-	<p class='sample_set_name'>CCD-".$sampleSetDate."-".$sampleSetNumber."-01</p>
-	<input type='hidden' id='sample_name' name='sample_name' value='CCD-".$sampleSetDate."-".$sampleSetNumber."-01'>";
+	<p class='sample_set_name'>CCD-".$sampleSetDate."-<p id='sample_set_number_echo' name='sample_set_number_echo' style='display:inline;'>".$sampleSetNumber."</p>-01</p>
+</div>
+";
 
+?>
+<script>
+	$('#sample_set_number').on('change', function() {
+		var number = $(this).val();
+		var padded = ('00' + number).substring(number.length);
+		$(this).val(padded)
+		$("#sample_set_number_echo").html(padded);
+
+	}).trigger('change');
+
+</script>
+<?
 mysqli_close($link);
 ?>

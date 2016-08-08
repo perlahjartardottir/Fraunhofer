@@ -11,7 +11,7 @@ $sql = "UPDATE sample
 		WHERE sample_ID = '$sampleID';";
 $result = mysqli_query($link, $sql);
 
-if(!result){
+if(!$result){
 	die("Could not update sample: ".mysqli_error($link));
 }
 

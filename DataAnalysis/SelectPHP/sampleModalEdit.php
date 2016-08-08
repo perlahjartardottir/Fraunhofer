@@ -32,10 +32,6 @@ echo"
       <div class='modal-body'>
         <div id='error_message'></div>
         <div class='form-group'>
-          <label>Name</label>
-          <input type='text' id='sample_name' value='".$sampleRow[1]."' class='form-control'>
-        </div>
-        <div class='form-group'>
     <label>Material: </label>
     <input list='materials_edit' id='material_edit' class='col-md-12 form-control' value='".$sampleRow[2]."'>
     <datalist id='materials_edit'>";

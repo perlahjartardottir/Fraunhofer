@@ -5,6 +5,8 @@ CREATE TABLE sample_set(
     PRIMARY KEY (sample_set_ID)
 );
 
+ALTER TABLE sample_set ADD CONSTRAINT uniq_sample_set_name UNIQUE (sample_set_name);
+
 CREATE TABLE sample(
 	sample_ID INT AUTO_INCREMENT,
     sample_set_ID INT,
@@ -15,6 +17,8 @@ CREATE TABLE sample(
 	PRIMARY KEY(sample_ID),
     FOREIGN KEY(sample_set_ID) REFERENCES sample_set(sample_set_ID)
 );
+
+ALTER TABLE sample ADD CONSTRAINT uniq_sample_name UNIQUE (sample_name);
 
 CREATE TABLE anlys_equipment(
 	anlys_eq_ID INT AUTO_INCREMENT,

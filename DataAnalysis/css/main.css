@@ -17,19 +17,19 @@ ul.navbar-brand{
     margin-bottom: 10px;
 }
 
-.btn.btn-success, .btn.btn-danger, .btn.btn-primary {
+.btn.btn-success, .btn.btn-danger, .btn.btn-primary{
     margin-bottom: 0px;
     margin-left: 5px;
 }
 
-#prcs_sample_overview_btn.btn.btn-primary {
+#prcs_sample_overview_btn.btn.btn-primary{
     margin-top: 10px;
 }
 
 #feedback_form{
     margin-top: 50px;
 }
-.color_success {
+.color_success{
     color: #5CB85C;
 }
 
@@ -49,8 +49,11 @@ h2[id="sample_overview_heading"]{
     text-align: center;
 }
 
-.sample_set_name {
+.sample_set_name{
     display: inline-block;
+}
+#sample_set_number{
+    width: 75px;
 }
 
 #front_table.table-borderless tbody tr td, #all_anlys_eq_table.table-borderless tbody tr td{
@@ -72,10 +75,6 @@ input[type=date]{
 textarea.form-control.custom_heading{
     width: 155px;
 }
-/*#employee_initials {
-    width: 85px;
-    display: inline;
-} */
 
 /*Analyze.php: make average style same as in table.*/
 .table_style_text{

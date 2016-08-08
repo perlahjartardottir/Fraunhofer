@@ -20,7 +20,7 @@ if($securityLevel < 2){
   <div class='container'>
     <div class='col-md-12'>
         <form class='form-inline pull-xs-right'>
-        <input type="text" id='sample_set_name' class="form-control" style='float: right;' placeholder='Quick search...' data-toggle="tooltip" data-placement="bottom" title="Search by name or date." onkeyup='displaySampleResults()'>
+        <input type="text" id='sample_set_name' class="form-control" style='float: right;' placeholder='Quick search...' data-toggle="tooltip" data-placement="bottom" title="Filter sets by name or date." onkeyup='displaySampleResults()'>
       </form>
     </div>
 

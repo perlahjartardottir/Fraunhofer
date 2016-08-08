@@ -18,11 +18,6 @@ if(!$sampleSetID){
   $sampleSetID = "-1";
 }
 
-// $allemployeeSql = "SELECT employee_ID, employee_name
-// FROM employee
-// ORDER BY employee_name ASC;";
-// $allemployeeResult = mysqli_query($link, $allemployeeSql);
-
 $numberOfSamplesToDisplay = 20;
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
@@ -57,17 +52,6 @@ WHERE sample_set_ID = '$sampleSetID';";
     <div class='row well well-lg'>
       <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>
       <form role='form' action='../InsertPHP/addSample.php' method="post" enctype="multipart/form-data">
-    <!-- <div class='col-md-4 form-group'>
-      <label>Employee: </label>
-      <input type='text' list='employees' name='employeeList' id='employeeList' value='' class='col-md-12 form-control'>
-      <datalist id="employees">
-        <?
-         // while($row = mysqli_fetch_array($allemployeeResult)){
-         //   echo"<option value='".$row[1]."'></option>";
-         // }
-        ?>
-      </datalist>
-    </div>-->
     <div class='col-md-6'>
       <div class='col-md-12 form-group'>
         <label>Choose a set: </label>
@@ -89,7 +73,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           <label>When was the sample initialized? </label>
           <div>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-            <input type='date' id='sample_set_date' name='sample_set_date' class='sample_set_name custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD' onchange='$(\"#sample_set_date_echo\").html($(this).val());'>
+            <input type='date' id='sample_set_date' name='sample_set_date' class='sample_set_name custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
           </div>
         </div>
         <div id='sample_set_name_div' class='col-md-12 form-group'></div>";
@@ -105,11 +89,16 @@ WHERE sample_set_ID = '$sampleSetID';";
         $latestSampleNumberSql = "SELECT COUNT(sample_id)
         FROM sample
         WHERE sample_set_ID = '$sampleSetID';";
-        $latestSampleNumberResult = mysqli_query($link, $latestSampleNumberSql);
-        $latestSampleNumberRow = mysqli_fetch_row($latestSampleNumberResult);
-        $latestSampleNumber = $latestSampleNumberRow[0];
+        $latestSampleNumber = mysqli_fetch_row(mysqli_query($link, $latestSampleNumberSql))[0];
         $sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
         $sampleName = $sampleSetName."-".$sampleNumber;
+
+        // $latestSampleNumberSql = "SELECT MAX(MID(sample_name, 15,2))
+        // FROM sample
+        // WHERE sample_set_ID = '$sampleSetID';";
+        // $latestSampleNumber = mysqli_fetch_row(mysqli_query($link, $latestSampleNumberSql))[0];
+        // $sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
+        // $sampleName = $sampleSetName."-".$sampleNumber;
 
         echo"
         <div class='col-md-12 form-group'>
@@ -180,7 +169,6 @@ $("#sample_set_date").on("change", function(){
     .format( this.getAttribute("data-date-format"))
     );
     sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
-    console.log(sampleSetDate);
     getNewSampleSetName(sampleSetDate);
 
 }).trigger("change")

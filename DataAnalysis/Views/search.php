@@ -17,7 +17,7 @@ if($securityLevel< 2){
   <div class='container'>
     <div class='row well well-lg col-md-3'>
       <form>
-        <h4 class='custom_heading'>Search by:</h4>
+        <h4 class='custom_heading'>(Needs more work) Search by:</h4>
         <div class='col-md-12 form-group'>
           <label>Sample Name: </label>
           <input type="text" id='sample_name' class='form-control' onkeyup='displaySearchResults()' />
