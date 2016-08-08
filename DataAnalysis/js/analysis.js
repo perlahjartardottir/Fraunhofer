@@ -257,8 +257,9 @@ function editAnlysResult(resID, form){
   paramRes2 = $(form).find("#anlys_res_param_2").val();
   paramRes3 = $(form).find("#anlys_res_param_3").val();
   comment = $(form).find("#anlys_res_comment").val();
-  console.log($(form).find("#anlys_res_prop_name"));
   propName = $(form).find("#anlys_res_prop_name").text();
+
+  console.log(result);
   
   // If we are using the anlys_result field it cannot be left empty.
   if(result === ""){
@@ -269,7 +270,7 @@ function editAnlysResult(resID, form){
     $(form).find("#error_message_edit").html(errorMessage);
   }  else{
     $.ajax({
-      url: "../UpdatePHP/editAnalysisResult.php",
+      url: "../UpdatePHP/editAnlysResult.php",
       type: "POST",
       data: {
         resID : resID,
@@ -288,5 +289,15 @@ function editAnlysResult(resID, form){
 }
 
 function deleteAnlysResult(resID){
-  console.log(resID);
+      $.ajax({
+      url: "../DeletePHP/deleteAnlysResult.php",
+      type: "POST",
+      data: {
+        resID : resID
+      },
+      success: function(data, status, xhr){
+        console.log(data);
+        window.location.reload(true);
+      }
+    });
 }

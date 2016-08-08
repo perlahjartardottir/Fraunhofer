@@ -69,7 +69,7 @@ echo"
         </div>
         <div class='modal-footer'>
           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnlysResult(".$resID.")'></button>
-          <button type='button' class='btn btn-success' onclick='editAnlysResult(".$resID.",this.form")'>Save</button> 
+          <button type='button' class='btn btn-success' onclick='editAnlysResult(".$resID.",this.form)'>Save</button> 
         </div>
       </form>
     </div>
@@ -79,7 +79,6 @@ echo"
 
 ?>
 <script>
-
   document.getElementById('close_modal').onclick = function(){
     modal.style.display = 'none';
   }

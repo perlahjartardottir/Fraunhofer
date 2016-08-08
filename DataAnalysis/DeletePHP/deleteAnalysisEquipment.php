@@ -8,7 +8,7 @@ $sql = "UPDATE anlys_equipment
 		WHERE anlys_eq_ID = '$eqID';";
 $result = mysqli_query($link, $sql);
 
-if(!result){
+if(!$result){
 	die("Could not deactive analysis equipment: ".mysqli_error($link));
 }
 
