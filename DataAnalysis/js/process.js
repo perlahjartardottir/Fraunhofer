@@ -70,3 +70,78 @@ function displayProcessTable(sampleID){
   });
 }
 }
+
+function loadPrcsModalEdit(prcsID){
+    $.ajax({
+    url: "../SelectPHP/PrcsModalEdit.php",
+    type: "POST",
+    data: {
+      prcsID : prcsID
+    },
+    success: function(data, status, xhr){
+      $("#prcs_modal_edit").html(data);
+      
+    }
+  });
+}
+
+function editPrcs(prcsID, form){
+  var errorMessage = "";
+  var coating = "";
+  var equipment = "";
+  var position = "";
+  var rotation = "";
+  var comment = "";
+
+  coating = $(form).find('#prcs_coating').val();
+  eqID = $(form).find('#prcs_eq').val();
+  position = $(form).find('#prcs_position').val();
+  rotation = $(form).find('#prcs_rotation').val();
+  comment = $(form).find('#prcs_comment').val();
+
+  console.log(coating);
+  console.log(equipment);
+  console.log(position);
+  console.log(rotation);
+  console.log(comment);
+
+
+  if(coating === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+coating+".</div>";
+  }
+
+  if(errorMessage){
+    $(form).find("#error_message_edit").html(errorMessage);
+  }  else{
+    $.ajax({
+      url: "../UpdatePHP/editPrcs.php",
+      type: "POST",
+      data: {
+        prcsID : prcsID,
+        coating : coating,
+        eqID : eqID,
+        position : position,
+        rotation : rotation,
+        comment : comment
+      },
+      success: function(data, status, xhr){
+        console.log(data);
+        window.location.reload(true);
+      }
+    });
+  }
+}
+
+function deletePrcs(prcsID){
+  $.ajax({
+    url: "../DeletePHP/deletePrcs.php",
+    type: "POST",
+    data: {
+      prcsID : prcsID
+    },
+    success: function(data, status, xhr){
+      console.log(data);
+      window.location.reload(true);
+    }
+  });
+}

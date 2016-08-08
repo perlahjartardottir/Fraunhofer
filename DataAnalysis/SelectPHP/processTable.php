@@ -3,6 +3,7 @@ include '../../connection.php';
 session_start();
 
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
+$rowCounter = 0;
 
 // $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
 // FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
@@ -17,11 +18,11 @@ $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 // ORDER BY anlys_res_ID;";
 // $resultsResult = mysqli_query($link, $resultsSql);
 
-$sql = "SELECT p.prcs_ID, p.employee_ID as employee, p.prcs_date as date, p.prcs_coating as coating, p.prcs_eq_ID as eqID, p.prcs_position as position,
+$sql = "SELECT p.prcs_ID as prcsID, p.employee_ID as employee, p.prcs_date as date, p.prcs_coating as coating, p.prcs_eq_ID as eqID, p.prcs_position as position,
     p.prcs_rotation as rotation, p.prcs_comment as comment, e.prcs_eq_acronym as eqAcronym
 FROM process p, prcs_equipment e
 WHERE p.prcs_eq_ID = e.prcs_eq_ID AND sample_ID = '$sampleID'
-ORDER BY prcs_date DESC;";
+ORDER BY p.prcs_ID DESC;";
 $result = mysqli_query($link, $sql);
 
 if($hasProcessInfo = mysqli_fetch_row($result)){
@@ -30,6 +31,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
 <caption></caption>
   <thead>
     <tr>
+     <th>#</th>
       <th>Date</th>
       <th>Employee</th>
       <th>Coating</th>
@@ -44,8 +46,8 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
   <?
     $result = mysqli_query($link, $sql);
     while($row = mysqli_fetch_array($result)){
-
-    $employeeInitialsSql = "SELECT 
+      $rowCounter++;
+      $employeeInitialsSql = "SELECT 
       CONCAT_WS('',
         SUBSTRING(employee_name, 1, 1),
         CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>2 THEN
@@ -63,6 +65,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
 
       echo"
       <tr>
+      <td><a onclick='loadAndShowPrcsModalEdit(".$row['prcsID'].")'>".$rowCounter."</a></td>
         <td>".$row['date']."</td>
         <td>".$employeeInitials."</td>
         <td>".$row['coating']."</td>
@@ -75,7 +78,8 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
 
 echo"
   </tbody>
-</table>";
+</table>
+<div id='prcs_modal_edit' class='modal'></div>";
 }
 else{
   echo"
@@ -83,3 +87,11 @@ else{
 }
 
 ?>
+<script>
+  // For the modal window to edit process.
+  var modal = document.getElementById('prcs_modal_edit');
+  function loadAndShowPrcsModalEdit(prcsID){
+    loadPrcsModalEdit(prcsID);
+    modal.style.display = "block";
+  }
+</script>

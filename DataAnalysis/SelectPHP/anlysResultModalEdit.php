@@ -25,7 +25,7 @@ echo"
         <div class='col-md-12'>
           <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
         </div>
-        <h3 class='center_heading'>".$propertyRow['propName']." - ".$propertyRow['eqName']." (Not ready)</h3>
+        <h3 class='center_heading'>".$propertyRow['propName']." - ".$propertyRow['eqName']."</h3>
       </div>
       <div class='modal-body'>
         <div id='error_message_edit'></div>";
