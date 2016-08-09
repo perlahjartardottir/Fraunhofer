@@ -22,7 +22,7 @@ if(mysqli_fetch_row($samplesOfTheDayResult)){
 	while($row = mysqli_fetch_row($samplesOfTheDayResult)){
 		echo"
 		<div class='form-group'>
-			<a class='sample_set_name' value='".$row[0]."'>".$row[1]."</a>
+			<a class='sample_set_name' onclick='setSampleSetIDAndRefresh(".$row[0].")'>".$row[1]."</a>
 		</div>";
 	}
 }

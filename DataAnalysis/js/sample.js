@@ -1,35 +1,3 @@
-// function addSample(){
-// 	var sampleSetID = $('#sample_set_ID').val();
-// 	var sampleSetDate = $('#sample_set_date').val()
-
-// 	if(sampleSetDate){
-// 		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
-// 		sampleSetDate = sampleSetDate.replace(/-/g,"").substring(2,8);
-// 	}
-
-// 	var sampleMaterial = $('#material-hidden').val();
-// 	var sampleComment = $('#sample_comment').val();
-
-// 	var sampleFile = $('#sample_file').val();
-
-// 	$.ajax({
-// 		url: "../InsertPHP/addSample.php",
-// 		type: "POST",
-// 		data: {
-// 			sampleSetID : sampleSetID,
-// 			sampleSetDate : sampleSetDate,
-// 			sampleMaterial : sampleMaterial,
-// 			sampleComment : sampleComment,
-
-// 			sampleFile : sampleFile
-// 		},
-// 		success: function(data, status, xhr){
-// 			console.log(data);
-// 			window.location.reload(true);
-// 		}
-// 	});
-// }
-
 function showSamplesInSet(sampleSetID){
 	$.ajax({
 		url: "../SelectPHP/showSamplesInSet.php",
@@ -54,7 +22,6 @@ function showSamplesInSetAndRefresh(sampleSetID){
 		},
 		success: function(data, status, xhr){
 			$("#samples_in_set").html(data);
-			// window.location.reload(true);
 			// Clear the id, since we have set the sampleSet session ID. 
 			window.location.href="../Views/addSample.php";
 
@@ -228,9 +195,24 @@ function loadSampleModalEdit(sampleID){
   	});
   }
 
+  function setSampleSetIDAndRefresh(sampleSetID){
+    console.log("settings sampleSetID: "+sampleSetID);
+    $.ajax({
+      url: "../UpdatePHP/setSampleSetID.php",
+      type: "POST",
+      data: {
+        sampleSetID : sampleSetID
+      },
+      success: function(data,status, xhr){
+        console.log(data);
+        window.location.reload();
+      }
+    });
+  }
+
   function getNewSampleSetName(sampleSetDate){
   	  	$.ajax({
-  		url: "../SelectPHP/getNewSampleSetName.php",
+  		url: "../SelectPHP/sampleSetName.php",
   		type: "POST",
   		data: {
   			sampleSetDate : sampleSetDate
