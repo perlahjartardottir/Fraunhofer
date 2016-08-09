@@ -46,6 +46,11 @@ echo"
           <label>Comment</label>
           <textarea id='sample_comment' class='form-control'>".$sampleRow[3]."</textarea> 
         </div>
+        <div class='form-group'>
+          <div id='sample_picture_error_message'><? echo $errorMessage; ?></div>
+          <label>Picture: (No functionality) </label>
+          <input type='file' name='fileToUpload' id='fileToUpload'>
+        </div>
         <div class='modal-footer'>
           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].",this.form)' ></button>
           <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button> 

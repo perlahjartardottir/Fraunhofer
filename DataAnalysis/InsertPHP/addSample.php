@@ -51,10 +51,23 @@ else{
 }
 
 
-// A base for picture uploading. 
+// Upload picture to server.
+// If adding sample failes the picture will not be uploaded.
+// Based on: http://www.w3schools.com/php/php_file_upload.asp
 
-$target_dir = "../Uploads/".date("Y")."/".date("M")."/".$sampleSetName."/".$sampleName."/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+// Build the path
+// $finalFolder = "Picture";
+$target_dir = "../Uploads/".date("Y")."/".date("m")."/".$sampleSetName."/".$sampleName."/";
+// If the folder does not exist create it.
+if (!file_exists($targer_dir)) {
+    mkdir($target_dir, 0777, true);
+}
+$temp = explode(".", $_FILES["fileToUpload"]["name"]);
+$newName = $sampleName."_profilePicture.".end($temp);
+
+//$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$target_file = $target_dir.$newName;
+
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 // Check if image file is a actual image or fake image
@@ -109,8 +122,17 @@ if ($uploadOk == 0) {
     }
 }
 
+$addPicToSampleSql = "UPDATE sample
+SET sample_picture = '$target_file'
+WHERE sample_ID = '$sampleID';";
+$addPicToSampleResult = mysqli_query($link, $addPicToSampleSql);
+if($addPicToSampleResult){
+	$errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+          		"Your picture has been uploaded to the server, but there was an error connecting the picture to the newly added sample.</div>";
+}
 
 mysqli_close($link);
+
 
 // There can be no echo before this call, otherwise the redirect will not work. 
 header('Location: ../Views/addSample.php?id='.$sampleSetID);
