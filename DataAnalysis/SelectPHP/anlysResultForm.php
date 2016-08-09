@@ -63,7 +63,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
   echo"
   <form class='col-md-12'>
     <div class='form-group row'>
-      <label class='col-md-2 col-form-label'>Date:</label>
+      <label class=''>Date:</label>
       <div class='col-md-2'>
         <input type='date' id='res_date' class='custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
       </div>
