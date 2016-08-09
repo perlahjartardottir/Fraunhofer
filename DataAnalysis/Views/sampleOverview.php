@@ -36,7 +36,7 @@ WHERE sample_set_ID = '$sampleSetID'
 ORDER BY sample_ID;";
 $samplesInSetResult = mysqli_query($link, $samplesInSetSql);
 
-$sampleInfoSql = "SELECT sample_name, sample_material, sample_comment
+$sampleInfoSql = "SELECT sample_name, sample_material, sample_comment, sample_picture
 FROM sample
 WHERE sample_ID = '$sampleID';";
 $sampleInfoResult = mysqli_query($link, $sampleInfoSql);
@@ -65,7 +65,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 		<div class='row well well-lg'>
 			<div class='col-md-12'>
        <h2 id='sample_overview_heading' class='custom_heading center_heading'>Sample overview</h2>
-       <div class='col-md-4 form-group'>
+       <div class='col-md-3 form-group'>
        <!-- Set combo box -->
         <label>Set:</label>
         <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh(this.value)' style='width:auto;'>
@@ -78,9 +78,16 @@ WHERE sample_set_ID = '$sampleSetID';";
         </select>
       </div>
        <!-- Sample combo box -->
-      <div id='samples_in_set' class='col-md-4 form-group'></div>
+      <div id='samples_in_set' class='col-md-3 form-group'></div>
+       <!-- Sample Picture -->
+      <div class='col-md-3 form-group'>
+      <?
+      echo"
+        <img id='sample_picture_thumbnail' src='".$sampleInfoRow[3]."' class='img-responsive img-thumbnail' alt='Sample picture'>";
+      ?>
+      </div>
       <!-- Sample info -->
-      <div class='col-md-4 form-group'>
+      <div class='col-md-3 form-group'>
         <p><strong>Material: </strong><?php echo $sampleInfoRow[1]; ?></p>
         <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
       </div>

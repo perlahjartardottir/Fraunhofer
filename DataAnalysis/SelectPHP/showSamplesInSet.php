@@ -6,7 +6,7 @@ $sampleSetID = mysqli_real_escape_string($link, $_POST['sampleSetID']);
 $_SESSION["sampleSetID"] = $sampleSetID;
 
 
-$sql = "SELECT sample_ID, sample_name, sample_material, sample_comment
+$sql = "SELECT sample_ID, sample_name, sample_material, sample_comment, sample_picture
 FROM sample
 WHERE sample_set_ID = '$sampleSetID';";
 
@@ -40,7 +40,7 @@ if($sampleSetID !== "-1"){
            <td><a onclick='loadAndShowSampleModal(".$row[0].")'>".$row[1]."</a></td>
            <td>".$row[2]."</td>
            <td>".$row[3]."</td>
-           <td>Picture</td>
+           <td>Display pic name here</td>
          </tr>";
        }
        echo"

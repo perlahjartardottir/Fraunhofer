@@ -4,7 +4,7 @@ session_start();
 
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 
-$sql = "SELECT sample_ID, sample_name, sample_material, sample_comment
+$sql = "SELECT sample_ID, sample_name, sample_material, sample_comment, sample_picture
 FROM sample
 WHERE sample_ID = '$sampleID';";
 $result = mysqli_query($link, $sql);
@@ -32,15 +32,15 @@ echo"
       <div class='modal-body'>
         <div id='error_message'></div>
         <div class='form-group'>
-    <label>Material: </label>
-    <input list='materials_edit' id='material_edit' class='col-md-12 form-control' value='".$sampleRow[2]."'>
-    <datalist id='materials_edit'>";
-      while($row = mysqli_fetch_array($materialsResult)){
-        echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
-      }
-      echo"
-    </datalist>
-    <input type='hidden' name='material_edit' id='material_edit-hidden'>
+          <label>Material: </label>
+          <input list='materials_edit' id='material_edit' class='col-md-12 form-control' value='".$sampleRow[2]."'>
+          <datalist id='materials_edit'>";
+            while($row = mysqli_fetch_array($materialsResult)){
+              echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
+            }
+            echo"
+          </datalist>
+          <input type='hidden' name='material_edit' id='material_edit-hidden'>
         </div>
         <div class='form-group'>
           <label>Comment</label>
@@ -50,6 +50,9 @@ echo"
           <div id='sample_picture_error_message'><? echo $errorMessage; ?></div>
           <label>Picture: (No functionality) </label>
           <input type='file' name='fileToUpload' id='fileToUpload'>
+        </div>
+        <div class='form-group'>
+          <img id='sample_picture_thumbnail' src='".$sampleRow[4]."' class='img-responsive img-thumbnail' alt='Sample picture'>
         </div>
         <div class='modal-footer'>
           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].",this.form)' ></button>
