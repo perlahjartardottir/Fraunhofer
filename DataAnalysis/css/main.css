@@ -1,22 +1,3 @@
-.username{
-    font-weight: bold;
-    margin-left: 5px;
-}
-
-.header_btn{
-
-    margin-top: 10px;
-}
-
-ul.navbar-brand{
-    margin-bottom: 0px;
-}
-.nav_bar_lower.col-md-12, .nav_bar_lower.container, .navbar-collapse.nav_bar_lower{
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-bottom: 10px;
-}
-
 .btn.btn-success, .btn.btn-danger, .btn.btn-primary{
     margin-bottom: 0px;
     margin-left: 5px;
@@ -32,10 +13,6 @@ ul.navbar-brand{
 .color_success{
     color: #5CB85C;
 }
-
-/*.modal-footer .btn{
-    margin-bottom: 5px;
-}*/
 
 .custom_heading{
     margin: 20px 0px;
