@@ -1,6 +1,5 @@
-<!-- The header file for almost all views. -->
-<!-- This file includes all the .css and .js needed  -->
-<!-- It also displays the top of the page and the user who is logged in -->
+<!-- The header file for all views. -->
+<!-- Includes all the .css and .js needed.  -->
 
 <?php
 include '../connection.php';
@@ -28,19 +27,18 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 <meta name="google" content="notranslate">
 <meta http-equiv="Content-Language" content="en">
 <link href='../css/main.css' rel='stylesheet'>
+<link href='../css/header.css' rel='stylesheet'>
 <link href='/css/bootstrap.min.css' rel='stylesheet'>
 <link href='/css/jquery-ui.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<!-- For formating input date -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script> <!-- For formating input date -->
 <script src='../js/app.js'></script>
 <script src='../js/sample.js'></script>
 <script src='../js/analysis.js'></script>
 <script src='../js/process.js'></script>
 <script src='../js/bootstrap.js'></script>
-
+<!-- Toolbar -->
 <div class="navbar navbar-default collapse navbar-collapse navHeaderCollapse navbar-static-top">
   <div class="container">
     <ul class='navbar-brand navbar-left'>
@@ -53,36 +51,26 @@ $_SESSION["securityLevelDA"] = $securityLevel;
     </ul>
   </div>
 </div>
-
-<!-- Toolbar -->
+<!-- Navigation bar-->
 <div class="container nav_bar_lower">
   <div class='btn-group col-md-12 nav_bar_lower' data-toggle='buttons'>
     <button type='button' id='nav_home' class='btn btn-primary col-md-2' onclick="location.href='dataAnalysis.php'">Home</button>
-    <button type='button' id='nav_addSample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
+    <button type='button' id='nav_sample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
     <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href='process.php'">Process</button>
     <button type='button' id='nav_analyze' class='btn btn-primary col-md-2' onclick="location.href='analyze.php'">Analyze</button>
     <button type='button' id='nav_search' class='btn btn-primary col-md-2' onclick="location.href='search.php'">Search</button>
-    <div class="btn-group" role="group">
-      <button type='button' class='btn btn-primary dropdown-toggle' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div id='nav_overview_btn_group' class='btn-group col-md-2' role='group'>
+      <button type='button' id='nav_overview' class='btn btn-primary col-md-12 dropdown-toggle'  data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
         Overview
-        <span class="caret"></span>
+        <span class='caret'></span>
       </button>
-      <ul class="dropdown-menu">
+      <ul class='dropdown-menu'>
         <li><a onclick="location.href='sampleOverview.php'">Sample Overview</a></li>
         <li><a onclick="location.href='anlysEquipment.php'">Analysis equipment</a></li>
       </ul>
+    </div>
   </div>
 </div>
-<!--     <button type='button' id='nav_overview' class='btn btn-primary col-md-2' onclick="location.href='overview.php'">Overview</button> -->
-<!--           <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>
-            <span class='caret'></span>
-            <span class='sr-only'>Toggle Dropdown</span>
-          </button>
-          <ul class='dropdown-menu' role='menu'>
-            <li><a href='viewAnalysisEquipment.php'>Analysis equipment</a></li>
-            <li><a href='../../Tooling/Views/viewAllMachines.php'>Process equipment</a></li>
-          </ul> -->
-        </div>
-      </div>
+</div>
 
 

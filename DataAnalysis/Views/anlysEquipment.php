@@ -185,6 +185,10 @@ if($securityLevel < 2){
  ?>
 
  <script>
+
+ $(document).ready(function(){
+  $("#nav_overview").button("toggle");
+});
   var divCounter = 1;
   function addProp(elem){  
     newProp = "<div id='new_prop_"+divCounter+"' class='form-group'>"+

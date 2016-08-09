@@ -158,7 +158,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 $(document).ready(function(){
  var sampleSetID = <?php echo $sampleSetID; ?>;
  showSamplesInSet(sampleSetID);
- $("#nav_addSample").button("toggle");
+ $("#nav_sample").button("toggle");
 });
 
 // Format the date input.

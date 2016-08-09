@@ -151,7 +151,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     <div id='anlys_result_table' class='col-md-12'></div>
     <!-- Process -->
     <div class='col-md-8'>
-    <h3 class='custom_heading'>Process (Not ready)</h3>
+    <h3 class='custom_heading'>Process</h3>
   </div>
   <div id='process_table' class='col-md-12'></div>
 </div>
@@ -161,6 +161,7 @@ WHERE sample_set_ID = '$sampleSetID';";
   $(document).ready(function(){
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
     displayProcessTable(<?php echo $sampleID; ?>);
+  $("#nav_overview").button("toggle");
   })
 
 // Check if the user enters with a set that exists in the dropd down. 
