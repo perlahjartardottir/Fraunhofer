@@ -55,24 +55,14 @@ function deleteSample(sampleID, form){
 }
 
 function editSample(sampleID, form){
-	var errorMessage = "";
-	var name = $(form).find("#sample_name").val();
-	if (!name){
-		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Name</div>";
-	}
-
 	var material = $('#material_edit-hidden').val();
 	var comment = $(form).find("#sample_comment").val();
-	
-	if(errorMessage){
-		$(form).find("#error_message").html(errorMessage);
-	}  else{
-		$.ajax({
+
+	$.ajax({
 			url: "../UpdatePHP/editSample.php",
 			type: "POST",
 			data: {
 				sampleID : sampleID,
-				name : name,
 				material : material,
 				comment : comment
 			},
@@ -81,7 +71,6 @@ function editSample(sampleID, form){
 				window.location.reload(true);
 			}
 		});
-	}
 }
 
 function loadSampleModal(sampleSetID, sampleID){
