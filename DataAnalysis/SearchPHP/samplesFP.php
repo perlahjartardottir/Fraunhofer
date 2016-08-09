@@ -4,16 +4,26 @@ include '../../connection.php';
 $sampleSetName = mysqli_escape_string($link, $_POST["sampleSetName"]);
 $sampleSetName = "%".$sampleSetName."%";
 
-$numberOfSamplesToDisplay = 20;
+$numberOfSetsToDisplay = 20;
 
-$recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+// $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+// FROM sample_set
+// WHERE sample_set_name LIKE '$sampleSetName'
+// ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSetsToDisplay;";
+
+// Get the latest samples ordered by sample_set_ID then order those by date.
+$recentSampleSetsSql = "SELECT q.*
+FROM(
+SELECT sample_set_ID, sample_set_name
 FROM sample_set
 WHERE sample_set_name LIKE '$sampleSetName'
-ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSamplesToDisplay;";
+ORDER BY sample_set_ID  DESC LIMIT $numberOfSetsToDisplay) q
+ORDER BY MID(sample_set_name,5,6) DESC;";
 
 ?>
     <div class='col-md-12'>
-    <h2 class='center_heading custom_heading'>Samples</h2>
+    <h2 class='center_heading'>Recently added samples</h2>
+    <h5 class='center_heading custom_heading'>Ordered by name</h5>
       <table id='front_table' class='table table-borderless col-md-12'>
        <thead>
         <tr>

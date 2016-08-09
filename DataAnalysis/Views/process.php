@@ -20,10 +20,10 @@ if(!$sampleID){
   $sampleID = "-1";
 }
 
-$numberOfSamplesToDisplay = 20;
+$numberOfSetsToDisplay = $_SESSION['numberOfSetsToDisplayInDD'];
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
-ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSamplesToDisplay;";
+ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSetsToDisplay;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
