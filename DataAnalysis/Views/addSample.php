@@ -19,9 +19,17 @@ if(!$sampleSetID){
 }
 
 $numberOfSetsToDisplay = $_SESSION['numberOfSetsToDisplayInDD'];
-$recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+
+// $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+// FROM sample_set
+// ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSetsToDisplay;";
+
+$recentSampleSetsSql = "SELECT q.*
+FROM(
+SELECT sample_set_ID, sample_set_name
 FROM sample_set
-ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSetsToDisplay;";
+ORDER BY sample_set_ID DESC LIMIT $numberOfSetsToDisplay ) q
+ORDER BY MID(sample_set_name, 5, 6) DESC;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
 $materialsSql = "SELECT DISTINCT(sample_material)
@@ -86,19 +94,19 @@ WHERE sample_set_ID = '$sampleSetID';";
 
     // Format: CCD-YYMMDD-XX-NN
     // Get the number for the sample. 
-        $latestSampleNumberSql = "SELECT COUNT(sample_id)
-        FROM sample
-        WHERE sample_set_ID = '$sampleSetID';";
-        $latestSampleNumber = mysqli_fetch_row(mysqli_query($link, $latestSampleNumberSql))[0];
-        $sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
-        $sampleName = $sampleSetName."-".$sampleNumber;
-
-        // $latestSampleNumberSql = "SELECT MAX(MID(sample_name, 15,2))
+        // $latestSampleNumberSql = "SELECT COUNT(sample_id)
         // FROM sample
         // WHERE sample_set_ID = '$sampleSetID';";
         // $latestSampleNumber = mysqli_fetch_row(mysqli_query($link, $latestSampleNumberSql))[0];
         // $sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
         // $sampleName = $sampleSetName."-".$sampleNumber;
+
+        $latestSampleNumberSql = "SELECT MAX(MID(sample_name, 15,2))
+        FROM sample
+        WHERE sample_set_ID = '$sampleSetID';";
+        $latestSampleNumber = mysqli_fetch_row(mysqli_query($link, $latestSampleNumberSql))[0];
+        $sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
+        $sampleName = $sampleSetName."-".$sampleNumber;
 
         echo"
         <div class='col-md-12 form-group'>

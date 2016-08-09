@@ -10,7 +10,7 @@ $maxThickness = mysqli_real_escape_string($link, $_POST["endThickness"]);
 $sampleName = "%".$sampleName."%";
 
 
-$sql = "SELECT s.sample_ID, s.sample_name
+$sql = "SELECT s.sample_ID, s.sample_name, s.sample_set_ID
 FROM sample s
 WHERE s.sample_name LIKE '$sampleName'";
 
@@ -61,7 +61,7 @@ $result = mysqli_query($link, $sql);
     while($row = mysqli_fetch_array($result)){
     	echo"
     		<tr>
-    			<td><a onclick='loadAndShowSampleModal(".$row[0].")'>".$row[1]."</a></td>
+    			<td><a onclick='loadAndShowSampleModal(".$row[2].",".$row[0].")'>".$row[1]."</a></td>
     			<td>Coating</td>";
       // Get the thickness of the sample. 
     	$thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3)
@@ -90,8 +90,8 @@ $result = mysqli_query($link, $sql);
 <div id="sample_modal" class="modal"></div>
 <script>
   var modal = document.getElementById('sample_modal');
-  function loadAndShowSampleModal(sampleID){
-    loadSampleModal(sampleID);
+  function loadAndShowSampleModal(sampleSetID,sampleID){
+    loadSampleModal(sampleSetID, sampleID);
     modal.style.display = "block";
   }
  </script>

@@ -2,7 +2,9 @@
 include '../../connection.php';
 session_start();
 
+$sampleSetID = mysqli_real_escape_string($link, $_POST["sampleSetID"]);
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
+
 
 $sql = "SELECT sample_name, ss.sample_set_name, sample_material, sample_comment, ss.sample_set_ID
 FROM sample s, sample_set ss
@@ -11,7 +13,7 @@ $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 
 $_SESSION["sampleID"] = $sampleID;
-$_SESSION["sampleSetID"] = $row[4];
+$_SESSION["sampleSetID"] = $sampleSetID;
 
 echo"
  <div class='modal-dialog'>

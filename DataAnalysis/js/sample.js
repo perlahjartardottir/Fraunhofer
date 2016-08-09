@@ -94,8 +94,8 @@ function loadSampleModal(sampleSetID, sampleID){
 		},
 		success: function(data, status, xhr){
 			$("#sample_modal").html(data);
-			setSampleSetID(sampleSetID);
-			setSampleID(sampleID);
+			// setSampleSetID(sampleSetID);
+			// setSampleID(sampleID);
 			
 		}
 	});

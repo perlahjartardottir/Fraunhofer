@@ -27,12 +27,15 @@ if(!$eqID){
   $eqID = "-1";
 }
 
-$numberOfSetsToDisplay = $_SESSION['numberOfSetsToDisplayInDD'];
 $eqWithAnlysResults = [];
+$numberOfSetsToDisplay = $_SESSION['numberOfSetsToDisplayInDD'];
 
-$recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
+$recentSampleSetsSql = "SELECT q.*
+FROM(
+SELECT sample_set_ID, sample_set_name
 FROM sample_set
-ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSetsToDisplay;";
+ORDER BY sample_set_ID DESC LIMIT $numberOfSetsToDisplay ) q
+ORDER BY MID(sample_set_name, 5, 6) DESC;";
 $recentSampleSetsResult = mysqli_query($link, $recentSampleSetsSql);
 
 $sampleInfoSql = "SELECT sample_name, sample_material, sample_comment
