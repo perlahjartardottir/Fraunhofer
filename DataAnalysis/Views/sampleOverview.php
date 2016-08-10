@@ -79,18 +79,21 @@ WHERE sample_set_ID = '$sampleSetID';";
       </div>
        <!-- Sample combo box -->
       <div id='samples_in_set' class='col-md-3 form-group'></div>
-       <!-- Sample Picture -->
-      <div class='col-md-3 form-group'>
-      <?
-      echo"
-        <img id='sample_picture_thumbnail' src='".$sampleInfoRow[3]."' class='img-responsive img-thumbnail' alt='Sample picture'>";
-      ?>
-      </div>
       <!-- Sample info -->
       <div class='col-md-3 form-group'>
         <p><strong>Material: </strong><?php echo $sampleInfoRow[1]; ?></p>
         <p><strong>Comment: </strong><?php echo $sampleInfoRow[2]; ?></p>
       </div>
+       <!-- Sample Picture -->
+      
+      <?
+      if($sampleInfoRow[3]){
+        echo"
+          <div class='col-md-3 form-group'>
+            <img id='sample_picture_thumbnail' src='".$sampleInfoRow[3]."' class='img-responsive img-thumbnail' alt='Sample picture' onclick='window.open(\"samplePicture.php?id=".$sampleRow[0]."\")'>
+          </div>";
+      }
+      ?>
     </div>
     <!-- Analysis -->
     <div class='col-md-8'>

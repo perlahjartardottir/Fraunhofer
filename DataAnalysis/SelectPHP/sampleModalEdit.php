@@ -50,10 +50,14 @@ echo"
           <div id='sample_picture_error_message'><? echo $errorMessage; ?></div>
           <label>Picture: (No functionality) </label>
           <input type='file' name='fileToUpload' id='fileToUpload'>
-        </div>
-        <div class='form-group'>
-          <img id='sample_picture_thumbnail' src='".$sampleRow[4]."' class='img-responsive img-thumbnail' alt='Sample picture'>
-        </div>
+        </div>";
+      if($sampleRow[4]){
+        echo"
+          <div class='form-group'>
+            <img id='sample_picture_thumbnail' src='".$sampleRow[4]."' class='img-responsive img-thumbnail' alt='Sample picture' onclick='window.open(\"samplePicture.php?id=".$sampleRow[0]."\")'>
+          </div>";
+      }
+      echo"
         <div class='modal-footer'>
           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].",this.form)' ></button>
           <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button> 
@@ -64,17 +68,16 @@ echo"
 </div>
 </div>";
 
-//Material: So user can both choose from datalist and enter text. 
 ?>
 <script>
 
 $('#material_edit-hidden').val(document.getElementById('material_edit').value);
-console.log(document.getElementById('material_edit').value);
 
   document.getElementById('close_modal').onclick = function(){
     modal.style.display = 'none';
     }
 
+  //Material: So user can both choose from datalist and enter text. 
   $('input[list]').on('input', function(e) {
     var input = $(e.target),
     options = $('#' + input.attr('list') + ' option'),
