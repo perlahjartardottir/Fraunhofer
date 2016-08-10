@@ -22,7 +22,7 @@ $sampleSetName= mysqli_fetch_row(mysqli_query($link, $sampleSetNameSql))[0];
 echo"
  <div class='modal-dialog'>
   <div class='modal-content '>
-    <form role='form'>
+    <form role='form' action='../UpdatePHP/editSample.php' method='post' enctype='multipart/form-data'>
       <div class='modal-header'>
         <div class='col-md-12'>
           <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
@@ -44,7 +44,7 @@ echo"
         </div>
         <div class='form-group'>
           <label>Comment:</label>
-          <textarea id='sample_comment' class='form-control'>".$sampleRow[3]."</textarea> 
+          <textarea id='sample_comment' name='sample_comment' class='form-control'>".$sampleRow[3]."</textarea> 
         </div>";
         if($sampleRow[4]){
         echo"
@@ -53,26 +53,23 @@ echo"
             <img id='sample_picture_thumbnail' src='".$sampleRow[4]."' class='img-responsive img-thumbnail' alt='Sample picture' onclick='window.open(\"samplePicture.php?id=".$sampleRow[0]."\")'>
           </div>";
       }
-      echo"
-      </form>
-        <form role='form' action='../UpdatePHP/editSamplePicture.php' method='post' enctype='multipart/form-data'>
+      echo" 
           <div class='form-group'>
+            <input type=hidden id='sample_ID' name='sample_ID' value='".$sampleID."' >
             <input type=hidden id='sample_name' name='sample_name' value='".$sampleRow[1]."'>
             <input type=hidden id='sample_set_name' name='smaple_set_name' value='".$sampleSetName."'>
             <label style='display:block;'>Upload new/replace picture:</label>
             <label class='btn btn-default btn-file'>Browse
-            <input type='file' id='sample_picture_new' name='sample_picture_new' style='display: none;' onchange='$(\"#new_sample_picture_name\").html(getFileName($(this).val()));'>
+            <input type='file' id='sample_picture' name='sample_picture' style='display: none;' onchange='$(\"#new_sample_picture_name\").html(getFileName($(this).val()));'>
             </label>
             <span id='new_sample_picture_name'></span>
-            <button type='submit' class='btn btn-default col-md-2' style='float:right;'>Upload</button>
           </div>
         </form>
         ";
-            // <input type='file' id='sample_picture_new' name='sample_picture_new' class='btn btn-default btn-file'>";
     echo"
     <div class='modal-footer'>
             <div class='form-group'>
-          <button type='button' class='btn btn-success' style='float:right;' onclick='editSample(".$sampleRow[0].",this)'>Save</button> 
+          <button type='submit' class='btn btn-success' style='float:right;' onclick='editSample(".$sampleRow[0].",this)'>Save</button> 
           <button type='button' class='btn btn-danger glyphicon glyphicon-trash' style='float:right;' onclick='deleteSample(".$sampleRow[0].",this)' ></button>
         </div>
       </div>

@@ -1,9 +1,9 @@
 <?php
 include '../../connection.php';
 
-$sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
-$material = mysqli_real_escape_string($link, $_POST["material"]);
-$comment = mysqli_real_escape_string($link, $_POST["comment"]);
+$sampleID = $_POST["sample_ID"];
+$material = $_POST["material_edit"];
+$comment = $_POST["sample_comment"];
 
 $sql = "UPDATE sample
 		SET sample_material = '$material', sample_comment='$comment'
@@ -13,6 +13,9 @@ $result = mysqli_query($link, $sql);
 if(!$result){
 	die("Could not update sample: ".mysqli_error($link));
 }
+
+//Upload photo and connect to sample.
+include '../UploadPHP/samplePicture.php';
 
 mysqli_close($link);
 
