@@ -43,26 +43,39 @@ echo"
           <input type='hidden' name='material_edit' id='material_edit-hidden'>
         </div>
         <div class='form-group'>
-          <label>Comment</label>
+          <label>Comment:</label>
           <textarea id='sample_comment' class='form-control'>".$sampleRow[3]."</textarea> 
-        </div>
-        <div class='form-group'>
-          <div id='sample_picture_error_message'><? echo $errorMessage; ?></div>
-          <label>Picture: (No functionality) </label>
-          <input type='file' name='fileToUpload' id='fileToUpload'>
         </div>";
-      if($sampleRow[4]){
+        if($sampleRow[4]){
         echo"
           <div class='form-group'>
+          <label>Sample picture:</label>
             <img id='sample_picture_thumbnail' src='".$sampleRow[4]."' class='img-responsive img-thumbnail' alt='Sample picture' onclick='window.open(\"samplePicture.php?id=".$sampleRow[0]."\")'>
           </div>";
       }
       echo"
-        <div class='modal-footer'>
-          <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteSample(".$sampleRow[0].",this.form)' ></button>
-          <button type='button' class='btn btn-success' onclick='editSample(".$sampleRow[0].",this.form)'>Save</button> 
-        </div>
       </form>
+        <form role='form' action='../UpdatePHP/editSamplePicture.php' method='post' enctype='multipart/form-data'>
+          <div class='form-group'>
+            <input type=hidden id='sample_name' name='sample_name' value='".$sampleRow[1]."'>
+            <input type=hidden id='sample_set_name' name='smaple_set_name' value='".$sampleSetName."'>
+            <label style='display:block;'>Upload new/replace picture:</label>
+            <label class='btn btn-default btn-file'>Browse
+            <input type='file' id='sample_picture_new' name='sample_picture_new' style='display: none;' onchange='$(\"#new_sample_picture_name\").html(getFileName($(this).val()));'>
+            </label>
+            <span id='new_sample_picture_name'></span>
+            <button type='submit' class='btn btn-default col-md-2' style='float:right;'>Upload</button>
+          </div>
+        </form>
+        ";
+            // <input type='file' id='sample_picture_new' name='sample_picture_new' class='btn btn-default btn-file'>";
+    echo"
+    <div class='modal-footer'>
+            <div class='form-group'>
+          <button type='button' class='btn btn-success' style='float:right;' onclick='editSample(".$sampleRow[0].",this)'>Save</button> 
+          <button type='button' class='btn btn-danger glyphicon glyphicon-trash' style='float:right;' onclick='deleteSample(".$sampleRow[0].",this)' ></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -29,7 +29,7 @@ function showSamplesInSetAndRefresh(sampleSetID){
 	});
 }
 
-function deleteSample(sampleID, form){	
+function deleteSample(sampleID, element){	
 	var errorMessage = "";
 	// Display a confirmation popup window before proceeding.
 	var r = confirm("Are you sure you want to delete this sample?");
@@ -44,7 +44,7 @@ function deleteSample(sampleID, form){
 			if(data.substring(0,5) === "Error"){
           		errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
           		"Samples that have been analysed or processed cannot be deleted.</div>";
-          		$(form).find("#error_message").html(errorMessage);
+          		$(element).parent().parent().find("#error_message").html(errorMessage);
           	}
           	else{
 				window.location.reload(true);
@@ -54,9 +54,9 @@ function deleteSample(sampleID, form){
 	}
 }
 
-function editSample(sampleID, form){
+function editSample(sampleID, element){
 	var material = $('#material_edit-hidden').val();
-	var comment = $(form).find("#sample_comment").val();
+	var comment = $(element).parent().parent().find("#sample_comment").val();
 
 	$.ajax({
 			url: "../UpdatePHP/editSample.php",
@@ -82,10 +82,7 @@ function loadSampleModal(sampleSetID, sampleID){
 			sampleID : sampleID
 		},
 		success: function(data, status, xhr){
-			$("#sample_modal").html(data);
-			// setSampleSetID(sampleSetID);
-			// setSampleID(sampleID);
-			
+			$("#sample_modal").html(data);		
 		}
 	});
 }

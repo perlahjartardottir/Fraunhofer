@@ -137,16 +137,11 @@ WHERE sample_set_ID = '$sampleSetID';";
         <textarea id='sample_comment' name='sample_comment' class='form-control'></textarea>
       </div>
       <div class='col-md-12 form-group'>
-<!--         <label>Picture: (No functionality) </label>
-        <br>
-        <label class="btn btn-default btn-file">Choose File
-          <input type="file" id='sample_file' name='sample_file' style='display: none;' onchange='$("#sample_file_path").html($(this).val());'>
+        <label for='fileToUpload' style='display:block;'>Picture:</label>
+        <label class="btn btn-default btn-file">Browse
+          <input type="file" id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$("#sample_file_path").html(getFileName($(this).val()));'>
         </label>
-        <span id="sample_file_path"></span> -->
-        <div id='sample_picture_error_message'><? echo $errorMessage; ?></div>
-        <label>Picture: (No functionality) </label>
-        <input type="file" name="fileToUpload" id="fileToUpload">
-
+        <span id="sample_file_path"></span>
       </div>
     </div> <!-- Details -->
     <div class='col-md-12'>
