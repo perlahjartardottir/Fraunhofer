@@ -24,7 +24,6 @@ function showSamplesInSetAndRefresh(sampleSetID){
 			$("#samples_in_set").html(data);
 			// Clear the id, since we have set the sampleSet session ID. 
 			window.location.href="../Views/addSample.php";
-
 		}
 	});
 }
@@ -46,9 +45,9 @@ function deleteSample(sampleID, element){
           		"Samples that have been analysed or processed cannot be deleted.</div>";
           		$(element).parent().parent().find("#error_message").html(errorMessage);
           	}
-          	else{
+      else{
 				window.location.reload(true);
-          	}
+      }
 			}
 		});
 	}

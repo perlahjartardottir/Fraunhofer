@@ -12,10 +12,6 @@ if($securityLevel < 2){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
-
-// How mamy sets we display in drop downs. 
-$_SESSION['numberOfSetsToDisplayInDD'] = 10;
-
   ?>
 <head>
 <title>Fraunhofer CCD</title>

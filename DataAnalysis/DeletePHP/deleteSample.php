@@ -5,6 +5,10 @@ session_start();
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 $sampleSetID = $_SESSION["sampleSetID"];
 
+// Delete sample picture from server if any.
+include 'deleteSamplePicture.php';
+	
+
 $deleteSampleSql = "DELETE FROM sample
 WHERE sample_ID = '$sampleID';";
 $deleteSampleResult = mysqli_query($link, $deleteSampleSql);
@@ -20,7 +24,7 @@ else{
 
 	// We have successfully deleted the sample.
 	$_SESSION['sampleID'] = '-1';
-	
+
 	// Find how many samples are left in the set.
 	$allSamplesInSetSql = "SELECT sample_ID
 	FROM sample

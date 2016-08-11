@@ -10,6 +10,8 @@ $sampleComment = $_POST['sample_comment'];
 $sampleSetName = $_POST["sample_set_name"];
 $sampleName = $_POST['sample_name'];
 $errorMessage  = "";
+// For samplePicture.php
+$action = "insert";
 
 // If new sample set.
 if($sampleSetDate){

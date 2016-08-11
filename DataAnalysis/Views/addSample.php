@@ -19,6 +19,8 @@ if(!$sampleSetID){
 }
 
 $numberOfSetsToDisplay = $_SESSION['numberOfSetsToDisplayInDD'];
+$maxPictureSize = $_SESSION["pictureValidation"]["maxSize"];
+$pictureFormats = $_SESSION["pictureValidation"]["formats"];
 
 // $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 // FROM sample_set
@@ -139,10 +141,11 @@ WHERE sample_set_ID = '$sampleSetID';";
       <div class='col-md-12 form-group'>
         <label for='sample_picture' style='display:block;'>Picture:</label>
         <label class="btn btn-default btn-file">Browse
-          <input type="file" id='sample_picture' name='sample_picture' style='display: none;' onchange='$("#sample_file_path").html(getFileName($(this).val()));'>
+          <input type="file" id='sample_picture' name='sample_picture' style='display: none;' accept='image/jpg,image/jpeg,image/png,image/bmp,image/gif,image/tif' onchange='$("#sample_file_path").html(getFileName($(this).val()));'>
         </label>
         <span id="sample_file_path"></span>
       </div>
+      <div id='error_message_picture' class='col-md-12'></div>
     </div> <!-- Details -->
     <div class='col-md-12'>
       <!-- <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button> -->
@@ -195,6 +198,17 @@ $('input[list]').on('input', function(e) {
     }
   }
 });
+
+// Picture validation. User can choose to ignore the message, but then the picture will not be uploaded.
+$('#sample_picture').bind('change', function() {
+  if(this.files[0].size > <?php echo $maxPictureSize?>){
+    var errorMessage = "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+              "Sorry, your file is too large. The max size is: " + <?php echo strval(number_format($maxPictureSize/1024/1024,2)); ?> +" MB.</div>";
+    $('#error_message_picture').html(errorMessage);
+  }
+});
+
+
 
 // Check if the user enters with a set that exists in the dropd down. 
 var exists = false;

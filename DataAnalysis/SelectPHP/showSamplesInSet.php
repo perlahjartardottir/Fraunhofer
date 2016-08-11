@@ -39,16 +39,25 @@ if($sampleSetID !== "-1"){
           <tr>
            <td><a onclick='loadAndShowSampleModal(".$row[0].")'>".$row[1]."</a></td>
            <td>".$row[2]."</td>
-           <td>".$row[3]."</td>
-           <td>Display pic name here</td>
+           <td>".$row[3]."</td>";
+           if($row[4]){
+            echo"
+              <td><a onclick='window.open(\"samplePicture.php?id=".$row[0]."\")'>Yes</a></td>";
+           }
+           else{
+            echo"
+              <td>No</td>";
+
+           }
+        echo"
          </tr>";
        }
        echo"
      </tbody>
    </table>
     <button type='button' class='btn btn-primary' onclick=location.href='sampleOverview.php' style='float:right'>Sample Overview</button>
-   <button type='button' class='btn btn-primary' onclick=location.href='analyze.php' style='float:right'>Analyze</button>
-   <button type='button' class='btn btn-primary' onclick=location.href='process.php' style='float:right'>Process</button>
+    <button type='button' class='btn btn-primary' onclick=location.href='analyze.php' style='float:right'>Analyze</button>
+    <button type='button' class='btn btn-primary' onclick=location.href='process.php' style='float:right'>Process</button>
  </div>
  <div id='sample_modal_edit' class='modal'></div>";
 }
