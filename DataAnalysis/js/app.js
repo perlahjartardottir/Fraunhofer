@@ -106,7 +106,7 @@ function addFeedback(form){
 
 function showFeedback(){
 	$.ajax({
-		url: "../SelectPHP/showFeedback.php",
+		url: "../SelectPHP/feedback.php",
 		type: "POST",
 		data: {
 		},

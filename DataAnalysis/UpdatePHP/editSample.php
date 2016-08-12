@@ -1,6 +1,8 @@
 <?php
 include '../../connection.php';
+session_start();
 
+$sampleSetID = $_SESSION["sampleSetID"];
 $sampleID = $_POST["sample_ID"];
 $material = $_POST["material_edit"];
 $comment = $_POST["sample_comment"];
@@ -22,7 +24,7 @@ if($deletePicture === "yes"){
 }
 
 // Upload photo and connect to sample.
-include '../UploadPHP/samplePicture.php';
+include '../InsertPHP/samplePicture.php';
 
 // There can be no echo before this call, otherwise the redirect will not work. 
 header('Location: ../Views/addSample.php?id='.$sampleSetID);

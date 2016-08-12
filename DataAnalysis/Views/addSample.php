@@ -148,9 +148,8 @@ WHERE sample_set_ID = '$sampleSetID';";
       <div id='error_message_picture' class='col-md-12'></div>
     </div> <!-- Details -->
     <div class='col-md-12'>
-      <!-- <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button> -->
       <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add</button>
-      <a href="../UploadPHP/download.php?id=../readme.pdf">Download the cool PDF.</a>
+<!--       <a href="../DownloadPHP/download.php?id=../readme.pdf">Download the cool PDF.</a> -->
     </div>
 
   </form>

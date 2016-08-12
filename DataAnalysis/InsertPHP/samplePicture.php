@@ -1,8 +1,7 @@
 <?php
 include '../../connection.php';
-session_start();
-$sampleSetID = $_SESSION["sampleSetID"];
-$sampleID = $_SESSION["sampleID"];
+
+$sampleID = $_POST["sample_ID"];
 $sampleName =  $_POST["sample_name"];
 $maxPictureSize = $_SESSION["pictureValidation"]["maxSize"];
 $pictureFormats = $_SESSION["pictureValidation"]["formats"];

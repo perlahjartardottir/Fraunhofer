@@ -1,6 +1,6 @@
 function showSamplesInSet(sampleSetID){
 	$.ajax({
-		url: "../SelectPHP/showSamplesInSet.php",
+		url: "../SelectPHP/samplesInSet.php",
 		type: "POST",
 		data: {
 			sampleSetID : sampleSetID
@@ -15,7 +15,7 @@ function showSamplesInSet(sampleSetID){
 // To display samples in set at addSample.php
 function showSamplesInSetAndRefresh(sampleSetID){
 	$.ajax({
-		url: "../SelectPHP/showSamplesInSet.php",
+		url: "../SelectPHP/samplesInSet.php",
 		type: "POST",
 		data: {
 			sampleSetID : sampleSetID
