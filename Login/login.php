@@ -15,7 +15,8 @@
   <!-- Custom styles for this template -->
   <link href="../css/signin.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src='../Tooling/dest/fraunhofer.min.js'></script>
+<!--   <script src='../Tooling/dest/fraunhofer.min.js'></script> -->
+   <script src='../Tooling/js/passScript.js'></script>
 </head>
 <body>
 <div class="container">
