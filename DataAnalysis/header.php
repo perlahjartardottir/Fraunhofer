@@ -37,9 +37,9 @@ $_SESSION["pictureValidation"]["formats"] = ["jpg", "jpeg", "png", "gif", "bmp",
 <meta http-equiv="Content-Language" content="en">
 <link href='../css/main.css' rel='stylesheet'>
 <link href='../css/header.css' rel='stylesheet'>
-<link href='/css/bootstrap.min.css' rel='stylesheet'>
-<link href='/css/jquery-ui.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href='../css/bootstrap.min.css' rel='stylesheet'>
+<link href='../css/jquery-ui.min.css' rel='stylesheet'>
+<link href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script> <!-- For formating input date -->
 <script src='../js/app.js'></script>

@@ -79,7 +79,7 @@ WHERE sample_set_ID = '$sampleSetID';";
   <div class='row well well-lg'>
   <div class='col-md-12'>
     <form role='form'>
-      <div id='error_message'></div>
+      <!-- <div id='error_message'>bla</div> -->
       <div id='sample_div' class='col-md-12'>
         <h4 class='custom_heading'>1. Choose a sample</h4>
         <div class='col-md-4 form-group'>

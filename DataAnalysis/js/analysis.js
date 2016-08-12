@@ -155,9 +155,10 @@ function deleteAnalysisEquipment(eqID){
   comment = "";
   params = [];
 
-  if(sampleID === "-1"){
+  if(sampleID == "-1"){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
   }
+  console.log(errorMessage);
 
   if($(form).find('#property_name')[0]){
       propertyName = $(form).find('#property_name')[0].innerText;
@@ -175,9 +176,12 @@ function deleteAnalysisEquipment(eqID){
   if(form.elements.res_param){
     for (i = 0; i < form.elements.res_param.length; i++){
       params.push(form.elements.res_param[i].value);
-      console.log(form.elements.res_param[i].value);
     }
   }
+
+  // var formData = new FormData();
+  // formData.append('file', $(form).find('#anlys_res_file')[0].files[0]);
+  // console.log(formData);
 
   if(errorMessage){
     $(form).find("#error_message").html(errorMessage);

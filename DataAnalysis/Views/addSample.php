@@ -150,7 +150,9 @@ WHERE sample_set_ID = '$sampleSetID';";
     <div class='col-md-12'>
       <!-- <button type='button' class='btn btn-primary col-md-2' style='float:right' onclick='addSample()'>Add</button> -->
       <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add</button>
+      <a href="../UploadPHP/download.php?id=../readme.pdf">Download the cool PDF.</a>
     </div>
+
   </form>
 </div>
 <!-- SelectPHP/showSamplesInSet.php -->

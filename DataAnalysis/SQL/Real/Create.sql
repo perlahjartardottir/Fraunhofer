@@ -99,7 +99,6 @@ CREATE TABLE anlys_result(
     anlys_res_result DOUBLE,
     anlys_res_date DATE,
     anlys_res_comment VARCHAR(2000),
-    anlys_res_file MEDIUMBLOB,
     anlys_res_1 DOUBLE,	-- Result of anlys_param_1 --
     anlys_res_2 DOUBLE, -- Result of anlys_param_2 --
     anlys_res_3 DOUBLE, -- Result of anlys_param_3 --
@@ -110,8 +109,10 @@ CREATE TABLE anlys_result(
 
 ALTER TABLE anlys_result ADD employee_ID INT;
 ALTER TABLE anlys_result ADD CONSTRAINT FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID);
+ALTER TABLE anlys_result ADD anlys_res_file VARCHAR(2048);
 -- ALTER TABLE anlys_result MODIFY sample_ID INT NOT NULL;
 -- ALTER TABLE anlys_result MODIFY anlys_eq_prop_ID INT NOT NULL;
+
 
 
 CREATE TABLE process(

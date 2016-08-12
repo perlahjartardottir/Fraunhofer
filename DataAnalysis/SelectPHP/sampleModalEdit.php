@@ -24,13 +24,13 @@ $sampleSetName= mysqli_fetch_row(mysqli_query($link, $sampleSetNameSql))[0];
 echo"
  <div class='modal-dialog'>
   <div class='modal-content '>
-    <form id='sample_edit_form' role='form' action='../UpdatePHP/editSample.php' method='post' enctype='multipart/form-data'>
       <div class='modal-header'>
         <div class='col-md-12'>
           <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
         </div>
         <h3 class='center_heading'>".$sampleRow[1]."</h3>
       </div>
+      <form id='sample_edit_form' role='form' action='../UpdatePHP/editSample.php' method='post' enctype='multipart/form-data'>
       <div class='modal-body'>
         <div id='error_message'></div>
         <div class='form-group'>
@@ -67,26 +67,23 @@ echo"
           <label style='display:block;'>Upload a picture:</label>";
       }
       echo" 
-            <input type=hidden id='sample_ID' name='sample_ID' value='".$sampleID."' >
-            <input type=hidden id='sample_name' name='sample_name' value='".$sampleRow[1]."'>
+            <input type='hidden' id='sample_ID' name='sample_ID' value='".$sampleID."' >
+            <input type='hidden' id='sample_name' name='sample_name' value='".$sampleRow[1]."'>
             <label class='btn btn-default btn-file'>Browse
-            <input type='file' id='sample_picture_edit' name='sample_picture_edit' style='display:none;' accept='image/jpg,image/jpeg,image/png,image/bmp,image/gif,image/tif' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));'>
+            <input type='file' id='sample_picture_edit' name='sample_picture_edit' style='display:none;' accept='image/jpg,image/jpeg,image/png,image/bmp,image/gif,image/tif' onchange='$(\"#new_sample_picture_name\").html(getFileName($(this).val()));'>
             </label>
             <span id='new_sample_picture_name'></span>
           </div>
           <div id='error_message_picture_edit'></div>
-        </form>
-        ";
-    echo"
-    <div class='modal-footer'>
-            <div class='form-group'>
-          <button type='submit' class='btn btn-success' style='float:right;' >Save</button> 
-          <button type='button' class='btn btn-danger glyphicon glyphicon-trash' style='float:right;' onclick='deleteSample(".$sampleRow[0].",this)' ></button>
         </div>
+        <div class='modal-footer'>
+            <input type='submit' class='btn btn-success' style='float:right;' value='Save'>
+            <button type='button' class='btn btn-danger glyphicon glyphicon-trash' style='float:right;' onclick='deleteSample(".$sampleRow[0].",this)' ></button>
+        </div>  
       </div>
+      </form>
     </div>
   </div>
-</div>
 </div>";
 
 ?>
@@ -97,12 +94,6 @@ $('#material_edit-hidden').val(document.getElementById('material_edit').value);
   document.getElementById('close_modal').onclick = function(){
     modal.style.display = 'none';
     }
-
-            $('#sample_picture').bind('change', function() {
-            alert('This file size is: ' + this.files[0].size/1024/1024 + "MB");
-        });
-
-
 
   //Material: So user can both choose from datalist and enter text. 
   $('input[list]').on('input', function(e) {

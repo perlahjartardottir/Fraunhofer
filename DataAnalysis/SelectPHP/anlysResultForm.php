@@ -62,6 +62,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 // The result form.
   echo"
   <form class='col-md-12'>
+  <div id='error_message'></div>
     <div class='form-group row'>
       <label class=''>Date:</label>
       <div class='col-md-2'>
@@ -140,7 +141,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       <label class='col-md-2 col-form-label'>File: (No functionality) </label>
       <div class='col-md-4'>
         <label class='btn btn-default btn-file'>Browse...
-          <input type='file' id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));'>
+          <input type='file' id='anlys_res_file' name='anlys_res_file' style='display: none;' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));'>
         </label>
         <span id='sample_file_path' class='table_style_text'></span>
       </div>

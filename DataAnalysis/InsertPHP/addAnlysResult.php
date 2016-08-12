@@ -10,6 +10,7 @@ $date = mysqli_real_escape_string($link, $_POST["date"]);
 $employee = mysqli_real_escape_string($link, $_POST["employee"]);
 $params = $_POST["params"];
 $param1 = $param2 = $param3 = "";
+
 for($i = 0; $i < count($params); $i++){
 	if($i === 0){
 		$param1 = mysqli_real_escape_string($link, $params[$i]);

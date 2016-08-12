@@ -980,7 +980,7 @@ function authenticate() {
   var userID = $('#userID').val();
   var password = $('#password').val();
   $.ajax({
-    url: "../../Login/logincheck.php",
+    url: "../Login/logincheck.php",
     type: "POST",
     data: {
       userID: userID,
@@ -1009,7 +1009,7 @@ function authenticateAppending() {
   var userID = $('#userID').val();
   var password = $('#password').val();
   $.ajax({
-    url: "../../Login/logincheck.php",
+    url: "../Login/logincheck.php",
     type: "POST",
     data: {
       userID: userID,
@@ -1037,13 +1037,13 @@ function authenticateAppending() {
 
 function logout() {
   $.ajax({
-    url: "../../Login/logout.php",
+    url: "../Login/logout.php",
     type: "POST"
   }).done(function() {
     // redirect the user to the login page
     // this is done so you loose access to the site you are at
     // when you log out.
-    window.location = "../../Login/login.php";
+    window.location = "../Login/login.php";
   });
 }
 

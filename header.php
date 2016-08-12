@@ -1,7 +1,7 @@
 <!-- The header file for almost all views. -->
 <!-- This file includes all the .css and .js needed  -->
 <!-- It also displays the top of the page and the user who is logged in -->
-<link href='/css/header.css' rel='stylesheet'>
+<link href='../css/header.css' rel='stylesheet'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src='../js/app.js'></script>
 <script src='../Tooling/js/bootstrap.js'></script>

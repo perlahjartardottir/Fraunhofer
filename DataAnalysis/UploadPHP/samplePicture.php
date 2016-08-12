@@ -19,7 +19,7 @@ else if ($action === "insert"){
 if($_FILES[$samplePicture]["name"]){
 
 // Build the path
-  $target_dir = "../../DataAnalysisUploads/".date("Y")."/".date("m")."/".$sampleName."/";
+  $target_dir = "../../../Fraunhofer Uploads/Data Analysis/".date("Y")."/".date("m")."/".$sampleName."/";
 // If the folder does not exist create it.
   if (!file_exists($targer_dir)) {
     mkdir($target_dir, 0777, true);
@@ -88,10 +88,5 @@ if($_FILES[$samplePicture]["name"]){
  }
 
 }
-
-mysqli_close($link);
-
-// There can be no echo before this call, otherwise the redirect will not work. 
-header('Location: ../Views/addSample.php?id='.$sampleSetID);
 
 ?>
