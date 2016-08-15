@@ -152,7 +152,7 @@ WHERE sample_set_ID = '$sampleSetID';";
         ?>
       </div>
       <div class='col-md-12'>
-        <h4 class='custom_heading'>3. Enter results</h4>
+        <h4 class='custom_heading'>3. Enter results (Under construction)</h4>
         <div id='res_div'></div>
       </div>
       <div class='col-md-12'>

@@ -146,7 +146,69 @@ function deleteAnalysisEquipment(eqID){
  });
  }
 
- function addAnlysResult(sampleID, eqPropID, form){
+//  function addAnlysResult(sampleID, eqPropID, form){
+//   errorMessage = "";
+//   employee = "";
+//   date = "";
+//   result = "";
+//   propertyName = "";
+//   comment = "";
+//   params = [];
+
+//   if(sampleID == "-1"){
+//     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
+//   }
+//   console.log(errorMessage);
+
+//   if($(form).find('#property_name')[0]){
+//       propertyName = $(form).find('#property_name')[0].innerText;
+//       propertyName = propertyName.substring(0, (propertyName.length - 1));
+//       result = $(form).find('#res_res').val();
+//       if(result === ""){
+//         errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propertyName+".</div>";
+//       }
+//   }
+
+//   comment = $(form).find('#res_comment').val();
+//   date = $(form).find('#res_date').val();
+//   employee = $(form).find('#employee_initials').val();
+
+//   if(form.elements.res_param){
+//     for (i = 0; i < form.elements.res_param.length; i++){
+//       params.push(form.elements.res_param[i].value);
+//     }
+//   }
+
+//   // var formData = new FormData();
+//   // formData.append('file', $(form).find('#anlys_res_file')[0].files[0]);
+//   // console.log(formData);
+
+//   if(errorMessage){
+//     $(form).find("#error_message").html(errorMessage);
+//   }  else{
+//     $.ajax({
+//       url: "../InsertPHP/addAnlysResult.php",
+//       type: "POST",
+//       data: {
+//         sampleID : sampleID,
+//         eqPropID : eqPropID,
+//         result : result,
+//         comment : comment,
+//         date : date,
+//         params : params,
+//         employee : employee
+//       },
+//       success: function(data,status, xhr){
+//        console.log(data);
+//        //displayAnlysResultTable(sampleID, eqPropID);
+//        window.location.reload();
+//      }
+//    });
+//   }
+// }
+
+
+ function anlysResultValidation(sampleID, eqPropID, form){
   errorMessage = "";
   employee = "";
   date = "";
@@ -185,26 +247,12 @@ function deleteAnalysisEquipment(eqID){
 
   if(errorMessage){
     $(form).find("#error_message").html(errorMessage);
-  }  else{
-    $.ajax({
-      url: "../InsertPHP/addAnlysResult.php",
-      type: "POST",
-      data: {
-        sampleID : sampleID,
-        eqPropID : eqPropID,
-        result : result,
-        comment : comment,
-        date : date,
-        params : params,
-        employee : employee
-      },
-      success: function(data,status, xhr){
-       console.log(data);
-       //displayAnlysResultTable(sampleID, eqPropID);
-       window.location.reload();
-     }
-   });
+    console.log("form validation false");
+    return false;
   }
+  console.log("form validation true");
+  return true;
+  
 }
 
 function displayAnlysResultTable(sampleID, eqPropID){

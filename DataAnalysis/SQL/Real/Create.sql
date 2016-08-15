@@ -164,6 +164,14 @@ CREATE TABLE da_feedback(
 	FOREIGN KEY (employee_ID) REFERENCES employee(employee_ID)
 );
 
+CREATE TABLE anlys_res_file(
+	anlys_res_file_ID INT AUTO_INCREMENT,
+    anlys_res_ID INT,
+    anlys_res_file VARCHAR(2048) NOT NULL,
+    PRIMARY KEY(anlys_res_file_ID),
+    FOREIGN KEY(anlys_res_ID) REFERENCES anlys_result(anlys_res_ID)
+);
+
 ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_eq_prop CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ALTER TABLE anlys_result CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;

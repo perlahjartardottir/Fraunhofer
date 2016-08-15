@@ -48,6 +48,13 @@ textarea.form-control.custom_heading{
     width: 155px;
 }
 
+ul
+{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+
 /* EDIT SAMPLE MODAL */
 
 #sample_picture_thumbnail{

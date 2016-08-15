@@ -61,22 +61,22 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
 // The result form.
   echo"
-  <form class='col-md-12'>
+  <form class='col-md-12' role='form' action='../InsertPHP/addAnlysResult.php' method='post' enctype='multipart/form-data' onsubmit='return anlysResultValidation(".$sampleID.",".$eqPropID.",this)'>
   <div id='error_message'></div>
     <div class='form-group row'>
-      <label class=''>Date:</label>
+      <input type='hidden' id='eq_prop_ID' name='eq_prop_ID' value=".$eqPropID.">
+      <label class='col-md-2 col-form-label'>Date:</label>
       <div class='col-md-2'>
-        <input type='date' id='res_date' class='custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
+        <input type='date' id='res_date' name='res_date' class='custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
       </div>
       <label class='col-md-2 col-form-label'>Employee:</label>
       <div class='col-md-2'>
-        <select id='employee_initials' class='form-control'>";
+        <select id='employee_initials' name='employee_initials' class='form-control'>";
             while($row = mysqli_fetch_row($employeeInitialsResult)){
               echo "<option value='".$row[0]."'>".$row[2]."</option>";
             }
       echo"
        </select>
-       <span id='employee_name' class='table_style_text'></span>
       </div>
     </div>";
 
@@ -87,15 +87,15 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       <div class='form-group row'>
         <label class='col-md-2 col-form-label'>Inner diameter (&#181;m): </label>
         <div class='col-md-2'>
-          <input type='number' id='res_calc_d' class='form-control' value='' >
+          <input type='number' id='res_calc_d' class='form-control' step='any' value='' >
         </div>
         <label class='col-md-2 col-form-label'>Outer diamter (&#181;m): </label>
         <div class='col-md-2'>
-          <input type='number' id='res_calc_D' class='form-control' value='' >
+          <input type='number' id='res_calc_D'class='form-control' step='any' value='' >
         </div>
         <label class='col-md-2 col-form-label'>Radius of ball (&#181;m): </label>
         <div class='col-md-2'>
-          <input type='number' id='res_calc_R' class='form-control' value='25400'>
+          <input type='number' id='res_calc_R' class='form-control' step='any' value='25400'>
         </div>
       </div>";
     }
@@ -109,7 +109,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
            echo"
            <label class='col-md-2 col-form-label'>".$propertyRow[$i].":</label>
            <div class='col-md-2'>
-            <input type='number' name='res_param' class='form-control'>
+            <input type='number' name='res_param[".($i-3)."]' class='form-control' step='any'>
           </div>";
         }
       }
@@ -128,7 +128,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         }
         echo":</label>
         <div class='col-md-2'>
-          <input type='number' id='res_res' class='form-control' value='' onclick='calcCGThickness()'>
+          <input type='number' id='res_res' name='res_res' class='form-control' step='any' onclick='calcCGThickness()'>
         </div>
       </div>";
     }
@@ -136,20 +136,24 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     <div class='form-group row'>
       <label class='col-md-2 col-form-label'>Comment:</label>
       <div class='col-md-2'>
-        <textarea id='res_comment' class='form-control custom_comment' value=''></textarea>
+        <textarea id='res_comment' name='res_comment' class='form-control custom_comment' value=''></textarea>
       </div>
       <label class='col-md-2 col-form-label'>File: (No functionality) </label>
       <div class='col-md-4'>
-        <label class='btn btn-default btn-file'>Browse...
-          <input type='file' id='anlys_res_file' name='anlys_res_file' style='display: none;' onchange='$(\"#sample_file_path\").html(getFileName($(this).val()));'>
-        </label>
-        <span id='sample_file_path' class='table_style_text'></span>
+      <input type='file' id='anlys_file' name='anlys_file[]' multiple accept='media_type' style='display:none' onchange='handleFiles(this.files)''>
+      <a href='#' id='file_select' class='btn btn-default btn-file'>Browse</a> 
+      <div id='file_list'>
+        <p>No files selected.</p>
       </div>
     </div>
-      <div class='form-group row'>
-        <button type='button' class='btn btn-primary col-md-2' onclick='addAnlysResult(".$sampleID.",".$propertyRow[0].",this.form)' style='float:right'>Add</button>
+      <div class='form-group row col-md-12'>
+      <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Submit</button>
       </div>
   </form>";
+   ?>
+
+
+<?
 
   echo"
   <div id='anlys_result_table' class='col-md-12'></div>";
@@ -160,11 +164,6 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
   $(document).ready(function(){
     displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
 })
-
-    // // Trime the filepath to only the file name. 
-    // function getFileName(s) {
-    //   return s.replace(/^.*[\\\/]/, '');
-    // }
 
     // Format the date input.
     $('#res_date').on('change', function() {
@@ -191,5 +190,47 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
       // Make tge dropdown list select the currently logged in user.
       $("#employee_initials").val(<?php echo $userID; ?>);
+
+      // File uploading.
+      // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
+
+      window.URL = window.URL || window.webkitURL;
+
+      var fileSelect = document.getElementById("file_select"),
+      fileElem = document.getElementById("anlys_file"),
+      fileList = document.getElementById("file_list");
+
+      fileSelect.addEventListener("click", function (e) {
+        if (fileElem) {
+          fileElem.click();
+        }
+  e.preventDefault(); // prevent navigation to "#"
+}, false);
+
+      function handleFiles(files) {
+        if (!files.length) {
+          fileList.innerHTML = "<p>No files selected!</p>";
+        } else {
+          fileList.innerHTML = "";
+          var list = document.createElement("ul");
+          fileList.appendChild(list);
+          for (var i = 0; i < files.length; i++) {
+            var li = document.createElement("li");
+            list.appendChild(li);
+
+            // var img = document.createElement("img");
+            // img.src = window.URL.createObjectURL(files[i]);
+            // img.height = 60;
+            // img.onload = function() {
+            //   window.URL.revokeObjectURL(this.src);
+            // }
+            // li.appendChild(img);
+
+            var info = document.createElement("span");
+            info.innerHTML = files[i].name + ": " + files[i].size + " bytes";
+            li.appendChild(info);
+          }
+        }
+      }
 
     </script>

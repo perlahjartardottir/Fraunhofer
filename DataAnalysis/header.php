@@ -25,10 +25,13 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 $_SESSION["numberOfSetsToDisplayInDD"] = 10;
 
 // How large a picture can be. 5 MiB.
-$_SESSION["pictureValidation"]["maxSize"] =  10243000;
+$_SESSION["pictureValidation"]["maxSize"] =  5243000;
 
 // What picture formats are accpeted.
 $_SESSION["pictureValidation"]["formats"] = ["jpg", "jpeg", "png", "gif", "bmp", "tif"];
+
+// How large a file can be. 5 MiB.
+$_SESSION["fileValidation"]["maxSize"] = 5243000;
 
 ?>
 
