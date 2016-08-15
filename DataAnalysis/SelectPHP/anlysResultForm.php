@@ -8,6 +8,7 @@ $_SESSION["propID"] = $propID;
 $eqID = mysqli_real_escape_string($link, $_POST["eqID"]);
 $_SESSION["eqID"] = $eqID;
 $eqPropID = "-1";
+$maxFileSize = $_SESSION["fileValidation"]["maxSize"];
 $noPropResult = [];
 $propsWithAnlysResults = [];
 
@@ -138,7 +139,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       <div class='col-md-2'>
         <textarea id='res_comment' name='res_comment' class='form-control custom_comment' value=''></textarea>
       </div>
-      <label class='col-md-2 col-form-label'>File: (No functionality) </label>
+      <label class='col-md-2 col-form-label'>Files: (No functionality) </label>
       <div class='col-md-4'>
       <input type='file' id='anlys_file' name='anlys_file[]' multiple accept='media_type' style='display:none' onchange='handleFiles(this.files)''>
       <a href='#' id='file_select' class='btn btn-default btn-file'>Browse</a> 
@@ -204,12 +205,12 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         if (fileElem) {
           fileElem.click();
         }
-  e.preventDefault(); // prevent navigation to "#"
-}, false);
+        e.preventDefault(); // prevent navigation to "#"
+      }, false);
 
       function handleFiles(files) {
         if (!files.length) {
-          fileList.innerHTML = "<p>No files selected!</p>";
+          fileList.innerHTML = "<p>No files selected.</p>";
         } else {
           fileList.innerHTML = "";
           var list = document.createElement("ul");
@@ -227,7 +228,15 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
             // li.appendChild(img);
 
             var info = document.createElement("span");
-            info.innerHTML = files[i].name + ": " + files[i].size + " bytes";
+            if(files[i].size > <?php echo $maxFileSize; ?>){
+
+              var errorMessage = "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+              "Sorry, " + files[i].name + " is too large. The max size is: " + <?php echo strval(number_format($maxFileSize/1000/1000,2)); ?> +" MB.</div>";
+               info.innerHTML = files[i].name + " - " + (files[i].size/1000/1000).toFixed(2) + " MB" + errorMessage;
+            }
+            else{
+            info.innerHTML = files[i].name;
+            }
             li.appendChild(info);
           }
         }

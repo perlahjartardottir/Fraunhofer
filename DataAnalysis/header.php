@@ -24,14 +24,14 @@ $_SESSION["securityLevelDA"] = $securityLevel;
 // How many sets we display in drop downs. 
 $_SESSION["numberOfSetsToDisplayInDD"] = 10;
 
-// How large a picture can be. 5 MiB.
-$_SESSION["pictureValidation"]["maxSize"] =  5243000;
+// How large a picture can be. 5 MB.
+$_SESSION["pictureValidation"]["maxSize"] =  5000000;
 
 // What picture formats are accpeted.
 $_SESSION["pictureValidation"]["formats"] = ["jpg", "jpeg", "png", "gif", "bmp", "tif"];
 
 // How large a file can be. 5 MiB.
-$_SESSION["fileValidation"]["maxSize"] = 5243000;
+$_SESSION["fileValidation"]["maxSize"] = 5000000;
 
 ?>
 

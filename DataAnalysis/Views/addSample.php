@@ -204,7 +204,7 @@ $('input[list]').on('input', function(e) {
 $('#sample_picture').bind('change', function() {
   if(this.files[0].size > <?php echo $maxPictureSize?>){
     var errorMessage = "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-              "Sorry, your file is too large. The max size is: " + <?php echo strval(number_format($maxPictureSize/1024/1024,2)); ?> +" MB.</div>";
+              "Sorry, your file is too large. The max size is: " + <?php echo strval(number_format($maxPictureSize/1000/1000,2)); ?> +" MB.</div>";
     $('#error_message_picture').html(errorMessage);
   }
 });
