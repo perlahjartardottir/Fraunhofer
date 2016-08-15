@@ -1,7 +1,6 @@
 <?php
 include '../../connection.php';
 
-$sampleID = $_POST["sample_ID"];
 $sampleName =  $_POST["sample_name"];
 $maxPictureSize = $_SESSION["pictureValidation"]["maxSize"];
 $pictureFormats = $_SESSION["pictureValidation"]["formats"];
@@ -38,8 +37,8 @@ if($_FILES[$samplePicture]["name"]){
       $uploadOk = 1;
     } else {
         //echo "File is not an image.";
-      $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-      "This file is not an image.</div>";
+      // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+      // "This file is not an image.</div>";
       $uploadOk = 0;
     }
   }
@@ -47,22 +46,22 @@ if($_FILES[$samplePicture]["name"]){
 // Check file size. Max size: 5 MB.
   if ($_FILES[$samplePicture]["size"] > $maxPictureSize) {
     //echo "Sorry, your file is too large.";
-    $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-    "Sorry, your file is too large. The max size is: </div>";
+    // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+    // "Sorry, your file is too large. The max size is: </div>";
     $uploadOk = 0;
   }
 // Allow certain file formats
   if(!in_array($imageFileType, $pictureFormats)) {
     //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-    $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-    "Sorry, only JPG, JPEG, PNG & GIF files are allowed.</div>";
+    // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+    // "Sorry, only JPG, JPEG, PNG & GIF files are allowed.</div>";
     $uploadOk = 0;
   }
 // Check if $uploadOk is set to 0 by an error
   if ($uploadOk == 0) {
     // echo "Sorry, your file was not uploaded.";
-    $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-    "Sorry, your file was not uploaded.</div>";
+    // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+    // "Sorry, your file was not uploaded.</div>";
 
 // if everything is ok, try to upload file
   } else {
@@ -81,8 +80,8 @@ if($_FILES[$samplePicture]["name"]){
 
     } else {
         // echo "Sorry, there was an error uploading your file.";
-     $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-     "Sorry, there was an error uploading your file.</div>";
+     // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+     // "Sorry, there was an error uploading your file.</div>";
    }
  }
 
