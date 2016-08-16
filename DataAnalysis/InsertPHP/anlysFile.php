@@ -1,5 +1,6 @@
 <?php
 include '../../connection.php';
+session_start();
 
 $maxFileSize = $_SESSION["fileValidation"]["maxSize"];
 $uploadOk = 1;
@@ -50,10 +51,10 @@ while($_FILES[$file]["name"][$uploadCounter]){
 	if ($_FILES[$file]["size"][$uploadCounter] > $maxFileSize) {
 		$uploadOk = 0;
 	}
-	if($uploadOk === 1){
+	if($uploadOk == 1){
 		if (move_uploaded_file($_FILES[$file]["tmp_name"][$uploadCounter], $targetFile)) {
 
-			$sql = "INSERT INTO anlys_res_file (anlys_res_ID, anlys_res_file) VALUES ('$anlysResultID','$targetFile');";
+			$sql = "INSERT INTO anlys_res_file (anlys_res_ID, anlys_res_file) VALUES ('$resID','$targetFile');";
 			$result = mysqli_query($link, $sql);
 
 			if(!$result){

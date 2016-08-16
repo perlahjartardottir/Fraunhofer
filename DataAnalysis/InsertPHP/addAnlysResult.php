@@ -34,7 +34,7 @@ if(!$result){
 	die("Could not add analysis result: ".mysqli_error($link));
 }
 
-$anlysResultID = mysqli_insert_id($link);
+$resID = mysqli_insert_id($link);
 //Upload analysis file and add path to db.
 include 'anlysFile.php';
 

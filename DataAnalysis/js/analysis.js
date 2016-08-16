@@ -210,18 +210,14 @@ function deleteAnalysisEquipment(eqID){
 
  function anlysResultValidation(sampleID, eqPropID, form){
   errorMessage = "";
-  employee = "";
-  date = "";
   result = "";
   propertyName = "";
-  comment = "";
-  params = [];
 
   if(sampleID == "-1"){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
   }
-  console.log(errorMessage);
 
+  // If we are using the anlys_result field, it must not be empty.
   if($(form).find('#property_name')[0]){
       propertyName = $(form).find('#property_name')[0].innerText;
       propertyName = propertyName.substring(0, (propertyName.length - 1));
@@ -230,20 +226,6 @@ function deleteAnalysisEquipment(eqID){
         errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propertyName+".</div>";
       }
   }
-
-  comment = $(form).find('#res_comment').val();
-  date = $(form).find('#res_date').val();
-  employee = $(form).find('#employee_initials').val();
-
-  if(form.elements.res_param){
-    for (i = 0; i < form.elements.res_param.length; i++){
-      params.push(form.elements.res_param[i].value);
-    }
-  }
-
-  // var formData = new FormData();
-  // formData.append('file', $(form).find('#anlys_res_file')[0].files[0]);
-  // console.log(formData);
 
   if(errorMessage){
     $(form).find("#error_message").html(errorMessage);
@@ -295,50 +277,48 @@ function loadAnlysResultModalEdit(resID, eqPropID){
   });
 }
 
-function editAnlysResult(resID, form){
-  var errorMessage = "";
-  var result = "";
-  var paramRes1 = "";
-  var paramRes2 = "";
-  var paramRes3 = "";
-  var comment = "";
-  var propName = "";
+// function editAnlysResult(resID, form){
+//   var errorMessage = "";
+//   var result = "";
+//   var paramRes1 = "";
+//   var paramRes2 = "";
+//   var paramRes3 = "";
+//   var comment = "";
+//   var propName = "";
   
-  result = $(form).find("#anlys_res_result").val();
-  paramRes1 = $(form).find("#anlys_res_param_1").val();
-  paramRes2 = $(form).find("#anlys_res_param_2").val();
-  paramRes3 = $(form).find("#anlys_res_param_3").val();
-  comment = $(form).find("#anlys_res_comment").val();
-  propName = $(form).find("#anlys_res_prop_name").text();
-
-  console.log(result);
+//   result = $(form).find("#anlys_res_result").val();
+//   paramRes1 = $(form).find("#anlys_res_param_1").val();
+//   paramRes2 = $(form).find("#anlys_res_param_2").val();
+//   paramRes3 = $(form).find("#anlys_res_param_3").val();
+//   comment = $(form).find("#anlys_res_comment").val();
+//   propName = $(form).find("#anlys_res_prop_name").text();
   
-  // If we are using the anlys_result field it cannot be left empty.
-  if(result === ""){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propName+".</div>";
-  }
+//   // If we are using the anlys_result field it cannot be left empty.
+//   if(result === ""){
+//     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propName+".</div>";
+//   }
 
-  if(errorMessage){
-    $(form).find("#error_message_edit").html(errorMessage);
-  }  else{
-    $.ajax({
-      url: "../UpdatePHP/editAnlysResult.php",
-      type: "POST",
-      data: {
-        resID : resID,
-        result : result,
-        paramRes1 : paramRes1,
-        paramRes2 : paramRes2,
-        paramRes3 : paramRes3,
-        comment : comment
-      },
-      success: function(data, status, xhr){
-        console.log(data);
-        window.location.reload(true);
-      }
-    });
-  }
-}
+//   if(errorMessage){
+//     $(form).find("#error_message_edit").html(errorMessage);
+//   }  else{
+//     $.ajax({
+//       url: "../UpdatePHP/editAnlysResult.php",
+//       type: "POST",
+//       data: {
+//         resID : resID,
+//         result : result,
+//         paramRes1 : paramRes1,
+//         paramRes2 : paramRes2,
+//         paramRes3 : paramRes3,
+//         comment : comment
+//       },
+//       success: function(data, status, xhr){
+//         console.log(data);
+//         window.location.reload(true);
+//       }
+//     });
+//   }
+// }
 
 function deleteAnlysResult(resID){
       $.ajax({

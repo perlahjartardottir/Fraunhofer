@@ -148,7 +148,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       </div>
     </div>
       <div class='form-group row col-md-12'>
-      <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Submit</button>
+      <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add</button>
       </div>
   </form>";
    ?>
