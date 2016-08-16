@@ -61,6 +61,7 @@ echo"
         }
       }
     echo"
+      <th>File</th>
     </tr>
   </thead>
   <tbody>";
@@ -85,6 +86,12 @@ echo"
     WHERE employee_ID = '$resultRow[6]';";
     $employeeInitials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
 
+    $resID = $resultRow['resID'];
+    $anlysFilesSql = "SELECT anlys_res_file_ID, anlys_res_file
+    FROM anlys_res_file
+    WHERE anlys_res_ID = '$resID';";
+    $anlysFilesResult = mysqli_query($link, $anlysFilesSql);
+
       echo"
       <tr>
         <td><a onclick='loadAndShowAnlysResultModalEdit(".$resultRow['resID'].",".$eqPropID.")'>".$rowCounter."</a></td>
@@ -108,6 +115,22 @@ echo"
         }
       }
       echo"
+        <td>";
+      if(mysqli_num_rows($anlysFilesResult) > 0){
+        $fileCounter = 1;
+        while($fileRow = mysqli_fetch_row($anlysFilesResult)){
+          echo"
+          <a href='../DownloadPHP/downloadAnlysFile.php?id=".$fileRow[1]."'>".$fileCounter."</a> ";
+          $fileCounter++;
+
+        }
+      }
+      else{
+        echo"
+          No";
+      }
+      echo"
+      </td>
       </tr>";
     }
     echo"

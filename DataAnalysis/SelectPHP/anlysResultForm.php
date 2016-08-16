@@ -139,7 +139,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       <div class='col-md-2'>
         <textarea id='res_comment' name='res_comment' class='form-control custom_comment' value=''></textarea>
       </div>
-      <label class='col-md-2 col-form-label'>Files: (No functionality) </label>
+      <label class='col-md-2 col-form-label'>Files:</label>
       <div class='col-md-4'>
       <input type='file' id='anlys_file' name='anlys_file[]' multiple accept='media_type' style='display:none' onchange='handleFiles(this.files)''>
       <a href='#' id='file_select' class='btn btn-default btn-file'>Browse</a> 
@@ -218,14 +218,6 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
           for (var i = 0; i < files.length; i++) {
             var li = document.createElement("li");
             list.appendChild(li);
-
-            // var img = document.createElement("img");
-            // img.src = window.URL.createObjectURL(files[i]);
-            // img.height = 60;
-            // img.onload = function() {
-            //   window.URL.revokeObjectURL(this.src);
-            // }
-            // li.appendChild(img);
 
             var info = document.createElement("span");
             if(files[i].size > <?php echo $maxFileSize; ?>){

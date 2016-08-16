@@ -33,41 +33,25 @@ if($_FILES[$samplePicture]["name"]){
   if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES[$samplePicture]["tmp_name"]);
     if($check !== false) {
-        // echo "File is an image - " . $check["mime"] . ".";
       $uploadOk = 1;
     } else {
-        //echo "File is not an image.";
-      // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-      // "This file is not an image.</div>";
       $uploadOk = 0;
     }
   }
 
-// Check file size. Max size: 5 MB.
+// Check file size. 
   if ($_FILES[$samplePicture]["size"] > $maxPictureSize) {
-    //echo "Sorry, your file is too large.";
-    // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-    // "Sorry, your file is too large. The max size is: </div>";
-    $uploadOk = 0;
-  }
-// Allow certain file formats
-  if(!in_array($imageFileType, $pictureFormats)) {
-    //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-    // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-    // "Sorry, only JPG, JPEG, PNG & GIF files are allowed.</div>";
-    $uploadOk = 0;
-  }
-// Check if $uploadOk is set to 0 by an error
-  if ($uploadOk == 0) {
-    // echo "Sorry, your file was not uploaded.";
-    // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-    // "Sorry, your file was not uploaded.</div>";
 
-// if everything is ok, try to upload file
-  } else {
+    $uploadOk = 0;
+  }
+// Allow certain file formats.
+  if(!in_array($imageFileType, $pictureFormats)) {
+    $uploadOk = 0;
+  }
+// if everything is ok, try to upload file.
+  if ($uploadOk == 1) {
 	// This does replace an existing photo with same name.
     if (move_uploaded_file($_FILES[$samplePicture]["tmp_name"], $target_file)) {
-        // echo "The file ". basename( $_FILES[$samplePicture]["name"]). " has been uploaded.";
 
       $sql = "UPDATE sample
       SET sample_picture = '$target_file'
@@ -78,13 +62,8 @@ if($_FILES[$samplePicture]["name"]){
         die("Could not update sample picture: ".mysqli_error($link));
       }
 
-    } else {
-        // echo "Sorry, there was an error uploading your file.";
-     // $errorMessage .= "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-     // "Sorry, there was an error uploading your file.</div>";
-   }
- }
-
+    } 
+  }
 }
 
 ?>
