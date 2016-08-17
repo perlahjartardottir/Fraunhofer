@@ -30,22 +30,20 @@ while($_FILES[$file]["name"][$uploadCounter]){
 	// Build the path
 	$targetDir = "../../../Fraunhofer Uploads/Data Analysis/".date("Y")."/".date("m")."/".$sampleName."/";
 	// If the folder does not exist create it.
-	if (!file_exists($targer_dir)){
+	if (!file_exists($targetDir)){
 		mkdir($targetDir, 0777, true);
 	}
 	$temp = explode(".", $_FILES[$file]["name"][$uploadCounter]);
 	$newName = $sampleName."_".$eqName.".".end($temp);
 	$targetFile = $targetDir.$newName;
 
- 	// If this file already exists we don't want to overrite it, but rather add an extension to it's name e.g. fileName(1).pdf
+ 	// If this file already exists we don't want to overrite it, but rather add a counter to it's name.
+ 	// E.g. CCD-990710-99-01_NikonMicroscope_1.jpeg.
 	$fileCounter = 1;
-	$newPath = $targetFile;
-	while(file_exists($newPath)){
-		$newPieces = explode(".", $targetFile);
-		$frontpath = str_replace('.'.end($newPieces),'',$targetFile);
-		$newPath = $frontpath."(".$fileCounter.").".end($newPieces);
-		$targetFile = $newPath;
+	while(file_exists($targetFile)){
+		$targetFile = $targetDir.$sampleName."_".$eqName."_".$fileCounter.".".end($temp);
 		$fileCounter++;
+
 	}
 
 	if ($_FILES[$file]["size"][$uploadCounter] > $maxFileSize) {
@@ -60,7 +58,6 @@ while($_FILES[$file]["name"][$uploadCounter]){
 			if(!$result){
 				die("Could not insert anlys result file: ".mysqli_error($link));
 			}
-
 		}
 	}
 

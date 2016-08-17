@@ -1,5 +1,6 @@
 <?php
 include '../../connection.php';
+session_start();
 
 $sampleID = $_SESSION["sampleID"];
 $resID = mysqli_escape_string($link, $_POST["res_ID"]);
