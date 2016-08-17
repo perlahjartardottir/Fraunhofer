@@ -43,7 +43,7 @@ $sampleInfoResult = mysqli_query($link, $sampleInfoSql);
 $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 
 $anlysAverageSql = "SELECT r.anlys_eq_prop_ID as eqPropID, e.anlys_eq_ID as eqID, e.anlys_eq_name as eqName, p.anlys_prop_ID as propID,
-                    a.anlys_eq_prop_unit as unit, p.anlys_prop_name as propName, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_aveg as dispAveg, COUNT(r.anlys_res_ID) as numberOfResults, r.anlys_res_result as singleResult, a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit
+                    a.anlys_eq_prop_unit as unit, p.anlys_prop_name as propName, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_aveg as dispAveg, COUNT(r.anlys_res_ID) as numberOfResults, r.anlys_res_result as singleResult, a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit, anlys_res_ID as resID
 FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
 WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
 a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
@@ -95,8 +95,13 @@ WHERE sample_set_ID = '$sampleSetID';";
       }
       ?>
     </div>
-    <!-- Analysis -->
+    <!-- Process -->
     <div class='col-md-8'>
+      <h3 class='custom_heading'>Process</h3>
+  </div>
+  <div id='process_table' class='col-md-12'></div>
+    <!-- Analysis -->
+    <div class='col-md-12'>
       <h3 class='custom_heading'>Analysis</h3>
       <?
       $anlysResult = mysqli_query($link, $anlysAverageSql);
@@ -109,6 +114,7 @@ WHERE sample_set_ID = '$sampleSetID';";
         <th>Coating property</th>
         <th class='text-left'>Measurement</th>
         <th>Equipment</th>
+        <th>Files</th>
       </thead>
       <tbody>";
       $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
@@ -135,9 +141,6 @@ WHERE sample_set_ID = '$sampleSetID';";
               $roughnessRow = mysqli_fetch_array(mysqli_query($link, $roughnessSql));
               $ra = $roughnessRow[0];
               $rz = $roughnessRow[1];
-
-              // TO DO: UNITS!
-
               echo "Ra: ".$ra." ".$row['param1unit'].", Rz: ".$rz." ".$row['param2unit'];
             }
             else{
@@ -145,8 +148,31 @@ WHERE sample_set_ID = '$sampleSetID';";
             }
             echo"
             </a></td>
-            <td>".$row['eqName']."</td>
-          </tr>";
+            <td>".$row['eqName']."</td>";
+
+            $resID = $row['resID'];
+            $anlysFilesSql = "SELECT anlys_res_file_ID, anlys_res_file
+            FROM anlys_res_file
+            WHERE anlys_res_ID = '$resID';";
+            $anlysFilesResult = mysqli_query($link, $anlysFilesSql);
+            echo"
+              <td>";
+            if(mysqli_num_rows($anlysFilesResult) > 0){
+              $fileCounter = 1;
+              while($fileRow = mysqli_fetch_row($anlysFilesResult)){
+                echo"
+                <a href='../DownloadPHP/downloadAnlysFile.php?id=".$fileRow[1]."'>".$fileCounter."</a> ";
+                $fileCounter++;
+              }
+            }
+            else{
+              echo"
+                No";
+            }
+            echo"
+            </td>";
+            echo"  
+              </tr>";
         }
       
     echo"
@@ -159,11 +185,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     ?>
     </div>
     <div id='anlys_result_table' class='col-md-12'></div>
-    <!-- Process -->
-    <div class='col-md-8'>
-    <h3 class='custom_heading'>Process</h3>
-  </div>
-  <div id='process_table' class='col-md-12'></div>
+
 </div>
 </div>
 </div>

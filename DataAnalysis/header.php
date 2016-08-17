@@ -30,7 +30,7 @@ $_SESSION["pictureValidation"]["maxSize"] =  5000000;
 // What picture formats are accpeted.
 $_SESSION["pictureValidation"]["formats"] = ["jpg", "jpeg", "png", "gif", "bmp", "tif"];
 
-// How large a file can be. 5 MiB.
+// How large a file can be. 5 MB.
 $_SESSION["fileValidation"]["maxSize"] = 5000000;
 
 ?>
@@ -45,11 +45,12 @@ $_SESSION["fileValidation"]["maxSize"] = 5000000;
 <link href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script> <!-- For formating input date -->
-<script src='../js/app.js'></script>
+<script src='../dest/fraunhofer.min.js'></script>
+<!-- <script src='../js/app.js'></script>
 <script src='../js/sample.js'></script>
 <script src='../js/analysis.js'></script>
 <script src='../js/process.js'></script>
-<script src='../js/bootstrap.js'></script>
+<script src='../js/bootstrap.js'></script> -->
 <!-- Toolbar -->
 <div class="navbar navbar-default collapse navbar-collapse navHeaderCollapse navbar-static-top">
   <div class="container">

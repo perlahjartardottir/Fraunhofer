@@ -99,13 +99,6 @@ function editPrcs(prcsID, form){
   rotation = $(form).find('#prcs_rotation').val();
   comment = $(form).find('#prcs_comment').val();
 
-  console.log(coating);
-  console.log(equipment);
-  console.log(position);
-  console.log(rotation);
-  console.log(comment);
-
-
   if(coating === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+coating+".</div>";
   }

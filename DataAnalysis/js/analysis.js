@@ -112,6 +112,21 @@ function deleteAnalysisEquipment(eqID){
     }
   }
 
+  
+function deleteAnlysResult(resID){
+      $.ajax({
+      url: "../DeletePHP/deleteAnlysResult.php",
+      type: "POST",
+      data: {
+        resID : resID
+      },
+      success: function(data, status, xhr){
+        console.log(data);
+        window.location.reload(true);
+      }
+    });
+}
+
   function showSampleInfo(){
    sampleID = $("#sample_ID").val();
 
@@ -146,68 +161,6 @@ function deleteAnalysisEquipment(eqID){
  });
  }
 
-//  function addAnlysResult(sampleID, eqPropID, form){
-//   errorMessage = "";
-//   employee = "";
-//   date = "";
-//   result = "";
-//   propertyName = "";
-//   comment = "";
-//   params = [];
-
-//   if(sampleID == "-1"){
-//     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
-//   }
-//   console.log(errorMessage);
-
-//   if($(form).find('#property_name')[0]){
-//       propertyName = $(form).find('#property_name')[0].innerText;
-//       propertyName = propertyName.substring(0, (propertyName.length - 1));
-//       result = $(form).find('#res_res').val();
-//       if(result === ""){
-//         errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propertyName+".</div>";
-//       }
-//   }
-
-//   comment = $(form).find('#res_comment').val();
-//   date = $(form).find('#res_date').val();
-//   employee = $(form).find('#employee_initials').val();
-
-//   if(form.elements.res_param){
-//     for (i = 0; i < form.elements.res_param.length; i++){
-//       params.push(form.elements.res_param[i].value);
-//     }
-//   }
-
-//   // var formData = new FormData();
-//   // formData.append('file', $(form).find('#anlys_res_file')[0].files[0]);
-//   // console.log(formData);
-
-//   if(errorMessage){
-//     $(form).find("#error_message").html(errorMessage);
-//   }  else{
-//     $.ajax({
-//       url: "../InsertPHP/addAnlysResult.php",
-//       type: "POST",
-//       data: {
-//         sampleID : sampleID,
-//         eqPropID : eqPropID,
-//         result : result,
-//         comment : comment,
-//         date : date,
-//         params : params,
-//         employee : employee
-//       },
-//       success: function(data,status, xhr){
-//        console.log(data);
-//        //displayAnlysResultTable(sampleID, eqPropID);
-//        window.location.reload();
-//      }
-//    });
-//   }
-// }
-
-
  function anlysResultValidation(sampleID, eqPropID, form){
   errorMessage = "";
   result = "";
@@ -229,12 +182,9 @@ function deleteAnalysisEquipment(eqID){
 
   if(errorMessage){
     $(form).find("#error_message").html(errorMessage);
-    console.log("form validation false");
     return false;
   }
-  console.log("form validation true");
-  return true;
-  
+  return true; 
 }
 
 function displayAnlysResultTable(sampleID, eqPropID){
@@ -275,61 +225,4 @@ function loadAnlysResultModalEdit(resID, eqPropID){
       
     }
   });
-}
-
-// function editAnlysResult(resID, form){
-//   var errorMessage = "";
-//   var result = "";
-//   var paramRes1 = "";
-//   var paramRes2 = "";
-//   var paramRes3 = "";
-//   var comment = "";
-//   var propName = "";
-  
-//   result = $(form).find("#anlys_res_result").val();
-//   paramRes1 = $(form).find("#anlys_res_param_1").val();
-//   paramRes2 = $(form).find("#anlys_res_param_2").val();
-//   paramRes3 = $(form).find("#anlys_res_param_3").val();
-//   comment = $(form).find("#anlys_res_comment").val();
-//   propName = $(form).find("#anlys_res_prop_name").text();
-  
-//   // If we are using the anlys_result field it cannot be left empty.
-//   if(result === ""){
-//     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+propName+".</div>";
-//   }
-
-//   if(errorMessage){
-//     $(form).find("#error_message_edit").html(errorMessage);
-//   }  else{
-//     $.ajax({
-//       url: "../UpdatePHP/editAnlysResult.php",
-//       type: "POST",
-//       data: {
-//         resID : resID,
-//         result : result,
-//         paramRes1 : paramRes1,
-//         paramRes2 : paramRes2,
-//         paramRes3 : paramRes3,
-//         comment : comment
-//       },
-//       success: function(data, status, xhr){
-//         console.log(data);
-//         window.location.reload(true);
-//       }
-//     });
-//   }
-// }
-
-function deleteAnlysResult(resID){
-      $.ajax({
-      url: "../DeletePHP/deleteAnlysResult.php",
-      type: "POST",
-      data: {
-        resID : resID
-      },
-      success: function(data, status, xhr){
-        console.log(data);
-        window.location.reload(true);
-      }
-    });
 }
