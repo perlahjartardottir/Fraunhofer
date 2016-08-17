@@ -78,7 +78,7 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
               echo "<option value='".$row[0]."'>".$row[1]."</option>";
             }
       echo"
-          <option value='0'>No Coating</option>
+          <option>No Coating</option>
        </select>
       </div>
     </div>

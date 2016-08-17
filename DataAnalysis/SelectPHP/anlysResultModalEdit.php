@@ -66,13 +66,13 @@ echo"
                     <option value='".$row[0]."'>".$row[1]."</option>";
                 }
               }
-        if($resultRow['prcsID'] == 0){
+        if($resultRow['prcsID'] == NULL){
         echo"
-            <option value='' selected>No Coating</option>";
+            <option selected>No Coating</option>";
         }
         else{
           echo"
-            <option value=''>No Coating</option>";
+            <option>No Coating</option>";
         }
         echo"
          </select>

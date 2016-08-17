@@ -109,7 +109,7 @@ WHERE sample_set_ID = '$sampleSetID';";
       echo"
       <table class='table table-responsive'>
       <thead>
-        <th>Coating (Not ready)</th>
+        <th>Coating</th>
         <th>Coating property</th>
         <th class='text-left'>Measurement</th>
         <th>Equipment</th>
@@ -118,9 +118,23 @@ WHERE sample_set_ID = '$sampleSetID';";
       <tbody>";
       $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
       while($row = mysqli_fetch_array($anlysAverageResult)){
+        $resID = $row['resID'];
         echo"
-          <tr>
-            <td>Coating</td>
+          <tr>";
+          if($row['coating'] == NULL){
+            echo"
+            <td>No coating</td>";
+          }
+          else{
+            $coatingSql = "SELECT prcs_coating
+            FROM process p, anlys_result r
+            WHERE p.prcs_ID = r.prcs_ID AND r.anlys_res_ID = '$resID';";
+            $coating = mysqli_fetch_row(mysqli_query($link, $coatingsSql))[0];
+
+            echo"
+              <td>".$coating."</td>";
+          }
+          echo"
             <td>".$row['propName']."</td>
             <td><a onclick='displayAnlysResultTable(".$sampleID.",".$row[0].")'>";
             // If this eqprop should display avegs and the aveg is not 0.
@@ -149,7 +163,6 @@ WHERE sample_set_ID = '$sampleSetID';";
             </a></td>
             <td>".$row['eqName']."</td>";
 
-            $resID = $row['resID'];
             $anlysFilesSql = "SELECT anlys_res_file_ID, anlys_res_file
             FROM anlys_res_file
             WHERE anlys_res_ID = '$resID';";
