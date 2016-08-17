@@ -4,18 +4,22 @@ include '../../connection.php';
 session_start();
 
 $prcsID = mysqli_real_escape_string($link, $_POST["prcsID"]);
-
+$sampleID = $_SESSION["sampleID"];
 $sql = "SELECT prcs_coating as coating, prcs_eq_ID as equipment, prcs_position as position, prcs_rotation as rotation,
 		prcs_comment as comment, prcs_date as date
 FROM process
 WHERE prcs_ID = '$prcsID';";
 $row = mysqli_fetch_array(mysqli_query($link, $sql));
 
-$prcsEquipementSql = "SELECT prcs_eq_ID, prcs_eq_name, prcs_eq_acronym
+$prcsEquipementSql = "SELECT prcs_eq_ID as eqID, prcs_eq_name as eqName, prcs_eq_acronym
 FROM prcs_equipment
 WHERE prcs_eq_active = TRUE;";
 $prcsEquipementResult = mysqli_query($link, $prcsEquipementSql);
 
+$sampleNameSql = "SELECT sample_name
+FROM sample
+WHERE sample_ID = '$sampleID';";
+$sampleName = mysqli_fetch_row(mysqli_query($link, $sampleNameSql))[0];
 
 echo"
 <div class='modal-dialog'>
@@ -25,8 +29,7 @@ echo"
         <div class='col-md-12'>
           <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
         </div>
-        <h3 class='center_heading'>Process(Not ready)</h3>
-        <h4 class='center_heading'>".$row['date']."</h4>
+        <h3 class='center_heading'>".$sampleName."</h3>
       </div>
       <div class='modal-body'>
         <div id='error_message_edit'></div>

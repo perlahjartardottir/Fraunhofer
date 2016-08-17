@@ -24,6 +24,11 @@ FROM anlys_res_file
 WHERE anlys_res_ID = '$resID';";
 $anlysFilesResult = mysqli_query($link, $anlysFilesSql);
 
+$sampleNameSql = "SELECT sample_name
+FROM sample
+WHERE sample_ID = '$sampleID';";
+$sampleName = mysqli_fetch_row(mysqli_query($link, $sampleNameSql))[0];
+
 echo"
 <div class='modal-dialog'>
   <div class='modal-content '>
@@ -33,6 +38,7 @@ echo"
           <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
         </div>
         <h3 class='center_heading'>".$propertyRow['propName']." - ".$propertyRow['eqName']."</h3>
+        <h5 class='center_heading'>".$sampleName."</h5>
       </div>
       <div class='modal-body'>
         <div id='error_message_edit'></div>

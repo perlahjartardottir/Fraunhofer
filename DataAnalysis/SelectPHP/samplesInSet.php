@@ -4,7 +4,7 @@ session_start();
 
 $sampleSetID = mysqli_real_escape_string($link, $_POST['sampleSetID']);
 $_SESSION["sampleSetID"] = $sampleSetID;
-
+$sampleID = $_SESSION["sampleID"];
 
 $sql = "SELECT sample_ID, sample_name, sample_material, sample_comment, sample_picture
 FROM sample

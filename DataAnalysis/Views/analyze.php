@@ -1,7 +1,7 @@
 <?php
 include '../../connection.php';
 session_start();
-
+$_SESSION["direct"]["redirect"] = "analyze";
 $securityLevel = $_SESSION["securityLevelDA"];
 
 // If the user security level is not high enough we kill the page and give him a link to the log in page.
@@ -164,7 +164,6 @@ WHERE sample_set_ID = '$sampleSetID';";
 </div>
 <script>
 
-
   $(document).ready(function(){
 
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
@@ -212,12 +211,6 @@ WHERE sample_set_ID = '$sampleSetID';";
       }
     }
 
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
 
 
   </script>

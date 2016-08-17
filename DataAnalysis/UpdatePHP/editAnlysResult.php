@@ -12,13 +12,8 @@ $paramRes3 = mysqli_real_escape_string($link, $_POST["res_param_3_edit"]);
 $comment = mysqli_escape_string($link, $_POST["comment_edit"]);
 // For anlysFile.php.
 $action = "edit";
-// For deleteAnlysFile.php.
-// $fileIDs = [];
-// $itemCounter = 0;
-// while($_POST["file_ID_delete"][$fileCounter]){
-// 	array_push($_POST["file_ID_delete"][$itemCounter], $fileIDs);
-// 	$itemCounter++;
-// }
+// For redirecting.
+$redirect = $_SESSION["direct"]["redirect"];
 
 $sql = "UPDATE anlys_result SET anlys_res_result = '$result', anlys_res_comment  = '$comment', anlys_res_1 = '$paramRes1',
 anlys_res_2 = '$paramRes2', anlys_res_3 = '$paramRes3'
@@ -47,6 +42,14 @@ include '../InsertPHP/anlysFile.php';
 mysqli_close($link);
 
 // There can be no echo before this call, otherwise the redirect will not work. 
-header('Location: ../Views/analyze.php');
+if($redirect === "analyze"){
+	header("Location: ../Views/analyze.php");
+}
+else if($redirect == "sampleOverview"){
+	header("Location: ../Views/sampleOverview.php");
+}
+else{
+	header("Location: ../Views/dataAnalysis.php");	
+}
 
 ?>
