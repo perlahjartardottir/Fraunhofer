@@ -12,6 +12,7 @@ $maxFileSize = $_SESSION["fileValidation"]["maxSize"];
 $noPropResult = [];
 $propsWithAnlysResults = [];
 
+// Don't display the form unless user has chosen equipment.
 if($propID !== "-1" && $eqID !== "-1"){
 
   $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
@@ -22,7 +23,7 @@ if($propID !== "-1" && $eqID !== "-1"){
   $propertyRow = mysqli_fetch_array($propertyResult);
   $eqPropID = $propertyRow[0];
 
-  $resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3
+  $resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3, prcs_ID as prcsID
   FROM anlys_result
   WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
   ORDER BY anlys_res_ID;";
@@ -59,11 +60,28 @@ $userIDSql = "SELECT employee_ID
            WHERE employee_name = '$user'";
 $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
+$coatingsSql = "SELECT p.prcs_ID, p.prcs_coating
+FROM process p
+WHERE p.sample_ID = '$sampleID'
+ORDER BY p.prcs_ID DESC;";
+$coatingsResult = mysqli_query($link, $coatingsSql);
 
 // The result form.
   echo"
   <form class='col-md-12' role='form' action='../InsertPHP/addAnlysResult.php' method='post' enctype='multipart/form-data' onsubmit='return anlysResultValidation(".$sampleID.",".$eqPropID.",this)'>
   <div id='error_message'></div>
+    <div class='form-group row'>
+       <label class='col-md-2 col-form-label'>Layer of coating:</label>
+      <div class='col-md-2'>
+        <select id='coating' name='coating' class='form-control'>";
+            while($row = mysqli_fetch_row($coatingsResult)){
+              echo "<option value='".$row[0]."'>".$row[1]."</option>";
+            }
+      echo"
+          <option value='0'>No Coating</option>
+       </select>
+      </div>
+    </div>
     <div class='form-group row'>
       <input type='hidden' id='eq_prop_ID' name='eq_prop_ID' value=".$eqPropID.">
       <label class='col-md-2 col-form-label'>Date:</label>
@@ -73,9 +91,9 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       <label class='col-md-2 col-form-label'>Employee:</label>
       <div class='col-md-2'>
         <select id='employee_initials' name='employee_initials' class='form-control'>";
-            while($row = mysqli_fetch_row($employeeInitialsResult)){
-              echo "<option value='".$row[0]."'>".$row[2]."</option>";
-            }
+          while($row = mysqli_fetch_row($employeeInitialsResult)){
+            echo "<option value='".$row[0]."'>".$row[2]."</option>";
+          }
       echo"
        </select>
       </div>

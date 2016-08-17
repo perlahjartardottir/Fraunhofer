@@ -148,13 +148,13 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
           <div class='col-md-2'>
             <textarea  id='prcs_comment' name='prcs_comment' class='form-control custom_comment' value=''></textarea>
           </div>
-          <label class='col-md-2 col-form-label'>File: (No functionality) </label>
+          <!-- <label class='col-md-2 col-form-label'>File: (No functionality) </label>
           <div class='col-md-4'>
             <label class='btn btn-default btn-file'>Browse...
               <input type='file' id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$("#sample_file_path").html(getFileName($(this).val()));'>
             </label>
             <span id='sample_file_path' class='table_style_text'></span>
-          </div>
+          </div> -->
         </div>
         <div class='form-group row'>
           <button type='button' class='btn btn-primary col-md-2' onclick='addProcess("<? echo $sampleID; ?>",this.form)' style='float:right;'>Add</button>
