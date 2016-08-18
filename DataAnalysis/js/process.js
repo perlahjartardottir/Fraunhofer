@@ -55,8 +55,6 @@ function displayProcessTable(sampleID){
     $("#process_table").html("");
   }
   else{
-
-  console.log("sampleID: "+sampleID);
   
   $.ajax({
     url: "../SelectPHP/processTable.php",

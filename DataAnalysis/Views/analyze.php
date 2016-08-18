@@ -54,14 +54,6 @@ $sampleSetNameSql = "SELECT sample_set_name
 FROM sample_set
 WHERE sample_set_ID = '$sampleSetID';";
 
-// $eqWithAnlysResultsSql = "SELECT DISTINCT(CONCAT(a.anlys_eq_ID, a.anlys_prop_ID))
-// FROM anlys_result r, sample s, anlys_eq_prop a
-// WHERE r.sample_ID = s.sample_ID AND r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$sampleID';";
-// $eqWithAnlysResultsResult = mysqli_query($link, $eqWithAnlysResultsSql);
-// while ($row = mysqli_fetch_row($eqWithAnlysResultsResult)){
-//     array_push($eqWithAnlysResults, $row[0]);
-// }
-
 ?>
 
 <head>
@@ -169,17 +161,17 @@ WHERE sample_set_ID = '$sampleSetID';";
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
 
     $("#nav_analyze").button('toggle');
-    // Color the equipment link that is chosen.
-    $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
+    // Underline the equipment link that is chosen.
+    // $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
     $("#<?php echo $eqID.$propID; ?>").css("text-decoration", "underline");
 
   })
 
-    // Color the equipment the user chose. 
+    // Udnerline the equipment the user chose. 
     $("td a").click(function () { 
-      $("td a").css("color", bootstrapBlue);
+      // $("td a").css("color", bootstrapBlue);
       $("td a").css("text-decoration", "none");
-      $(this).css("color", bootstrapPurple);
+      // $(this).css("color", bootstrapPurple);
       $(this).css("text-decoration", "underline");
 
     });

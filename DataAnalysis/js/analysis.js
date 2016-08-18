@@ -173,14 +173,16 @@ function showAnlysResultForm(propID, eqID, sampleID, form){
 
 function displayAnlysResultTable(sampleID, eqPropID, prcsID, elem){
   
+  console.log("sample: "+sampleID);
+  console.log("eqProp: "+eqPropID);
+  console.log("prcsID: "+prcsID);
+
   // If the anlys result table is already being dislayed, hide it. 
-  if($('#anlys_result_table').find('#eqPropID_hidden').val() == eqPropID &&
-        $('#anlys_result_table').find('#prcsID_hidden').val() == prcsID) {
+  if($('#anlys_result_table').find('#eqPropID_hidden').val() == eqPropID && $('#anlys_result_table').find('#prcsID_hidden').val() == prcsID) {
     $("#anlys_result_table").html("");
     $(elem).removeClass("bg-info");
   }
   else{
-
     if(elem){
       // Remove the coloring of previously chosen row.
       $("tr").removeClass("bg-info");

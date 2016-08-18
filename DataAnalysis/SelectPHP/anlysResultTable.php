@@ -158,10 +158,18 @@ echo"
 
 // Average calculations displayed below table. 
 if($propertyRow['dispAveg']){
-  $avegSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
+  if($prcsID === '-1'){
+    $avegSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
     FROM anlys_result
-    WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID'
-    GROUP BY anlys_eq_prop_ID;";
+    WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID' AND prcs_ID IS NULL
+    GROUP BY anlys_eq_prop_ID, prcs_ID;";
+  }
+  else{
+    $avegSql = "SELECT TRUNCATE(AVG(anlys_res_result), 3)
+    FROM anlys_result
+    WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID' AND prcs_ID = '$prcsID'
+    GROUP BY anlys_eq_prop_ID, prcs_ID;";
+  }
     $avegResult = mysqli_fetch_row(mysqli_query($link, $avegSql))[0];
 
     echo"
