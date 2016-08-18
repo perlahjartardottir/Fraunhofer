@@ -9,8 +9,8 @@ $result = mysqli_real_escape_string($link, $_POST["res_res_edit"]);
 $paramRes1 = mysqli_real_escape_string($link, $_POST["res_param_1_edit"]);
 $paramRes2 = mysqli_real_escape_string($link, $_POST["res_param_2_edit"]);
 $paramRes3 = mysqli_real_escape_string($link, $_POST["res_param_3_edit"]);
-$comment = mysqli_escape_string($link, $_POST["comment_edit"]);
-$process = mysqli_escape_string($link, $_POST["coating"]);
+$comment = mysqli_escape_string($link, $_POST["res_comment_edit"]);
+$process = mysqli_escape_string($link, $_POST["res_coating_edit"]);
 
 // For anlysFile.php.
 $action = "edit";

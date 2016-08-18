@@ -18,10 +18,10 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
 <caption></caption>
   <thead>
     <tr>
-     <th>#</th>
+      <th></th>
+      <th>Coating</th>
       <th>Date</th>
       <th>Employee</th>
-      <th>Coating</th>
       <th>Equipment</th>
       <th>Position</th>
       <th>Rotation</th>
@@ -49,13 +49,13 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
     FROM employee
     WHERE employee_ID = $row[employee];";
     $employeeInitials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
-
+    // <td><a onclick='loadAndShowPrcsModalEdit(".$row['prcsID'].")'>".$row['coating']."</a></td>
       echo"
       <tr>
-      <td><a onclick='loadAndShowPrcsModalEdit(".$row['prcsID'].")'>".$rowCounter."</a></td>
+        <td><a class='glyphicon glyphicon-edit' onclick='loadAndShowPrcsModalEdit(".$row['prcsID'].")'></a></td>
+        <td>".$row['coating']."</td>
         <td>".$row['date']."</td>
         <td>".$employeeInitials."</td>
-        <td>".$row['coating']."</td>
         <td>".$row['eqAcronym']."</td>
         <td>".$row['position']."</td>
         <td>".$row['rotation']."</td>

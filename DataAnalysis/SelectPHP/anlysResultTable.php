@@ -4,33 +4,55 @@ session_start();
 
 $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 $eqPropID = mysqli_real_escape_string($link, $_POST["eqPropID"]);
-$rowCounter = 0;
+$prcsID = mysqli_real_escape_string($link, $_POST["prcsID"]);
+$coatingName = "";
+
 
 $propertySql = "SELECT a.anlys_eq_prop_ID as eqPropID, p.anlys_prop_name as propName, e.anlys_eq_name as eqName, a.anlys_param_1 as param1, a.anlys_param_2 as param2, a.anlys_param_3 as param3, a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit, a.anlys_eq_prop_unit as unit, a.anlys_prop_ID as propID, a.anlys_aveg as dispAveg
 FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
 WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
-AND a.anlys_eq_prop_ID = '$eqPropID';";
+      AND a.anlys_eq_prop_ID = '$eqPropID';";
 $propertyResult = mysqli_query($link, $propertySql);
 $propertyRow = mysqli_fetch_array($propertyResult);
 
-$resultsSql = "SELECT anlys_res_result as result, anlys_res_date as date, anlys_res_comment as comment, anlys_res_1, anlys_res_2, anlys_res_3, employee_ID as employee, anlys_res_ID as resID
-FROM anlys_result
-WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$eqPropID'
-ORDER BY anlys_res_ID;";
+// Cannot send null with function to javascript,  therefor -1.
+if($prcsID === '-1'){
+   $resultsSql = "SELECT anlys_res_result as result, anlys_res_date as date, anlys_res_comment as comment, anlys_res_1, anlys_res_2, anlys_res_3, employee_ID as employee, anlys_res_ID as resID, prcs_ID as prcsID
+  FROM anlys_result
+  WHERE anlys_eq_prop_ID = '$eqPropID' AND sample_ID = '$sampleID' AND prcs_ID IS NULL
+  ORDER BY anlys_res_ID;";
+
+  $coatingName = "sample without coating";
+}
+else{
+  $resultsSql = "SELECT anlys_res_result as result, anlys_res_date as date, anlys_res_comment as comment, anlys_res_1, anlys_res_2, anlys_res_3, employee_ID as employee, anlys_res_ID as resID
+  FROM anlys_result
+  WHERE anlys_eq_prop_ID = '$eqPropID' AND sample_ID = '$sampleID' AND prcs_ID = '$prcsID'
+  ORDER BY anlys_res_ID;";
+
+  $coatingNameSql = "SELECT prcs_coating
+  FROM process
+  WHERE prcs_ID = '$prcsID';";
+  $coatingName = mysqli_fetch_row(mysqli_query($link, $coatingNameSql))[0];
+}
 $resultsResult = mysqli_query($link, $resultsSql);
+
+
+
 
 echo"
 
 <!-- For displayAnlysResultTable to know what div is being displayed -->
 <input type='hidden' id='eqPropID_hidden' value='".$eqPropID."'>
+<input type='hidden' id='prcsID_hidden' value='".$prcsID."'>
 
 <div class='col-md-12'>
 </div>
 <table class='table table-responsive'>
-<caption>Analysis results for: ".$propertyRow['propName']."</caption>
+<caption>Analysis results for ".strtolower($propertyRow['propName'])." of ".$coatingName." measured with ".$propertyRow['eqName']."</caption>
   <thead>
     <tr>
-      <th>#</th>
+      <th></th>
       <th>Date</th>
       <th>Employee</th>";
       // Only display anlys_res_result if we should calc average or if it has units e.g. adhesion.
@@ -44,8 +66,6 @@ echo"
       echo"
       </th>";
       }
-
-
       echo"
       <th>Comment</th>";
       for($i = 3; $i < 6; $i++){
@@ -67,8 +87,6 @@ echo"
   <tbody>";
 
     while($resultRow = mysqli_fetch_array($resultsResult)){
-
-    $rowCounter++;
 
     $employeeInitialsSql = "SELECT 
       CONCAT_WS('',
@@ -94,7 +112,7 @@ echo"
 
       echo"
       <tr>
-        <td><a onclick='loadAndShowAnlysResultModalEdit(".$resultRow['resID'].",".$eqPropID.")'>".$rowCounter."</a></td>
+        <td><a class='glyphicon glyphicon-edit' onclick='loadAndShowAnlysResultModalEdit(".$resultRow['resID'].",".$eqPropID.")'></a></td>
         <td>".$resultRow[1]."</td>
         <td>".$employeeInitials."</td>";
       if($propertyRow[dispAveg] || $propertyRow['unit']){

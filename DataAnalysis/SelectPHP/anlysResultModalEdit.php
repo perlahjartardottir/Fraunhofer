@@ -53,7 +53,7 @@ echo"
          <input type='hidden' id='eq_prop_ID' name='eq_prop_ID' value=".$eqPropID.">
         <div class='form-group'>
         <label>Layer of coating:</label>
-          <select id='coating' name='coating' class='form-control'>";
+          <select id='coating' name='res_coating_edit' class='form-control'>";
               while($row = mysqli_fetch_row($coatingsResult)){
                 if($row[0] == $resultRow['prcsID']){
                   echo "

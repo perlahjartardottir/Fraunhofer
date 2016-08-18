@@ -13,7 +13,7 @@
     margin: 20px 0px;
     /*text-align: center;*/
 }
-h2[id="sample_overview_heading"]{
+#sample_overview_heading{
     margin-bottom: 50px;
 }
 
@@ -28,12 +28,17 @@ h2[id="sample_overview_heading"]{
     width: 75px;
 }
 
-#front_table.table-borderless tbody tr td, #all_anlys_eq_table.table-borderless tbody tr td{
+#front_table.table-borderless tbody tr td, #all_anlys_eq_table.table-borderless tbody tr td, #anlys_overview_table tbody tr td{
     border: none;
 }
 
 #front_table.table, #all_anlys_eq_table.table{
     margin-bottom: 40px;
+}
+
+#anlys_overview_table.table-hover > tbody > tr:hover {
+  background-color: #D2D2D2;
+/*  background-color: #D9EDF7;*/
 }
 
 /* anlysResultForm.php */
