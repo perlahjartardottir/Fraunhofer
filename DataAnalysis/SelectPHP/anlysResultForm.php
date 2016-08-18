@@ -11,6 +11,10 @@ $eqPropID = "-1";
 $maxFileSize = $_SESSION["fileValidation"]["maxSize"];
 $noPropResult = [];
 $propsWithAnlysResults = [];
+$prcsID = $_SESSION["prcsID"];
+if(!$prcsID){
+  $prcsID = -1;
+}
 
 // Don't display the form unless user has chosen equipment.
 if($propID !== "-1" && $eqID !== "-1"){
@@ -73,12 +77,12 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
     <div class='form-group row'>
        <label class='col-md-2 col-form-label'>Layer of coating:</label>
       <div class='col-md-2'>
-        <select id='coating' name='coating' class='form-control'>";
+        <select id='coating' name='coating' class='form-control' onchange='setPrcsIDAndRefresh()'>";
             while($row = mysqli_fetch_row($coatingsResult)){
               echo "<option value='".$row[0]."'>".$row[1]."</option>";
             }
       echo"
-          <option>No Coating</option>
+          <option value='-1'>No Coating</option>
        </select>
       </div>
     </div>
@@ -181,17 +185,19 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
 <script>
 
   $(document).ready(function(){
-    displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
+    displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>, <?php echo $prcsID; ?>);
 })
+        // Make the combo box select the currently chosen sample set.
+    $("#coating").val(<?php echo $prcsID; ?>)
 
     // Format the date input.
-    $('#res_date').on('change', function() {
+    $("#res_date").on("change", function(){
       this.setAttribute(
         'data-date',
         moment(this.value, 'YYYY-MM-DD')
         .format( this.getAttribute('data-date-format'))
         )
-    }).trigger('change')
+    }).trigger("change")
 
       // When user clicks res_res field when using thickness & Calotte Grinder calculate the thickness. 
       function calcCGThickness(){

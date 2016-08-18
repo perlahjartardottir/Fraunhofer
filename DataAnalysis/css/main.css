@@ -7,8 +7,6 @@
     margin-top: 10px;
 }
 
-
-
 .custom_heading{
     margin: 20px 0px;
     /*text-align: center;*/
@@ -36,12 +34,13 @@
     margin-bottom: 40px;
 }
 
+/* ANLYS OVERVIEW TABLE */
 #anlys_overview_table.table-hover > tbody > tr:hover {
   background-color: #D2D2D2;
 /*  background-color: #D9EDF7;*/
 }
 
-/* anlysResultForm.php */
+/* ANLYS RESULT FROM */
 input[type=number]{
     width: 155px;
 } 
@@ -78,7 +77,7 @@ ul
     color: #5CB85C;
 }
 
-/*Analyze.php: make average style same as in table.*/
+/* ANALYZE */
 .table_style_text{
 
     font-size: medium;
@@ -102,6 +101,7 @@ ul
     padding-left: 0px;
 }
 
+/* ANLYS EQUIPMENT */
 /* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */
 .custom_date input[name = prop_name], .custom_date input[name = prop_unit]{
     height: 34px;
@@ -118,6 +118,7 @@ ul
 
 }
 
+/* ADD SAMPLE & ANALYZE*/
 /* addSample.php & analyze.php: To change the format of the date field */
 /* Based on: http://stackoverflow.com/a/31162426 */
 .custom_date input {

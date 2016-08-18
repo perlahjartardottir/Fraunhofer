@@ -105,7 +105,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div>
     <div id='analysis_overview_table'></div>
 <?
-  include '../SelectPHP/anlysOverviewTable.php';a
+  include '../SelectPHP/anlysOverviewTable.php';
 ?>
 
 </div>

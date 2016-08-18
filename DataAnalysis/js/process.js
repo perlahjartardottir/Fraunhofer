@@ -138,3 +138,18 @@ function deletePrcs(prcsID){
     }
   });
 }
+
+function setPrcsIDAndRefresh(){
+  prcsID = $("#coating").val();
+  console.log("settings prcsID: "+prcsID);
+  $.ajax({
+    url: "../UpdatePHP/setPrcsID.php",
+    type: "POST",
+    data: {
+      prcsID : prcsID
+    },
+    success: function(data,status, xhr){
+      window.location.reload(true);
+    }
+  });
+}

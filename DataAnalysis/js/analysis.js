@@ -181,10 +181,12 @@ function displayAnlysResultTable(sampleID, eqPropID, prcsID, elem){
   }
   else{
 
-  // Remove the coloring of previously chosen row.
-  $("tr").removeClass("bg-info");
-  // Add color to chosen row.
-  $(elem).addClass("bg-info");
+    if(elem){
+      // Remove the coloring of previously chosen row.
+      $("tr").removeClass("bg-info");
+      // Add color to chosen row.
+      $(elem).addClass("bg-info");
+    }
 
   $.ajax({
     url: "../SelectPHP/anlysResultTable.php",

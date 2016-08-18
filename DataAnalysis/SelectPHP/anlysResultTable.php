@@ -15,14 +15,14 @@ WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
 $propertyResult = mysqli_query($link, $propertySql);
 $propertyRow = mysqli_fetch_array($propertyResult);
 
-// Cannot send null with function to javascript,  therefor -1.
+// From anlysOverviewTable: Cannot send null with function to javascript,  therefor -1.
 if($prcsID === '-1'){
    $resultsSql = "SELECT anlys_res_result as result, anlys_res_date as date, anlys_res_comment as comment, anlys_res_1, anlys_res_2, anlys_res_3, employee_ID as employee, anlys_res_ID as resID, prcs_ID as prcsID
   FROM anlys_result
   WHERE anlys_eq_prop_ID = '$eqPropID' AND sample_ID = '$sampleID' AND prcs_ID IS NULL
   ORDER BY anlys_res_ID;";
 
-  $coatingName = "sample without coating";
+  $coatingName = "No coating";
 }
 else{
   $resultsSql = "SELECT anlys_res_result as result, anlys_res_date as date, anlys_res_comment as comment, anlys_res_1, anlys_res_2, anlys_res_3, employee_ID as employee, anlys_res_ID as resID
@@ -49,7 +49,7 @@ echo"
 <div class='col-md-12'>
 </div>
 <table class='table table-responsive'>
-<caption>Analysis results for ".strtolower($propertyRow['propName'])." of ".$coatingName." measured with ".$propertyRow['eqName']."</caption>
+<caption>Results for: ".$coatingName." - ".$propertyRow['propName']." - ".$propertyRow['eqName']."</caption>
   <thead>
     <tr>
       <th></th>
