@@ -4,7 +4,6 @@
 }
 
 .username{
-	margin-top:15px;
-	padding-left:10px;
-	color:black;
+    font-weight: bold;
+    margin-left: 5px;
 }
