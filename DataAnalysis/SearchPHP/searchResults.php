@@ -5,7 +5,7 @@ $sampleName = mysqli_escape_string($link, $_POST["sampleName"]);
 $beginDate = mysqli_real_escape_string($link, $_POST["beginDate"]);
 $endDate = mysqli_real_escape_string($link, $_POST["endDate"]);
 $minThickness = mysqli_real_escape_string($link, $_POST["minThickness"]);
-$maxThickness = mysqli_real_escape_string($link, $_POST["endThickness"]);
+$maxThickness = mysqli_real_escape_string($link, $_POST["maxThickness"]);
 
 $sampleName = "%".$sampleName."%";
 
@@ -42,13 +42,14 @@ WHERE s.sample_ID = r.sample_ID AND r.anlys_res_result <= '$maxThickness' AND an
                                     WHERE anlys_prop_name LIKE 'Thickness')))";
 }
 
-$sql .= "ORDER BY s.sample_ID DESC;";
+$sql .= "
+ORDER BY s.sample_ID DESC;";
 $result = mysqli_query($link, $sql);
 
 
 
 ?>
-<table class='table table-responsive table-condensed'>
+<table class='table table-responsive table-striped'>
     <thead>
     	<tr>
       		<th>Sample</th>
@@ -64,22 +65,22 @@ $result = mysqli_query($link, $sql);
     			<td><a onclick='loadAndShowSampleModal(".$row[2].",".$row[0].")'>".$row[1]."</a></td>
     			<td>Coating</td>";
       // Get the thickness of the sample. 
-    	$thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3)
-              FROM anlys_result r
-              WHERE r.sample_ID = '$row[0]' AND anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
+    	$thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3), a.anlys_eq_prop_unit
+              FROM anlys_result r, anlys_eq_prop a
+              WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$row[0]' AND r.anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
               FROM anlys_eq_prop
               WHERE anlys_prop_ID = (SELECT anlys_prop_ID
                                     FROM anlys_property
                                     WHERE anlys_prop_name LIKE 'Thickness'))
-              GROUP BY anlys_eq_prop_ID
-              ORDER BY anlys_res_ID DESC
+              GROUP BY r.anlys_eq_prop_ID
+              ORDER BY r.anlys_res_ID DESC
               LIMIT 1;";
         $thicknessResult = mysqli_query($link, $thicknessSql);
         $thicknessRow = mysqli_fetch_row($thicknessResult);
 
 
        	echo"
-    			<td>".$thicknessRow[0]."</td>
+    			<td>".$thicknessRow[0]." ".$thicknessRow[1]."</td>
     		</tr>";
     }
     ?>

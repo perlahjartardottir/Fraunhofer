@@ -17,13 +17,13 @@ if($securityLevel< 2){
   <div class='container'>
     <div class='row well well-lg col-md-3'>
       <form>
-        <h4 class='custom_heading'>(Not fully functional) Search by:</h4>
+        <h4 class='custom_heading'>(Limited functionality) Search by:</h4>
         <div class='col-md-12 form-group'>
           <label>Sample Name: </label>
           <input type="text" id='sample_name' class='form-control' onkeyup='displaySearchResults()' />
         </div>
         <div class='col-md-12 form-group'>
-          <label>Coating: (No functionality)</label>
+          <label>Coating: </label>
           <input type="text" id='' class='form-control' onkeyup='displaySearchResults()' />
         </div>
         <div class='col-md-12 form-group'>

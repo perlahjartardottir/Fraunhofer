@@ -27,7 +27,7 @@ function displaySearchResults(){
 	}
 	if(endDate){
 		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD
-		beginDate = beginDate.replace(/-/g,"").substring(2,8);
+		endDate = beginDate.replace(/-/g,"").substring(2,8);
 	}
 
 	$.ajax({
