@@ -38,8 +38,6 @@ else{
 $resultsResult = mysqli_query($link, $resultsSql);
 
 
-
-
 echo"
 
 <!-- For displayAnlysResultTable to know what div is being displayed -->
