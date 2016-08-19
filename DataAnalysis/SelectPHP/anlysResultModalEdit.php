@@ -58,8 +58,6 @@ echo"
                 if($row[0] == $resultRow['prcsID']){
                   echo "
                     <option value='".$row[0]."' selected >".$row[1]."</option>";
-                  // echo"
-                  // <option value='audi' selected>Audi</option>";
                 }
                 else{
                   echo "
@@ -68,11 +66,11 @@ echo"
               }
         if($resultRow['prcsID'] == NULL){
         echo"
-            <option selected>No Coating</option>";
+            <option value='-1' selected>No Coating</option>";
         }
         else{
           echo"
-            <option>No Coating</option>";
+            <option value='-1'>No Coating</option>";
         }
         echo"
          </select>
