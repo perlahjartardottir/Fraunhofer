@@ -40,7 +40,7 @@
 /*  background-color: #D9EDF7;*/
 }
 
-/* ANLYS RESULT FROM */
+/* ANLYS RESULT FROM & PROCESS */
 input[type=number]{
     width: 155px;
 } 
@@ -48,7 +48,10 @@ input[type=number]{
 input[type=date]{
     width: 155px;
 }
-textarea.form-control.custom_heading{
+textarea.form-control.custom_comment{
+    width: 155px;
+}
+select.form-control.custom_select{
     width: 155px;
 }
 

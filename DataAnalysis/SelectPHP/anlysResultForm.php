@@ -77,7 +77,7 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
     <div class='form-group row'>
        <label class='col-md-2 col-form-label'>Layer of coating:</label>
       <div class='col-md-2'>
-        <select id='coating' name='coating' class='form-control' onchange='setPrcsIDAndRefresh()'>";
+        <select id='coating' name='coating' class='form-control custom_select' onchange='setPrcsIDAndRefresh()'>";
             while($row = mysqli_fetch_row($coatingsResult)){
               echo "<option value='".$row[0]."'>".$row[1]."</option>";
             }
@@ -218,20 +218,16 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
 
       // File uploading.
       // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
-
       window.URL = window.URL || window.webkitURL;
-
       var fileSelect = document.getElementById("file_select"),
       fileElem = document.getElementById("anlys_file"),
       fileList = document.getElementById("file_list");
-
       fileSelect.addEventListener("click", function (e) {
         if (fileElem) {
           fileElem.click();
         }
         e.preventDefault(); // prevent navigation to "#"
       }, false);
-
       function handleFiles(files) {
         if (!files.length) {
           fileList.innerHTML = "<p>No files selected.</p>";
