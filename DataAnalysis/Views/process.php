@@ -162,9 +162,9 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       </form>
     </div>
     <div id='process_table' class='col-md-12'></div>
-<!--     <div class='col-md-12'>
+    <div class='col-md-12'>
       <button type='button' id='prcs_sample_overview_btn' class='btn btn-primary col-md-2' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
-    </div> -->
+    </div>
   </div>
 </div>
 <script>
