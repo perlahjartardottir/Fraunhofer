@@ -63,6 +63,12 @@ FROM employee
 WHERE employee_name = '$user'";
 $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
+$allCoatingsSql = "SELECT DISTINCT(prcs_coating) from process;";
+$allCoatingsResult = mysqli_query($link, $allCoatingsSql);
+
+$allPositionsSql = "SELECT DISTINCT(prcs_position) from process;";
+$allPositionsResult = mysqli_query($link, $allPositionsSql);
+
 ?>
 
 <head>
@@ -74,7 +80,6 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     <div class='row well well-lg'>
       <!-- 1. Choose sample -->
       <div class='col-md-12'>
-        <div id='error_message'></div>
         <h4 class='custom_heading'>1. Choose a sample</h4>
         <div class='col-md-4 form-group'>
          <!-- Set combo box -->
@@ -100,6 +105,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
     <div class='col-md-12'>
       <h4 id='prop_eq_div' class='custom_heading'>2. Enter process information</h4>
       <form role=form>
+      <div id='error_message'></div>
         <div class='form-group row'>
           <label class='col-xs-2 col-form-label'>Date:</label>
           <div class='col-md-2'>
@@ -120,11 +126,28 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
         <div class='form-group row'>
           <label class='col-md-2 col-form-label'>Coating: </label>
           <div class='col-md-2'>
-            <input type='text' id='prcs_coating' name='prcs_coating' class='form-control' value=''>
+            <input type='text' list='coatings' id='prcs_coating' name='prcs_coating' class='form-control'>
+            <datalist id='coatings'>
+            <?
+              while($coatingRow = mysqli_fetch_array($allCoatingsResult)){
+                echo "<option value='".$coatingRow[0]."'></option>";
+              }
+            ?>
+
+            </datalist>
           </div>
           <label class='col-md-2 col-form-label'>Position: </label>
           <div class='col-md-2'>
             <input type='text' id='prcs_position' name='prcs_position' class='form-control' value=''>
+            <input type='text' list='positions' id='prcs_position' name='prcs_position' class='form-control'>
+            <datalist id='positions'>
+            <?
+              while($positionRow = mysqli_fetch_array($allPositionsResult)){
+                echo "<option value='".$positionRow[0]."'></option>";
+              }
+            ?>
+
+            </datalist>
           </div>
           <label class='col-md-2 col-form-label'>Rotation: </label>
           <div class='col-md-2'>

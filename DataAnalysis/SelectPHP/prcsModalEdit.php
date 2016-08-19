@@ -21,6 +21,13 @@ FROM sample
 WHERE sample_ID = '$sampleID';";
 $sampleName = mysqli_fetch_row(mysqli_query($link, $sampleNameSql))[0];
 
+$allCoatingsSql = "SELECT DISTINCT(prcs_coating) from process;";
+$allCoatingsResult = mysqli_query($link, $allCoatingsSql);
+
+$allPositionsSql = "SELECT DISTINCT(prcs_position) from process;";
+$allPositionsResult = mysqli_query($link, $allPositionsSql);
+
+
 echo"
 <div class='modal-dialog'>
   <div class='modal-content '>
@@ -35,7 +42,13 @@ echo"
         <div id='error_message_edit'></div>
           <div class='form-group'>
           	<label>Coating:</label>
-          	<input type='text' id='prcs_coating' class='form-control' value='".$row['coating']."'>
+            <input type='text' list='coatings' id='prcs_coating' name='prcs_coating' class='form-control' value='".$row['coating']."'>
+            <datalist id='coatings'>";
+              while($coatingRow = mysqli_fetch_array($allCoatingsResult)){
+                echo "<option value='".$coatingRow[0]."'></option>";
+              }
+          echo"
+            </datalist>
           </div>
           <div class='form-group'>
           	<label>Equipment:</label>
@@ -48,7 +61,13 @@ echo"
           </div>
           <div class='form-group'>
           	<label>Position:</label>
-          	<input type='text' id='prcs_position' class='form-control' value='".$row['position']."'>
+            <input type='text' list='positions' id='prcs_position' name='prcs_position' class='form-control' value='".$row['position']."'>
+            <datalist id='positions'>";
+              while($positionRow = mysqli_fetch_array($allPositionsResult)){
+                echo "<option value='".$positionRow[0]."'></option>";
+              }
+          echo"
+            </datalist>
           </div>
           <div class='form-group'>
           	<label>Rotation:</label>
