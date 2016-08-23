@@ -24,7 +24,7 @@ if($securityLevel< 2){
         </div>
         <div class='col-md-12 form-group'>
           <label>Coating: </label>
-          <input type="text" id='' class='form-control' onkeyup='displaySearchResults()' />
+          <input type="text" id='coating' class='form-control' onkeyup='displaySearchResults()' />
         </div>
         <div class='col-md-12 form-group'>
           <label id='search_thickness_label' class='col-md-12'>Thickness: </label>

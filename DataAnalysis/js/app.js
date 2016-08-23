@@ -20,6 +20,7 @@ function displaySearchResults(){
 	var maxThickness = $("#max_thickness").val();
 	var beginDate = $('#begin_date').val();
 	var endDate  = $('#end_date').val();
+	var coating  = $('#coating').val();
 
 	if(beginDate){
 		// Trim the string down to our desired format. Before: YYYY-MM-DD. Afer: YYMMDD

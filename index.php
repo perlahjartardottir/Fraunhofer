@@ -10,13 +10,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <meta http-equiv="Content-Language" content="en">
   <title>Login Fraunhofer CCD</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="/css/signin.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/signin.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src='Tooling/dest/fraunhofer.min.js'></script>
+   <script src='js/app.js'></script>
 </head>
 <body>
 <div class="container">

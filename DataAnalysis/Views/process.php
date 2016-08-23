@@ -138,7 +138,6 @@ $allPositionsResult = mysqli_query($link, $allPositionsSql);
           </div>
           <label class='col-md-2 col-form-label'>Position: </label>
           <div class='col-md-2'>
-            <input type='text' id='prcs_position' name='prcs_position' class='form-control' value=''>
             <input type='text' list='positions' id='prcs_position' name='prcs_position' class='form-control'>
             <datalist id='positions'>
             <?
