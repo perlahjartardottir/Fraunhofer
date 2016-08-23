@@ -230,16 +230,40 @@ function orderRequest(){
   });
   var request_supplier     = supplier_name.val();
   var department           = $('#department').val();
-  var cost_code           = $('#cost_code').val();
+  var cost_code             = $('#cost_code').val();
   var orderTimeframe       = $('#orderTimeframe').val();
+  var orderTimeframeDate    = $('#orderTimeframeDate').val();
   var request_description  = $('#request_description').val();
   var employee_ID          = $('#employee_ID').val();
   var part_number          = $('#part_number').val();
   var quantity             = $('#quantity').val();
+  var unitPrice             = $('#unitPrice').val();
   var request_price        = $('#request_price').val();
-  if(request_description === ""){
-    $("#invalidRequest").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Description</div>");
-  } else{
+  var errorMessage = "";
+  
+  if(request_supplier === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier</div>";
+  }
+  if(orderTimeframe === "Specific date" && orderTimeframeDate === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Date</div>";
+  }
+  if(part_number === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Part number</div>";
+  }
+  if(quantity === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Quantity</div>";
+  }
+  if(unitPrice == ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Unit price</div>";
+
+  }
+  if(request_price == ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Total price</div>";
+  }
+
+  if(errorMessage){
+    $("#invalidRequest").html(errorMessage);
+  }else{
     $.ajax({
       url: '../InsertPHP/addNewRequest.php',
       type: 'POST',
