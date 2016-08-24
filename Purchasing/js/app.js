@@ -219,7 +219,7 @@ function quoteSuggestions() {
   });
 }
 
-function orderRequest(){
+function orderRequest(redirect, form){
   var supplier_name = $("input[name='supplierList']").on('input', function(e){
     var $input = $(this),
         val = $input.val(),
@@ -247,18 +247,14 @@ function orderRequest(){
   if(orderTimeframe === "Specific date" && orderTimeframeDate === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Date</div>";
   }
-  if(part_number === ""){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Part number</div>";
-  }
   if(quantity === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Quantity</div>";
   }
-  if(unitPrice == ""){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Unit price</div>";
-
+  if(department === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Department</div>";
   }
-  if(request_price == ""){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Total price</div>";
+  if(cost_code === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Cost code</div>";
   }
 
   if(errorMessage){
@@ -279,11 +275,21 @@ function orderRequest(){
         quantity             : quantity
       },
       success: function(data, status, xhr){
-        window.location = "purchasing.php";
+        if(redirect === "yes"){
+          window.location = "purchasing.php";
+        }
+        else{
+          infoMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Your request has been sent.</div>";
+          $('#requestForm')[0].reset();
+          $("#requestSent").html(infoMessage);
+
+        }
+        
       }
     });
   }
 }
+
 function activeRequest(element){
   if(!element){
     $("#output").html("");

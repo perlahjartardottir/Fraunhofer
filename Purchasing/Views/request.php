@@ -73,7 +73,8 @@ $supplierResult = mysqli_query($link, $supplierSql);
     <div class='row well well-lg'>
       <h5>To add quotes to the request, please add them <strong><u>before</u></strong> you create the request (Press Quotes button on Home view).</h5>
       <h5>*Required.</h5>
-      <form>
+      <form id='requestForm'>
+        <div id='requestSent'></div>
         <h3>Make a request for a purchase order</h3>
         <div class='col-md-4 form-group'>
           <label>Supplier: * </label>
@@ -92,17 +93,18 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <select id='orderTimeframe' class='form-control' onchange='displayDate()'>
               <option value='With next order'>With next order</option>
               <option value='Specific date'>Specific date</option>
+              <option value='Other'>Other</option>
              </select>
             </div>
             <div class='col-md-6'>
-            <label class='orderTimeframeDate'>Choose date:</label>
-              <input type='date' id='orderTimeframeDate' class='form-control orderTimeframeDate'>
+            <label class='orderTimeframeDate'>Required by date:*</label>
+              <input type='date' id='orderTimeframeDate' class='form-control orderTimeframeDate' value='<?php echo date("Y-m-d"); ?>'>
             </div>
         </div>
         <div id='requestList'>
           <div name=''>
           <div class='col-md-4 form-group'>
-            <label>Part #: * </label>
+            <label>Part #: </label>
             <input type="text" id='part_number' class='form-control'>
           </div>
           <div class='col-md-2 form-group'>
@@ -110,15 +112,15 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <input type="number" id='quantity' class='form-control'>
           </div>
           <div class='col-md-2 form-group'>
-            <label>Unit price: * </label>
+            <label>Unit price:  </label>
             <input type='number' id='unitPrice' class='form-control' onclick='calcTotalPrice()'>
           </div>
           <div class='col-md-2 form-group'>
-            <label>Total price: * </label>
+            <label>Total price:  </label>
             <input type='number' id='request_price' class='form-control'>
           </div>
           <div class='col-md-4 form-group'>
-            <label>Department: </label>
+            <label>Department: *</label>
             <select id='department' class='form-control' onchange='updateCostCode()'>
               <option value=''>All departments</option>
               <?php
@@ -134,8 +136,11 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <textarea id='request_description' class='form-control' rows='4'></textarea>
           </div>
         </div>
+
+        <input class='form-control btn btn-primary' type="button" value="Request - I have another order!" onclick='orderRequest("",this.form)' style='margin-top:25px;'>
+      <input class='form-control btn btn-primary' type="button" value="Request - I'm done!" onclick='orderRequest("yes", this.form)' style='margin-top:25px;'>
       </form>
-      <input class='form-control btn btn-primary' type="button" value="Request" onclick='orderRequest()' style='margin-top:25px;'>
+
     </div>
   </div>
   <script>
@@ -147,6 +152,9 @@ $supplierResult = mysqli_query($link, $supplierSql);
   function displayDate() {
     if($("#orderTimeframe").val() == "Specific date"){
       $(".orderTimeframeDate").show();
+    }
+    else{
+      $(".orderTimeframeDate").hide();
     }
   }
 
