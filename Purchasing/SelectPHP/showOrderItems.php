@@ -118,7 +118,10 @@ $departmentSql2 = "SELECT department_name
                           echo"
                         </select>
                       </div>
-                      <div class='col-md-6 result'>
+                      <div class='col-md-6'>
+                        <label>Cost code:</label>
+                        <div class='result'>
+                        </div>
                       </div>
                       <div class='col-md-12'>
                         <label>USD Unit</label>

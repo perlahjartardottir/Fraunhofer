@@ -545,18 +545,33 @@ function addOrderItem(){
   });
 }
 
-function addOrderItemFromRequest(){
+function displayAddOrderItemFromRequestModal(request_ID, supplier_ID){
+    $.ajax({
+    url: '../SelectPHP/addOrderItemFromRequestModal.php',
+    type: 'POST',
+    data:{
+      request_ID    : request_ID,
+      supplier_ID : supplier_ID
+    },
+    success: function(data, status, xhr){
+        $("#addRequestModal").html(data);
+    }
+  });
+}
+
+function addOrderItemFromRequest(request_ID, form){
   var quantity    = $('#req_quantity').val();
   var part_number = $('#req_part_number').val();
   var unit_price  = $('#req_unit_price').val();
   var description = $('#req_description').val();
   var department  = $('#req_department').val();
-  var cost_code   = $('#req_cost_code').val();
+  var cost_code  = $('#req_cost_code').val();
 
   $.ajax({
-    url: '../InsertPHP/addNewOrderItem.php',
+    url: '../InsertPHP/addOrderItemFromRequest.php',
     type: 'POST',
     data:{
+      request_ID  : request_ID,
       quantity    : quantity,
       part_number : part_number,
       unit_price  : unit_price,
@@ -726,19 +741,22 @@ function addNewSupplier(){
   }
 }
 
-function updateCostCode(){
+function updateCostCode(cost_code){
   var department_name = $('#department').val();
   // for modal window at addOrderItem.php (cannot have two identical ids).
   if(department_name === ""){
     department_name = $('#req_department').val();
   }
   var group_by_select = $('#group_by_select').val();
+  var request_modal = $('#request_modal').val();
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
     data: {
       department_name : department_name,
-      group_by_select : group_by_select
+      group_by_select : group_by_select,
+      request_modal   : request_modal,
+      cost_code       : cost_code
     },
     success: function(data, status, xhr) {
       $('.result').html(data);

@@ -2,14 +2,22 @@
 include '../../connection.php';
 $department_name = mysqli_real_escape_string($link, $_POST['department_name']);
 $group_by_select = mysqli_real_escape_string($link, $_POST['group_by_select']);
+$request_modal = mysqli_real_escape_string($link, $_POST['request_modal']);
+$cost_code = mysqli_real_escape_string($link, $_POST['cost_code']);
+
 
 // If we are in the overview view then we want to filter the table after we
 // change the value of the cost code
 if($group_by_select != ""){
   echo"<script>overview();</script>";
   // <label>Cost code: *</label>
-  echo"<select id='cost_code' class='form-control' onchange='overview();'>";
-} else{
+  echo"<select id='cost_code' name='cost_code' class='form-control' onchange='overview();'>";
+}
+// If we are in the add order item to request modal. 
+else if($request_modal != ""){
+  // <label>Cost code: *</label>
+  echo"<select id='req_cost_code' class='form-control'>";
+}else{
   // <label>Cost code: *</label>
   echo"<select id='cost_code' class='form-control'>";
 }
@@ -67,3 +75,9 @@ if($department_name == 'PVD'){
 }
 echo "</select>";
 ?>
+<script>
+$(document).ready(function(){
+  costCode = String(<?php echo $cost_code; ?>);
+  $("select option[value='"+costCode+"']").attr("selected","selected");
+})
+</script>

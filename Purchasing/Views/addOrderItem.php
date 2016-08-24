@@ -229,88 +229,95 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
                               WHERE employee_ID = '$findActiveRequestsRow[3]';";
               $employeeResult = mysqli_query($link, $employeeSql);
               $employeeRow = mysqli_fetch_array($employeeResult);
-              echo"<li><a href='#' data-toggle='modal' data-target='#".$findActiveRequestsRow[0]."'> ".$findActiveRequestsRow[0]." </a></li>";
-              echo"
-                <div class='modal fade' id='".$findActiveRequestsRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
-                  <div class='modal-dialog'>
-                    <div class='modal-content col-md-12'>
-                      <div class='modal-header'>
-                        <h4>Request ID: ".$findActiveRequestsRow[0]."</h4>
-                        <h5>By ".$employeeRow[0]." on ".$findActiveRequestsRow[2]." for ".$findActiveRequestsRow[1]."</h5>
-                      </div>
-                      <div class='modal-body col-md-12'>";
-                        // <p><strong>Requested by:</strong> <input type='text' value='".$employeeRow[0]."'></p>
-                        // <p><strong>Supplier:</strong> <input type='text' value='".$findActiveRequestsRow[1]."'></p>
-                        // <p><strong>Date:</strong><input type='text' value='".$findActiveRequestsRow[2]."'></p>
-                        // <p><strong>Part number:</strong><input type='text' value='".$findActiveRequestsRow[5]."'></p>
-                        // <p><strong>Quantity:</strong><input type='text' value='".$findActiveRequestsRow[6]."'></p>
-                        // <p><strong>Description:</strong><input type='text' value='".$findActiveRequestsRow[4]."'></p>
-                      echo"
-                        <form class='form-horizontal'>
-                          <div class='form-group'>
-                            <div class='col-md-3'>
-                              <label class='control-label'>Part number:</label>
-                            </div>
-                            <div class='col-md-6'>
-                              <input type='text' id='req_part_number' class='form-control' value='".$findActiveRequestsRow[5]."'>
-                            </div>
-                          </div>
-                          <div class='form-group'>
-                            <div class='col-md-3'>
-                              <label class='control-label'>Quantity:</label>
-                            </div>
-                            <div class='col-md-6'>
-                              <input type='number' id='req_quantity' class='form-control' value='".$findActiveRequestsRow[6]."'>
-                            </div>
-                          </div>
-                          <div class='form-group'>
-                            <div class='col-md-3'>
-                              <label class='control-label'>Unit price:</label>
-                            </div>
-                            <div class='col-md-6'>
-                              <input type='number' id='req_unit_price' class='form-control' value='".$findActiveRequestsRow[7]."'>
-                            </div>
-                          </div>
-                          <div class='form-group'>
-                            <div class='col-md-3'>
-                              <label>Department: *</label>
-                            </div>
-                            <div class='col-md-6'>
-                              <select id='req_department' class='form-control' onchange='updateCostCode()'>
-                                <option value=''>All departments</option>";
-                              while($departmentRow = mysqli_fetch_array($departmentResult)){
-                                echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
-                              }
-                            echo"
-                              </select>
-                            </div>
-                          </div>
-                          <div class='form-group'>
-                            <div class='col-md-3'>
-                              <label>Cost code: </label>
-                            </div>
-                            <div id='req_cost_code_div' class='col-md-6 result'></div>
-                          </div>
-                          <div class='form-group'>
-                            <div class='col-md-3'>
-                              <label class='control-label'>Description:</label>
-                            </div>
-                            <div class='col-md-6'>
-                              <textarea id='req_description' class='form-control'>".$findActiveRequestsRow[4]."</textarea>
-                            </div>
-                          </div>
-                          </form>
-                      </div>
-                      <div class='modal-footer'>
-                        <button type='button' class='btn btn-primary' onclick='addNewRequest(".$findActiveRequestsRow[0].")'>Use</button>
-                        <button type='button' class='btn' data-dismiss='modal'>Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>";
+               echo"<li>
+                      <a onclick='displayOrderItemModal(".$findActiveRequestsRow[0].",".$supplier_ID.")' > ".$findActiveRequestsRow[0]." </a>
+                    </li>";              // echo"<li><a href='#' data-toggle='modal' data-target='#".$findActiveRequestsRow[0]."'> ".$findActiveRequestsRow[0]." </a></li>";
+            //   echo"
+            //     <div class='modal fade' id='".$findActiveRequestsRow[0]."' tabindex='-1' role='dialog' aria-labelledby='".$requestRow[0]."' aria-hidden='true'>
+            //       <div class='modal-dialog'>
+            //         <div class='modal-content col-md-12'>
+            //           <div class='modal-header'>
+            //             <h4>Request ID: ".$findActiveRequestsRow[0]."</h4>
+            //             <h5>By ".$employeeRow[0]." on ".$findActiveRequestsRow[2]." for ".$findActiveRequestsRow[1]."</h5>
+            //           </div>
+            //           <div class='modal-body col-md-12'>";
+            //             // <p><strong>Requested by:</strong> <input type='text' value='".$employeeRow[0]."'></p>
+            //             // <p><strong>Supplier:</strong> <input type='text' value='".$findActiveRequestsRow[1]."'></p>
+            //             // <p><strong>Date:</strong><input type='text' value='".$findActiveRequestsRow[2]."'></p>
+            //             // <p><strong>Part number:</strong><input type='text' value='".$findActiveRequestsRow[5]."'></p>
+            //             // <p><strong>Quantity:</strong><input type='text' value='".$findActiveRequestsRow[6]."'></p>
+            //             // <p><strong>Description:</strong><input type='text' value='".$findActiveRequestsRow[4]."'></p>
+            //           echo"
+            //             <form class='form-horizontal'>
+            //               <div class='form-group'>
+            //                 <div class='col-md-3'>
+            //                   <label class='control-label'>Part number:</label>
+            //                 </div>
+            //                 <div class='col-md-6'>
+            //                   <input type='text' id='req_part_number' class='form-control' value='".$findActiveRequestsRow[5]."'>
+            //                 </div>
+            //               </div>
+            //               <div class='form-group'>
+            //                 <div class='col-md-3'>
+            //                   <label class='control-label'>Quantity:</label>
+            //                 </div>
+            //                 <div class='col-md-6'>
+            //                   <input type='number' id='req_quantity' class='form-control' value='".$findActiveRequestsRow[6]."'>
+            //                 </div>
+            //               </div>
+            //               <div class='form-group'>
+            //                 <div class='col-md-3'>
+            //                   <label class='control-label'>Unit price:</label>
+            //                 </div>
+            //                 <div class='col-md-6'>
+            //                   <input type='number' id='req_unit_price' class='form-control' value='".$findActiveRequestsRow[7]."'>
+            //                 </div>
+            //               </div>
+            //               <div class='form-group'>
+            //                 <div class='col-md-3'>
+            //                   <label>Department: *</label>
+            //                 </div>
+            //                 <div class='col-md-6'>
+            //                   <select id='req_department' class='form-control' onchange='updateCostCode()'>
+            //                     <option value=''>All departments</option>";
+            //                     $departmentResultModal = mysqli_query($link, $departmentSql);
+            //                   while($departmentRowModal = mysqli_fetch_array($departmentResultModal)){
+            //                     echo "<option value='".$departmentRowModal[0]."'>".$departmentRowModal[0]."</option>";
+            //                   }
+            //                 echo"
+            //                   </select>
+            //                 </div>
+            //               </div>
+            //               <div class='form-group'>
+            //                 <div class='col-md-3'>
+            //                   <label>Cost code: </label>
+            //                 </div>
+            //                 <div class='col-md-6 result'></div>
+            //               </div>
+            //               <div class='form-group'>
+            //                 <div class='col-md-3'>
+            //                   <label class='control-label'>Description:</label>
+            //                 </div>
+            //                 <div class='col-md-6'>
+            //                   <textarea id='req_description' class='form-control'>".$findActiveRequestsRow[4]."</textarea>
+            //                 </div>
+            //               </div>
+            //               </form>
+            //           </div>
+            //           <div class='modal-footer'>
+            //             <button type='button' class='btn btn-primary' onclick='addOrderItemFromRequest(".$findActiveRequestsRow[0].")'>Use</button>
+            //             <button type='button' class='btn' data-dismiss='modal'>Close</button>
+            //           </div>
+            //         </div>
+            //       </div>
+            //     </div>";
             }
-          echo"</ul></div>";
+          echo"
+          </ul>
+          </div>";
     } ?>
+      <!-- SelectPHP/addOrderItemFromRequestModal.php -->
+     <div id='addRequestModal' class='modal'></div>
     <div class='row well well-lg'>
       <h4>Add a new item</h4>
       <form>
@@ -328,7 +335,6 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
           <select id='department' class='form-control' onchange='updateCostCode()'>
             <option value=''>All departments</option>
             <?php
-            $departmentResult = mysqli_query($link, $departmentSql);
             while($departmentRow = mysqli_fetch_array($departmentResult)){
               echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
             }?>
@@ -389,6 +395,20 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
           updateCostCode();
           console.log(order_ID);
       });
+
+      // For the modal window to edit analysis results.
+      var modal = document.getElementById('addRequestModal');
+      function displayOrderItemModal(request_ID, supplier_ID){
+        displayAddOrderItemFromRequestModal(request_ID, supplier_ID);
+        modal.style.display = "block";
+      }
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+         modal.style.display = "none";
+        }
+      }
+
       //if the user enters the view with a PO not on the dropdownlist
       // check if the value is in the list already
       var exists = false;
