@@ -23,13 +23,13 @@ ORDER BY MID(sample_set_name,5,6) DESC;";
 ?>
     <div class='col-md-12'>
     <h2 class='center_heading'>Recently added samples</h2>
-    <h5 class='center_heading custom_heading'>Ordered by name</h5>
+    <h5 class='center_heading custom_heading'>Displayed based on date of initialization (latest on top).</h5>
       <table id='front_table' class='table table-borderless col-md-12'>
        <thead>
         <tr>
-          <th class='col-md-4'>Name</th>
+          <th class='col-md-4'>Sample name</th>
           <th class='col-md-4 text-center'>Coating</th>
-          <th class='col-md-4 text-center'>Thickness</th>
+          <th class='col-md-4 text-center'>Coating thickness</th>
         </tr>
       </thead>
       <tbody></tbody>

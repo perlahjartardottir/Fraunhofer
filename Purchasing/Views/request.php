@@ -113,7 +113,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
           </div>
           <div class='col-md-2 form-group'>
             <label>Unit price:  </label>
-            <input type='number' id='unitPrice' class='form-control' onclick='calcTotalPrice()'>
+            <input type='number' id='unit_price' class='form-control' onclick='calcTotalPrice()'>
           </div>
           <div class='col-md-2 form-group'>
             <label>Total price:  </label>
@@ -129,7 +129,9 @@ $supplierResult = mysqli_query($link, $supplierSql);
               }?>
             </select>
           </div>
-          <div class='form-group col-md-4 result'>
+          <div class='col-md-4 form-group'>
+            <label>Cost code: </label>
+            <div class='result'></div>
           </div>
           <div class='col-md-4 form-group'>
             <label>Description: </label>
@@ -159,19 +161,20 @@ $supplierResult = mysqli_query($link, $supplierSql);
   }
 
   function calcTotalPrice() {
-    unitPrice = $("#unitPrice").val();
-    quantity = $("#quantity").val();
+    var unitPrice = $("#unit_price").val();
+    var quantity = $("#quantity").val();
     totalPrice = unitPrice*quantity;
     $("#request_price").val(totalPrice);
   }
 
-  $("#unitPrice").blur(function(){
+  $("#unit_price").blur(function(){
     calcTotalPrice();
   })
 
-  function newItem(){
+    $("#quantity").blur(function(){
+    calcTotalPrice();
+  })
 
-  }
 
   </script>
 </body>

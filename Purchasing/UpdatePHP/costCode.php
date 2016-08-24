@@ -7,11 +7,11 @@ $group_by_select = mysqli_real_escape_string($link, $_POST['group_by_select']);
 // change the value of the cost code
 if($group_by_select != ""){
   echo"<script>overview();</script>";
-  echo"<label>Cost code: *</label>
-       <select id='cost_code' class='form-control' onchange='overview();'>";
+  // <label>Cost code: *</label>
+  echo"<select id='cost_code' class='form-control' onchange='overview();'>";
 } else{
-  echo"<label>Cost code: *</label>
-       <select id='cost_code' class='form-control'>";
+  // <label>Cost code: *</label>
+  echo"<select id='cost_code' class='form-control'>";
 }
 if($department_name == 'PVD'){
   echo "<option value='PVD'>PVD overall</option>

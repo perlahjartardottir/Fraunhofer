@@ -237,8 +237,9 @@ function orderRequest(redirect, form){
   var employee_ID          = $('#employee_ID').val();
   var part_number          = $('#part_number').val();
   var quantity             = $('#quantity').val();
-  var unitPrice             = $('#unitPrice').val();
+  var unitPrice             = $('#unit_price').val();
   var request_price        = $('#request_price').val();
+  var unit_price          = $('#unit_price').val();
   var errorMessage = "";
   
   if(request_supplier === ""){
@@ -272,6 +273,7 @@ function orderRequest(redirect, form){
         employee_ID          : employee_ID,
         part_number          : part_number,
         request_price        : request_price,
+        unit_price           : unit_price,
         quantity             : quantity
       },
       success: function(data, status, xhr){
@@ -281,6 +283,7 @@ function orderRequest(redirect, form){
         else{
           infoMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Your request has been sent.</div>";
           $('#requestForm')[0].reset();
+          displayDate();
           $("#requestSent").html(infoMessage);
 
         }
@@ -542,6 +545,32 @@ function addOrderItem(){
   });
 }
 
+function addOrderItemFromRequest(){
+  var quantity    = $('#req_quantity').val();
+  var part_number = $('#req_part_number').val();
+  var unit_price  = $('#req_unit_price').val();
+  var description = $('#req_description').val();
+  var department  = $('#req_department').val();
+  var cost_code   = $('#req_cost_code').val();
+
+  $.ajax({
+    url: '../InsertPHP/addNewOrderItem.php',
+    type: 'POST',
+    data:{
+      quantity    : quantity,
+      part_number : part_number,
+      unit_price  : unit_price,
+      department  : department,
+      cost_code   : cost_code,
+      description : description
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+      //console.log(data);
+    }
+  });
+}
+
 function addNewRequest(request_ID){
   var r = confirm('Are you sure you are finished with your current request?');
   if (r === true){
@@ -699,6 +728,10 @@ function addNewSupplier(){
 
 function updateCostCode(){
   var department_name = $('#department').val();
+  // for modal window at addOrderItem.php (cannot have two identical ids).
+  if(department_name === ""){
+    department_name = $('#req_department').val();
+  }
   var group_by_select = $('#group_by_select').val();
   $.ajax({
     url: "../UpdatePHP/costCode.php",

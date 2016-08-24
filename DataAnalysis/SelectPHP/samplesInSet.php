@@ -22,7 +22,7 @@ $sampleSetName= mysqli_fetch_row(mysqli_query($link, $sampleSetNameSql))[0];
 if($sampleSetID !== "-1"){
   echo"
   <div class='row well well-lg'>
-    <h3 class='custom_heading'>".$sampleSetName."</h3>
+    <h3 class='custom_heading'>Samples in set: ".$sampleSetName."</h3>
      <table class='table table-responsive' style='width:92%;'>
       <thead>
         <tr>
