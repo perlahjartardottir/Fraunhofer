@@ -77,7 +77,7 @@ echo "</select>";
 ?>
 <script>
 $(document).ready(function(){
-  costCode = String(<?php echo $cost_code; ?>);
+  costCode = String(<?php echo json_encode($cost_code); ?>);
   $("select option[value='"+costCode+"']").attr("selected","selected");
 })
 </script>
