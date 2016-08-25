@@ -279,10 +279,20 @@ function orderRequest(redirect, form){
         }
         else{
           infoMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Your request has been sent.</div>";
-          $('#requestForm')[0].reset();
-          displayDate();
+          // Too imitade a reload and to keep information from form. 
+          $("#invalidRequest").html("");
+          $("#requestSent").html("");
           $("#requestSent").html(infoMessage);
-
+          // Reset form except a few inputs.
+          $('#requestForm')[0].reset();
+          $("input[name='supplierList']").val(request_supplier);
+          $('#orderTimeframe').val(orderTimeframe);
+          displayDate();
+          if(orderTimeframeDate != ""){
+            $('#orderTimeframeDate').val(orderTimeframeDate);
+          }
+          // To clear cost code drop down.
+          updateCostCode();
         }
         
       }

@@ -54,17 +54,11 @@ $supplier_address = "%" . $supplier_address . "%";
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT s.supplier_ID, s.supplier_name, s.supplier_phone, s.supplier_email, s.supplier_address, s.supplier_fax, s.supplier_contact, s.supplier_website, s.supplier_login, s.supplier_password, s.supplier_accountNr, s.supplier_notes, s.net_terms
-              FROM supplier s
-              WHERE s.supplier_name LIKE '$supplier_name'
-              AND s.supplier_contact LIKE '$supplier_contact'
-              AND s.supplier_phone LIKE '$supplier_phone'
-              AND s.supplier_email LIKE '$supplier_email'
-              AND s.supplier_address LIKE '$supplier_address'
-              ORDER BY (SELECT AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) / 3
-                        FROM order_rating r, purchase_order o
-                        WHERE o.order_ID = r.order_ID
-                        AND o.supplier_ID = s.supplier_ID) DESC, s.supplier_name;";
+      $sql = "SELECT s.supplier_ID, s.supplier_name, s.supplier_phone, s.supplier_email, s.supplier_address, s.supplier_fax, s.supplier_contact, s.supplier_website, s.supplier_login, s.supplier_password, s.supplier_accountNr, s.supplier_notes, s.net_terms, s.supplier_name, ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2) as aveg
+              FROM supplier s, order_rating r, purchase_order o
+              WHERE o.order_ID = r.order_ID AND o.supplier_ID = s.supplier_ID
+              GROUP BY s.supplier_ID
+              ORDER BY aveg DESC, supplier_name;";
       $result = mysqli_query($link, $sql);
       $category = "";
       while($row = mysqli_fetch_array($result)){
@@ -160,6 +154,7 @@ $supplier_address = "%" . $supplier_address . "%";
                     data-content='Avg timeliness: ".$averageRating[1]."<br/> Avg price: ".$averageRating[2]."<br/> Avg quality: ".$averageRating[3]."<br/> Avg customer service: ".$averageRating[7]."'>";
              echo $averageRating[0]." <i class='fa fa-diamond' aria-hidden='true'></i>";
              echo "</button></td></tr>";
+            // MODAL
              echo "<div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
                    <div class='modal-dialog'>
                       <div class='modal-content'>

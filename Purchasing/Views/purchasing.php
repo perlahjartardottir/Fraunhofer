@@ -128,12 +128,13 @@
     </div>
 
     <!-- Here is the requested table ------------------------------------------------>
-    <div class='col-md-3'>
+    <div class='col-md-4' style='padding-left: 0px'>
       <h4>Requested</h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
             <th>Request</th>
+            <th>Supplier</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -155,6 +156,7 @@
             echo"
               <tr>
                 <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$description."... </a></td>
+                <td>".substr($requestRow[2],0,15)."</td>
                 <td>".$requestRow[1];
 
                 // Query to find requests that don't belong to a purchase order
@@ -206,10 +208,10 @@
       <table class='table table-responsive'>
         <thead>
           <tr>
-            <th>Purchase Order</th>
+            <th>PO</th>
             <th>Supplier</th>
             <th>Order Date</th>
-            <th>Expected Delivery</th>
+            <th>Expected</th>
           </tr>
         </thead>
         <tbody>
@@ -344,13 +346,13 @@
     </div>
 
     <!-- Here we have the Delivered table -------------------------------->
-    <div class='col-md-3'>
+    <div class='col-md-2' style='padding-right: 0px;'>
       <h4>Delivered</h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
-            <th>Purchase Order</th>
-            <th>Receiving Date</th>
+            <th>PO</th>
+            <th>Received</th>
           </tr>
         </thead>
         <tbody>

@@ -42,7 +42,6 @@ $supplierResult = mysqli_query($link, $supplierSql);
   <?php include '../header.php'; ?>
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <div class='container'>
-    <div id='invalidRequest'></div>
     <?php if(mysqli_num_rows($result) > 0){ ?>
     <div class='row well'>
       <h3><center>Quotes</center></h3>
@@ -74,6 +73,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
       <h5>To add quotes to the request, please add them <strong><u>before</u></strong> you create the request (Press Quotes button on Home view).</h5>
       <h5>*Required.</h5>
       <form id='requestForm'>
+        <div id='invalidRequest'></div>
         <div id='requestSent'></div>
         <h3>Make a request for a purchase order</h3>
         <div class='col-md-4 form-group'>
@@ -101,43 +101,44 @@ $supplierResult = mysqli_query($link, $supplierSql);
               <input type='date' id='orderTimeframeDate' class='form-control orderTimeframeDate' value='<?php echo date("Y-m-d"); ?>'>
             </div>
         </div>
-        <div id='requestList'>
-          <div name=''>
-          <div class='col-md-4 form-group'>
-            <label>Part #: </label>
-            <input type="text" id='part_number' class='form-control'>
-          </div>
-          <div class='col-md-2 form-group'>
-            <label>Quantity: *  </label>
-            <input type="number" id='quantity' class='form-control'>
-          </div>
-          <div class='col-md-2 form-group'>
-            <label>Unit price:  </label>
-            <input type='number' id='unit_price' class='form-control' onclick='calcTotalPrice()'>
-          </div>
-          <div class='col-md-2 form-group'>
-            <label>Total price:  </label>
-            <input type='number' id='request_price' class='form-control'>
-          </div>
-          <div class='col-md-4 form-group'>
-            <label>Department: *</label>
-            <select id='department' class='form-control' onchange='updateCostCode()'>
-              <option value=''>All departments</option>
-              <?php
-              while($departmentRow = mysqli_fetch_array($departmentResult)){
-                echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
-              }?>
-            </select>
-          </div>
-          <div class='col-md-4 form-group'>
+        <div class='col-md-4 form-group'>
+          <label>Department: *</label>
+          <select id='department' class='form-control' onchange='updateCostCode()'>
+            <option value=''>All departments</option>
+            <?php
+            while($departmentRow = mysqli_fetch_array($departmentResult)){
+              echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
+            }?>
+          </select>
+       </div>
+       <div class='col-md-8 form-group'>
+        <div class='col-md-6' style='padding:0px;'>
             <label>Cost code: * </label>
             <div class='result'></div>
-          </div>
-          <div class='col-md-4 form-group'>
-            <label>Description: </label>
-            <textarea id='request_description' class='form-control' rows='4'></textarea>
-          </div>
         </div>
+        </div>
+
+        <div class='col-md-4 form-group'>
+          <label>Part #: </label>
+          <input type="text" id='part_number' class='form-control'>
+        </div>
+        <div class='col-md-2 form-group'>
+          <label>Quantity: *  </label>
+          <input type="number" id='quantity' class='form-control'>
+        </div>
+        <div class='col-md-2 form-group'>
+          <label>Unit price:  </label>
+          <input type='number' id='unit_price' class='form-control' onclick='calcTotalPrice()'>
+        </div>
+        <div class='col-md-2 form-group'>
+          <label>Total price:  </label>
+          <input type='number' id='request_price' class='form-control'>
+        </div>
+        <div class='col-md-4 form-group'>
+          <label>Description: </label>
+          <textarea id='request_description' class='form-control' rows='4'></textarea>
+        </div>
+      </div>
 
         <input class='form-control btn btn-primary' type="button" value="Request - I have another order!" onclick='orderRequest("",this.form)' style='margin-top:25px;'>
       <input class='form-control btn btn-primary' type="button" value="Request - I'm done!" onclick='orderRequest("yes", this.form)' style='margin-top:25px;'>
