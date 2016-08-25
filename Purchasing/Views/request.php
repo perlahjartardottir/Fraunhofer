@@ -77,7 +77,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
         <div id='requestSent'></div>
         <h3>Make a request for a purchase order</h3>
         <div class='col-md-4 form-group'>
-          <label>Supplier: * </label>
+          <label>Supplier: </label>
           <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
           <datalist id="suppliers">
             <?
@@ -130,7 +130,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
             </select>
           </div>
           <div class='col-md-4 form-group'>
-            <label>Cost code: </label>
+            <label>Cost code: * </label>
             <div class='result'></div>
           </div>
           <div class='col-md-4 form-group'>

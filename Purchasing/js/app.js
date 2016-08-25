@@ -242,9 +242,6 @@ function orderRequest(redirect, form){
   var unit_price          = $('#unit_price').val();
   var errorMessage = "";
   
-  if(request_supplier === ""){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier</div>";
-  }
   if(orderTimeframe === "Specific date" && orderTimeframeDate === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Date</div>";
   }
