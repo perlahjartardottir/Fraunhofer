@@ -75,6 +75,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
       <form id='requestForm'>
         <div id='invalidRequest'></div>
         <div id='requestSent'></div>
+        <div id='emailSent'></div>
         <h3>Make a request for a purchase order</h3>
         <div class='col-md-4 form-group'>
           <label>Supplier: </label>

@@ -13,6 +13,7 @@ $quantity             = mysqli_real_escape_string($link, $_POST['quantity']);
 $request_price        = mysqli_real_escape_string($link, $_POST['request_price']);
 $unit_price        = mysqli_real_escape_string($link, $_POST['unit_price']);
 
+// If the user has chosen a specific date, add that but not the text "specific date".
 if($timeframe === "Specific date"){
 	$timeframe = $timeframeDate;
 }
@@ -34,4 +35,41 @@ $quoteResult = mysqli_query($link, $quoteSql);
 if(!$result){
 	echo("Something went wrong : ".mysqli_error($link));
 }
+
+// If this request is needed within 2 days, send an email to office manager (ID 6).
+if($timeframeDate !== ""){
+	$today = date("Y-m-d");
+	$difference = abs(strtotime($today) - strtotime($timeframeDate));
+	$days = floor(($difference - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+	if($days < 2){
+
+		$employeeSql = "SELECT employee_name
+		FROM employee
+		WHERE employee_ID = '$employee_ID';";
+		$employeeName = mysqli_fetch_row(mysqli_query($link, $employeeSql))[0];
+
+		$purchasingPersonSql = "SELECT employee_email
+		FROM employee
+		WHERE employee_ID = '7';";
+		$purchasingPerson = mysqli_fetch_row(mysqli_query($link, $purchasingPersonSql))[0];
+		
+		$subject = "";
+		if($days < 1){
+			$subject = "Request ".$request_ID." is required today!";
+		}
+		else{
+			$subject = "Request ".$request_ID." is required by ".$timeframeDate;
+		}
+		
+		$message = "Requested by: ".$employeeName."\nSupplier: ".$request_supplier."\nRequired by: ".$timeframeDate."\nTotal price: ".$request_price."\n\n";
+		$message .= "You can process the order at: localhost:8887/Fraunhofer/Purchasing/views/processOrder.php\n\n";
+		$to = $purchasingPerson;
+		$headers = "From: ccd.purchasing@gmail.com";
+
+		if(mail($to,$subject,$message,$headers)){
+			echo $purchasingPerson;
+		}
+	}
+}
+
 ?>

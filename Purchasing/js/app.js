@@ -294,6 +294,11 @@ function orderRequest(redirect, form){
           }
           // To clear cost code drop down.
           updateCostCode();
+          if(data){
+            emailMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>It sounds like your last request was urgent, "+data+" has been notified.</div>";
+             $("#emailSent").html(emailMessage);
+
+          }
         }
         
       }
