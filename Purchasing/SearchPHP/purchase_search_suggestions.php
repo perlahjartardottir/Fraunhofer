@@ -96,9 +96,9 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
   <?php
   $result = mysqli_query($link, $sql);
   while($row = mysqli_fetch_array($result)){
-    $orderItemSql = "SELECT quantity, part_number, description, unit_price
-                     FROM order_item
-                     WHERE order_ID = '$row[0]';";
+    $orderItemSql = "SELECT i.quantity, i.part_number, i.description, i.unit_price, e.employee_name
+                     FROM order_item i, purchase_order p, employee e
+                     WHERE i.order_ID = p.order_ID AND p.employee_ID = e.employee_ID AND i.order_ID = '$row[0]';";
     $orderItemResult = mysqli_query($link, $orderItemSql);
     echo"
     <div class='modal fade' id='".$row[0]."' tabindex='-1' role='dialog' aria-labelledby='".$row[0]."' aria-hidden='true'>
@@ -112,6 +112,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
               <thead>
                 <tr>
                   <th>Pos. #</th>
+                  <th>For</th>
                   <th>Quantity</th>
                   <th>Part #</th>
                   <th>Description</th>
@@ -128,6 +129,7 @@ $totalFinalPrice = 0; // A variable that shows the complete price of all the PO'
                   echo"
                     <tr>
                       <td>".$counter."</td>
+                      <td>".$orderItemRow[4]."</td>
                       <td>".$orderItemRow[0]."</td>
                       <td>".$orderItemRow[1]."</td>
                       <td>".$orderItemRow[2]."</td>
