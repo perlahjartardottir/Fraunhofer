@@ -10,15 +10,12 @@ $cost_code = mysqli_real_escape_string($link, $_POST['cost_code']);
 // change the value of the cost code
 if($group_by_select != ""){
   echo"<script>overview();</script>";
-  // <label>Cost code: *</label>
   echo"<select id='cost_code' name='cost_code' class='form-control' onchange='overview();'>";
 }
 // If we are in the add order item to request modal. 
 else if($request_modal != ""){
-  // <label>Cost code: *</label>
   echo"<select id='req_cost_code' class='form-control'>";
 }else{
-  // <label>Cost code: *</label>
   echo"<select id='cost_code' class='form-control'>";
 }
 if($department_name == 'PVD'){

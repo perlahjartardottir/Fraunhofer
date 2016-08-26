@@ -26,7 +26,13 @@ $user_sec_lvl = $user_sec_lvl[1]; ?>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src='../js/jquery-ui.js'></script> -->
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- Datatables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js"></script>
+
+
+
 <script src='../js/app.js'></script>
 <script src='../js/bootstrap.js'></script>
 <script src='../js/bootbox.min.js'></script>

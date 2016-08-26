@@ -66,6 +66,7 @@
                     ORDER BY order_receive_date DESC
                     LIMIT 10;";
   $deliveredResult = mysqli_query($link, $deliveredSql);
+
   ?>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
@@ -128,14 +129,15 @@
     </div>
 
     <!-- Here is the requested table ------------------------------------------------>
-    <div class='col-md-4' style='padding-left: 0px'>
-      <h4>Requested</h4>
-      <table class='table table-responsive'>
+    <div class='col-md-6' style='padding-left: 0px'>
+      <h3>Requested</h3>
+      <table id='request_table' class='table table-responsive order-column'>
         <thead>
           <tr>
             <th>Request</th>
+            <th>Made by</th>
             <th>Supplier</th>
-            <th>Date</th>
+            <th>Required by</th>
           </tr>
         </thead>
         <tbody>
@@ -143,7 +145,15 @@
           while($requestRow = mysqli_fetch_array($requestResult)){
 
             // this variable shows the first 15 characters of the description
-            $description = substr($requestRow[4], 0, 15);
+            // $description = substr($requestRow[4], 0, 15);
+
+                // Query to find requests that don't belong to a purchase order
+                // If it doesn't belong to a purchase order, then you can delete it
+                $emptyRequestSql = "SELECT request_ID
+                        FROM purchase_order
+                        WHERE request_ID = '$requestRow[0]';";
+                $emptyRequestResult = mysqli_query($link, $emptyRequestSql);
+                $emptyRequestRow = mysqli_fetch_array($emptyRequestResult);
 
             // Query to find name of the employee who issued the request
             $employeeRequestSql = "SELECT employee_name
@@ -153,22 +163,38 @@
             $employeeRequestRow = mysqli_fetch_array($employeeRequestResult);
             $employee_name = $employeeRequestRow[0];
 
+            $employeeInitialsSql = "SELECT
+                                    CONCAT_WS(' ',
+                                      SUBSTRING_INDEX(employee_name, ' ', 1),
+                                      CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>2 THEN
+                                        CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -3), 1), '.')
+                                      END,
+                                      CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>1 THEN
+                                        CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -2), 1), '.')
+                                      END,
+                                      CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>0 THEN
+                                        CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -1), 1), '.')
+                                      END) shortname
+                                  FROM
+                                    employee
+                                  WHERE employee_ID = '$requestRow[5]';";
+            $employee_initials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
+
+
+
             echo"
               <tr>
-                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$description."... </a></td>
-                <td>".substr($requestRow[2],0,15)."</td>
-                <td>".$requestRow[1];
-
-                // Query to find requests that don't belong to a purchase order
-                // If it doesn't belong to a purchase order, then you can delete it
-                $emptyRequestSql = "SELECT request_ID
-                        FROM purchase_order
-                        WHERE request_ID = '$requestRow[0]';";
-                $emptyRequestResult = mysqli_query($link, $emptyRequestSql);
-                $emptyRequestRow = mysqli_fetch_array($emptyRequestResult);
-                if($emptyRequestRow[0] != $requestRow[0]){
-                  echo"<button style='float:right;' class='btn btn-danger btn-xs' onclick='delRequest(".$requestRow[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
+                <td>";
+                  if($emptyRequestRow[0] != $requestRow[0]){
+                  echo"
+                  <span class='glyphicon glyphicon-remove' style='color: #C52F2B; float:left; margin-right:15px;' aria-hidden='true' onclick='delRequest(".$requestRow[0].")'></span>";
                 }
+              echo"
+                <a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$requestRow[0]." </a></td>
+                <td>".$employee_initials."</td>
+                <td>".substr($requestRow[2],0,15)."</td>
+                <td>".$requestRow[7];
+
                 echo"</td>
               </tr>";
             echo"
@@ -204,13 +230,14 @@
 
     <!-- Here we have the In Progress table ---------------------------->
     <div class='col-md-6'>
-      <h4>In Progress</h4>
-      <table class='table table-responsive'>
+      <h3>In Progress</h3>
+      <table id='progress_table' class='table table-responsive order-column'>
         <thead>
           <tr>
             <th>PO</th>
+            <th>For</th>
             <th>Supplier</th>
-            <th>Order Date</th>
+<!--             <th>Ordered on</th> -->
             <th>Expected</th>
           </tr>
         </thead>
@@ -232,9 +259,29 @@
             } else{
               echo"<tr>";
             }
+
+            $employeeInitialsSql = "SELECT
+                        CONCAT_WS(' ',
+                          SUBSTRING_INDEX(employee_name, ' ', 1),
+                          CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>2 THEN
+                            CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -3), 1), '.')
+                          END,
+                          CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>1 THEN
+                            CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -2), 1), '.')
+                          END,
+                          CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>0 THEN
+                            CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -1), 1), '.')
+                          END) shortname
+                      FROM
+                        employee
+                      WHERE employee_ID = '$inProgressRow[10]';";
+          $employee_initials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
+
+
               echo"<td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
-                  <td>".substr($inProgressRow[11],0,15)."</td>
-                  <td>".$inProgressRow[1]."</td>";
+                  <td>".$employee_initials."</td>
+                  <td>".substr($inProgressRow[11],0,15)."</td>";
+                  // <td>".$inProgressRow[1]."</td>";
               if($dateDiffDays < 0){
                 echo "<td><b>".$inProgressRow[6]."</b></td>";
               }else{
@@ -346,7 +393,7 @@
     </div>
 
     <!-- Here we have the Delivered table -------------------------------->
-    <div class='col-md-2' style='padding-right: 0px;'>
+ <!--    <div class='col-md-2' style='padding-right: 0px;'>
       <h4>Delivered</h4>
       <table class='table table-responsive'>
         <thead>
@@ -355,17 +402,17 @@
             <th>Received</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody> -->
           <?php
-          while($deliveredRow = mysqli_fetch_array($deliveredResult)){
-              echo"<tr>
-                    <td><a href='#' data-toggle='modal' onclick='setSessionIDSearch(".$deliveredRow[0].")' data-target='#".$deliveredRow[0]."'>".$deliveredRow[4]."</a></td>
-                    <td>".$deliveredRow[2]."</td>
-                   </tr>";
-          }
+          // while($deliveredRow = mysqli_fetch_array($deliveredResult)){
+          //     echo"<tr>
+          //           <td><a href='#' data-toggle='modal' onclick='setSessionIDSearch(".$deliveredRow[0].")' data-target='#".$deliveredRow[0]."'>".$deliveredRow[4]."</a></td>
+          //           <td>".$deliveredRow[2]."</td>
+          //          </tr>";
+          // }
           ?>
-        </tbody>
-      </table>
+ <!--        </tbody>
+      </table> -->
       <?php
       $deliveredResult = mysqli_query($link, $deliveredSql);
       while($deliveredRow = mysqli_fetch_array($deliveredResult)){
@@ -466,6 +513,23 @@
   </div>
   <script>
     $(document).ready(function(){
+      // Make tables sortable and searchable. 
+      // $('#request_table').DataTable();
+      // $('#progress_table').DataTable();
+      $('#request_table').dataTable( {
+        "pageLength": 15
+      } );
+      $('#progress_table').dataTable( {
+        "pageLength": 15
+      } );
+      // $('#request_table').DataTable( {
+      //   paging: false
+      // } );
+      // $('#progress_table').DataTable( {
+      //   paging: false
+      // } );
+
+
       setInterval(test, 10000);
       function test(){
         $.ajax({
@@ -479,6 +543,7 @@
         });
       }
     });
+
   </script>
 </body>
 </html>

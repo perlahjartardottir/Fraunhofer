@@ -82,7 +82,7 @@ $departmentSql2 = "SELECT department_name
         }
 
         echo"<tr>
-              <td><a href='#' data-toggle='modal' onclick='updateCostCodeOnClick()' data-target='#".$row[4]."'>".$counter."</a></td>
+              <td><a href='#' data-toggle='modal' onclick='updateCostCode(".json_encode($costCode).",".json_encode($departmentRow[0]).")' data-target='#".$row[4]."'>".$counter."</a></td>
               <td>".$row[0]."</td>
               <td>".$costCode."</td>
               <td>".$row[1]."</td>
@@ -108,13 +108,33 @@ $departmentSql2 = "SELECT department_name
                         <input type='text' id='part_number' value='".$row[1]."' class='form-control'>
                       </div>
                       <div class='col-md-6'>
-                        <label>Department</label>
-                        <select id='department' class='form-control' onchange='updateCostCodeModal(this)'>
+                        <label>Department</label>";
+                        $noCostCode = "noCostCode";
+                        echo"
+                        <select id='department_edit' class='form-control' onchange='updateCostCode()'>
                           <option value=''>All departments</option>";
                           $departmentResult2 = mysqli_query($link, $departmentSql2);
                           while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
-                            echo "<option value='".$departmentRow2[0]."'"; if($departmentRow[0] == $departmentRow2[0]){echo" selected";} echo">".$departmentRow2[0]."</option>";
+                            if($departmentRow[0] == $departmentRow2[0]){
+                              echo "<option value='".$departmentRow2[0]."' selected>".$departmentRow2[0]."</option>
+                              <script>
+                              console.log('here');
+                              </script>";
+                            }
+                            else{
+                              echo "<option value='".$departmentRow2[0]."'>".$departmentRow2[0]."</option>";
+                            }
+                            // echo "<option value='".$departmentRow2[0]."'"; if($departmentRow[0] == $departmentRow2[0]){echo" selected";} echo">".$departmentRow2[0]."</option>";
+                          //   echo "<option value='".$departmentRow2[0]."'>".$departmentRow2[0]."</option>";
+                          //   if($departmentRow[0] == $departmentRow2[0]){
+                          //     echo'
+                          //   <script>
+                          //   dep = String('.json_encode($departmentRow[0]).');
+                          //   $("select option[value=\'"+dep+"\']").attr("selected","selected");
+                          // </script>';
+                          //   }
                           }
+
                           echo"
                         </select>
                       </div>
@@ -163,5 +183,5 @@ $departmentSql2 = "SELECT department_name
       <option value='GBP'<?php if($currency == 'GBP'){echo "selected";}?>>&pound; GBP</option>
     </select>
   </form>
-
 </div>
+

@@ -266,6 +266,7 @@ function orderRequest(redirect, form){
         department           : department,
         cost_code            : cost_code,
         orderTimeframe       : orderTimeframe,
+        orderTimeframeDate   : orderTimeframeDate,
         request_description  : request_description,
         employee_ID          : employee_ID,
         part_number          : part_number,
@@ -748,12 +749,27 @@ function addNewSupplier(){
   }
 }
 
-function updateCostCode(cost_code){
-  var department_name = $('#department').val();
-  // for modal window at addOrderItem.php (cannot have two identical ids).
-  if(department_name === ""){
+function updateCostCode(cost_code, departmentName){
+  
+  var department_name = "";
+
+  // For modal window at showOrderItems.php
+  if(departmentName){
+    department_name = departmentName
+  }
+    // For modal window at addOrderItem.php (cannot have two identical ids).
+  if($('#req_department').val()){
     department_name = $('#req_department').val();
   }
+  if($('#department_edit').val()){
+    department_name = $('#department_edit').val();
+  }
+  if($('#department').val()){
+    department_name = $('#department').val();
+  }
+
+  console.log("dep:"+department_name);
+  console.log("cost:"+cost_code);
   var group_by_select = $('#group_by_select').val();
   var request_modal = $('#request_modal').val();
   $.ajax({
@@ -1040,7 +1056,7 @@ function editOrderItem(order_item_ID, element){
   // and from there we find the correct id's
   var quantity    = $(element).parent().prev().find("#quantity").val();
   var part_number = $(element).parent().prev().find('#part_number').val();
-  var department  = $(element).parent().prev().find('#department').val();
+  var department  = $(element).parent().prev().find('#department_edit').val();
   var cost_code  = $(element).parent().prev().find('#cost_code').val();
   var unit_price  = $(element).parent().prev().find('#unit_price').val();
   var description = $(element).parent().prev().find('#description').val();
