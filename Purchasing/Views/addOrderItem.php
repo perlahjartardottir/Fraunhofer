@@ -15,7 +15,7 @@ while($row = mysqli_fetch_array($secResult)){
 $user_sec_lvl = str_split($user_sec_lvl);
 $user_sec_lvl = $user_sec_lvl[1];
 // if the user security level is not high enough we kill the page and give him a link to the log in page
-if($user_sec_lvl < 2){
+if($user_sec_lvl < 3){
   echo "<a href='../../Login/login.php'>Login Page</a></br>";
   die("You don't have the privileges to view this site.");
 }
@@ -373,6 +373,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
                       <option value='1'>Thomas Schuelke</option>
                       <option value='5'>Lars Haubold</option>
                       <option value='8'>Michael Becker</option>
+                      <option value='7'>Perla (for testing)</option>
                     </select>
                   </div>
                   <div class='col-md-3'>

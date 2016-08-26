@@ -237,7 +237,7 @@
             <th>PO</th>
             <th>For</th>
             <th>Supplier</th>
-<!--             <th>Ordered on</th> -->
+            <th>Ordered on</th>
             <th>Expected</th>
           </tr>
         </thead>
@@ -280,8 +280,8 @@
 
               echo"<td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
                   <td>".$employee_initials."</td>
-                  <td>".substr($inProgressRow[11],0,15)."</td>";
-                  // <td>".$inProgressRow[1]."</td>";
+                  <td>".substr($inProgressRow[11],0,15)."</td>
+                  <td>".$inProgressRow[1]."</td>";
               if($dateDiffDays < 0){
                 echo "<td><b>".$inProgressRow[6]."</b></td>";
               }else{
@@ -374,8 +374,12 @@
                   <button class='btn btn-primary' style='margin-top: 5px;' onclick='addInProgressComment(".$inProgressRow[0].", this);'>Add comment</button>
                 </form>
               </div>
-              <div class='modal-footer'>
-                <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>
+              <div class='modal-footer'>";
+                if($user_sec_lvl > 2){
+                  echo"
+                  <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>";
+                }
+                echo"
                 <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>";
                 if($user_sec_lvl > 3){
                   echo"<button class='btn btn-danger' onclick='delPurchaseOrder(".$inProgressRow[0].")'>Delete po</button>";

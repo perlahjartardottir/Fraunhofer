@@ -347,11 +347,11 @@ function requestApproval(){
       employee_ID : employee_ID
     },
     success: function(data, status, xhr){
-      // window.location.reload();
+      window.location.reload();
       console.log(data);
-      setTimeout(function() {
-        showRunTools();
-      }, 1000);
+    //   setTimeout(function() {
+    //     showRunTools();
+    //   }, 1000);
     }
   });
 }
@@ -768,8 +768,6 @@ function updateCostCode(cost_code, departmentName){
     department_name = $('#department').val();
   }
 
-  console.log("dep:"+department_name);
-  console.log("cost:"+cost_code);
   var group_by_select = $('#group_by_select').val();
   var request_modal = $('#request_modal').val();
   $.ajax({

@@ -116,10 +116,7 @@ $departmentSql2 = "SELECT department_name
                           $departmentResult2 = mysqli_query($link, $departmentSql2);
                           while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
                             if($departmentRow[0] == $departmentRow2[0]){
-                              echo "<option value='".$departmentRow2[0]."' selected>".$departmentRow2[0]."</option>
-                              <script>
-                              console.log('here');
-                              </script>";
+                              echo "<option value='".$departmentRow2[0]."' selected>".$departmentRow2[0]."</option>";
                             }
                             else{
                               echo "<option value='".$departmentRow2[0]."'>".$departmentRow2[0]."</option>";
