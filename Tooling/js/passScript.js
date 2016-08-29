@@ -1430,6 +1430,27 @@ function changeCoating() {
   });
 }
 
+function addCoating() {
+  var coating_type = $('#coating_type').val();
+  var coating_description = $('#coating_description').val();
+  console.log(coating_type);
+  console.log(coating_description);
+  $.ajax({
+    url: "../InsertPHP/insertNewCoating.php",
+    type: "POST",
+    data: {
+      coating_type: coating_type,
+      coating_description: coating_description
+    },
+    success: function(data, status, xhr) {
+      console.log(data);
+      window.location.reload(true);
+    }
+
+  });
+}
+
+
 function deleteCoating() {
   var coating_ID = $('#input_coating_ID').val();
   $.ajax({

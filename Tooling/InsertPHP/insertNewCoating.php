@@ -1,10 +1,8 @@
-Implement when you have more info.
-
 <?php
 include '../connection.php';
 // Escape user inputs for security
-$coatingType = mysqli_real_escape_string($link, $_POST['coatingType']);
-$coatingDesc = mysqli_real_escape_string($link, $_POST['coatingDesc']);
+$coatingType = mysqli_real_escape_string($link, $_POST['coating_type']);
+$coatingDesc = mysqli_real_escape_string($link, $_POST['coating_description']);
  var_dump($coatingDesc);
 // attempt insert query execution
 $sql = "INSERT INTO coating(coating_type, coating_description) VALUES ('$coatingType', '$coatingDesc');";
