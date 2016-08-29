@@ -255,6 +255,13 @@ function orderRequest(redirect, form){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Cost code</div>";
   }
 
+  if(checkIfRecommended(request_supplier) === 'Not Recommended'){
+    r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
+    if (r !== true){
+      return;
+    }
+  }
+
   if(errorMessage){
     $("#invalidRequest").html(errorMessage);
   }else{

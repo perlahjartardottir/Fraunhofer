@@ -191,7 +191,7 @@ function changeEmployee() {
         alert("Invalid phone number");
       }
       if (data.indexOf("invalid security level") > -1) {
-        alert("Security level should be in the range 1-4");
+        alert("Security level should be in the range 1-4 and four letters long");
       } else {
         window.location.reload(true);
       }
