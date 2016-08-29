@@ -506,12 +506,12 @@ function createPurchaseOrder(){
   var employee_ID = $('#employee_ID').val();
   var request_ID  = $('#activeRequest').text();
 
-  if(checkIfRecommended(supplier_name) === 'Not Recommended'){
-    r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
-    if (r !== true){
-      return;
-    }
-  }
+  // if(checkIfRecommended(supplier_name) === 'Not Recommended'){
+  //   r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
+  //   if (r !== true){
+  //     return;
+  //   }
+  // }
 
   if(!employee_name){
     $("#invalidPO").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Employee</div>");
