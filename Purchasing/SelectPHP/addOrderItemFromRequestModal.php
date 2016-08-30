@@ -78,7 +78,7 @@ $employeeRow = mysqli_fetch_array($employeeResult);
                     <option value=''>All departments</option>";
                     $departmentResultModal = mysqli_query($link, $departmentSql);
                   while($departmentRowModal = mysqli_fetch_array($departmentResultModal)){
-                  	if ( $requestRow[8]=== $departmentRowModal[0]){
+                  	if ( $requestRow[8] === $departmentRowModal[0]){
                   		echo "<option selected value='".$departmentRowModal[0]."'>".$departmentRowModal[0]."</option>";
                   	}
                   	else{

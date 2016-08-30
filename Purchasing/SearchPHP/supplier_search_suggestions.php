@@ -54,7 +54,7 @@ $supplier_address = "%" . $supplier_address . "%";
     </thead>
     <tbody>
       <?php
-      $sql = "SELECT s.supplier_ID, s.supplier_name, s.supplier_phone, s.supplier_email, s.supplier_address, s.supplier_fax, s.supplier_contact, s.supplier_website, s.supplier_login, s.supplier_password, s.supplier_accountNr, s.supplier_notes, s.net_terms, s.supplier_name, ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2) as aveg
+      $sql = "SELECT s.supplier_ID, s.supplier_name, s.supplier_phone, s.supplier_email, s.supplier_address, s.supplier_fax, s.supplier_contact, s.supplier_website, s.supplier_login, s.supplier_password, s.supplier_accountNr, s.supplier_notes, s.net_terms, s.supplier_name, ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2) as aveg, credit_card
               FROM supplier s, order_rating r, purchase_order o
               WHERE o.order_ID = r.order_ID AND o.supplier_ID = s.supplier_ID
               GROUP BY s.supplier_ID
@@ -173,7 +173,17 @@ $supplier_address = "%" . $supplier_address . "%";
                                 <p><strong>Contact: </strong><span id='supplier_contact'>".$row[6]."</span></p>
                                 <p><strong>Account Nr: </strong><span id='supplier_accountNr'>".$row[10]."</span></p>";
                                 if($row[12] != ""){echo"<p><strong>Net Terms: </strong><span id='net_terms'>".$row[12]." days</span></p>";}
-                              echo"</div>
+                              echo"
+                               <p><strong>Credit card required: </strong><span id='supplier_acreditcard'>";
+                              if($row[15] == '1'){
+                                echo"yes";
+                              }
+                              else{
+                                echo"no";
+                              }
+                              echo"
+                              </span></p>
+                              </div>
                               <div class='col-md-6'>
                                 <p><strong>Website: </strong><a href='".$row[7]."' target='_blank'><span id='supplier_website'>".$row[7]."</span></a></p>
                                 <p><strong>Login: </strong><span id='supplier_login'>".$row[8]."</span></p>

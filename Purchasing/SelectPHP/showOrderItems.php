@@ -4,13 +4,6 @@ session_start();
 $order_ID = $_SESSION['order_ID'];
 $currency = $_SESSION["currency"];
 
-// For debugging reasons, can be deleted
-function console_log( $data ){
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-  }
-
 // get the correct currency display
 if($currency == 'EUR'){
   $currencySymbol = '&euro;';
@@ -111,12 +104,13 @@ $departmentSql2 = "SELECT department_name
                         <label>Department</label>";
                         $noCostCode = "noCostCode";
                         echo"
-                        <select id='department_edit' class='form-control' onchange='updateCostCode()'>
+                        <input type='hidden' id='edit_modal' value='yes'>
+                        <select id='department' class='form-control' onchange='updateModalCostCode(this)'>
                           <option value=''>All departments</option>";
                           $departmentResult2 = mysqli_query($link, $departmentSql2);
                           while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
                             if($departmentRow[0] == $departmentRow2[0]){
-                              echo "<option value='".$departmentRow2[0]."' selected>".$departmentRow2[0]."</option>";
+                              echo "<option selected value='".$departmentRow2[0]."' >".$departmentRow2[0]." -hello</option>";
                             }
                             else{
                               echo "<option value='".$departmentRow2[0]."'>".$departmentRow2[0]."</option>";
@@ -152,7 +146,7 @@ $departmentSql2 = "SELECT department_name
                     </form>
                   </div>
                   <div class='modal-footer'>
-                    <button type='button' class='btn btn-success' onclick='editOrderItem(".$row[4].", this)'>Edit</button>
+                    <button type='button' class='btn btn-success' onclick='editOrderItem(".$row[4].", this)'>Save</button>
                     <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
                   </div>
                 </div>
@@ -181,4 +175,3 @@ $departmentSql2 = "SELECT department_name
     </select>
   </form>
 </div>
-

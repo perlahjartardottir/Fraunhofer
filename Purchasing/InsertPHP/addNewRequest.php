@@ -72,4 +72,6 @@ if($timeframeDate !== ""){
 	}
 }
 
+mysqli_close($link);
+
 ?>

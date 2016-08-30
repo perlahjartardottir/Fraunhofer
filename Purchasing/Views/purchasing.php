@@ -382,7 +382,7 @@
                 echo"
                 <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>";
                 if($user_sec_lvl > 3){
-                  echo"<button class='btn btn-danger' onclick='delPurchaseOrder(".$inProgressRow[0].")'>Delete po</button>";
+                  echo"<button class='btn btn-danger' onclick='cancelPurchaseOrder(".$inProgressRow[0].")'>Cancel</button>";
                 }
                 echo"<a href='../Views/purchaseOrderReceived.php' class='btn btn-success'";
                 if($inProgressRow[8] == 'pending' || $inProgressRow[8] == 'declined'){ echo " disabled";}

@@ -449,10 +449,26 @@ function delOrderItem(order_item_ID){
 }
 
 function delPurchaseOrder(order_ID){
-  var r = confirm("Are you sure you want to delete this purchase order?");
+  var r = confirm("Are you sure you want to cancel this purchase order?");
   if(r === true){
     $.ajax({
       url: '../DeletePHP/deletePurchaseOrder.php',
+      type: 'POST',
+      data:{
+        order_ID : order_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
+}
+
+function cancelPurchaseOrder(order_ID){
+  var r = confirm("Are you sure you want to cancel this purchase order?");
+  if(r === true){
+    $.ajax({
+      url: '../UpdatePHP/cancelPurchaseOrder.php',
       type: 'POST',
       data:{
         order_ID : order_ID
@@ -785,6 +801,12 @@ function addNewSupplier(){
   if (net_terms === ''){
     net_terms = 30;
   }
+  var credit_card = $('#credit_card');
+    if(credit_card.is(':checked')){
+        credit_card = $('#credit_card').val();
+      }else{
+        credit_card = 0;
+      }
   console.log(net_terms);
   if(!supplier_name){
     $("#invalidSupplier").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier name</div>");
@@ -804,7 +826,8 @@ function addNewSupplier(){
         supplier_accountNr : supplier_accountNr,
         net_terms        : net_terms,
         supplier_website : supplier_website,
-        supplier_notes : supplier_notes
+        supplier_notes   : supplier_notes,
+        credit_card      : credit_card
       },
       success: function(data, status, xhr) {
         window.location = '../Views/supplierList.php';
@@ -822,18 +845,23 @@ function updateCostCode(cost_code, departmentName){
     department_name = departmentName
   }
     // For modal window at addOrderItem.php (cannot have two identical ids).
-  if($('#req_department').val()){
+  else if($('#req_department').val() !== undefined){
     department_name = $('#req_department').val();
   }
-  if($('#department_edit').val()){
+  else if($('#department_edit').val() !== undefined){
     department_name = $('#department_edit').val();
   }
-  if($('#department').val()){
+  else if($('#department').val() !== undefined){
     department_name = $('#department').val();
   }
+  console.log(department_name);
 
   var group_by_select = $('#group_by_select').val();
   var request_modal = $('#request_modal').val();
+  var edit_modal = $('#edit_modal').val();
+
+  console.log(edit_modal);
+
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
@@ -841,6 +869,7 @@ function updateCostCode(cost_code, departmentName){
       department_name : department_name,
       group_by_select : group_by_select,
       request_modal   : request_modal,
+      edit_modal      : edit_modal,
       cost_code       : cost_code
     },
     success: function(data, status, xhr) {
@@ -951,6 +980,16 @@ function editSupplier(supplier_ID){
     var supplier_login = $("#supplier_login").val();
     var supplier_password = $("#supplier_password").val();
     var supplier_notes = $("#supplier_notes").val();
+    var credit_card = $("#credit_card").val();
+    var credit_card = $('#credit_card');
+    if(credit_card.is(':checked')){
+        credit_card = $('#credit_card').val();
+      }else{
+        credit_card = 0;
+      }
+
+
+    console.log(credit_card);
     $.ajax({
       url: '../UpdatePHP/editSupplier.php',
       type: "POST",
@@ -967,11 +1006,13 @@ function editSupplier(supplier_ID){
         supplier_website : supplier_website,
         supplier_login : supplier_login,
         supplier_password : supplier_password,
-        supplier_notes : supplier_notes
+        supplier_notes : supplier_notes,
+        credit_card : credit_card
       },
       success: function(data, status, xhr) {
       //  window.location="../Views/supplierList.php";
       console.log(data);
+      window.location.reload(true);
       }
     });
   }
@@ -1118,8 +1159,11 @@ function editOrderItem(order_item_ID, element){
   // and from there we find the correct id's
   var quantity    = $(element).parent().prev().find("#quantity").val();
   var part_number = $(element).parent().prev().find('#part_number').val();
-  var department  = $(element).parent().prev().find('#department_edit').val();
-  var cost_code  = $(element).parent().prev().find('#cost_code').val();
+  var department  = $(element).parent().prev().find('#department').val();
+  var cost_code   = $('#edit_cost_code').val();
+  if(cost_code == undefined){
+      cost_code   = $('#cost_code').val();
+  }
   var unit_price  = $(element).parent().prev().find('#unit_price').val();
   var description = $(element).parent().prev().find('#description').val();
 

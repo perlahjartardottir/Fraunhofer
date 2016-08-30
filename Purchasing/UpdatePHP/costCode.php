@@ -3,6 +3,7 @@ include '../../connection.php';
 $department_name = mysqli_real_escape_string($link, $_POST['department_name']);
 $group_by_select = mysqli_real_escape_string($link, $_POST['group_by_select']);
 $request_modal = mysqli_real_escape_string($link, $_POST['request_modal']);
+$edit_modal = mysqli_real_escape_string($link, $_POST['edit_modal']);
 $cost_code = mysqli_real_escape_string($link, $_POST['cost_code']);
 
 
@@ -15,6 +16,8 @@ if($group_by_select != ""){
 // If we are in the add order item to request modal. 
 else if($request_modal != ""){
   echo"<select id='req_cost_code' class='form-control'>";
+}else if($edit_modal != ""){
+  echo"<select id='edit_cost_code' class='form-control'>";
 }else{
   echo"<select id='cost_code' class='form-control'>";
 }
