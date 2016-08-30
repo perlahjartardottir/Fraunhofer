@@ -135,7 +135,7 @@
         <thead>
           <tr>
             <th>Request</th>
-            <th>Made by</th>
+            <th>By</th>
             <th>Supplier</th>
             <th>Required by</th>
           </tr>
@@ -180,14 +180,13 @@
                                   WHERE employee_ID = '$requestRow[5]';";
             $employee_initials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
 
-
-
             echo"
               <tr>
                 <td>";
                   if($emptyRequestRow[0] != $requestRow[0]){
                   echo"
-                  <span class='glyphicon glyphicon-remove' style='color: #C52F2B; float:left; margin-right:15px;' aria-hidden='true' onclick='delRequest(".$requestRow[0].")'></span>";
+                  <a class='glyphicon glyphicon-edit' style='float:left; margin-right:8px;' onclick='displayEditRequestModal(".$requestRow[0].")'></a>
+                  <span class='glyphicon glyphicon-remove' style='color: #C52F2B; float:left; margin-right:8px;' aria-hidden='true' onclick='delRequest(".$requestRow[0].")'></span>";
                 }
               echo"
                 <a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$requestRow[0]." </a></td>
@@ -217,7 +216,7 @@
                       <p>Description: ".$requestRow[4]."</p>
                     </div>
                     <div class='modal-footer'>
-                      <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+                      <button type='button' class='btn btn-primary' data-dismiss='modal'> Close</button>
                     </div>
                   </div>
                 </div>
@@ -227,7 +226,8 @@
         </tbody>
       </table>
     </div>
-
+   <!-- SelectPHP/editRequestModal.php -->
+    <div id='editRequestModal' class='modal'></div>
     <!-- Here we have the In Progress table ---------------------------->
     <div class='col-md-6'>
       <h3>In Progress</h3>
@@ -547,6 +547,19 @@
         });
       }
     });
+
+      // For the modal window to edit analysis results.
+      var modal = document.getElementById('editRequestModal');
+      function displayEditRequestModal(request_ID){
+        editRequestModal(request_ID);
+        modal.style.display = "block";
+      }
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+         modal.style.display = "none";
+        }
+      }
 
   </script>
 </body>

@@ -579,6 +579,58 @@ function displayAddOrderItemFromRequestModal(request_ID, supplier_ID){
   });
 }
 
+function editRequestModal(request_ID){
+    $.ajax({
+    url: '../SelectPHP/editRequestModal.php',
+    type: 'POST',
+    data:{
+      request_ID    : request_ID,
+    },
+    success: function(data, status, xhr){
+        $("#editRequestModal").html(data);
+    }
+  });
+}
+
+function editRequest(request_ID){
+    var supplier_name = $("input[name='supplierList']").on('input', function(e){
+    var $input = $(this),
+        val = $input.val(),
+        list = $input.attr('list'),
+        match = $('#'+list + ' option').filter(function() {
+           return ($(this).val() === val);
+       });
+  });
+  var request_supplier     = supplier_name.val();
+  var quantity    = $('#req_quantity').val();
+  var part_number = $('#req_part_number').val();
+  var unit_price  = $('#req_unit_price').val();
+  var description = $('#req_description').val();
+  var department  = $('#req_department').val();
+  var cost_code  = $('#req_cost_code').val();
+  var request_price = $("#req_price").val();
+
+  $.ajax({
+    url: '../UpdatePHP/editRequest.php',
+    type: 'POST',
+    data:{
+      request_ID       : request_ID,
+      request_supplier : request_supplier,
+      quantity         : quantity,
+      part_number      : part_number,
+      unit_price       : unit_price,
+      department       : department,
+      cost_code        : cost_code,
+      description      : description,
+      request_price    : request_price 
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+      //console.log(data);
+    }
+  });
+}
+
 function addOrderItemFromRequest(request_ID, form){
   var quantity    = $('#req_quantity').val();
   var part_number = $('#req_part_number').val();
