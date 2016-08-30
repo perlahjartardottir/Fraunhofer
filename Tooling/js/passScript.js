@@ -924,24 +924,58 @@ function addShipDateToPO(comment, date) {
   });
 }
 
-function addCoating() {
-  var coatingType = $('#coatingType').val();
-  var coatingDesc = $('#coatingDesc').val();
-  if (!coatingType) {
-    $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating type</div>");
-    return 0;
-  } else if (!coatingDesc) {
-    $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating description</div>");
-    return 0;
+// function addCoating() {
+//   var coatingType = $('#coatingType').val();
+//   var coatingDesc = $('#coatingDesc').val();
+//   if (!coatingType) {
+//     $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating type</div>");
+//     return 0;
+//   } else if (!coatingDesc) {
+//     $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating description</div>");
+//     return 0;
+//   }
+//   $.ajax({
+//     url: "../InsertPHP/insertNewCoating.php",
+//     type: "POST",
+//     data: {
+//       coatingType: coatingType,
+//       coatingDesc: coatingDesc
+//     },
+//   });
+// }
+
+function addCoating(form) {
+  var coating_type = $('#coating_type').val();
+  var coating_description = $('#coating_description').val();
+  message = "";
+  console.log(coating_type);
+  console.log(coating_description);
+   if (!coating_type) {
+    message += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating type</div>";
+  } else if (!coating_description) {
+    message += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating description</div>";
   }
+  if(message){
+    $("#invalidCoating").html(message);
+  }
+  else{
   $.ajax({
     url: "../InsertPHP/insertNewCoating.php",
     type: "POST",
     data: {
-      coatingType: coatingType,
-      coatingDesc: coatingDesc
+      coating_type: coating_type,
+      coating_description: coating_description
     },
+    success: function(data, status, xhr) {
+      console.log(data);
+       $(form)[0].reset();
+       message = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Coating has been added.</div>";
+       $("#coatingAdded").html(message);
+      // window.location.reload(true);
+    }
+
   });
+  }
 }
 
 function addNewMachine(line) {
@@ -1429,27 +1463,6 @@ function changeCoating() {
 
   });
 }
-
-function addCoating() {
-  var coating_type = $('#coating_type').val();
-  var coating_description = $('#coating_description').val();
-  console.log(coating_type);
-  console.log(coating_description);
-  $.ajax({
-    url: "../InsertPHP/insertNewCoating.php",
-    type: "POST",
-    data: {
-      coating_type: coating_type,
-      coating_description: coating_description
-    },
-    success: function(data, status, xhr) {
-      console.log(data);
-      window.location.reload(true);
-    }
-
-  });
-}
-
 
 function deleteCoating() {
   var coating_ID = $('#input_coating_ID').val();

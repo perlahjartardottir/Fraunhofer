@@ -86,25 +86,6 @@ $user_sec_lvl = $user_sec_lvl[0];
           </form>
         </div>";
       }
-    if($user_sec_lvl >3)
-    {
-      echo"
-        <div class='row well well-lg'>
-          <form>
-          <h4>Add a new coating</h4>
-              <div class='col-md-4 form-group'>
-                <label>Coating type:</label>
-                <input type='text' id='coating_type' class='form-control'/>
-              </div>
-              <div class='col-md-4 form-group'>
-                <label>Coating description:</label>
-                <input type='text' id='coating_description' class='form-control'/>
-              </div>
-            <div class='col-md-4'>
-              <button value='Submit' onclick='addCoating()' class='btn btn-primary col-md-12' style='float:right; margin-top:24px'>Insert</button>
-            </div>
-          </form>";
-      }
   ?>
 </div>
 </body>
