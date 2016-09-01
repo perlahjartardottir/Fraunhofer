@@ -30,11 +30,8 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
           <label>Sample Name: </label>
           <input type="text" id='sample_name' class='form-control' onkeyup='displaySearchResults()' />
         </div>
-        <div class='col-md-12 form-group'>
-          <label>Coating: </label>
-          <input type="text" id='coating' class='form-control' onkeyup='displaySearchResults()' />
-        </div> -->
-<!--         <div class='col-md-12 form-group'>
+
+   <div class='col-md-12 form-group'>
           <label>Initialization date from:</label>
           <input type="date" id='begin_date' class='form-control' onchange='displaySearchResults()' />
         </div>
@@ -42,180 +39,165 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
           <label>Initialization date to:</label>
           <input type="date" id='end_date' class='form-control' onchange='displaySearchResults()'/>
         </div> -->
-<!--         <div class='col-md-12 form-group'>
-          <label>Name</label>
-            <div>
-              <input type="text" id='name' class='col-md-6 form-control' placeholder='E.g. 161007-01-01' onkeyup='displaySearchResults()' />
-            </div>
-        </div> -->
 
-      <!-- SEARCH COLUMNS ---->
+        <!-- SEARCH COLUMNS ---->
         <div class='col-md-12 form-group'>
           <label>Coating</label>
-            <div>
-              <input type="text" id='coating' class='col-md-6 form-control' placeholder='E.g. AlTiN' onkeyup='displaySearchResults()' />
-            </div>
-        </div>
-        <div class='col-md-12 form-group'>
-          <label>Thickness </label>
-            <div>
-              <input type="number" id='min_thickness' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
-              <input type="number" id='max_thickness' class='col-md-6 form-control'  placeholder='Max' onkeyup='displaySearchResults()' />
-            </div>
-        </div>
-        <div class='col-md-12 form-group'>
-          <label id='roughness' class='label_expand' onload='expand(this)' onclick='expand(this)'>Roughness <span class='glyphicon glyphicon-triangle-top'></span></label>
           <div>
-            <input type="number" id='min_ra' class='col-md-6 form-control' placeholder='Min Ra' onkeyup='displaySearchResults()' />
-            <input type="number" id='max_ra' class='form-control' placeholder='Max Ra' onkeyup='displaySearchResults()' />
-            <input type="number" id='min_rz' class='col-md-6 form-control' placeholder='Min Rz' onkeyup='displaySearchResults()' />
-            <input type="number" id='max_rz' class='col-md-6 form-control' placeholder='Max Rz' onkeyup='displaySearchResults()' />
-          </div>
-        </div>
-        <div  class='col-md-12 form-group'>
-          <label id='adhesion' class='label_expand' onload='expand(this)' onclick='expand(this)'>Adhesion <span class='glyphicon glyphicon-triangle-top'></span></label>
-          <div>
-            <input type="number" id='min_adhesion' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
-            <input type="number" id='max_adhesion' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+            <input type="text" id='coating' class='col-md-6 form-control' placeholder='E.g. AlTiN' onkeyup='displaySearchResults()' />
           </div>
         </div>
         <div class='col-md-12 form-group'>
-          <label id='contact' class='label_expand' onload='expand(this)' onclick='expand(this)'>Contact Angle <span class='glyphicon glyphicon-triangle-top'></span></label>
-          <div>
-            <input type="number" id='min_contact' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
-            <input type="number" id='max_contact' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
-          </div>
-        </div>
-        <div  class='col-md-12 form-group'>
-          <label id='friction' class='label_expand' onload='expand(this)' onclick='expand(this)'>Friction <span class='glyphicon glyphicon-triangle-top'></span></label>
-          <div>
-            <input type="number" id='min_friction' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
-            <input type="number" id='max_friction' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
-          </div>
-        </div>
-        <div  class='col-md-12 form-group'>
-          <label id='transmittence' class='label_expand' onload='expand(this)' onclick='expand(this)'>Transmittence <span class='glyphicon glyphicon-triangle-top'></span></label>
-          <div>
-            <input type="number" id='min_transmittence' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
-            <input type="number" id='max_transmittence' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
-          </div>
-        </div>
-        <div class='col-md-12 form-group'>
-         <label id='wear' class='label_expand' onload='expand(this)' onclick='expand(this)'>Wear Rate <span class='glyphicon glyphicon-triangle-top'></span></label>
+         <label>Thickness</label>
          <div>
-          <input type="number" id='min_wear' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
-          <input type="number" id='max_wear' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+          <input type="number" id='min_thickness' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_thickness' class='col-md-6 form-control'  placeholder='Max' onkeyup='displaySearchResults()' />
         </div>
       </div>
       <div class='col-md-12 form-group'>
-        <label id='youngs' class='label_expand' onload='expand(this)' onclick='expand(this)'>Young's Modulus<span class='glyphicon glyphicon-triangle-top'></span></label>
+        <label id='roughness' class='label_expand' onload='expand(this)' onclick='expand(this)'>Roughness <span class='glyphicon glyphicon-triangle-top'></span></label>
         <div>
-          <input type="number" id='min_youngs' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
-          <input type="number" id='max_youngs' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+          <input type="number" id='min_ra' class='col-md-6 form-control' placeholder='Min Ra' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_ra' class='form-control' placeholder='Max Ra' onkeyup='displaySearchResults()' />
+          <input type="number" id='min_rz' class='col-md-6 form-control' placeholder='Min Rz' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_rz' class='col-md-6 form-control' placeholder='Max Rz' onkeyup='displaySearchResults()' />
         </div>
       </div>
-      <input type='hidden' id='now_filtering' value=''/>
-      <input type='hidden' id='column_number' value=''/>
-    </form>
-  </div>
+      <div  class='col-md-12 form-group'>
+        <label id='adhesion' class='label_expand' onclick='expand(this)'>Adhesion <span class='glyphicon glyphicon-triangle-top'></span></label>
+        <div>
+          <input type="number" id='min_adhesion' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_adhesion' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+        </div>
+      </div>
+      <div class='col-md-12 form-group'>
+        <label id='contact' class='label_expand'  onclick='expand(this)'>Contact Angle <span class='glyphicon glyphicon-triangle-top'></span></label>
+        <div>
+          <input type="number" id='min_contact' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_contact' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+        </div>
+      </div>
+      <div  class='col-md-12 form-group'>
+        <label id='friction' class='label_expand' onclick='expand(this)'>Friction <span class='glyphicon glyphicon-triangle-top'></span></label>
+        <div>
+          <input type="number" id='min_friction' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_friction' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+        </div>
+      </div>
+      <div  class='col-md-12 form-group'>
+        <label id='transmittence' class='label_expand'  onclick='expand(this)'>Transmittence <span class='glyphicon glyphicon-triangle-top'></span></label>
+        <div>
+          <input type="number" id='min_transmittence' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
+          <input type="number" id='max_transmittence' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+        </div>
+      </div>
+      <div class='col-md-12 form-group'>
+       <label id='wear' class='label_expand' onclick='expand(this)'>Wear Rate <span class='glyphicon glyphicon-triangle-top'></span></label>
+       <div>
+        <input type="number" id='min_wear' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
+        <input type="number" id='max_wear' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+      </div>
+    </div>
+    <div class='col-md-12 form-group'>
+      <label id='youngs' class='label_expand' onclick='expand(this)'>Young's Modulus<span class='glyphicon glyphicon-triangle-top'></span></label>
+      <div>
+        <input type="number" id='min_youngs' class='col-md-6 form-control' placeholder='Min' onkeyup='displaySearchResults()' />
+        <input type="number" id='max_youngs' class='col-md-6 form-control' placeholder='Max' onkeyup='displaySearchResults()' />
+      </div>
+    </div>
+  </form>
+</div>
 
-  <!-- SEARCH RESULTS ---->
-  <div class='col-md-8 col-md-offset-1'>
-  <table id='search_table' class='table table-responsive table-striped' style='width:100%;'>
+
+<!-- SEARCH RESULTS ---->
+<div class='col-md-9' style='padding-left: 50px;'>
+  <table id='search_table' class='table table-responsive table-striped compact hover' cellspacing='0' width='100%'>
     <thead>
       <tr>
-          <th>Sample</th>
-          <th>Coating</th>
-          <th>Thickness</th>
-          <th class='roughness column_hide'>Roughness</th>
-          <th class='adhesion column_hide'>Adhesion</th>
-          <th class='contact column_hide'>C. Angle</th>
-          <th class='friction column_hide'>Friction</th>
-          <th class='transmittence column_hide'>Transm.</th>
-          <th class='wear column_hide'>Wear Rate</th>
-          <th class='youngs column_hide'>Young's M.</th>
-        </tr>
+        <th>Sample</th>
+        <th>Coating</th>
+        <th>Thickness</th>
+        <th class='roughness column_hide'>Roughness (Ra)</th>
+        <th class='roughness column_hide'>Roughness (Rz)</th>
+        <th class='adhesion column_hide'>Adhesion</th>
+        <th class='contact column_hide'>C. Angle</th>
+        <th class='friction column_hide'>Friction</th>
+        <th class='transmittence column_hide'>Transm.</th>
+        <th class='wear column_hide'>Wear Rate</th>
+        <th class='youngs column_hide'>Young's M.</th>
+      </tr>
     </thead>
     <tbody>
-    <?
-    while($row = mysqli_fetch_array($allSamplesResult)){
-      
-      // Coating
-      // $coatingSql = "SELECT prcs_coating
-      //               FROM process
-      //               WHERE sample_ID = '$row[0]';";
-      // $coating = mysqli_fetch_row(mysqli_query($link, $coatingSql))[0];
+      <?
+      while($row = mysqli_fetch_array($allSamplesResult)){
+        
+        $prcsID = $row['prcsID'];
+        $thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 1
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $thicknessRow = mysqli_fetch_row(mysqli_query($link, $thicknessSql));
 
-      // Thickness
-      // $thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3), a.anlys_eq_prop_unit
-      //         FROM anlys_result r, anlys_eq_prop a
-      //         WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$row[0]' AND r.anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
-      //         FROM anlys_eq_prop
-      //         WHERE anlys_prop_ID = (SELECT anlys_prop_ID
-      //                               FROM anlys_property
-      //                               WHERE anlys_prop_name LIKE 'Thickness'))
-      //         GROUP BY r.anlys_eq_prop_ID
-      //         ORDER BY r.anlys_res_ID DESC
-      //         LIMIT 1;";
-      $prcsID = $row['prcsID'];
-      $thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
-      FROM anlys_result r, anlys_eq_prop a, anlys_property p
-      WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
-      a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 1
-      GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
-      $thicknessRow = mysqli_fetch_row(mysqli_query($link, $thicknessSql));
-      
-      $adhesionSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 0) as avegResult, a.anlys_eq_prop_unit
-      FROM anlys_result r, anlys_eq_prop a, anlys_property p
-      WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
-      a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 4
-      GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
-      $adhesionRow = mysqli_fetch_row(mysqli_query($link, $adhesionSql));
+        $roughnessSql = "SELECT TRUNCATE(AVG(r.anlys_res_1), 3) as ra, TRUNCATE(AVG(r.anlys_res_2), 3) as rz, a.anlys_param_1_unit, a.anlys_param_2_unit 
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 2
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $roughnessRow = mysqli_fetch_row(mysqli_query($link, $roughnessSql));
+        
+        $adhesionSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 0) as avegResult, a.anlys_eq_prop_unit
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 4
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $adhesionRow = mysqli_fetch_row(mysqli_query($link, $adhesionSql));
 
-      $contactAngleSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
-      FROM anlys_result r, anlys_eq_prop a, anlys_property p
-      WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
-      a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 6
-      GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
-      $contactAngleRow = mysqli_fetch_row(mysqli_query($link, $contactAngleSql));
+        $contactAngleSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 6
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $contactAngleRow = mysqli_fetch_row(mysqli_query($link, $contactAngleSql));
 
-      $frictionSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
-      FROM anlys_result r, anlys_eq_prop a, anlys_property p
-      WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
-      a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 8
-      GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
-      $frictionRow = mysqli_fetch_row(mysqli_query($link, $frictionSql));
+        $frictionSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 8
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $frictionRow = mysqli_fetch_row(mysqli_query($link, $frictionSql));
 
-      $transmittenceSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
-      FROM anlys_result r, anlys_eq_prop a, anlys_property p
-      WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
-      a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 9
-      GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
-      $transmittenceRow = mysqli_fetch_row(mysqli_query($link, $transmittenceSql));
+        $transmittenceSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 9
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $transmittenceRow = mysqli_fetch_row(mysqli_query($link, $transmittenceSql));
 
-      $wearRateSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
-      FROM anlys_result r, anlys_eq_prop a, anlys_property p
-      WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
-      a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 7
-      GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
-      $wearRateRow = mysqli_fetch_row(mysqli_query($link, $wearRateSql));
+        $wearRateSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 7
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $wearRateRow = mysqli_fetch_row(mysqli_query($link, $wearRateSql));
 
-      $youngsModulusSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
-      FROM anlys_result r, anlys_eq_prop a, anlys_property p
-      WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
-      a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 5
-      GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
-      $youngsModulusRow = mysqli_fetch_row(mysqli_query($link, $youngsModulusSql));
+        $youngsModulusSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
+        FROM anlys_result r, anlys_eq_prop a, anlys_property p
+        WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND
+        a.anlys_prop_ID = p.anlys_prop_ID AND r.prcs_ID = '$prcsID' AND p.anlys_prop_ID = 5
+        GROUP BY r.anlys_eq_prop_ID, r.prcs_ID;";
+        $youngsModulusRow = mysqli_fetch_row(mysqli_query($link, $youngsModulusSql));
 
 
-      echo"
+        echo"
         <tr>
           <td><a onclick='loadAndShowSampleModal(".$row[2].",".$row[0].")'>".$row[1]."</a></td>
           <td>".$row['coating']."</td>";
 
-        echo"
+          echo"
           <td>".$thicknessRow[0]." ".$thicknessRow[1]."</td>
-          <td class='roughness column_hide'></td>
+          <td class='roughness column_hide'>".$roughnessRow[0]." ".$roughnessRow[2]."</td>
+          <td class='roughness column_hide'> ".$roughnessRow[1]." ".$roughnessRow[3]."</td>
           <td class='adhesion column_hide'>".$adhesionRow[0]." ".$adhesionRow[1]."</td>
           <td class='contact column_hide'>".$contactAngleRow[0]." ".$contactAngleRow[1]."</td>
           <td class='friction column_hide'>".$frictionRow[0]." ".$frictionRow[1]."</td>
@@ -223,16 +205,16 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
           <td class='wear column_hide'>".$wearRateRow[0]." ".$wearRateRow[1]."</td>
           <td class='youngs column_hide'>".$youngsModulusRow[0]." ".$youngsModulusRow[1]."</td>
         </tr>";
-    }
-    ?>
+      }
+      ?>
 
     </tbody>
-</table>
-<!-- Sample Modals -->
-<div id="sample_modal" class="modal"></div>
+  </table>
+  <!-- Sample Modals -->
+  <div id="sample_modal" class="modal"></div>
 </div>
 
-  <!-- SearchPHP/searchResults.php -->
+<!-- SearchPHP/searchResults.php -->
 <!--   <div class="col-md-8 col-md-offset-1">
     <div id='search_results' class='table table-responsive'>
     </div>
@@ -252,150 +234,185 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
 // Do this for all input fields.
 
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseFloat( $('#min_thickness').val(), 10 );
-        var max = parseFloat( $('#max_thickness').val(), 10 );
-        var value = parseFloat( data[2] ) || 0; // use data for the age column
- 
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_thickness').val(), 10 );
+    var max = parseFloat( $('#max_thickness').val(), 10 );
+        var value = parseFloat( data[2] ) || 0; // choose column.
+        
         if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && value <= max ) ||
-             ( min <= value   && isNaN( max ) ) ||
-             ( min <= value   && value <= max ) )
+         ( isNaN( min ) && value <= max ) ||
+         ( min <= value   && isNaN( max ) ) ||
+         ( min <= value   && value <= max ) )
         {
-            return true;
+          return true;
         }
         return false;
-    }
-);
+      }
+      );
 
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseFloat( $('#min_adhesion').val(), 10 );
-        var max = parseFloat( $('#max_adhesion').val(), 10 );
-        var value = parseFloat( data[4] ) || 0; // use data for the age column
- 
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && value <= max ) ||
-             ( min <= value   && isNaN( max ) ) ||
-             ( min <= value   && value <= max ) )
-        {
-            return true;
-        }
-        return false;
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_ra').val(), 10 );
+    var max = parseFloat( $('#max_ra').val(), 10 );
+    var value = parseFloat( data[3] ) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
     }
-);
+    return false;
+  }
+  );
 
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseFloat( $('#min_contact').val(), 10 );
-        var max = parseFloat( $('#max_contact').val(), 10 );
-        var value = parseFloat( data[5] ) || 0; // use data for the age column
- 
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && value <= max ) ||
-             ( min <= value   && isNaN( max ) ) ||
-             ( min <= value   && value <= max ) )
-        {
-            return true;
-        }
-        return false;
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_rz').val(), 10 );
+    var max = parseFloat( $('#max_rz').val(), 10 );
+    var value = parseFloat( data[4] ) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
     }
-);
+    return false;
+  }
+  );
 
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseFloat( $('#min_friction').val(), 10 );
-        var max = parseFloat( $('#max_friction').val(), 10 );
-        var value = parseFloat( data[6] ) || 0; // use data for the age column
- 
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && value <= max ) ||
-             ( min <= value   && isNaN( max ) ) ||
-             ( min <= value   && value <= max ) )
-        {
-            return true;
-        }
-        return false;
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_adhesion').val(), 10 );
+    var max = parseFloat( $('#max_adhesion').val(), 10 );
+    var value = parseFloat( data[4] ) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
     }
-);
+    return false;
+  }
+  );
 
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseFloat( $('#min_transmittence').val(), 10 );
-        var max = parseFloat( $('#max_transmittence').val(), 10 );
-        var value = parseFloat( data[7] ) || 0; // use data for the age column
- 
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && value <= max ) ||
-             ( min <= value   && isNaN( max ) ) ||
-             ( min <= value   && value <= max ) )
-        {
-            return true;
-        }
-        return false;
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_contact').val(), 10 );
+    var max = parseFloat( $('#max_contact').val(), 10 );
+    var value = parseFloat( data[5] ) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
     }
-);
+    return false;
+  }
+  );
 
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseFloat( $('#min_wear').val(), 10 );
-        var max = parseFloat( $('#max_wear').val(), 10 );
-        var value = parseFloat( data[8] ) || 0; // use data for the age column
- 
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && value <= max ) ||
-             ( min <= value   && isNaN( max ) ) ||
-             ( min <= value   && value <= max ) )
-        {
-            return true;
-        }
-        return false;
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_friction').val(), 10 );
+    var max = parseFloat( $('#max_friction').val(), 10 );
+    var value = parseFloat( data[6] ) || 0;
+
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
     }
-);
+    return false;
+  }
+  );
 
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseFloat( $('#min_youngs').val(), 10 );
-        var max = parseFloat( $('#max_youngs').val(), 10 );
-        var value = parseFloat( data[9] ) || 0; // use data for the age column
- 
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && value <= max ) ||
-             ( min <= value   && isNaN( max ) ) ||
-             ( min <= value   && value <= max ) )
-        {
-            return true;
-        }
-        return false;
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_transmittence').val(), 10 );
+    var max = parseFloat( $('#max_transmittence').val(), 10 );
+    var value = parseFloat( data[7] ) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
     }
-);
- 
+    return false;
+  }
+  );
+
+$.fn.dataTable.ext.search.push(
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_wear').val(), 10 );
+    var max = parseFloat( $('#max_wear').val(), 10 );
+    var value = parseFloat( data[8] ) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
+    }
+    return false;
+  }
+  );
+
+$.fn.dataTable.ext.search.push(
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_youngs').val(), 10 );
+    var max = parseFloat( $('#max_youngs').val(), 10 );
+    var value = parseFloat( data[9] ) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
+    }
+    return false;
+  }
+  );
+
 $(document).ready(function() {
 
-    $('#nav_search').button('toggle');
+  $('#nav_search').button('toggle');
     // Hide some of the search input fields. 
     expand($('.label_expand'));
     // Create the datatable
     var table = $('#search_table').DataTable({
-        'pageLength': 100
+      'pageLength': 100
     });
-     
+    
     // Event listeners for the search box. 
 
     $('#coating').keyup( function() {
-        table.search(this.value);
-        table.draw();
+      table.search(this.value);
+      table.draw();
     });
 
-    var inputFields = '#min_thickness, #max_thickness, #min_adhesion, #max_adhesion, #min_contact, #max_contact,'
-                      + '#min_friction, #max_friction, #min_transmittence, #max_transmittence, #min_wear, #max_wear,'
-                      + '#min_youngs, #max_youngs';
+    var inputFields = '#min_thickness, #max_thickness, #min_ra, #max_ra, #min_rz, #max_rz, #min_adhesion, #max_adhesion,'
+    + '#min_contact, #max_contact,'
+    + '#min_friction, #max_friction, #min_transmittence, #max_transmittence, #min_wear, #max_wear,'
+    + '#min_youngs, #max_youngs';
 
     $(inputFields).keyup( function() {
-        table.draw();
+      table.draw();
     });
 
-});
+  });
 
 var modal = document.getElementById('sample_modal');
 // Display the modal. 
