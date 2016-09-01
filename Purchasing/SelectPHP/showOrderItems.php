@@ -110,20 +110,11 @@ $departmentSql2 = "SELECT department_name
                           $departmentResult2 = mysqli_query($link, $departmentSql2);
                           while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
                             if($departmentRow[0] == $departmentRow2[0]){
-                              echo "<option selected value='".$departmentRow2[0]."' >".$departmentRow2[0]." -hello</option>";
+                              echo "<option selected value='".$departmentRow2[0]."' >".$departmentRow2[0]."</option>";
                             }
                             else{
                               echo "<option value='".$departmentRow2[0]."'>".$departmentRow2[0]."</option>";
                             }
-                            // echo "<option value='".$departmentRow2[0]."'"; if($departmentRow[0] == $departmentRow2[0]){echo" selected";} echo">".$departmentRow2[0]."</option>";
-                          //   echo "<option value='".$departmentRow2[0]."'>".$departmentRow2[0]."</option>";
-                          //   if($departmentRow[0] == $departmentRow2[0]){
-                          //     echo'
-                          //   <script>
-                          //   dep = String('.json_encode($departmentRow[0]).');
-                          //   $("select option[value=\'"+dep+"\']").attr("selected","selected");
-                          // </script>';
-                          //   }
                           }
 
                           echo"

@@ -70,7 +70,6 @@ ul
     margin: auto;
 }
 
-
 /* FEEDBACK */ 
 
 #feedback_form{
@@ -79,6 +78,28 @@ ul
 .color_success{
     color: #5CB85C;
 }
+
+/* SEARCH  */
+
+#search_table td.column_hide, th.column_hide{
+    display: none;
+}
+
+#search_table td.column_display, th.column_display{
+    display: table-cell;
+}
+
+#search_samples_form input[type=number]{
+    width: 90px;
+} 
+#search_samples_form div.col-md-12{
+    padding:0px;
+} 
+
+/*.dataTables_filter {
+    display: none; 
+}*/
+
 
 /* ANALYZE */
 .table_style_text{
@@ -96,9 +117,6 @@ ul
     font-variant: normal;
     font-style: normal;
     color: -internal-quirk-inherit;
-}
-#search_thickness_label{
-    padding-left: 0px;
 }
 .custom_padding.no_left_padding{
     padding-left: 0px;
