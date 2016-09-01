@@ -75,12 +75,15 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
     <tbody>
     <?
     while($row = mysqli_fetch_array($allSamplesResult)){
-    	echo"
-    		<tr>
-    			<td><a onclick='loadAndShowSampleModal(".$row[2].",".$row[0].")'>".$row[1]."</a></td>
-    			<td>Coating</td>";
-      // Get the thickness of the sample. 
-    	$thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3), a.anlys_eq_prop_unit
+    	
+      // Coating
+      $coatingSql = "SELECT prcs_coating
+                    FROM process
+                    WHERE sample_ID = '$row[0]';";
+      $coating = mysqli_fetch_row(mysqli_query($link, $coatingSql))[0];
+
+      // Thickness
+      $thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3), a.anlys_eq_prop_unit
               FROM anlys_result r, anlys_eq_prop a
               WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$row[0]' AND r.anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
               FROM anlys_eq_prop
@@ -90,8 +93,13 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
               GROUP BY r.anlys_eq_prop_ID
               ORDER BY r.anlys_res_ID DESC
               LIMIT 1;";
-        $thicknessResult = mysqli_query($link, $thicknessSql);
-        $thicknessRow = mysqli_fetch_row($thicknessResult);
+        $thicknessRow = mysqli_fetch_row(mysqli_query($link, $thicknessSql));
+
+
+      echo"
+    		<tr>
+    			<td><a onclick='loadAndShowSampleModal(".$row[2].",".$row[0].")'>".$row[1]."</a></td>
+    			<td>".$coating."</td>";
 
        	echo"
     			<td>".$thicknessRow[0]." ".$thicknessRow[1]."</td>
@@ -102,7 +110,6 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
           <td class='transmittence column_hide'>Transmittence</td>
           <td class='wear column_hide'>Wear Rate</td>
           <td class='youngs column_hide'>Young's Modulus</td>
-        </tr>
     		</tr>";
     }
     ?>
@@ -124,5 +131,5 @@ var modal = document.getElementById('sample_modal');
 function loadAndShowSampleModal(sampleSetID,sampleID){
   loadSampleModal(sampleSetID, sampleID);
   modal.style.display = "block";
-  }
+}
  </script>

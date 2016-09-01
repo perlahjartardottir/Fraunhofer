@@ -69,6 +69,10 @@ $allCoatingsResult = mysqli_query($link, $allCoatingsSql);
 $allPositionsSql = "SELECT DISTINCT(prcs_position) from process;";
 $allPositionsResult = mysqli_query($link, $allPositionsSql);
 
+$sampleSetNameSql = "SELECT sample_set_name
+FROM sample_set
+WHERE sample_set_ID = '$sampleSetID';";
+
 ?>
 
 <head>
@@ -83,7 +87,7 @@ $allPositionsResult = mysqli_query($link, $allPositionsSql);
         <h4 class='custom_heading'>1. Choose a sample</h4>
         <div class='col-md-4 form-group'>
          <!-- Set combo box -->
-         <label>Set:</label>
+         <label>Set:<?php echo $sampleSetID;?></label>
          <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh(this.value)' style='width:auto;'>
           <option value='-1'>Choose a set</option>
           <?
@@ -222,8 +226,27 @@ $('#prcs_date').on('change', function() {
     )
 }).trigger('change')
 
+// Check if the user enters with a set that exists in the dropd down. 
+  var exists = false;
+  $('#sample_set_ID option').each(function(){
+      if (this.value == '<?php echo $sampleSetID; ?>') {
+          exists = true;
+      }
+  });
+  // If the down does not contain the set, add it to the drop down. 
+  if(!exists){
+    <?
+      $sampleSetName = mysqli_fetch_row(mysqli_query($link,$sampleSetNameSql))[0];
+    ?>
+    $('#sample_set_ID').append($('<option>', {
+        value: <?php echo $sampleSetID; ?>,
+        text: '<?php echo $sampleSetName; ?>'
+    }));
+  }
+
 // Make the dropdown list select the currently chosen sample set on refresh.
 $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+
 // Make tge dropdown list select the currently logged in user.
 $("#employee_initials").val(<?php echo $userID; ?>);
 
