@@ -73,6 +73,14 @@ $sampleSetNameSql = "SELECT sample_set_name
 FROM sample_set
 WHERE sample_set_ID = '$sampleSetID';";
 
+$formSql = "SELECT p.prcs_coating as coating, prcs_position as position, prcs_rotation as rotation,
+prcs_comment as comment, prcs_eq_ID as eqID
+FROM process p, sample s
+WHERE p.sample_ID = s.sample_ID AND s.sample_set_ID = '$sampleSetID'
+ORDER BY sample_name DESC
+LIMIT 1;";
+$form = mysqli_fetch_array(mysqli_query($link, $formSql));
+
 ?>
 
 <head>
@@ -87,7 +95,7 @@ WHERE sample_set_ID = '$sampleSetID';";
         <h4 class='custom_heading'>1. Choose a sample</h4>
         <div class='col-md-4 form-group'>
          <!-- Set combo box -->
-         <label>Set:<?php echo $sampleSetID;?></label>
+         <label>Set:</label>
          <select id='sample_set_ID' class='form-control' onchange='updateSamplesInSetAndRefresh(this.value)' style='width:auto;'>
           <option value='-1'>Choose a set</option>
           <?
@@ -130,7 +138,7 @@ WHERE sample_set_ID = '$sampleSetID';";
         <div class='form-group row'>
           <label class='col-md-2 col-form-label'>Coating: </label>
           <div class='col-md-2'>
-            <input type='text' list='coatings' id='prcs_coating' name='prcs_coating' class='form-control'>
+            <input type='text' list='coatings' id='prcs_coating' name='prcs_coating' class='form-control' value='<?php echo $form["coating"]; ?>'>
             <datalist id='coatings'>
             <?
               while($coatingRow = mysqli_fetch_array($allCoatingsResult)){
@@ -142,7 +150,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           </div>
           <label class='col-md-2 col-form-label'>Position: </label>
           <div class='col-md-2'>
-            <input type='text' list='positions' id='prcs_position' name='prcs_position' class='form-control'>
+            <input type='text' list='positions' id='prcs_position' name='prcs_position' class='form-control' value='<?php echo $form["position"]; ?>'>
             <datalist id='positions'>
             <?
               while($positionRow = mysqli_fetch_array($allPositionsResult)){
@@ -154,7 +162,7 @@ WHERE sample_set_ID = '$sampleSetID';";
           </div>
           <label class='col-md-2 col-form-label'>Rotation: </label>
           <div class='col-md-2'>
-            <input type='number' id='prcs_rotation' name='prcs_rotation' class='form-control' value=''>
+            <input type='number' id='prcs_rotation' name='prcs_rotation' class='form-control' value='<?php echo $form["rotation"]; ?>'>
           </div>
         </div>
         <div class='form-group row'>
@@ -163,7 +171,12 @@ WHERE sample_set_ID = '$sampleSetID';";
             <select id='prcs_eq_acronyms' class='form-control'>
               <?
               while($row = mysqli_fetch_row($prcsEquipementResult)){
-                echo "<option value='".$row[0]."'>".$row[2]."</option>";
+                if($row[0] === $form['eqID']){
+                  echo "<option selected value='".$row[0]."'>".$row[2]."</option>";
+                }
+                else{
+                  echo "<option value='".$row[0]."'>".$row[2]."</option>";
+                }
               }
               ?>
             </select>
@@ -172,7 +185,7 @@ WHERE sample_set_ID = '$sampleSetID';";
         <div class='form-group row'>
           <label class='col-md-2 col-form-label'>Comment:</label>
           <div class='col-md-2'>
-            <textarea  id='prcs_comment' name='prcs_comment' class='form-control custom_comment' value=''></textarea>
+            <textarea  id='prcs_comment' name='prcs_comment' class='form-control custom_comment'><?php echo $form["comment"]; ?></textarea>
           </div>
           <!-- <label class='col-md-2 col-form-label'>File: (No functionality) </label>
           <div class='col-md-4'>
