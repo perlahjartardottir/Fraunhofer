@@ -43,7 +43,7 @@
  ?>
 
  <head>
-  <title>Fraunhofer CCD</title>
+  <title>Data Analysis</title>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body>

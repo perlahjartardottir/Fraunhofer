@@ -57,7 +57,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 ?>
 
 <head>
-  <title>Fraunhofer CCD</title>
+  <title>Data Analysis</title>
   <script>
       var bootstrapBlue = "#337AB7";
       var bootstrapDarkBlue = "#23527C";

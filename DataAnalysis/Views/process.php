@@ -84,7 +84,7 @@ $form = mysqli_fetch_array(mysqli_query($link, $formSql));
 ?>
 
 <head>
-  <title>Fraunhofer CCD</title>
+  <title>Data Analysis</title>
 </head>
 <body>
   <?php include '../header.php';?>

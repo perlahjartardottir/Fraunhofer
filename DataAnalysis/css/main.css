@@ -81,6 +81,9 @@ ul
 #search_samples_form input[type=number]{
     width: 90px;
 } 
+#search_samples_form input[type=date]{
+    width: 180px;
+} 
 #search_samples_form div.col-md-12{
     padding:0px;
 } 
@@ -88,7 +91,7 @@ ul
     width: 180px;
 } 
 #search_table_wrapper{
-    width:105%;
+    width:109%;
 }
 
 /* ANALYZE */

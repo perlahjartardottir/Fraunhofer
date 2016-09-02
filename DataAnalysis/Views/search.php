@@ -18,7 +18,7 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
 
 ?>
 <head>
-  <title>Fraunhofer CCD</title>
+  <title>Data Analysis</title>
 </head>
 <body>
   <?php include '../header.php'; ?>
@@ -26,20 +26,6 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
     <div class='row well well-lg col-md-3'>
       <form id='search_samples_form'>
         <h4 class='custom_heading'>Search by:</h4>
-<!--         <div class='col-md-12 form-group'>
-          <label>Sample Name: </label>
-          <input type="text" id='sample_name' class='form-control' onkeyup='displaySearchResults()' />
-        </div>
-
-   <div class='col-md-12 form-group'>
-          <label>Initialization date from:</label>
-          <input type="date" id='begin_date' class='form-control' onchange='displaySearchResults()' />
-        </div>
-        <div class='col-md-12 form-group'>
-          <label>Initialization date to:</label>
-          <input type="date" id='end_date' class='form-control' onchange='displaySearchResults()'/>
-        </div> -->
-
         <!-- SEARCH COLUMNS ---->
         <div class='col-md-12 form-group'>
           <label>Coating</label>
@@ -47,6 +33,21 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
             <input type="text" id='coating' class='col-md-6 form-control' placeholder='E.g. AlTiN' onkeyup='displaySearchResults()' />
           </div>
         </div>
+        <div class='col-md-12 form-group'>
+          <label>Sample initialized after:</label>
+          <div>
+            <input type="date" id='min_date' class='col-md-6 form-control' />
+            <input type='hidden' id='min_date_hidden' />
+          </div>
+        </div>
+        <div class='col-md-12 form-group'>
+          <label>Sample initalized before:</label>
+          <div>
+            <input type="date" id='max_date' class='form-control' />
+            <input type='hidden' id='max_date_hidden' />
+          </div>
+        </div>
+
         <div class='col-md-12 form-group'>
          <label>Thickness</label>
          <div>
@@ -130,7 +131,7 @@ $allSamplesResult = mysqli_query($link, $allSamplesSql);
     <tbody>
       <?
       while($row = mysqli_fetch_array($allSamplesResult)){
-        
+
         $prcsID = $row['prcsID'];
         $thicknessSql = "SELECT TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_eq_prop_unit
         FROM anlys_result r, anlys_eq_prop a, anlys_property p
@@ -386,6 +387,26 @@ $.fn.dataTable.ext.search.push(
   }
   );
 
+$.fn.dataTable.ext.search.push(
+  function( settings, data, dataIndex ) {
+    var min = parseFloat( $('#min_date_hidden').val(), 10 );
+    var max = parseFloat( $('#max_date_hidden').val(), 10 );
+    var value = ( data[0] ).substring(4,10) || 0;
+    // console.log(min);
+    // console.log(max);
+    // console.log(value);
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+     ( isNaN( min ) && value <= max ) ||
+     ( min <= value   && isNaN( max ) ) ||
+     ( min <= value   && value <= max ) )
+    {
+      return true;
+    }
+    return false;
+  }
+  );
+
 $(document).ready(function() {
 
   $('#nav_search').button('toggle');
@@ -408,7 +429,21 @@ $(document).ready(function() {
     + '#min_friction, #max_friction, #min_transmittence, #max_transmittence, #min_wear, #max_wear,'
     + '#min_youngs, #max_youngs';
 
-    $(inputFields).keyup( function() {
+    $(inputFields).keyup( function(){
+      table.draw();
+    });
+
+    $('#min_date').change( function(){
+      // Format the date. Add 1 because we are searching for after the date.
+      var minDate = parseInt($('#min_date').val().replace(/-/g,"").substring(2,8)) + 1;
+      $('#min_date_hidden').val(minDate);
+      table.draw();
+    });
+
+    $('#max_date').change( function(){
+      // Format the date. Add 1 because we are searching for before the date.
+      var minDate = parseInt($('#max_date').val().replace(/-/g,"").substring(2,8)) - 1 ;
+      $('#max_date_hidden').val(minDate);
       table.draw();
     });
 
