@@ -79,8 +79,8 @@ $_SESSION["fileValidation"]["maxSize"] = 5000000;
       </button>
       <ul class='dropdown-menu'>
         <li><a onclick="location.href='sampleOverview.php'">Sample Overview</a></li>
-        <li><a onclick="location.href='anlysEquipment.php'">Analysis equipment</a></li>
-        <li><a onclick="location.href='prcsEquipment.php'">Process equipment</a></li>
+        <li><a onclick="location.href='anlysEquipment.php'">Analysis Equipment</a></li>
+        <li><a onclick="location.href='prcsEquipment.php'">Process Equipment</a></li>
       </ul>
     </div>
   </div>
