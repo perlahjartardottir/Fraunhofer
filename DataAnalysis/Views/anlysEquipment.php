@@ -30,7 +30,7 @@
    die("Database query failed: " . mysql_error());
  }
 
- $allEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID
+ $allEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID, e.anlys_eq_active
  FROM anlys_equipment e, anlys_eq_prop a, anlys_property p
  WHERE e.anlys_eq_ID = a.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
  GROUP BY e.anlys_eq_ID
@@ -203,8 +203,15 @@
 
            <div class='modal-footer col-md-12'>";
             if($securityLevel >= 4){
+              if($row[4] == 1){
+                echo"
+                <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].",this.form)'></button>";
+              }
+              else{
+                echo"
+                <button type='button' class='btn btn-success' onclick='activateAnlysEquipment(".$row[0].")'>Activate</button>";
+              }
               echo"
-                <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deleteAnalysisEquipment(".$row[0].",this.form)'></button>
                 <button type='button' class='btn btn-success' onclick='editAnalysisEquipment(".$row[0].",this.form)'>Save</button>";
             }
             echo"

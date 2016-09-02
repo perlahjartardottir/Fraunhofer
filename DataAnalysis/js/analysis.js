@@ -84,6 +84,24 @@ function deleteAnalysisEquipment(eqID){
   	}
   }
 
+  function activateAnlysEquipment(eqID){
+  // Display a confirmation popup window before proceeding.
+  var answer = confirm("Are you sure you want to activate this equipment?");
+  if (answer === true){
+    $.ajax({
+      url: "../UpdatePHP/activateAnalysisEquipment.php",
+      type: "POST",
+      data: {
+        eqID : eqID,
+      },
+      success: function(data, status, xhr){
+        console.log(data);
+        window.location.reload(true);
+      }
+    });
+  }
+}
+
 
   function deleteAnalysisEqProperty(propID, eqID, form){
   	var errorMessage = "";

@@ -68,7 +68,7 @@ $_SESSION["fileValidation"]["maxSize"] = 5000000;
 <div class="container nav_bar_lower">
   <div class='btn-group col-md-12 nav_bar_lower' data-toggle='buttons'>
     <button type='button' id='nav_home' class='btn btn-primary col-md-2' onclick="location.href='dataAnalysis.php'">Home</button>
-    <button type='button' id='nav_sample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add sample</button>
+    <button type='button' id='nav_sample' class='btn btn-primary col-md-2' onclick="location.href='addSample.php'">Add Sample</button>
     <button type='button' id='nav_process' class='btn btn-primary col-md-2' onclick="location.href='process.php'">Process</button>
     <button type='button' id='nav_analyze' class='btn btn-primary col-md-2' onclick="location.href='analyze.php'">Analyze</button>
     <button type='button' id='nav_search' class='btn btn-primary col-md-2' onclick="location.href='search.php'">Search</button>
@@ -80,6 +80,7 @@ $_SESSION["fileValidation"]["maxSize"] = 5000000;
       <ul class='dropdown-menu'>
         <li><a onclick="location.href='sampleOverview.php'">Sample Overview</a></li>
         <li><a onclick="location.href='anlysEquipment.php'">Analysis equipment</a></li>
+        <li><a onclick="location.href='prcsEquipment.php'">Process equipment</a></li>
       </ul>
     </div>
   </div>
