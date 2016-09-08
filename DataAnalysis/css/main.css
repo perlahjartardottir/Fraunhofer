@@ -46,6 +46,9 @@ textarea.form-control.custom_comment{
 select.form-control.custom_select{
     width: 155px;
 }
+input.form-control.custom_datalist{
+    width: 155px;
+}
 ul
 {
     list-style-type: none;

@@ -125,50 +125,19 @@ $form = mysqli_fetch_array(mysqli_query($link, $formSql));
           </div>
           <label class='col-xs-2 col-form-label'>Employee:</label>
           <div class='col-md-2'>
-            <select id='employee_initials' class='form-control'>";
+            <select id='employee_initials' class='form-control custom_select'>";
               <?
               while($row = mysqli_fetch_row($employeeInitialsResult)){
                 echo "<option value='".$row[0]."'>".$row[2]."</option>";
               }
               ?>
             </select>
-            <span id='employee_name' class='table_style_text'></span>
-          </div>
-        </div>
-        <div class='form-group row'>
-          <label class='col-md-2 col-form-label'>Coating: </label>
-          <div class='col-md-2'>
-            <input type='text' list='coatings' id='prcs_coating' name='prcs_coating' class='form-control' value='<?php echo $form["coating"]; ?>'>
-            <datalist id='coatings'>
-            <?
-              while($coatingRow = mysqli_fetch_array($allCoatingsResult)){
-                echo "<option value='".$coatingRow[0]."'></option>";
-              }
-            ?>
-
-            </datalist>
-          </div>
-          <label class='col-md-2 col-form-label'>Position: </label>
-          <div class='col-md-2'>
-            <input type='text' list='positions' id='prcs_position' name='prcs_position' class='form-control' value='<?php echo $form["position"]; ?>'>
-            <datalist id='positions'>
-            <?
-              while($positionRow = mysqli_fetch_array($allPositionsResult)){
-                echo "<option value='".$positionRow[0]."'></option>";
-              }
-            ?>
-
-            </datalist>
-          </div>
-          <label class='col-md-2 col-form-label'>Rotation: </label>
-          <div class='col-md-2'>
-            <input type='number' id='prcs_rotation' name='prcs_rotation' class='form-control' value='<?php echo $form["rotation"]; ?>'>
           </div>
         </div>
         <div class='form-group row'>
           <label class='col-md-2 col-form-label'>Equipment: </label>
           <div class='col-md-2'>
-            <select id='prcs_eq_acronyms' class='form-control'>
+            <select id='prcs_eq_acronyms' class='form-control custom_select'>
               <?
               while($row = mysqli_fetch_row($prcsEquipementResult)){
                 if($row[0] === $form['eqID']){
@@ -181,19 +150,48 @@ $form = mysqli_fetch_array(mysqli_query($link, $formSql));
               ?>
             </select>
           </div>
+          <label class='col-md-2 col-form-label'>Run#: </label>
+          <div class='col-md-2'>
+            <input type='number' id='prcs_run' name='prcs_run' class='form-control' value='1'>
+          </div>
+          <label class='col-md-2 col-form-label'>Run ID: </label>
+          <div class='col-md-2'>
+            <p id='prcs_run_ID'></p>
+          </div>
+        </div>
+        <div class='form-group row'>
+          <label class='col-md-2 col-form-label'>Coating: </label>
+          <div class='col-md-2'>
+            <input type='text' list='coatings' id='prcs_coating' name='prcs_coating' class='form-control custom_datalist' value='<?php echo $form["coating"]; ?>'>
+            <datalist id='coatings'>
+            <?
+              while($coatingRow = mysqli_fetch_array($allCoatingsResult)){
+                echo "<option value='".$coatingRow[0]."'></option>";
+              }
+            ?>
+            </datalist>
+          </div>
+          <label class='col-md-2 col-form-label'>Position: </label>
+          <div class='col-md-2'>
+            <input type='text' list='positions' id='prcs_position' name='prcs_position' class='form-control custom_datalist' value='<?php echo $form["position"]; ?>'>
+            <datalist id='positions'>
+            <?
+              while($positionRow = mysqli_fetch_array($allPositionsResult)){
+                echo "<option value='".$positionRow[0]."'></option>";
+              }
+            ?>
+            </datalist>
+          </div>
+          <label class='col-md-2 col-form-label'>Rotation: </label>
+          <div class='col-md-2'>
+            <input type='number' id='prcs_rotation' name='prcs_rotation' class='form-control' value='<?php echo $form["rotation"]; ?>'>
+          </div>
         </div>
         <div class='form-group row'>
           <label class='col-md-2 col-form-label'>Comment:</label>
           <div class='col-md-2'>
             <textarea  id='prcs_comment' name='prcs_comment' class='form-control custom_comment'><?php echo $form["comment"]; ?></textarea>
           </div>
-          <!-- <label class='col-md-2 col-form-label'>File: (No functionality) </label>
-          <div class='col-md-4'>
-            <label class='btn btn-default btn-file'>Browse...
-              <input type='file' id='fileToUpload' name='fileToUpload' style='display: none;' onchange='$("#sample_file_path").html(getFileName($(this).val()));'>
-            </label>
-            <span id='sample_file_path' class='table_style_text'></span>
-          </div> -->
         </div>
         <div class='form-group row'>
           <button type='button' class='btn btn-primary col-md-2' onclick='addProcess("<? echo $sampleID; ?>",this.form)' style='float:right;'>Add</button>
@@ -201,16 +199,25 @@ $form = mysqli_fetch_array(mysqli_query($link, $formSql));
       </form>
     </div>
     <div id='process_table' class='col-md-12'></div>
-<!--     <div class='col-md-12'>
-      <button type='button' id='prcs_sample_overview_btn' class='btn btn-primary col-md-2' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
-    </div> -->
   </div>
 </div>
 <script>
+
+function generateRunID(){
+    var eqID = $('#prcs_eq_acronyms').val();
+    var acr = $('#prcs_eq_acronyms option[value="'+eqID+'"]').text()
+    var date = $('#prcs_date').val().replace(/-/g,"").substring(2,8);
+    var run = $('#prcs_run').val();
+    var runPadded = ('00' + run).substring(run.length);
+    var runID = acr+date+runPadded;
+    $('#prcs_run_ID').html(runID);
+}
+
   $(document).ready(function(){
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
     displayProcessTable(<?php echo $sampleID; ?>);
     $("#nav_process").button('toggle');
+    generateRunID();
   })
 
 // Check if the user enters with a set that exists in the dropd down. 

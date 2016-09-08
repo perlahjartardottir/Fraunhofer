@@ -118,7 +118,7 @@ $prcsAllEqResult = mysqli_query($link, $prcsAllEqSql);
               <div class='form-group'>
                 <label>Acronym: </label>
                 <input type='text' id='new_eq_acronym' name='new_eq_acronym' class='form-control'>
-                <p class='text-muted'>Acronym must be unique.</p>
+                <p class='text-muted'>Used when generating process run id. Must be unique.</p>
               </div>
               <div class='form-group'>
                 <label>Comment:</label>
@@ -164,6 +164,7 @@ $prcsAllEqResult = mysqli_query($link, $prcsAllEqSql);
                 <div class='form-group'>
                   <label>Acronym:</label>
                   <input type='text' id='eq_acronym' name='eq_acronym' value='".$row[2]."' class='form-control'>
+                  <p class='text-muted'>Used when generating process run id. Must be unique.</p>
                 </div>
                 <div class='form-group'>
                   <label>Comment:</label>
