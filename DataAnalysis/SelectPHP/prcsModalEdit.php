@@ -6,7 +6,7 @@ session_start();
 $prcsID = mysqli_real_escape_string($link, $_POST["prcsID"]);
 $sampleID = $_SESSION["sampleID"];
 $sql = "SELECT prcs_coating as coating, prcs_eq_ID as equipment, prcs_position as position, prcs_rotation as rotation,
-		prcs_comment as comment, prcs_date as date
+		prcs_comment as comment, prcs_date as date, prcs_run_number as run, prcs_run_ID as runID
 FROM process
 WHERE prcs_ID = '$prcsID';";
 $row = mysqli_fetch_array(mysqli_query($link, $sql));
@@ -41,6 +41,31 @@ echo"
       <div class='modal-body'>
         <div id='error_message_edit'></div>
           <div class='form-group'>
+            <label>Date:</label>
+            <input type='date' id='prcs_date' class='form-control' value='".$row['date']."' style='width:100%;' onchange='generateRunID(this.form)'>
+          </div>
+          <div class='form-group'>
+            <label>Equipment:</label>
+            <select id='prcs_eq' class='form-control' value='".$row['equipment']."' onchange='generateRunID(this.form)'>";
+              while($eqRow = mysqli_fetch_row($prcsEquipementResult)){
+                if($row['equipment'] === $eqRow[0]){
+                  echo "<option selected value='".$eqRow[0]."'>".$eqRow[2]."</option>";
+                }
+                else{
+                  echo "<option value='".$eqRow[0]."'>".$eqRow[2]."</option>";
+                }
+              }
+             echo"
+            </select>
+          </div>
+          <div class='form-group'>
+            <label>Run#:</label>
+            <input type='number' id='prcs_run' class='form-control' value='".$row['run']."' style='width:100%' onchange='generateRunID(this.form)'>     
+          </div>
+          <div class='form-group'>
+            <label>Run ID:</label><p style='display:block;' id='prcs_run_ID'>".$row['runID']."</p>          
+          </div>
+          <div class='form-group'>
           	<label>Coating:</label>
             <input type='text' list='coatings' id='prcs_coating' name='prcs_coating' class='form-control' value='".$row['coating']."'>
             <datalist id='coatings'>";
@@ -49,15 +74,6 @@ echo"
               }
           echo"
             </datalist>
-          </div>
-          <div class='form-group'>
-          	<label>Equipment:</label>
-          	<select id='prcs_eq' class='form-control' value='".$row['equipment']."'>";
-              while($eqRow = mysqli_fetch_row($prcsEquipementResult)){
-                echo "<option value='".$eqRow[0]."'>".$eqRow[2]."</option>";
-              }
-             echo"
-          	</select>
           </div>
           <div class='form-group'>
           	<label>Position:</label>
@@ -71,7 +87,7 @@ echo"
           </div>
           <div class='form-group'>
           	<label>Rotation:</label>
-          	<input type='number' id='prcs_rotation' class='form-control' value='".$row['rotation']."'>
+          	<input type='number' id='prcs_rotation' class='form-control' value='".$row['rotation']."' style='width:100%'>
           </div>";
 
         echo"
@@ -94,4 +110,14 @@ echo"
   document.getElementById('close_modal').onclick = function(){
     modal.style.display = 'none';
   }
+  function generateRunID(form){
+    var eqID = $(form).find('#prcs_eq').val();
+    var acr = $(form).find('#prcs_eq option[value="'+eqID+'"]').text()
+    var date = $(form).find('#prcs_date').val().replace(/-/g,"").substring(2,8);
+    var run = $(form).find('#prcs_run').val();
+    var runPadded = ('00' + run).substring(run.length);
+    var runID = acr+date+runPadded;
+    $(form).find('#prcs_run_ID').html(runID);
+  }
+
 </script>

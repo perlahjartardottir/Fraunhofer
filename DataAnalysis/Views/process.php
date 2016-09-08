@@ -73,11 +73,12 @@ $sampleSetNameSql = "SELECT sample_set_name
 FROM sample_set
 WHERE sample_set_ID = '$sampleSetID';";
 
+// Get information from latest process to fill in the form. 
 $formSql = "SELECT p.prcs_coating as coating, prcs_position as position, prcs_rotation as rotation,
-prcs_comment as comment, prcs_eq_ID as eqID
+prcs_comment as comment, prcs_eq_ID as eqID, prcs_run_number as run
 FROM process p, sample s
 WHERE p.sample_ID = s.sample_ID AND s.sample_set_ID = '$sampleSetID'
-ORDER BY sample_name DESC
+ORDER BY p.prcs_ID DESC
 LIMIT 1;";
 $form = mysqli_fetch_array(mysqli_query($link, $formSql));
 
@@ -121,7 +122,7 @@ $form = mysqli_fetch_array(mysqli_query($link, $formSql));
         <div class='form-group row'>
           <label class='col-xs-2 col-form-label'>Date:</label>
           <div class='col-md-2'>
-            <input type='date' id='prcs_date' name='prcs_date' class='custom_date form-control' value='<? echo date("Y-m-d") ?>' data-date='' data-date-format='YYYY-MM-DD'>
+            <input type='date' id='prcs_date' name='prcs_date' class='custom_date form-control' value='<? echo date("Y-m-d") ?>' onchange='generateRunID()' data-date='' data-date-format='YYYY-MM-DD'>
           </div>
           <label class='col-xs-2 col-form-label'>Employee:</label>
           <div class='col-md-2'>
@@ -137,7 +138,7 @@ $form = mysqli_fetch_array(mysqli_query($link, $formSql));
         <div class='form-group row'>
           <label class='col-md-2 col-form-label'>Equipment: </label>
           <div class='col-md-2'>
-            <select id='prcs_eq_acronyms' class='form-control custom_select'>
+            <select id='prcs_eq_acronyms' class='form-control custom_select' onchange='generateRunID()'>
               <?
               while($row = mysqli_fetch_row($prcsEquipementResult)){
                 if($row[0] === $form['eqID']){
@@ -152,7 +153,7 @@ $form = mysqli_fetch_array(mysqli_query($link, $formSql));
           </div>
           <label class='col-md-2 col-form-label'>Run#: </label>
           <div class='col-md-2'>
-            <input type='number' id='prcs_run' name='prcs_run' class='form-control' value='1'>
+            <input type='number' id='prcs_run' name='prcs_run' class='form-control' value='<?php echo $form["run"]; ?>' onchange='generateRunID()'>
           </div>
           <label class='col-md-2 col-form-label'>Run ID: </label>
           <div class='col-md-2'>

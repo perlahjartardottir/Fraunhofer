@@ -6,7 +6,7 @@ $sampleID = mysqli_real_escape_string($link, $_POST["sampleID"]);
 $rowCounter = 0;
 
 $sql = "SELECT p.prcs_ID as prcsID, p.employee_ID as employee, p.prcs_date as date, p.prcs_coating as coating, p.prcs_eq_ID as eqID, p.prcs_position as position,
-    p.prcs_rotation as rotation, p.prcs_comment as comment, e.prcs_eq_acronym as eqAcronym
+    p.prcs_rotation as rotation, p.prcs_comment as comment, e.prcs_eq_acronym as eqAcronym, p.prcs_run_ID as runID
 FROM process p, prcs_equipment e
 WHERE p.prcs_eq_ID = e.prcs_eq_ID AND sample_ID = '$sampleID'
 ORDER BY p.prcs_ID DESC;";
@@ -20,6 +20,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
     <tr>
       <th></th>
       <th>Coating</th>
+      <th>Run ID</th>
       <th>Date</th>
       <th>Employee</th>
       <th>Equipment</th>
@@ -54,6 +55,7 @@ if($hasProcessInfo = mysqli_fetch_row($result)){
       <tr>
         <td><a class='glyphicon glyphicon-edit' onclick='loadAndShowPrcsModalEdit(".$row['prcsID'].")'></a></td>
         <td>".$row['coating']."</td>
+        <td>".$row['runID']."</td>
         <td>".$row['date']."</td>
         <td>".$employeeInitials."</td>
         <td>".$row['eqAcronym']."</td>

@@ -1,11 +1,5 @@
 function addProcess(sampleID, form){
-  errorMessage = "";
-  date = "";
-  employee = "";
-  coating = "";
-  position = "";
-  rotation = "";
-  comment = "";
+  var errorMessage = "";
 
   if(sampleID === "-1"){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Please choose a sample.</div>";
@@ -18,9 +12,14 @@ function addProcess(sampleID, form){
   position = $(form).find('#prcs_position').val();
   rotation = $(form).find('#prcs_rotation').val();
   comment = $(form).find('#prcs_comment').val();
+  run = $(form).find("#prcs_run").val();
+  runID = $(form).find("#prcs_run_ID").html();
 
   if(!coating){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: coating.</div>";
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating.</div>";
+  }
+  if(!run){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Run#.</div>";
   }
 
   if(errorMessage){
@@ -30,14 +29,16 @@ function addProcess(sampleID, form){
       url: "../InsertPHP/addProcess.php",
       type: "POST",
       data: {
-        sampleID : sampleID,
-        date : date, 
-        employee : employee,
-        coating : coating,
+        sampleID  : sampleID,
+        date      : date, 
+        employee  : employee,
+        coating   : coating,
         equipment : equipment,
-        position : position,
-        rotation : rotation,
-        comment : comment
+        position  : position,
+        rotation  : rotation,
+        comment   : comment,
+        run       : run,
+        runID     : runID
       },
       success: function(data,status, xhr){
        console.log(data);
@@ -96,6 +97,11 @@ function editPrcs(prcsID, form){
   position = $(form).find('#prcs_position').val();
   rotation = $(form).find('#prcs_rotation').val();
   comment = $(form).find('#prcs_comment').val();
+  run = $(form).find('#prcs_run').val();
+  runID = $(form).find('#prcs_run_ID').html();
+  console.log(run);
+  console.log(runID);
+
 
   if(coating === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: "+coating+".</div>";
@@ -113,7 +119,9 @@ function editPrcs(prcsID, form){
         eqID : eqID,
         position : position,
         rotation : rotation,
-        comment : comment
+        comment : comment,
+        run     : run,
+        runID   : runID
       },
       success: function(data, status, xhr){
         console.log(data);
