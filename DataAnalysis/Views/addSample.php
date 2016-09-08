@@ -45,7 +45,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 ?>
 
 <head>
-  <title>Fraunhofer CCD</title>
+  <title>Data Analysis</title>
 </head>
 <body>
   <?php include '../header.php'; ?>
@@ -53,18 +53,26 @@ WHERE sample_set_ID = '$sampleSetID';";
   <?php
 
 ?>
-
+  <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
   <div class='container'>
     <div class='row well well-lg'>
-      <h5>The sample set name is on the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
-      <h5>Samples can be edited or deleted in the overview table below the form.</h5>
+      <h5>The set name has the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
+      <h5>To edit a sample, choose it's set then click it's name in the overview table at the bottom of the page.</h5>
     </div>
     <div class='row well well-lg'>
       <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>
       <form role='form' action='../InsertPHP/addSample.php' method="post" enctype="multipart/form-data">
     <div class='col-md-6'>
       <div class='col-md-12 form-group'>
-        <label>Choose a set: </label>
+        <label>Choose a set (existing or new): </label>
         <select id='sample_set_ID' name='sample_set_ID' class='form-control' onchange='showSamplesInSetAndRefresh(this.value)'  style='width:auto;'>
           <option value='-1'>New</option>
           <?
@@ -112,7 +120,7 @@ WHERE sample_set_ID = '$sampleSetID';";
 
         echo"
         <div class='col-md-12 form-group'>
-          <label>Sample name: </label>
+          <label>Preview of sample name: </label>
           <br>
           <p>".$sampleName."</p>
           <input type='hidden' id='sample_name' name='sample_name' value='".$sampleName."'>
@@ -123,7 +131,7 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div> <!-- Sample -->
     <div class='col-md-6'>
       <div class='col-md-12 form-group'>
-        <label for='material' >Material: </label>
+        <label for='material' >Substrate/Base material: </label>
         <input list="materials" id='material' class='col-md-12 form-control'>
         <datalist id="materials">
           <?
@@ -148,7 +156,7 @@ WHERE sample_set_ID = '$sampleSetID';";
       <div id='error_message_picture' class='col-md-12'></div>
     </div> <!-- Details -->
     <div class='col-md-12'>
-      <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add</button>
+      <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add sample</button>
 <!--       <a href="../DownloadPHP/download.php?id=../readme.pdf">Download the cool PDF.</a> -->
     </div>
 

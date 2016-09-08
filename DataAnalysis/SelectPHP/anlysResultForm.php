@@ -11,7 +11,12 @@ $eqPropID = "-1";
 $maxFileSize = $_SESSION["fileValidation"]["maxSize"];
 $noPropResult = [];
 $propsWithAnlysResults = [];
+$prcsID = $_SESSION["prcsID"];
+if(!$prcsID){
+  $prcsID = -1;
+}
 
+// Don't display the form unless user has chosen equipment.
 if($propID !== "-1" && $eqID !== "-1"){
 
   $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
@@ -22,7 +27,7 @@ if($propID !== "-1" && $eqID !== "-1"){
   $propertyRow = mysqli_fetch_array($propertyResult);
   $eqPropID = $propertyRow[0];
 
-  $resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3
+  $resultsSql = "SELECT anlys_res_result, anlys_res_comment, anlys_res_date, anlys_res_1, anlys_res_2, anlys_res_3, prcs_ID as prcsID
   FROM anlys_result
   WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
   ORDER BY anlys_res_ID;";
@@ -59,11 +64,28 @@ $userIDSql = "SELECT employee_ID
            WHERE employee_name = '$user'";
 $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
+$coatingsSql = "SELECT p.prcs_ID, p.prcs_coating
+FROM process p
+WHERE p.sample_ID = '$sampleID'
+ORDER BY p.prcs_ID DESC;";
+$coatingsResult = mysqli_query($link, $coatingsSql);
 
 // The result form.
   echo"
   <form class='col-md-12' role='form' action='../InsertPHP/addAnlysResult.php' method='post' enctype='multipart/form-data' onsubmit='return anlysResultValidation(".$sampleID.",".$eqPropID.",this)'>
   <div id='error_message'></div>
+    <div class='form-group row'>
+       <label class='col-md-2 col-form-label'>Layer of coating:</label>
+      <div class='col-md-2'>
+        <select id='coating' name='coating' class='form-control custom_select' onchange='setPrcsIDAndRefresh()'>";
+            while($row = mysqli_fetch_row($coatingsResult)){
+              echo "<option value='".$row[0]."'>".$row[1]."</option>";
+            }
+      echo"
+          <option value='-1'>No Coating</option>
+       </select>
+      </div>
+    </div>
     <div class='form-group row'>
       <input type='hidden' id='eq_prop_ID' name='eq_prop_ID' value=".$eqPropID.">
       <label class='col-md-2 col-form-label'>Date:</label>
@@ -73,9 +95,9 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
       <label class='col-md-2 col-form-label'>Employee:</label>
       <div class='col-md-2'>
         <select id='employee_initials' name='employee_initials' class='form-control'>";
-            while($row = mysqli_fetch_row($employeeInitialsResult)){
-              echo "<option value='".$row[0]."'>".$row[2]."</option>";
-            }
+          while($row = mysqli_fetch_row($employeeInitialsResult)){
+            echo "<option value='".$row[0]."'>".$row[2]."</option>";
+          }
       echo"
        </select>
       </div>
@@ -163,17 +185,19 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 <script>
 
   $(document).ready(function(){
-    displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>);
+    displayAnlysResultTable(<?php echo $sampleID; ?>, <?php echo $eqPropID; ?>, <?php echo $prcsID; ?>);
 })
+        // Make the combo box select the currently chosen sample set.
+    $("#coating").val(<?php echo $prcsID; ?>)
 
     // Format the date input.
-    $('#res_date').on('change', function() {
+    $("#res_date").on("change", function(){
       this.setAttribute(
         'data-date',
         moment(this.value, 'YYYY-MM-DD')
         .format( this.getAttribute('data-date-format'))
         )
-    }).trigger('change')
+    }).trigger("change")
 
       // When user clicks res_res field when using thickness & Calotte Grinder calculate the thickness. 
       function calcCGThickness(){
@@ -194,20 +218,16 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
       // File uploading.
       // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications
-
       window.URL = window.URL || window.webkitURL;
-
       var fileSelect = document.getElementById("file_select"),
       fileElem = document.getElementById("anlys_file"),
       fileList = document.getElementById("file_list");
-
       fileSelect.addEventListener("click", function (e) {
         if (fileElem) {
           fileElem.click();
         }
         e.preventDefault(); // prevent navigation to "#"
       }, false);
-
       function handleFiles(files) {
         if (!files.length) {
           fileList.innerHTML = "<p>No files selected.</p>";

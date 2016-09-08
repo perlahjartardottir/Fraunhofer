@@ -16,7 +16,7 @@ $samplesOfTheDayResult = mysqli_query($link, $samplesOfTheDaySql);
 
 if(mysqli_fetch_row($samplesOfTheDayResult)){
 	echo"
-	<label>Sets initialized on this day:</label>";
+	<label>Sets previously initialized on this day:</label>";
 
 	$samplesOfTheDayResult = mysqli_query($link, $samplesOfTheDaySql);
 	while($row = mysqli_fetch_row($samplesOfTheDayResult)){
@@ -29,11 +29,11 @@ if(mysqli_fetch_row($samplesOfTheDayResult)){
 
 echo"
 <div class='form-group'>
-	<label>Set name: </label>
+	<label>Preview of set name: </label>
 	<p class='sample_set_name'>CCD-".$sampleSetDate."-</p><input type='number' id='sample_set_number' name='sample_set_number' class='form-control' style='display: inline-block;' min='1' max='99' value='$sampleSetNumber'></p>
 </div>
 <div class='form-group'>
-	<label>Sample name: </label>
+	<label>Preview of sample name: </label>
 	<p class='sample_set_name'>CCD-".$sampleSetDate."-<p id='sample_set_number_echo' name='sample_set_number_echo' style='display:inline;'>".$sampleSetNumber."</p>-01</p>
 </div>
 ";

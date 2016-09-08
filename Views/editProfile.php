@@ -20,7 +20,7 @@
     }
   ?>
   <title>Login Fraunhofer CCD</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
 </head>
 <body>

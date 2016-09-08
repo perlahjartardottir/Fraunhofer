@@ -75,8 +75,23 @@ if($user_sec_lvl < 2){
           <input type='number' class='form-control' id='net_terms'>
         </div>
         <div class='form-group col-md-4'>
+          <label>Credit card required:</label>
+          <br>
+          <?
+          if($row[12] == 1){
+            echo "<input checked type='checkbox' id='credit_card' value='1'>";
+          }
+          else{
+            echo "<input type='checkbox' id='credit_card' value='1'>";
+          }
+        ?>  
+        </div>
+        <div class='form-group col-md-12'>
           <label>Notes:</label>
-          <textarea class='form-control' id='supplier_notes'></textarea>
+          <br>
+          <div class='col-md-4' style='padding:0px;'>
+            <textarea class='form-control' id='supplier_notes'></textarea>
+          </div>
         </div>
         <button type='button' class='btn btn-primary form-control' onclick='addNewSupplier()'>Add</button>
       </form>

@@ -54,18 +54,10 @@ $sampleSetNameSql = "SELECT sample_set_name
 FROM sample_set
 WHERE sample_set_ID = '$sampleSetID';";
 
-// $eqWithAnlysResultsSql = "SELECT DISTINCT(CONCAT(a.anlys_eq_ID, a.anlys_prop_ID))
-// FROM anlys_result r, sample s, anlys_eq_prop a
-// WHERE r.sample_ID = s.sample_ID AND r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND r.sample_ID = '$sampleID';";
-// $eqWithAnlysResultsResult = mysqli_query($link, $eqWithAnlysResultsSql);
-// while ($row = mysqli_fetch_row($eqWithAnlysResultsResult)){
-//     array_push($eqWithAnlysResults, $row[0]);
-// }
-
 ?>
 
 <head>
-  <title>Fraunhofer CCD</title>
+  <title>Data Analysis</title>
   <script>
       var bootstrapBlue = "#337AB7";
       var bootstrapDarkBlue = "#23527C";
@@ -155,9 +147,9 @@ WHERE sample_set_ID = '$sampleSetID';";
         <h4 class='custom_heading'>3. Enter results (Under construction)</h4>
         <div id='res_div'></div>
       </div>
-      <div class='col-md-12'>
+<!--       <div class='col-md-12'>
         <button type='button' class='btn btn-primary col-md-2' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
-      </div>
+      </div> -->
   </form>
 </div>
 </div>
@@ -169,17 +161,17 @@ WHERE sample_set_ID = '$sampleSetID';";
     updateSamplesInSet(<?php echo $sampleSetID; ?>);
 
     $("#nav_analyze").button('toggle');
-    // Color the equipment link that is chosen.
-    $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
+    // Underline the equipment link that is chosen.
+    // $("#<?php echo $eqID.$propID; ?>").css("color", bootstrapPurple);
     $("#<?php echo $eqID.$propID; ?>").css("text-decoration", "underline");
 
   })
 
-    // Color the equipment the user chose. 
+    // Udnerline the equipment the user chose. 
     $("td a").click(function () { 
-      $("td a").css("color", bootstrapBlue);
+      // $("td a").css("color", bootstrapBlue);
       $("td a").css("text-decoration", "none");
-      $(this).css("color", bootstrapPurple);
+      // $(this).css("color", bootstrapPurple);
       $(this).css("text-decoration", "underline");
 
     });

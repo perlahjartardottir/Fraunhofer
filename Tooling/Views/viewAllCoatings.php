@@ -22,8 +22,6 @@ $user_sec_lvl = $user_sec_lvl[0];
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
   <link href='../css/main.css' rel='stylesheet'>
 
-
-
 </head>
 <body>
 <?php include '../header.php'; ?>
@@ -85,7 +83,8 @@ $user_sec_lvl = $user_sec_lvl[0];
             <div class='col-md-2' style='float:right;'>
               <button value='Submit' onclick='changeCoating()' class='btn btn-primary'>Submit changes</button>
             </div>
-          </form>";
+          </form>
+        </div>";
       }
   ?>
 </div>

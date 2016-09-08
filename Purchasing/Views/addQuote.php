@@ -74,7 +74,7 @@ $result = mysqli_query($link, $sql);
             <!-- hidden type which is used to redirect to the correct view -->
             <input type='hidden' value='addQuote' id='redirect' name='redirect'>
             <input type='hidden' name='MAX_FILE_SIZE' value='2000000'>
-            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="file" name="fileToUpload" id="fileToUpload" required>
           </div>
           <div class='col-md-4' style='margin-top: 15px;'>
             <label>Description: </label>

@@ -219,7 +219,7 @@ function quoteSuggestions() {
   });
 }
 
-function orderRequest(){
+function orderRequest(redirect, form){
   var supplier_name = $("input[name='supplierList']").on('input', function(e){
     var $input = $(this),
         val = $input.val(),
@@ -230,16 +230,44 @@ function orderRequest(){
   });
   var request_supplier     = supplier_name.val();
   var department           = $('#department').val();
-  var cost_code           = $('#cost_code').val();
+  var cost_code             = $('#cost_code').val();
   var orderTimeframe       = $('#orderTimeframe').val();
+  var orderTimeframeDate    = $('#orderTimeframeDate').val();
   var request_description  = $('#request_description').val();
   var employee_ID          = $('#employee_ID').val();
   var part_number          = $('#part_number').val();
   var quantity             = $('#quantity').val();
+  var unit_price             = $('#unit_price').val();
   var request_price        = $('#request_price').val();
-  if(request_description === ""){
-    $("#invalidRequest").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Description</div>");
-  } else{
+  var unit_description        = $('#unit_description').val();
+  var errorMessage = "";
+  
+  if(orderTimeframe === "Specific date" && orderTimeframeDate === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Date</div>";
+  }
+  if(department === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Department</div>";
+  }
+  if(cost_code === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Cost code</div>";
+  }
+  if(part_number === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Part#</div>";
+  }
+  if(quantity === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Quantity</div>";
+  }
+
+  if(checkIfRecommended(request_supplier) === 'Not Recommended'){
+    r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
+    if (r !== true){
+      return;
+    }
+  }
+
+  if(errorMessage){
+    $("#invalidRequest").html(errorMessage);
+  }else{
     $.ajax({
       url: '../InsertPHP/addNewRequest.php',
       type: 'POST',
@@ -248,18 +276,56 @@ function orderRequest(){
         department           : department,
         cost_code            : cost_code,
         orderTimeframe       : orderTimeframe,
+        orderTimeframeDate   : orderTimeframeDate,
         request_description  : request_description,
         employee_ID          : employee_ID,
         part_number          : part_number,
         request_price        : request_price,
-        quantity             : quantity
+        unit_price           : unit_price,
+        quantity             : quantity,
+        unit_description     : unit_description
       },
       success: function(data, status, xhr){
-        window.location = "purchasing.php";
+        if(redirect === "yes"){
+          window.location = "purchasing.php";
+        }
+        else{
+          infoMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Your request has been sent.</div>";
+          // Too imitade a reload and to keep information from form. 
+          $("#invalidRequest").html("");
+          $("#requestSent").html("");
+          $("#requestSent").html(infoMessage);
+          // Clear these values on request. 
+          $('#part_number').val("");
+          $('#quantity').val("");
+          $('#unit_price').val("");
+          $('#request_price').val("");
+          $('#unit_description').val("");
+
+          // Reset form except a few inputs.
+          // $('#requestForm')[0].reset();
+          // $("input[name='supplierList']").val(request_supplier);
+          // $('#orderTimeframe').val(orderTimeframe);
+          // displayDate();
+          // if(orderTimeframeDate != ""){
+          //   $('#orderTimeframeDate').val(orderTimeframeDate);
+          // }
+          // // To clear cost code drop down.
+          // updateCostCode();
+          
+
+          if(data){
+            emailMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>It sounds like your last request was urgent, "+data+" has been notified.</div>";
+             $("#emailSent").html(emailMessage);
+
+          }
+        }
+        
       }
     });
   }
 }
+
 function activeRequest(element){
   if(!element){
     $("#output").html("");
@@ -306,11 +372,11 @@ function requestApproval(){
       employee_ID : employee_ID
     },
     success: function(data, status, xhr){
-      // window.location.reload();
+      window.location.reload();
       console.log(data);
-      setTimeout(function() {
-        showRunTools();
-      }, 1000);
+    //   setTimeout(function() {
+    //     showRunTools();
+    //   }, 1000);
     }
   });
 }
@@ -396,10 +462,26 @@ function delOrderItem(order_item_ID){
 }
 
 function delPurchaseOrder(order_ID){
-  var r = confirm("Are you sure you want to delete this purchase order?");
+  var r = confirm("Are you sure you want to cancel this purchase order?");
   if(r === true){
     $.ajax({
       url: '../DeletePHP/deletePurchaseOrder.php',
+      type: 'POST',
+      data:{
+        order_ID : order_ID
+      },
+      success: function(data, status, xhr){
+        window.location.reload();
+      }
+    });
+  }
+}
+
+function cancelPurchaseOrder(order_ID){
+  var r = confirm("Are you sure you want to cancel this purchase order?");
+  if(r === true){
+    $.ajax({
+      url: '../UpdatePHP/cancelPurchaseOrder.php',
       type: 'POST',
       data:{
         order_ID : order_ID
@@ -453,12 +535,12 @@ function createPurchaseOrder(){
   var employee_ID = $('#employee_ID').val();
   var request_ID  = $('#activeRequest').text();
 
-  if(checkIfRecommended(supplier_name) === 'Not Recommended'){
-    r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
-    if (r !== true){
-      return;
-    }
-  }
+  // if(checkIfRecommended(supplier_name) === 'Not Recommended'){
+  //   r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
+  //   if (r !== true){
+  //     return;
+  //   }
+  // }
 
   if(!employee_name){
     $("#invalidPO").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Employee</div>");
@@ -498,6 +580,105 @@ function addOrderItem(){
     url: '../InsertPHP/addNewOrderItem.php',
     type: 'POST',
     data:{
+      quantity    : quantity,
+      part_number : part_number,
+      unit_price  : unit_price,
+      department  : department,
+      cost_code   : cost_code,
+      description : description
+    },
+    success: function(data, status, xhr){
+      window.location.reload();
+      //console.log(data);
+    }
+  });
+}
+
+function displayAddOrderItemFromRequestModal(request_ID, supplier_ID){
+    $.ajax({
+    url: '../SelectPHP/addOrderItemFromRequestModal.php',
+    type: 'POST',
+    data:{
+      request_ID    : request_ID,
+      supplier_ID : supplier_ID
+    },
+    success: function(data, status, xhr){
+        $("#addRequestModal").html(data);
+    }
+  });
+}
+
+function editRequestModal(request_ID){
+    $.ajax({
+    url: '../SelectPHP/editRequestModal.php',
+    type: 'POST',
+    data:{
+      request_ID    : request_ID,
+    },
+    success: function(data, status, xhr){
+        $("#editRequestModal").html(data);
+    }
+  });
+}
+
+function editRequest(request_ID){
+    var supplier_name = $("input[name='supplierList']").on('input', function(e){
+    var $input = $(this),
+        val = $input.val(),
+        list = $input.attr('list'),
+        match = $('#'+list + ' option').filter(function() {
+           return ($(this).val() === val);
+       });
+  });
+  var request_supplier     = supplier_name.val();
+  var quantity    = $('#req_quantity').val();
+  var part_number = $('#req_part_number').val();
+  var unit_price  = $('#req_unit_price').val();
+  var description = $('#req_description').val();
+  var department  = $('#req_department').val();
+  var cost_code  = $('#req_cost_code').val();
+  var request_price = $("#req_price").val();
+  var part_description = $('#req_part_description').val();
+  var orderTimeframe       = $('#orderTimeframe').val();
+  var orderTimeframeDate    = $('#orderTimeframeDate').val();
+
+  $.ajax({
+    url: '../UpdatePHP/editRequest.php',
+    type: 'POST',
+    data:{
+      request_ID       : request_ID,
+      request_supplier : request_supplier,
+      quantity         : quantity,
+      part_number      : part_number,
+      unit_price       : unit_price,
+      department       : department,
+      cost_code        : cost_code,
+      description      : description,
+      request_price    : request_price,
+      part_description : part_description,
+      orderTimeframe   : orderTimeframe,
+      orderTimeframeDate : orderTimeframeDate
+    },
+    success: function(data, status, xhr){
+      console.log(data);
+      window.location.reload();
+    }
+  });
+}
+
+function addOrderItemFromRequest(request_ID, form){
+  var quantity    = $('#req_quantity').val();
+  var part_number = $('#req_part_number').val();
+  var unit_price  = $('#req_unit_price').val();
+  var description = $('#req_description').val();
+  var department  = $('#req_department').val();
+  var cost_code  = $('#req_cost_code').val();
+
+  $.ajax({
+    url: '../InsertPHP/addOrderItemFromRequest.php',
+    type: 'POST',
+    data:{
+      request_ID  : request_ID,
       quantity    : quantity,
       part_number : part_number,
       unit_price  : unit_price,
@@ -639,6 +820,12 @@ function addNewSupplier(){
   if (net_terms === ''){
     net_terms = 30;
   }
+  var credit_card = $('#credit_card');
+    if(credit_card.is(':checked')){
+        credit_card = $('#credit_card').val();
+      }else{
+        credit_card = 0;
+      }
   console.log(net_terms);
   if(!supplier_name){
     $("#invalidSupplier").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Supplier name</div>");
@@ -658,7 +845,8 @@ function addNewSupplier(){
         supplier_accountNr : supplier_accountNr,
         net_terms        : net_terms,
         supplier_website : supplier_website,
-        supplier_notes : supplier_notes
+        supplier_notes   : supplier_notes,
+        credit_card      : credit_card
       },
       success: function(data, status, xhr) {
         window.location = '../Views/supplierList.php';
@@ -667,15 +855,38 @@ function addNewSupplier(){
   }
 }
 
-function updateCostCode(){
-  var department_name = $('#department').val();
+function updateCostCode(cost_code, departmentName){
+  
+  var department_name = "";
+
+  // For modal window at showOrderItems.php
+  if(departmentName){
+    department_name = departmentName
+  }
+    // For modal window at addOrderItem.php (cannot have two identical ids).
+  else if($('#req_department').val() !== undefined){
+    department_name = $('#req_department').val();
+  }
+  else if($('#department_edit').val() !== undefined){
+    department_name = $('#department_edit').val();
+  }
+  else if($('#department').val() !== undefined){
+    department_name = $('#department').val();
+  }
+  console.log(department_name);
   var group_by_select = $('#group_by_select').val();
+  var request_modal = $('#request_modal').val();
+  console.log("request_modal " + request_modal);
+
+
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
     data: {
       department_name : department_name,
-      group_by_select : group_by_select
+      group_by_select : group_by_select,
+      request_modal   : request_modal,
+      cost_code       : cost_code
     },
     success: function(data, status, xhr) {
       $('.result').html(data);
@@ -697,12 +908,15 @@ function updateCostCodeOnClick(){
 }
 function updateModalCostCode(element){
   var department_name = $(element).parent().find('#department').val();
-  console.log(department_name);
+      var request_modal = $('#request_modal').val();
+  console.log("request_modal " + request_modal);
+
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
     data: {
-      department_name : department_name
+      department_name : department_name,
+      request_modal : request_modal
     },
     success: function(data, status, xhr) {
       $('.result').html(data);
@@ -785,6 +999,16 @@ function editSupplier(supplier_ID){
     var supplier_login = $("#supplier_login").val();
     var supplier_password = $("#supplier_password").val();
     var supplier_notes = $("#supplier_notes").val();
+    var credit_card = $("#credit_card").val();
+    var credit_card = $('#credit_card');
+    if(credit_card.is(':checked')){
+        credit_card = $('#credit_card').val();
+      }else{
+        credit_card = 0;
+      }
+
+
+    console.log(credit_card);
     $.ajax({
       url: '../UpdatePHP/editSupplier.php',
       type: "POST",
@@ -801,11 +1025,13 @@ function editSupplier(supplier_ID){
         supplier_website : supplier_website,
         supplier_login : supplier_login,
         supplier_password : supplier_password,
-        supplier_notes : supplier_notes
+        supplier_notes : supplier_notes,
+        credit_card : credit_card
       },
       success: function(data, status, xhr) {
       //  window.location="../Views/supplierList.php";
       console.log(data);
+      window.location.reload(true);
       }
     });
   }
@@ -953,7 +1179,11 @@ function editOrderItem(order_item_ID, element){
   var quantity    = $(element).parent().prev().find("#quantity").val();
   var part_number = $(element).parent().prev().find('#part_number').val();
   var department  = $(element).parent().prev().find('#department').val();
-  var cost_code  = $(element).parent().prev().find('#cost_code').val();
+  var cost_code   = $('#req_cost_code').val();
+  console.log("cst code: " + cost_code);
+  // if(cost_code === undefined){
+  //     cost_code   = $('#cost_code').val();
+  // }
   var unit_price  = $(element).parent().prev().find('#unit_price').val();
   var description = $(element).parent().prev().find('#description').val();
 
@@ -977,11 +1207,14 @@ function editOrderItem(order_item_ID, element){
 
 function updateCostCodeModal(element){
   var department_name = $(element).parent().find('#department').val();
+    var request_modal = $('#request_modal').val();
+  console.log("request_modal " + request_modal);
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
     data: {
-      department_name : department_name
+      department_name : department_name,
+      request_modal : request_modal
     },
     success: function(data, status, xhr) {
       $('.result').html(data);

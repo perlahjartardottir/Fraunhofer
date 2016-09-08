@@ -12,7 +12,7 @@ echo"
 <!DOCTYPE html>
 <head>
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-  	<title>Fraunhofer CCD</title>
+  	<title>Data Analysis</title>
 </head>
 <body>
 <img src='".$picture."' width='1000' height='1000' alt='Sample picture' />

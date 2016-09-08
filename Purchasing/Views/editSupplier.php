@@ -21,7 +21,7 @@ if($user_sec_lvl < 3){
   die("You don't have the privileges to view this site.");
 }
 $sql = "SELECT supplier_name, supplier_address, supplier_contact, supplier_phone, supplier_fax, supplier_email,
-               supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes, net_terms
+               supplier_website, supplier_login, supplier_password, supplier_accountNr, supplier_notes, net_terms, credit_card
         FROM supplier
         WHERE supplier_ID = '$supplier_ID';";
 $result = mysqli_query($link, $sql);
@@ -87,8 +87,22 @@ if(!$result){
           <input type='number' class='form-control' id='net_terms' value='".$row[11]."'>
         </div>
         <div class='form-group col-md-4'>
+          <label>Credit card required:</label>
+          <br>";
+          if($row[12] == 1){
+            echo "<input checked type='checkbox' id='credit_card' value='1'>";
+          }
+          else{
+            echo "<input type='checkbox' id='credit_card' value='1'>";
+          }
+        echo"  
+        </div>
+        <div class='form-group col-md-12'>
           <label>Notes:</label>
+          <br>
+          <div class='col-md-4' style='padding:0px;'>
           <textarea class='form-control' id='supplier_notes'>".$row[10]."</textarea>
+          </div>
         </div>
         <button type='button' class='btn btn-primary form-control' onclick='editSupplier(".$supplier_ID.")'>Edit</button>";
         ?>

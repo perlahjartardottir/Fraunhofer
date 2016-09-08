@@ -55,8 +55,6 @@ function displayProcessTable(sampleID){
     $("#process_table").html("");
   }
   else{
-
-  console.log("sampleID: "+sampleID);
   
   $.ajax({
     url: "../SelectPHP/processTable.php",
@@ -138,6 +136,7 @@ function deletePrcs(prcsID){
     }
   });
 }
+
 
 function editPrcsEquipment(eqID, form){
   var errorMessage = "";
@@ -238,4 +237,20 @@ function addPrcsEquipment(form){
       }
     });
   }
+}
+
+function setPrcsIDAndRefresh(){
+  prcsID = $("#coating").val();
+  console.log("settings prcsID: "+prcsID);
+  $.ajax({
+    url: "../UpdatePHP/setPrcsID.php",
+    type: "POST",
+    data: {
+      prcsID : prcsID
+    },
+    success: function(data,status, xhr){
+      window.location.reload(true);
+    }
+  });
+
 }

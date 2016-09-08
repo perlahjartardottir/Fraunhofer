@@ -145,23 +145,7 @@ function deleteAnlysResult(resID){
     });
 }
 
-  function showSampleInfo(){
-   sampleID = $("#sample_ID").val();
-
-   $.ajax({
-    url: "../SelectPHP/sampleInfo.php",
-    type: "POST",
-    data: {
-     sampleID : sampleID
-   },
-   success: function(data,status, xhr){
-     $("#sample_info").html(data);
-     window.location.reload(true);		
-   }
- });
- }
-
- function showAnlysResultForm(propID, eqID, sampleID, form){
+function showAnlysResultForm(propID, eqID, sampleID, form){
    //sampleID = $(form).find('#sample_ID').val();
 
    $.ajax({
@@ -205,23 +189,32 @@ function deleteAnlysResult(resID){
   return true; 
 }
 
-function displayAnlysResultTable(sampleID, eqPropID){
+function displayAnlysResultTable(sampleID, eqPropID, prcsID, elem){
   
+  console.log("sample: "+sampleID);
+  console.log("eqProp: "+eqPropID);
+  console.log("prcsID: "+prcsID);
+
   // If the anlys result table is already being dislayed, hide it. 
-  if($('#anlys_result_table').find('#eqPropID_hidden').val() == eqPropID) {
+  if($('#anlys_result_table').find('#eqPropID_hidden').val() == eqPropID && $('#anlys_result_table').find('#prcsID_hidden').val() == prcsID) {
     $("#anlys_result_table").html("");
+    $(elem).removeClass("bg-info");
   }
   else{
-
-  console.log("sampleID: "+sampleID);
-  console.log("eqPropID: "+eqPropID);
+    if(elem){
+      // Remove the coloring of previously chosen row.
+      $("tr").removeClass("bg-info");
+      // Add color to chosen row.
+      $(elem).addClass("bg-info");
+    }
 
   $.ajax({
     url: "../SelectPHP/anlysResultTable.php",
     type: "POST",
     data: {
       sampleID : sampleID,
-      eqPropID : eqPropID
+      eqPropID : eqPropID,
+      prcsID : prcsID
     },
     success: function(data,status, xhr){
       $("#anlys_result_table").html(data);

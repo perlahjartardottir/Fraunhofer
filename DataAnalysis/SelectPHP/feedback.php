@@ -33,6 +33,7 @@ while($row = mysqli_fetch_array($result)){
 			}
 
 			echo"
+			<p><strong>ID: </strong>".$row['fdbkID']."<p>
 			<p>".$row['description']."</p>";
 
 			if($row['devComment']){

@@ -109,11 +109,17 @@ CREATE TABLE anlys_result(
 
 ALTER TABLE anlys_result ADD employee_ID INT;
 ALTER TABLE anlys_result ADD CONSTRAINT FOREIGN KEY(employee_ID) REFERENCES employee(employee_ID);
-ALTER TABLE anlys_result ADD anlys_res_file VARCHAR(2048);
+ALTER TABLE anlys_result ADD prcs_ID INT;
 -- ALTER TABLE anlys_result MODIFY sample_ID INT NOT NULL;
 -- ALTER TABLE anlys_result MODIFY anlys_eq_prop_ID INT NOT NULL;
 
-
+CREATE TABLE anlys_res_file(
+	anlys_res_file_ID INT AUTO_INCREMENT,
+    anlys_res_ID INT,
+    anlys_res_file VARCHAR(2048) NOT NULL,
+    PRIMARY KEY(anlys_res_file_ID),
+    FOREIGN KEY(anlys_res_ID) REFERENCES anlys_result(anlys_res_ID)
+);
 
 CREATE TABLE process(
 	prcs_ID INT AUTO_INCREMENT,
@@ -162,14 +168,6 @@ CREATE TABLE da_feedback(
     fdbk_dev_comment VARCHAR(10000),
 	PRIMARY KEY(fdbk_ID),
 	FOREIGN KEY (employee_ID) REFERENCES employee(employee_ID)
-);
-
-CREATE TABLE anlys_res_file(
-	anlys_res_file_ID INT AUTO_INCREMENT,
-    anlys_res_ID INT,
-    anlys_res_file VARCHAR(2048) NOT NULL,
-    PRIMARY KEY(anlys_res_file_ID),
-    FOREIGN KEY(anlys_res_ID) REFERENCES anlys_result(anlys_res_ID)
 );
 
 ALTER DATABASE fraunhofer CHARACTER SET utf8 COLLATE utf8_unicode_ci;

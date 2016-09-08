@@ -24,20 +24,29 @@ $user_sec_lvl = $user_sec_lvl[0];
 <body>
   <?php include '../header.php'; ?>
   <div class='container'>
-    <div id="invalidCoating"></div>
-    <div class='row well well-lg'>
-      <form>
-        <h4>Add new coating</h4>
-        <p class='col-md-6 form-group'>
-          <label for="coatingType">Coating type</label>
-          <input type="text" name="coatingType" id="coatingType" class='form-control' placeholder="Fx. AlTin">
-        </p>
-        <p class='col-md-6 form-group'>
-          <label for="coatingDesc">Coating Description</label>
-          <input type="text" name="coatingDesc" id="coatingDesc" class='form-control' placeholder="Fx. 60% Aluminum 40% Titanium">
-        </p>
-        <input class='form-control btn btn-primary'type="button" value="Add coating to database" onclick='addCoating()'>
-      </form>
+    <?
+          if($user_sec_lvl >3)
+    {
+      echo"
+        <div class='row well well-lg'>
+          <div id='coatingAdded'></div>
+          <div id='invalidCoating'></div>
+          <form>
+          <h4>Add a new coating</h4>
+              <div class='col-md-6 form-group'>
+                <label>Coating type:</label>
+                <input type='text' id='coating_type' class='form-control' required placeholder='Fx. AlTi'/>
+              </div>
+              <div class='col-md-6 form-group'>
+                <label>Coating description:</label>
+                <input type='text' id='coating_description' class='form-control' required placeholder='Fx. 60% Aluminum 40% Titanium'/>
+              </div>
+            <div class='col-md-12'>
+              <button type='button' onclick='addCoating(this.form)' class='btn btn-primary col-md-12' style='float:right; margin-top:24px'>Insert</button>
+            </div>
+          </form>";
+      }
+    ?>
     </div>
   </div>
 </body>

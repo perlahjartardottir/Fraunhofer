@@ -28,6 +28,22 @@ function showSamplesInSetAndRefresh(sampleSetID){
 	});
 }
 
+function showSampleInfo(){
+   sampleID = $("#sample_ID").val();
+
+   $.ajax({
+    url: "../SelectPHP/sampleInfo.php",
+    type: "POST",
+    data: {
+     sampleID : sampleID
+   },
+   success: function(data,status, xhr){
+     $("#sample_info").html(data);
+     window.location.reload(true);		
+   }
+ });
+ }
+
 function deleteSample(sampleID, element){	
 	var errorMessage = "";
 	// Display a confirmation popup window before proceeding.

@@ -22,7 +22,7 @@ $sampleSetName= mysqli_fetch_row(mysqli_query($link, $sampleSetNameSql))[0];
 if($sampleSetID !== "-1"){
   echo"
   <div class='row well well-lg'>
-    <h3 class='custom_heading'>".$sampleSetName."</h3>
+    <h3 class='custom_heading'>Samples in set: ".$sampleSetName."</h3>
      <table class='table table-responsive' style='width:92%;'>
       <thead>
         <tr>
@@ -55,9 +55,6 @@ if($sampleSetID !== "-1"){
        echo"
      </tbody>
    </table>
-    <button type='button' class='btn btn-primary' onclick=location.href='sampleOverview.php' style='float:right'>Sample Overview</button>
-    <button type='button' class='btn btn-primary' onclick=location.href='analyze.php' style='float:right'>Analyze</button>
-    <button type='button' class='btn btn-primary' onclick=location.href='process.php' style='float:right'>Process</button>
  </div>
  <div id='sample_modal_edit' class='modal'></div>";
 }

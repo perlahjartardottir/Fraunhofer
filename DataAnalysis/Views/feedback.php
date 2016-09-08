@@ -17,7 +17,7 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 
 ?>
 <head>
-	<title>Fraunhofer CCD</title>
+	<title>Data Analysis</title>
 </head>
 <body>
 	<?php include '../header.php';?>

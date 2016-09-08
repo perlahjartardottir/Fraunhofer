@@ -1,6 +1,5 @@
 <?php
 include '../../connection.php';
-include '../GlobalsPHP/properties.php';
 session_start();
 $_SESSION["direct"]["redirect"] = "sampleOverview";
 $securityLevel = $_SESSION["securityLevelDA"];
@@ -22,7 +21,7 @@ if(!$sampleID){
 }
 
 
-$numberOfSamplesToDisplay = 20;
+$numberOfSamplesToDisplay = $_SESSION["numberOfSetsToDisplayInDD"];
 $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
 FROM sample_set
 ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSamplesToDisplay;";
@@ -41,12 +40,12 @@ WHERE sample_ID = '$sampleID';";
 $sampleInfoResult = mysqli_query($link, $sampleInfoSql);
 $sampleInfoRow = mysqli_fetch_row($sampleInfoResult);
 
-$anlysAverageSql = "SELECT r.anlys_eq_prop_ID as eqPropID, e.anlys_eq_ID as eqID, e.anlys_eq_name as eqName, p.anlys_prop_ID as propID,
-                    a.anlys_eq_prop_unit as unit, p.anlys_prop_name as propName, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_aveg as dispAveg, COUNT(r.anlys_res_ID) as numberOfResults, r.anlys_res_result as singleResult, a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit, anlys_res_ID as resID
-FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
-WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
-a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
-GROUP BY r.anlys_eq_prop_ID;";
+// $anlysAverageSql = "SELECT r.anlys_eq_prop_ID as eqPropID, e.anlys_eq_ID as eqID, e.anlys_eq_name as eqName, p.anlys_prop_ID as propID,
+//                     a.anlys_eq_prop_unit as unit, p.anlys_prop_name as propName, TRUNCATE(AVG(r.anlys_res_result), 3) as avegResult, a.anlys_aveg as dispAveg, COUNT(r.anlys_res_ID) as numberOfResults, r.anlys_res_result as singleResult, a.anlys_param_1_unit as param1unit, a.anlys_param_2_unit as param2unit, a.anlys_param_3_unit as param3unit, anlys_res_ID as resID
+// FROM anlys_result r, anlys_eq_prop a, anlys_equipment e, anlys_property p
+// WHERE r.anlys_eq_prop_ID = a.anlys_eq_prop_ID AND a.anlys_eq_ID = e.anlys_eq_ID AND
+// a.anlys_prop_ID = p.anlys_prop_ID AND r.sample_ID = '$sampleID'
+// GROUP BY r.anlys_eq_prop_ID;";
 
 $sampleSetNameSql = "SELECT sample_set_name
 FROM sample_set
@@ -55,10 +54,19 @@ WHERE sample_set_ID = '$sampleSetID';";
 ?>
 
 <head>
-	<title>Fraunhofer CCD</title>
+	<title>Data Analysis</title>
 <!-- 	<link href='../css/bootstrap.min.css' rel='stylesheet'> -->
 </head>
 <body>
+  <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
 	<?php include '../header.php';?>
 	<div class="container">
 		<div class='row well well-lg'>
@@ -92,98 +100,22 @@ WHERE sample_set_ID = '$sampleSetID';";
             <img id='sample_picture_thumbnail' src='".$sampleInfoRow[3]."' class='img-responsive img-thumbnail' alt='Sample picture' onclick='window.open(\"samplePicture.php?id=".$sampleRow[0]."\")'>
           </div>";
       }
+
       ?>
     </div>
     <!-- Process -->
-    <div class='col-md-8'>
-      <h3 class='custom_heading'>Process</h3>
-  </div>
-  <div id='process_table' class='col-md-12'></div>
-    <!-- Analysis -->
     <div class='col-md-12'>
-      <h3 class='custom_heading'>Analysis</h3>
-      <?
-      $anlysResult = mysqli_query($link, $anlysAverageSql);
-      if(mysqli_fetch_array($anlysResult)){
-
-      echo"
-      <table class='table table-responsive'>
-      <thead>
-        <th>Coating (Not ready)</th>
-        <th>Coating property</th>
-        <th class='text-left'>Measurement</th>
-        <th>Equipment</th>
-        <th>Files</th>
-      </thead>
-      <tbody>";
-      $anlysAverageResult = mysqli_query($link, $anlysAverageSql);
-      while($row = mysqli_fetch_array($anlysAverageResult)){
-        echo"
-          <tr>
-            <td>Coating</td>
-            <td>".$row['propName']."</td>
-            <td><a onclick='displayAnlysResultTable(".$sampleID.",".$row[0].")'>";
-            // If this eqprop should display avegs and the aveg is not 0.
-            if($row[avegResult] && $row['dispAveg']){
-              echo $row[avegResult]." ".$row['unit'];
-            }
-            // If the property is adhesion and we have a result, display one value.
-            else if($row['propID'] == '4' && $row['numberOfResults']){
-              echo $row['singleResult']." ".$row['unit'];
-            }
-            // If the property is roughness display avegs for Ra (param1) and Rz (param2).
-            else if($row['propID'] == '2'){
-              $roughnessSql = "SELECT TRUNCATE(AVG(anlys_res_1), 3) as avegResParam1, TRUNCATE(AVG(anlys_res_2), 3) as avegResParam2
-              FROM anlys_result
-              WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = $row[0]
-              GROUP BY anlys_eq_prop_ID;";
-              $roughnessRow = mysqli_fetch_array(mysqli_query($link, $roughnessSql));
-              $ra = $roughnessRow[0];
-              $rz = $roughnessRow[1];
-              echo "Ra: ".$ra." ".$row['param1unit'].", Rz: ".$rz." ".$row['param2unit'];
-            }
-            else{
-              echo "N/A";
-            }
-            echo"
-            </a></td>
-            <td>".$row['eqName']."</td>";
-
-            $resID = $row['resID'];
-            $anlysFilesSql = "SELECT anlys_res_file_ID, anlys_res_file
-            FROM anlys_res_file
-            WHERE anlys_res_ID = '$resID';";
-            $anlysFilesResult = mysqli_query($link, $anlysFilesSql);
-            echo"
-              <td>";
-            if(mysqli_num_rows($anlysFilesResult) > 0){
-              $fileCounter = 1;
-              while($fileRow = mysqli_fetch_row($anlysFilesResult)){
-                echo"
-                <a href='../DownloadPHP/downloadAnlysFile.php?id=".$fileRow[1]."'>".$fileCounter."</a> ";
-                $fileCounter++;
-              }
-            }
-            else{
-              echo"
-                No";
-            }
-            echo"
-            </td>";
-            echo"  
-              </tr>";
-        }
-      
-    echo"
-    </tbody>
-    </table>";
-    }
-    else{
-      echo"<p class='table_style_text'>This sample has not been analyzed.</p>";
-    }
-    ?>
+      <h3 class='custom_heading'>Coatings</h3>
     </div>
-    <div id='anlys_result_table' class='col-md-12'></div>
+    <div id='process_table' class='col-md-12'></div>
+     <!-- Analysis -->
+     <div class=col-md-12>
+      <h3 class='custom_heading'>Analysis</h3>
+    </div>
+    <div id='analysis_overview_table'></div>
+<?
+  include '../SelectPHP/anlysOverviewTable.php';
+?>
 
 </div>
 </div>

@@ -14,7 +14,7 @@ WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
 AND a.anlys_eq_prop_ID = '$eqPropID';";
 $propertyRow = mysqli_fetch_array(mysqli_query($link, $propertySql));
 
-$resultSql = "SELECT anlys_eq_prop_ID as eqPropID, anlys_res_result as result, anlys_res_comment as comment, anlys_res_1, anlys_res_2, anlys_res_3
+$resultSql = "SELECT anlys_eq_prop_ID as eqPropID, anlys_res_result as result, anlys_res_comment as comment, anlys_res_1, anlys_res_2, anlys_res_3, prcs_ID as prcsID
 FROM anlys_result
 WHERE anlys_res_ID = '$resID';";
 $resultRow = mysqli_fetch_array(mysqli_query($link, $resultSql));
@@ -28,6 +28,12 @@ $sampleNameSql = "SELECT sample_name
 FROM sample
 WHERE sample_ID = '$sampleID';";
 $sampleName = mysqli_fetch_row(mysqli_query($link, $sampleNameSql))[0];
+
+$coatingsSql = "SELECT p.prcs_ID, p.prcs_coating
+FROM process p
+WHERE p.sample_ID = '$sampleID'
+ORDER BY p.prcs_ID DESC;";
+$coatingsResult = mysqli_query($link, $coatingsSql);
 
 echo"
 <div class='modal-dialog'>
@@ -44,7 +50,31 @@ echo"
         <div id='error_message_edit'></div>
         <input type='hidden' id='anlys_res_ID' name='res_ID' value='".$resID."'>
         <input type='hidden' id='anlys_sample_ID' name='sample_ID' value='".$sampleID."'>
-         <input type='hidden' id='eq_prop_ID' name='eq_prop_ID' value=".$eqPropID.">";
+         <input type='hidden' id='eq_prop_ID' name='eq_prop_ID' value=".$eqPropID.">
+        <div class='form-group'>
+        <label>Layer of coating:</label>
+          <select id='coating' name='res_coating_edit' class='form-control'>";
+              while($row = mysqli_fetch_row($coatingsResult)){
+                if($row[0] == $resultRow['prcsID']){
+                  echo "
+                    <option value='".$row[0]."' selected >".$row[1]."</option>";
+                }
+                else{
+                  echo "
+                    <option value='".$row[0]."'>".$row[1]."</option>";
+                }
+              }
+        if($resultRow['prcsID'] == NULL){
+        echo"
+            <option value='-1' selected>No Coating</option>";
+        }
+        else{
+          echo"
+            <option value='-1'>No Coating</option>";
+        }
+        echo"
+         </select>
+        </div>";
 
         // If we use the anlys_result field
         if($propertyRow['dispAveg'] || $propertyRow['propName'] == 'Adhesion'){

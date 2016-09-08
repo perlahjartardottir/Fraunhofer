@@ -2,52 +2,50 @@
     margin-bottom: 0px;
     margin-left: 5px;
 }
-
 #prcs_sample_overview_btn.btn.btn-primary{
     margin-top: 10px;
 }
-
-
-
 .custom_heading{
     margin: 20px 0px;
     /*text-align: center;*/
 }
-h2[id="sample_overview_heading"]{
+#sample_overview_heading{
     margin-bottom: 50px;
 }
-
 .center_heading{
     text-align: center;
 }
-
 .sample_set_name{
     display: inline-block;
 }
 #sample_set_number{
     width: 75px;
 }
-
-#front_table.table-borderless tbody tr td, #all_anlys_eq_table.table-borderless tbody tr td{
+#front_table.table-borderless tbody tr td, #all_anlys_eq_table.table-borderless tbody tr td, #anlys_overview_table tbody tr td{
     border: none;
 }
-
 #front_table.table, #all_anlys_eq_table.table{
     margin-bottom: 40px;
 }
+/* ANLYS OVERVIEW TABLE */
+#anlys_overview_table.table-hover > tbody > tr:hover {
+  background-color: #D2D2D2;
+/*  background-color: #D9EDF7;*/
+}
 
-/* anlysResultForm.php */
+/* ANLYS RESULT FROM & PROCESS */
 input[type=number]{
     width: 155px;
 } 
-
 input[type=date]{
     width: 155px;
 }
-textarea.form-control.custom_heading{
+textarea.form-control.custom_comment{
     width: 155px;
 }
-
+select.form-control.custom_select{
+    width: 155px;
+}
 ul
 {
     list-style-type: none;
@@ -63,7 +61,6 @@ ul
     margin: auto;
 }
 
-
 /* FEEDBACK */ 
 
 #feedback_form{
@@ -73,7 +70,31 @@ ul
     color: #5CB85C;
 }
 
-/*Analyze.php: make average style same as in table.*/
+/* SEARCH  */
+
+#search_table td.column_hide, th.column_hide{
+    display: none;
+}
+#search_table td.column_display, th.column_display{
+    display: table-cell;
+}
+#search_samples_form input[type=number]{
+    width: 90px;
+} 
+#search_samples_form input[type=date]{
+    width: 180px;
+} 
+#search_samples_form div.col-md-12{
+    padding:0px;
+} 
+#search_samples_form #coating{
+    width: 180px;
+} 
+#search_table_wrapper{
+    width:109%;
+}
+
+/* ANALYZE */
 .table_style_text{
 
     font-size: medium;
@@ -81,7 +102,6 @@ ul
     font-style: normal;
     color: -internal-quirk-inherit;
 }
-
 .table_style_text_bold{
 
     font-weight: bold;
@@ -90,13 +110,11 @@ ul
     font-style: normal;
     color: -internal-quirk-inherit;
 }
-#search_thickness_label{
-    padding-left: 0px;
-}
 .custom_padding.no_left_padding{
     padding-left: 0px;
 }
 
+/* ANLYS EQUIPMENT */
 /* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */
 .custom_date input[name = prop_name], .custom_date input[name = prop_unit]{
     height: 34px;
@@ -113,6 +131,7 @@ ul
 
 }
 
+/* ADD SAMPLE & ANALYZE*/
 /* addSample.php & analyze.php: To change the format of the date field */
 /* Based on: http://stackoverflow.com/a/31162426 */
 .custom_date input {
@@ -130,7 +149,6 @@ ul
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
-
 .custom_date input:before {
     position: absolute;
     top: 0px; left: 6px;
@@ -138,11 +156,9 @@ ul
     display: inline-block;
     color: black;
 }
-
 .custom_date input::-webkit-datetime-edit, .custom_date input::-webkit-inner-spin-button, .custom_date input::-webkit-clear-button {
     display: none;
 }
-
 .custom_date input::-webkit-calendar-picker-indicator {
     position: absolute;
     top: 10px;
@@ -166,7 +182,6 @@ ul
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */*/
 }
-
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -174,7 +189,6 @@ ul
     border: 1px solid #888;
     width: 80%;
 }
-
 /* The Close Button */
 .close {
     color: #aaaaaa;
@@ -182,7 +196,6 @@ ul
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
     color: #000;

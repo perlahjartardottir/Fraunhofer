@@ -35,3 +35,8 @@
     font-size: x-small;
   }
 }
+
+/* addOrderItem.php */
+.form-horizontal .control-label.text-left{
+    text-align: left;
+}

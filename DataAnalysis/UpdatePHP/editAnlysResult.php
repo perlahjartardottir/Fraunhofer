@@ -9,17 +9,27 @@ $result = mysqli_real_escape_string($link, $_POST["res_res_edit"]);
 $paramRes1 = mysqli_real_escape_string($link, $_POST["res_param_1_edit"]);
 $paramRes2 = mysqli_real_escape_string($link, $_POST["res_param_2_edit"]);
 $paramRes3 = mysqli_real_escape_string($link, $_POST["res_param_3_edit"]);
-$comment = mysqli_escape_string($link, $_POST["comment_edit"]);
+$comment = mysqli_escape_string($link, $_POST["res_comment_edit"]);
+$process = mysqli_escape_string($link, $_POST["res_coating_edit"]);
+
 // For anlysFile.php.
 $action = "edit";
 // For redirecting.
 $redirect = $_SESSION["direct"]["redirect"];
 
-$sql = "UPDATE anlys_result SET anlys_res_result = '$result', anlys_res_comment  = '$comment', anlys_res_1 = '$paramRes1',
-anlys_res_2 = '$paramRes2', anlys_res_3 = '$paramRes3'
-WHERE anlys_res_ID = $resID";
-$result = mysqli_query($link, $sql);
+// No coating.
+if($process == '-1'){
+	$sql = "UPDATE anlys_result SET anlys_res_result = '$result', anlys_res_comment  = '$comment', anlys_res_1 = '$paramRes1',
+	anlys_res_2 = '$paramRes2', anlys_res_3 = '$paramRes3', prcs_ID = NULL
+	WHERE anlys_res_ID = $resID;";
+}
+else{
+	$sql = "UPDATE anlys_result SET anlys_res_result = '$result', anlys_res_comment  = '$comment', anlys_res_1 = '$paramRes1',
+	anlys_res_2 = '$paramRes2', anlys_res_3 = '$paramRes3', prcs_ID = '$process'
+	WHERE anlys_res_ID = $resID;";
+}
 
+$result = mysqli_query($link, $sql);
 if(!$result){
 	die("Could not update analysis result: ".mysqli_error($link));
 }
