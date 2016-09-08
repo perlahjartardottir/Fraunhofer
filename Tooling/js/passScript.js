@@ -924,24 +924,58 @@ function addShipDateToPO(comment, date) {
   });
 }
 
-function addCoating() {
-  var coatingType = $('#coatingType').val();
-  var coatingDesc = $('#coatingDesc').val();
-  if (!coatingType) {
-    $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating type</div>");
-    return 0;
-  } else if (!coatingDesc) {
-    $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating description</div>");
-    return 0;
+// function addCoating() {
+//   var coatingType = $('#coatingType').val();
+//   var coatingDesc = $('#coatingDesc').val();
+//   if (!coatingType) {
+//     $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating type</div>");
+//     return 0;
+//   } else if (!coatingDesc) {
+//     $("#invalidCoating").html("<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating description</div>");
+//     return 0;
+//   }
+//   $.ajax({
+//     url: "../InsertPHP/insertNewCoating.php",
+//     type: "POST",
+//     data: {
+//       coatingType: coatingType,
+//       coatingDesc: coatingDesc
+//     },
+//   });
+// }
+
+function addCoating(form) {
+  var coating_type = $('#coating_type').val();
+  var coating_description = $('#coating_description').val();
+  message = "";
+  console.log(coating_type);
+  console.log(coating_description);
+   if (!coating_type) {
+    message += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating type</div>";
+  } else if (!coating_description) {
+    message += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Coating description</div>";
   }
+  if(message){
+    $("#invalidCoating").html(message);
+  }
+  else{
   $.ajax({
     url: "../InsertPHP/insertNewCoating.php",
     type: "POST",
     data: {
-      coatingType: coatingType,
-      coatingDesc: coatingDesc
+      coating_type: coating_type,
+      coating_description: coating_description
     },
+    success: function(data, status, xhr) {
+      console.log(data);
+       $(form)[0].reset();
+       message = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Coating has been added.</div>";
+       $("#coatingAdded").html(message);
+      // window.location.reload(true);
+    }
+
   });
+  }
 }
 
 function addNewMachine(line) {
@@ -972,80 +1006,80 @@ function addNewMachine(line) {
     });
   }
 }
-/*
-  Function that checks if your password matches your
-  username.
-*/
-function authenticate() {
-  var userID = $('#userID').val();
-  var password = $('#password').val();
-  $.ajax({
-    url: "../../Login/logincheck.php",
-    type: "POST",
-    data: {
-      userID: userID,
-      password: password
-    },
-    success: function(data, status, xhr) {
-      /*
-        checks if the data recieved from the php file
-        contains the string "error".
+// /*
+//   Function that checks if your password matches your
+//   username.
+// */
+// function authenticate() {
+//   var userID = $('#userID').val();
+//   var password = $('#password').val();
+//   $.ajax({
+//     url: "../../Login/logincheck.php",
+//     type: "POST",
+//     data: {
+//       userID: userID,
+//       password: password
+//     },
+//     success: function(data, status, xhr) {
+//       /*
+//         checks if the data recieved from the php file
+//         contains the string "error".
 
-        data.indexOf("error") returns -1 only if the string
-        is not found, so if the string is found it will return
-        a number larger than -1 and we move to the selection site.
-        The php file takes care of logging in or logging off the current user if he tries to log
-        in with wrong information, this is done for security reasons
-      */
-      if (data.indexOf("error") > -1) {
-        alert("Please enter the right information.");
-      } else {
-        window.location = "../Views/menu.php";
-      }
-    }
-  });
-}
-function authenticateAppending() {
-  var userID = $('#userID').val();
-  var password = $('#password').val();
-  $.ajax({
-    url: "../../Login/logincheck.php",
-    type: "POST",
-    data: {
-      userID: userID,
-      password: password
-    },
-    success: function(data, status, xhr) {
-      /*
-        checks if the data recieved from the php file
-        contains the string "error".
+//         data.indexOf("error") returns -1 only if the string
+//         is not found, so if the string is found it will return
+//         a number larger than -1 and we move to the selection site.
+//         The php file takes care of logging in or logging off the current user if he tries to log
+//         in with wrong information, this is done for security reasons
+//       */
+//       if (data.indexOf("error") > -1) {
+//         alert("Please enter the right information.");
+//       } else {
+//         window.location = "../Views/menu.php";
+//       }
+//     }
+//   });
+// }
+// function authenticateAppending() {
+//   var userID = $('#userID').val();
+//   var password = $('#password').val();
+//   $.ajax({
+//     url: "../Login/logincheck.php",
+//     type: "POST",
+//     data: {
+//       userID: userID,
+//       password: password
+//     },
+//     success: function(data, status, xhr) {
+//       /*
+//         checks if the data recieved from the php file
+//         contains the string "error".
 
-        data.indexOf("error") returns -1 only if the string
-        is not found, so if the string is found it will return
-        a number larger than -1 and we move to the selection site.
-        The php file takes care of logging in or logging off the current user if he tries to log
-        in with wrong information, this is done for security reasons
-      */
-      if (data.indexOf("error") > -1) {
-        alert("Please enter the right information.");
-      } else {
-        window.location.reload();
-      }
-    }
-  });
-}
+//         data.indexOf("error") returns -1 only if the string
+//         is not found, so if the string is found it will return
+//         a number larger than -1 and we move to the selection site.
+//         The php file takes care of logging in or logging off the current user if he tries to log
+//         in with wrong information, this is done for security reasons
+//       */
+//       if (data.indexOf("error") > -1) {
+//         alert("Please enter the right information.");
+//       } else {
+//         window.location.reload();
+//       }
+//     }
+//   });
+// }
 
-function logout() {
-  $.ajax({
-    url: "../../Login/logout.php",
-    type: "POST"
-  }).done(function() {
-    // redirect the user to the login page
-    // this is done so you loose access to the site you are at
-    // when you log out.
-    window.location = "../../Login/login.php";
-  });
-}
+// function logout() {
+//   $.ajax({
+//     url: "../../Login/logout.php",
+//     type: "POST"
+//   }).done(function() {
+//     // redirect the user to the login page
+//     // this is done so you loose access to the site you are at
+//     // when you log out.
+//     window.location = "../../Login/login.php";
+//   });
+// }
 
 function deleteMachine() {
   var machine_ID = $('#input_machine_ID').val();

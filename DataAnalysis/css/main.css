@@ -1,0 +1,204 @@
+.btn.btn-success, .btn.btn-danger, .btn.btn-primary{
+    margin-bottom: 0px;
+    margin-left: 5px;
+}
+#prcs_sample_overview_btn.btn.btn-primary{
+    margin-top: 10px;
+}
+.custom_heading{
+    margin: 20px 0px;
+    /*text-align: center;*/
+}
+#sample_overview_heading{
+    margin-bottom: 50px;
+}
+.center_heading{
+    text-align: center;
+}
+.sample_set_name{
+    display: inline-block;
+}
+#sample_set_number{
+    width: 75px;
+}
+#front_table.table-borderless tbody tr td, #all_anlys_eq_table.table-borderless tbody tr td, #anlys_overview_table tbody tr td{
+    border: none;
+}
+#front_table.table, #all_anlys_eq_table.table{
+    margin-bottom: 40px;
+}
+/* ANLYS OVERVIEW TABLE */
+#anlys_overview_table.table-hover > tbody > tr:hover {
+  background-color: #D2D2D2;
+/*  background-color: #D9EDF7;*/
+}
+
+/* ANLYS RESULT FROM & PROCESS */
+input[type=number]{
+    width: 155px;
+} 
+input[type=date]{
+    width: 155px;
+}
+textarea.form-control.custom_comment{
+    width: 155px;
+}
+select.form-control.custom_select{
+    width: 155px;
+}
+ul
+{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+
+/* EDIT SAMPLE MODAL */
+
+#sample_picture_thumbnail{
+    height:150px;
+    display: block;
+    margin: auto;
+}
+
+/* FEEDBACK */ 
+
+#feedback_form{
+    margin-top: 50px;
+}
+.color_success{
+    color: #5CB85C;
+}
+
+/* SEARCH  */
+
+#search_table td.column_hide, th.column_hide{
+    display: none;
+}
+#search_table td.column_display, th.column_display{
+    display: table-cell;
+}
+#search_samples_form input[type=number]{
+    width: 90px;
+} 
+#search_samples_form input[type=date]{
+    width: 180px;
+} 
+#search_samples_form div.col-md-12{
+    padding:0px;
+} 
+#search_samples_form #coating{
+    width: 180px;
+} 
+#search_table_wrapper{
+    width:109%;
+}
+
+/* ANALYZE */
+.table_style_text{
+
+    font-size: medium;
+    font-variant: normal;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+}
+.table_style_text_bold{
+
+    font-weight: bold;
+    font-size: medium;
+    font-variant: normal;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+}
+.custom_padding.no_left_padding{
+    padding-left: 0px;
+}
+
+/* ANLYS EQUIPMENT */
+/* viewAnalysisEquipment.php: For aligning the property part of the form and get bootstrap style. */
+.custom_date input[name = prop_name], .custom_date input[name = prop_unit]{
+    height: 34px;
+    padding: 6px 12px;
+    margin-bottom: 15px;    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+
+}
+
+/* ADD SAMPLE & ANALYZE*/
+/* addSample.php & analyze.php: To change the format of the date field */
+/* Based on: http://stackoverflow.com/a/31162426 */
+.custom_date input {
+    position: relative;
+    width: 100px; height: 34px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.custom_date input:before {
+    position: absolute;
+    top: 0px; left: 6px;
+    content: attr(data-date);
+    display: inline-block;
+    color: black;
+}
+.custom_date input::-webkit-datetime-edit, .custom_date input::-webkit-inner-spin-button, .custom_date input::-webkit-clear-button {
+    display: none;
+}
+.custom_date input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    color: black;
+    opacity: 1;
+}
+
+/*Modal window at dataAnalysis.php: default style*/
+
+.modal {
+/*    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;  /*Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */*/
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

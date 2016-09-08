@@ -1,45 +1,40 @@
-<!-- In this view we only display some parts if the security level is high enough -->
-<!-- This is the front page -->
 <!DOCTYPE html>
 <html>
 <head>
-  <?php
-  include '../../connection.php';
-  session_start();
-  // find the current user
-  $user = $_SESSION["username"];
+<?php
+include "../../connection.php";
+include "../header.php";
+session_start();
 
-  // find his level of security
-  $secsql = "SELECT security_level
-             FROM employee
-             WHERE employee_name = '$user'";
-  $secResult = mysqli_query($link, $secsql);
-
-  while($row = mysqli_fetch_array($secResult)){
-    $user_sec_lvl = $row[0];
-  }
-  // Get the third digit from the security level since that digit represents the
-  // security level of the data analysis database
-  $user_sec_lvl = str_split($user_sec_lvl);
-  $user_sec_lvl = $user_sec_lvl[2];
+$securityLevel = $_SESSION["securityLevelDA"];
+// iI the user security level is not high enough we kill the page and give him a link to the log in page.
+if($securityLevel < 2){
+  echo "<a href='../../Login/login.php'>Login Page</a></br>";
+  die("You don't have the privileges to view this site.");
+}
   ?>
-  <title>Fraunhofer CCD</title>
-  <link href='../css/bootstrap.min.css' rel='stylesheet'>
+<head>
+<title>Fraunhofer CCD</title>
 </head>
 <body>
-  <?php include '../header.php'; ?>
-  <div class="container">
-    <div class='row well'>
-      <div class='col-md-12'>
-        <div class='col-md-6'>
-          <button type='button' class='btn btn-primary col-md-12'>Add new sample</button>
-        </div>
-        <div class='col-md-6'>
-          <button type='button' class='btn btn-primary col-md-12'>Add to existing sample</button>
-        </div>
-      </div>
+  <div class='container'>
+    <div class='col-md-12'>
+        <form class='form-inline pull-xs-right'>
+        <input type="text" id='sample_set_name' class="form-control" style='float: right;' placeholder='Quick search...' data-toggle="tooltip" data-placement="bottom" title="Search for sets by name or date." onkeyup='displaySampleResults()'>
+      </form>
     </div>
-    <h1> Here we will have the data analysis view</h1>
-  </div>
+
+ <div id='sample_results'></div>
+</div>
+</div>
+<script>
+
+  $(document).ready(function(){
+    $("#nav_home").button('toggle');
+    displaySampleResults();
+  })
+
+ $('#sample_set_name').tooltip()
+
+</script>
 </body>
-</html>

@@ -4,13 +4,6 @@ session_start();
 $order_ID = $_SESSION['order_ID'];
 $currency = $_SESSION["currency"];
 
-// For debugging reasons, can be deleted
-function console_log( $data ){
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-  }
-
 // get the correct currency display
 if($currency == 'EUR'){
   $currencySymbol = '&euro;';
@@ -82,7 +75,7 @@ $departmentSql2 = "SELECT department_name
         }
 
         echo"<tr>
-              <td><a href='#' data-toggle='modal' onclick='updateCostCodeOnClick()' data-target='#".$row[4]."'>".$counter."</a></td>
+              <td><a href='#' data-toggle='modal' onclick='updateCostCode(".json_encode($costCode).",".json_encode($departmentRow[0]).")' data-target='#".$row[4]."'>".$counter."</a></td>
               <td>".$row[0]."</td>
               <td>".$costCode."</td>
               <td>".$row[1]."</td>
@@ -108,17 +101,29 @@ $departmentSql2 = "SELECT department_name
                         <input type='text' id='part_number' value='".$row[1]."' class='form-control'>
                       </div>
                       <div class='col-md-6'>
-                        <label>Department</label>
-                        <select id='department' class='form-control' onchange='updateCostCodeModal(this)'>
-                          <option value=''>All departments</option>";
+                        <label>Department</label>";
+                        $noCostCode = "noCostCode";
+                        echo"
+                        <input type='hidden' id='request_modal' value='yes'>
+                        <select id='department' class='form-control' onchange='updateModalCostCode(this)'>
+                          <option value=' '>All departments</option>";
                           $departmentResult2 = mysqli_query($link, $departmentSql2);
                           while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
-                            echo "<option value='".$departmentRow2[0]."'"; if($departmentRow[0] == $departmentRow2[0]){echo" selected";} echo">".$departmentRow2[0]."</option>";
+                            if($departmentRow[0] == $departmentRow2[0]){
+                              echo "<option selected value='".$departmentRow2[0]."' >".$departmentRow2[0]."</option>";
+                            }
+                            else{
+                              echo "<option value='".$departmentRow2[0]."'>".$departmentRow2[0]."</option>";
+                            }
                           }
+
                           echo"
                         </select>
                       </div>
-                      <div class='col-md-6 result'>
+                      <div class='col-md-6'>
+                        <label>Cost code:</label>
+                        <div class='result'>
+                        </div>
                       </div>
                       <div class='col-md-12'>
                         <label>USD Unit</label>
@@ -132,7 +137,7 @@ $departmentSql2 = "SELECT department_name
                     </form>
                   </div>
                   <div class='modal-footer'>
-                    <button type='button' class='btn btn-success' onclick='editOrderItem(".$row[4].", this)'>Edit</button>
+                    <button type='button' class='btn btn-success' onclick='editOrderItem(".$row[4].", this)'>Save</button>
                     <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
                   </div>
                 </div>
@@ -160,5 +165,4 @@ $departmentSql2 = "SELECT department_name
       <option value='GBP'<?php if($currency == 'GBP'){echo "selected";}?>>&pound; GBP</option>
     </select>
   </form>
-
 </div>

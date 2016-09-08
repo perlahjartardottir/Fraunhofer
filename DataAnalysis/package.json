@@ -1,25 +1,22 @@
 {
   "name": "fraunhofer",
   "version": "1.0.0",
-  "description": "package.json file for the fraunhofer database website",
+  "description": "fraunhofer data analysis database website",
   "main": "Login/login.php",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/eysteinn13/FraunhoferDBWebsite.git"
+    "url": "git+https://github.com/perlahj/Fraunhofer.git"
   },
-  "author": "Freyr",
+  "author": "Perla Osk Hjartardottir",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eysteinn13/FraunhoferDBWebsite/issues"
+    "url": "https://github.com/perlahj/Fraunhofer/issues"
   },
-  "homepage": "https://github.com/eysteinn13/FraunhoferDBWebsite#readme",
+  "homepage": "https://github.com/perlahj/Fraunhofer#readme",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-watch": "0.1.4",
-    "grunt-contrib-uglify": "^0.9.1"
+    "grunt-contrib-jshint": "^1.0.0"
   }
 }

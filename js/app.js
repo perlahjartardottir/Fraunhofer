@@ -1,14 +1,78 @@
+/*
+  Function that checks if your password matches your
+  username.
+*/
+function authenticate() {
+  var userID = $('#userID').val();
+  var password = $('#password').val();
+  $.ajax({
+    url: "/Fraunhofer/Login/logincheck.php",
+    type: "POST",
+    data: {
+      userID: userID,
+      password: password
+    },
+    success: function(data, status, xhr) {
+      /*
+        checks if the data recieved from the php file
+        contains the string "error".
+
+        data.indexOf("error") returns -1 only if the string
+        is not found, so if the string is found it will return
+        a number larger than -1 and we move to the selection site.
+        The php file takes care of logging in or logging off the current user if he tries to log
+        in with wrong information, this is done for security reasons
+      */
+      if (data.indexOf("error") > -1) {
+        alert("Please enter the right information.");
+      } else {
+        window.location = "/Fraunhofer/Views/menu.php";
+      }
+    }
+  });
+}
+function authenticateAppending() {
+  var userID = $('#userID').val();
+  var password = $('#password').val();
+  $.ajax({
+    url: "/Fraunhofer/Login/logincheck.php",
+    type: "POST",
+    data: {
+      userID: userID,
+      password: password
+    },
+    success: function(data, status, xhr) {
+      /*
+        checks if the data recieved from the php file
+        contains the string "error".
+
+        data.indexOf("error") returns -1 only if the string
+        is not found, so if the string is found it will return
+        a number larger than -1 and we move to the selection site.
+        The php file takes care of logging in or logging off the current user if he tries to log
+        in with wrong information, this is done for security reasons
+      */
+      if (data.indexOf("error") > -1) {
+        alert("Please enter the right information.");
+      } else {
+        window.location.reload();
+      }
+    }
+  });
+}
+
 function logout() {
   $.ajax({
-    url: "../Login/logout.php",
+    url: "/Fraunhofer/Login/logout.php",
     type: "POST"
   }).done(function() {
     // redirect the user to the login page
     // this is done so you loose access to the site you are at
     // when you log out.
-    window.location = "../Login/login.php";
+    window.location = "/Fraunhofer/Login/login.php";
   });
 }
+
 function addEmployee() {
   var eName = $('#eName').val();
   var ePhoneNumber = $('#ePhoneNumber').val();
@@ -127,7 +191,7 @@ function changeEmployee() {
         alert("Invalid phone number");
       }
       if (data.indexOf("invalid security level") > -1) {
-        alert("Security level should be in the range 1-4");
+        alert("Security level should be in the range 1-4 and four letters long");
       } else {
         window.location.reload(true);
       }

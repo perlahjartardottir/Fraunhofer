@@ -31,18 +31,27 @@ $departmentSql = "SELECT department_name
 $departmentResult = mysqli_query($link, $departmentSql);
 
 // Query for supplier list
-$supplierSql = "SELECT supplier_name
-                FROM supplier;";
+$supplierSql = "SELECT supplier_name, credit_card
+                FROM supplier
+                ORDER BY supplier_name;";
 $supplierResult = mysqli_query($link, $supplierSql);
 ?>
 <head>
   <title>Fraunhofer CCD</title>
 </head>
 <body>
+  <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
   <?php include '../header.php'; ?>
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <div class='container'>
-    <div id='invalidRequest'></div>
     <?php if(mysqli_num_rows($result) > 0){ ?>
     <div class='row well'>
       <h3><center>Quotes</center></h3>
@@ -71,66 +80,121 @@ $supplierResult = mysqli_query($link, $supplierSql);
     </div>
     <?php } ?>
     <div class='row well well-lg'>
-      <h5>*Only "Description" field is required. More information makes it easier to process the order.</h5>
-      <h5>*To add quotes to the request, please add them <strong><u>before</u></strong> you create the request (Press Quotes button on Home view).</h5>
-
-      <form>
+      <h5>To add quotes to the request, please add them <strong><u>before</u></strong> you create the request (Press Quotes button on Home view).</h5>
+      <h5>Requesting multiple items: fill out the form and press "I have another item". Then enter the information for the next item.</h5>
+      <h5>*Required.</h5>
+      <form id='requestForm'>
+        <div id='invalidRequest'></div>
+        <div id='requestSent'></div>
+        <div id='emailSent'></div>
         <h3>Make a request for a purchase order</h3>
         <div class='col-md-4 form-group'>
           <label>Supplier: </label>
-          <input type='text' list="suppliers" name="supplierList" id='supplierList' value='' class='col-md-12 form-control'>
+          <input type='text' list="suppliers" name="supplierList" id='supplierList' class='col-md-12 form-control'>
           <datalist id="suppliers">
             <?
             while($row = mysqli_fetch_array($supplierResult)){
-              echo"<option value='".$row[0]."'></option>";
+                 echo"<option value='".$row[0]."'>".$row[0]."</option>";
             }
             ?>
           </datalist>
         </div>
-        <div class='col-md-4 form-group'>
-          <label>Part #: </label>
-          <input type="text" id='part_number' class='form-control'>
+        <div class='col-md-8 form-group'>
+          <div class='col-md-6' style='padding:0px;'>
+            <label>Order by: * </label>
+            <select id='orderTimeframe' class='form-control' onchange='displayDate()'>
+              <option value='With next order'>With next order</option>
+              <option value='Specific date'>Specific date</option>
+              <option value='Other'>Other</option>
+             </select>
+            </div>
+            <div class='col-md-6'>
+            <label class='orderTimeframeDate'>Order by date:*</label>
+              <input type='date' id='orderTimeframeDate' class='form-control orderTimeframeDate'>
+            </div>
         </div>
         <div class='col-md-4 form-group'>
-          <label>Quantity: </label>
-          <input type="number" id='quantity' class='form-control'>
-        </div>
-        <div class='col-md-4 form-group'>
-          <label>Department: </label>
+          <label>Department: *</label>
           <select id='department' class='form-control' onchange='updateCostCode()'>
-            <option value=''>All departments</option>
+            <!-- All departments options, must have some value to work in Safari.-->
+            <option value=' '>All departments</option>
             <?php
             while($departmentRow = mysqli_fetch_array($departmentResult)){
               echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
             }?>
           </select>
+       </div>
+       <div class='col-md-8 form-group'>
+        <div class='col-md-6' style='padding:0px;'>
+            <label>Cost code: * </label>
+            <div class='result'></div>
         </div>
-        <div class='form-group col-md-4 result'>
         </div>
+        <div class='col-md-12 form-group'>
+          <div class='col-md-8' style='padding:0px;'>
+            <label>Request note: </label><p class='text-muted' style='margin-left: 10px; display:inline;'>Message to the person who processes the request.</p>
+            <textarea id='request_description' class='form-control' rows='2'></textarea>
+            
+          </div>
+        </div>
+        <hr  id='request_hr'/>
+        <div class="h-line"></div>
         <div class='col-md-4 form-group'>
-          <label>Order timeframe: </label>
-          <select id='orderTimeframe' class='form-control'>
-            <option value='With next order'>With next order</option>
-            <option value='This week'>This week</option>
-            <option value='Today'>Today</option>
-            <option value='Other'>Other</option>
-          </select>
+          <label>Part #: * </label>
+          <input type="text" id='part_number' class='form-control'>
         </div>
-        <div class='col-md-4 form-group'>
-          <label>Total price: </label>
+        <div class='col-md-2 form-group'>
+          <label>Quantity: * </label>
+          <input type="number" id='quantity' class='form-control'>
+        </div>
+        <div class='col-md-2 form-group'>
+          <label>Unit price:  </label>
+          <input type='number' id='unit_price' class='form-control' onclick='calcTotalPrice()'>
+        </div>
+        <div class='col-md-2 form-group'>
+          <label>Total price:  </label>
           <input type='number' id='request_price' class='form-control'>
         </div>
-        <div class='col-md-4 form-group'>
-          <label>Description: </label>
-          <textarea id='request_description' class='form-control' rows='4'></textarea>
+        <div class='col-md-8 form-group'>
+          <label>Part description: </label>
+          <input type="text" id='unit_description'  class='form-control'>
         </div>
+        <input class='form-control btn btn-primary' type="button" value="Request another item" onclick='orderRequest("",this.form)' style='margin-top:25px;'>
+      </div>
+      <input class='form-control btn btn-success' type="button" value="I'm done!" onclick='orderRequest("yes", this.form)' style='margin-top:25px;'>
       </form>
-      <input class='form-control btn btn-primary' type="button" value="Request" onclick='orderRequest()' style='margin-top:25px;'>
+
     </div>
   </div>
   <script>
   $(document).ready(function() {
       updateCostCode();
+      $(".orderTimeframeDate").hide();
   });
+
+  function displayDate() {
+    if($("#orderTimeframe").val() == "Specific date"){
+      $(".orderTimeframeDate").show();
+    }
+    else{
+      $(".orderTimeframeDate").hide();
+    }
+  }
+
+  function calcTotalPrice() {
+    var unitPrice = $("#unit_price").val();
+    var quantity = $("#quantity").val();
+    totalPrice = unitPrice*quantity;
+    $("#request_price").val(totalPrice);
+  }
+
+  $("#unit_price").blur(function(){
+    calcTotalPrice();
+  })
+
+    $("#quantity").blur(function(){
+    calcTotalPrice();
+  })
+
   </script>
 </body>

@@ -43,7 +43,7 @@
   }
 
   // Query to find all active requests
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code, request_price
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code, request_price, unit_description, unit_price
                  FROM order_request
                  WHERE active = 1 AND order_ID IS NULL
                  ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
@@ -52,9 +52,10 @@
 
   // Query to find all purchase orders that have been
   // requested and have not yet been received
-  $inProgressSql = "SELECT order_ID, order_date, request_ID, order_final_inspection, order_name, supplier_ID, expected_delivery_date, net_terms, approval_status, comment, order_for_who
-                    FROM purchase_order
-                    WHERE order_receive_date IS NULL;";
+   $inProgressSql = "SELECT o.order_ID, o.order_date, o.request_ID, o.order_final_inspection, o.order_name, o.supplier_ID, o.expected_delivery_date, o.net_terms, o.approval_status, comment, o.order_for_who, s.supplier_name
+                     FROM purchase_order o, supplier s
+                     WHERE order_receive_date IS NULL AND o.supplier_ID = s.supplier_ID
+                     ORDER BY o.order_date asc;";
   $inProgressResult = mysqli_query($link, $inProgressSql);
 
   // Query to find 10 most recent purchase orders that
@@ -65,6 +66,7 @@
                     ORDER BY order_receive_date DESC
                     LIMIT 10;";
   $deliveredResult = mysqli_query($link, $deliveredSql);
+
   ?>
   <link href='../css/bootstrap.min.css' rel='stylesheet'>
 </head>
@@ -77,6 +79,15 @@
 <title id='title'>Fraunhofer CCD</title>
 <body>
   <?php include '../header.php'; ?>
+    <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
   <div class="container">
     <div class="row well well-lg">
       <div class='col-md-12 col-md-offset-1'>
@@ -127,13 +138,15 @@
     </div>
 
     <!-- Here is the requested table ------------------------------------------------>
-    <div class='col-md-3'>
-      <h4>Requested</h4>
-      <table class='table table-responsive'>
+    <div class='col-md-6' style='padding-left: 0px'>
+      <h3>Requested</h3>
+      <table id='request_table' class='table table-responsive order-column'>
         <thead>
           <tr>
             <th>Request</th>
-            <th>Date</th>
+            <th>By</th>
+            <th>Supplier</th>
+            <th>Order by</th>
           </tr>
         </thead>
         <tbody>
@@ -141,7 +154,15 @@
           while($requestRow = mysqli_fetch_array($requestResult)){
 
             // this variable shows the first 15 characters of the description
-            $description = substr($requestRow[4], 0, 15);
+            // $description = substr($requestRow[4], 0, 15);
+
+                // Query to find requests that don't belong to a purchase order
+                // If it doesn't belong to a purchase order, then you can delete it
+                $emptyRequestSql = "SELECT request_ID
+                        FROM purchase_order
+                        WHERE request_ID = '$requestRow[0]';";
+                $emptyRequestResult = mysqli_query($link, $emptyRequestSql);
+                $emptyRequestRow = mysqli_fetch_array($emptyRequestResult);
 
             // Query to find name of the employee who issued the request
             $employeeRequestSql = "SELECT employee_name
@@ -151,21 +172,37 @@
             $employeeRequestRow = mysqli_fetch_array($employeeRequestResult);
             $employee_name = $employeeRequestRow[0];
 
+            $employeeInitialsSql = "SELECT
+                                    CONCAT_WS(' ',
+                                      SUBSTRING_INDEX(employee_name, ' ', 1),
+                                      CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>2 THEN
+                                        CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -3), 1), '.')
+                                      END,
+                                      CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>1 THEN
+                                        CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -2), 1), '.')
+                                      END,
+                                      CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>0 THEN
+                                        CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -1), 1), '.')
+                                      END) shortname
+                                  FROM
+                                    employee
+                                  WHERE employee_ID = '$requestRow[5]';";
+            $employee_initials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
+
             echo"
               <tr>
-                <td><a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$description."... </a></td>
-                <td>".$requestRow[1];
-
-                // Query to find requests that don't belong to a purchase order
-                // If it doesn't belong to a purchase order, then you can delete it
-                $emptyRequestSql = "SELECT request_ID
-                        FROM purchase_order
-                        WHERE request_ID = '$requestRow[0]';";
-                $emptyRequestResult = mysqli_query($link, $emptyRequestSql);
-                $emptyRequestRow = mysqli_fetch_array($emptyRequestResult);
-                if($emptyRequestRow[0] != $requestRow[0]){
-                  echo"<button style='float:right;' class='btn btn-danger btn-xs' onclick='delRequest(".$requestRow[0].")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
+                <td>";
+                  if($emptyRequestRow[0] != $requestRow[0]){
+                  echo"
+                  <a class='glyphicon glyphicon-edit' style='float:left; margin-right:8px;' onclick='displayEditRequestModal(".$requestRow[0].")'></a>
+                  <span class='glyphicon glyphicon-remove' style='color: #C52F2B; float:left; margin-right:8px;' aria-hidden='true' onclick='delRequest(".$requestRow[0].")'></span>";
                 }
+              echo"
+                <a href='#' data-toggle='modal' data-target='#".$requestRow[0]."'>".$requestRow[0]." </a></td>
+                <td>".$employee_initials."</td>
+                <td>".substr($requestRow[2],0,15)."</td>
+                <td>".$requestRow[7];
+
                 echo"</td>
               </tr>";
             echo"
@@ -173,22 +210,23 @@
                 <div class='modal-dialog'>
                   <div class='modal-content col-md-12'>
                     <div class='modal-header'>
-                      <h4>Request: ".$requestRow[0]."</h4>
+                    <h4>Request ".$requestRow[0]."</h4>
+                    <h5>By ".$employee_name." on ".$requestRow[1]."</h5>
+                   <h5>".$requestRow[4]."</h5>
                     </div>
                     <div class='modal-body col-md-12'>
-                      <p>Requested by: ".$employee_name."</p>
-                      <p>Date: ".$requestRow[1]."</p>
-                      <p>Order timeframe: ".$requestRow[7]."</p>
-                      <p>Part number: ".$requestRow[8]."</p>
-                      <p>Quantity: ".$requestRow[9]."</p>
-                      <p>Total price: $".$requestRow[11]."</p>
-                      <p>Supplier: ".$requestRow[2]."</p>
-                      <p>Department: ".$requestRow[6]."</p>
-                      <p>Cost code: ".$requestRow[10]."</p>
-                      <p>Description: ".$requestRow[4]."</p>
+                      <p><strong>Supplier: </strong>".$requestRow[2]."</p>
+                      <p><strong>Order timeframe: </strong>".$requestRow[7]."</p>
+                      <p><strong>Department: </strong>".$requestRow[6]."</p>
+                      <p><strong>Cost code: </strong>".$requestRow[10]."</p>
+                      <p><strong>Part number: </strong>".$requestRow[8]."</p>
+                       <p><strong>Part description: </strong>".$requestRow[12]."</p>
+                      <p><strong>Quantity: </strong>".$requestRow[9]."</p>
+                      <p><strong>Unit price: </strong>$".$requestRow[13]."</p>
+                       <p><strong>Total price: </strong>$".$requestRow[11]."</p>
                     </div>
                     <div class='modal-footer'>
-                      <button type='button' class='btn btn-primary' data-dismiss='modal'>Close</button>
+                      <button type='button' class='btn btn-primary' data-dismiss='modal'> Close</button>
                     </div>
                   </div>
                 </div>
@@ -198,16 +236,19 @@
         </tbody>
       </table>
     </div>
-
+   <!-- SelectPHP/editRequestModal.php -->
+    <div id='editRequestModal' class='modal'></div>
     <!-- Here we have the In Progress table ---------------------------->
-    <div class='col-md-5'>
-      <h4>In Progress</h4>
-      <table class='table table-responsive'>
+    <div class='col-md-6'>
+      <h3>In Progress</h3>
+      <table id='progress_table' class='table table-responsive order-column'>
         <thead>
           <tr>
-            <th>Purchase Order</th>
-            <th>Order Date</th>
-            <th>Expected Delivery</th>
+            <th>PO</th>
+            <th>For</th>
+            <th>Supplier</th>
+            <th>Ordered on</th>
+            <th>Expected</th>
           </tr>
         </thead>
         <tbody>
@@ -228,8 +269,29 @@
             } else{
               echo"<tr>";
             }
+
+            $employeeInitialsSql = "SELECT
+                        CONCAT_WS(' ',
+                          SUBSTRING_INDEX(employee_name, ' ', 1),
+                          CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>2 THEN
+                            CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -3), 1), '.')
+                          END,
+                          CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>1 THEN
+                            CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -2), 1), '.')
+                          END,
+                          CASE WHEN LENGTH(employee_name)-LENGTH(REPLACE(employee_name,' ',''))>0 THEN
+                            CONCAT(LEFT(SUBSTRING_INDEX(employee_name, ' ', -1), 1), '.')
+                          END) shortname
+                      FROM
+                        employee
+                      WHERE employee_ID = '$inProgressRow[10]';";
+          $employee_initials = mysqli_fetch_row(mysqli_query($link, $employeeInitialsSql))[0];
+
+
               echo"<td><a href='#' onclick='setSessionIDSearch(".$inProgressRow[0].")' data-toggle='modal' data-target='#".$inProgressRow[0]."'>".$inProgressRow[4]."</a></td>
-                    <td>".$inProgressRow[1]."</td>";
+                  <td>".$employee_initials."</td>
+                  <td>".substr($inProgressRow[11],0,15)."</td>
+                  <td>".$inProgressRow[1]."</td>";
               if($dateDiffDays < 0){
                 echo "<td><b>".$inProgressRow[6]."</b></td>";
               }else{
@@ -322,11 +384,15 @@
                   <button class='btn btn-primary' style='margin-top: 5px;' onclick='addInProgressComment(".$inProgressRow[0].", this);'>Add comment</button>
                 </form>
               </div>
-              <div class='modal-footer'>
-                <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>
+              <div class='modal-footer'>";
+                if($user_sec_lvl > 2){
+                  echo"
+                  <a href='../Views/addOrderItem.php' class='btn btn-primary' style='float:left'>Edit Order</a>";
+                }
+                echo"
                 <a href='../Printouts/purchaseOrder.php' class='btn btn-primary' style='float:left'>Printout</a>";
                 if($user_sec_lvl > 3){
-                  echo"<button class='btn btn-danger' onclick='delPurchaseOrder(".$inProgressRow[0].")'>Delete po</button>";
+                  echo"<button class='btn btn-danger' onclick='cancelPurchaseOrder(".$inProgressRow[0].")'>Cancel</button>";
                 }
                 echo"<a href='../Views/purchaseOrderReceived.php' class='btn btn-success'";
                 if($inProgressRow[8] == 'pending' || $inProgressRow[8] == 'declined'){ echo " disabled";}
@@ -341,26 +407,26 @@
     </div>
 
     <!-- Here we have the Delivered table -------------------------------->
-    <div class='col-md-4'>
+ <!--    <div class='col-md-2' style='padding-right: 0px;'>
       <h4>Delivered</h4>
       <table class='table table-responsive'>
         <thead>
           <tr>
-            <th>Purchase Order</th>
-            <th>Receiving Date</th>
+            <th>PO</th>
+            <th>Received</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody> -->
           <?php
-          while($deliveredRow = mysqli_fetch_array($deliveredResult)){
-              echo"<tr>
-                    <td><a href='#' data-toggle='modal' onclick='setSessionIDSearch(".$deliveredRow[0].")' data-target='#".$deliveredRow[0]."'>".$deliveredRow[4]."</a></td>
-                    <td>".$deliveredRow[2]."</td>
-                   </tr>";
-          }
+          // while($deliveredRow = mysqli_fetch_array($deliveredResult)){
+          //     echo"<tr>
+          //           <td><a href='#' data-toggle='modal' onclick='setSessionIDSearch(".$deliveredRow[0].")' data-target='#".$deliveredRow[0]."'>".$deliveredRow[4]."</a></td>
+          //           <td>".$deliveredRow[2]."</td>
+          //          </tr>";
+          // }
           ?>
-        </tbody>
-      </table>
+ <!--        </tbody>
+      </table> -->
       <?php
       $deliveredResult = mysqli_query($link, $deliveredSql);
       while($deliveredRow = mysqli_fetch_array($deliveredResult)){
@@ -461,6 +527,23 @@
   </div>
   <script>
     $(document).ready(function(){
+      // Make tables sortable and searchable. 
+      // $('#request_table').DataTable();
+      // $('#progress_table').DataTable();
+      $('#request_table').dataTable( {
+        "pageLength": 15
+      } );
+      $('#progress_table').dataTable( {
+        "pageLength": 15
+      } );
+      // $('#request_table').DataTable( {
+      //   paging: false
+      // } );
+      // $('#progress_table').DataTable( {
+      //   paging: false
+      // } );
+
+
       setInterval(test, 10000);
       function test(){
         $.ajax({
@@ -474,6 +557,20 @@
         });
       }
     });
+
+      // For the modal window to edit analysis results.
+      var modal = document.getElementById('editRequestModal');
+      function displayEditRequestModal(request_ID){
+        editRequestModal(request_ID);
+        modal.style.display = "block";
+      }
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+         modal.style.display = "none";
+        }
+      }
+
   </script>
 </body>
 </html>

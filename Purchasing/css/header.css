@@ -8,3 +8,14 @@
 	padding-left:10px;
 	color:black;
 }
+/* A line to break up the request form */
+#request_hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:#d9d9d9;
+  height: 1px;
+}
+
+

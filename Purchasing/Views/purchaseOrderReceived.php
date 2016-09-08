@@ -65,6 +65,11 @@ $scanSql = "SELECT COUNT(scan_ID)
 $scanResult = mysqli_query($link, $scanSql);
 
 $numberOfScans = mysqli_fetch_array($scanResult);
+
+$dateOfOrderSql = "SELECT order_date
+FROM purchase_order
+WHERE order_ID = '$order_ID';";
+$dateOfOrder = mysqli_fetch_row(mysqli_query($link, $dateOfOrderSql))[0];
 ?>
 <head>
   <title>Fraunhofer CCD</title>
@@ -228,7 +233,7 @@ $numberOfScans = mysqli_fetch_array($scanResult);
       <form>
         <div class='col-md-12' style='margin-top:30px;'>
           <button class='btn btn-primary' style='float:right;' onclick='packageReceived(<?php echo $order_ID;?>, this)'>Order Received</button>
-          <input type='date' id='receiveDate' class='form-control' style='float:right; margin-right:5px; width:auto;'>
+          <input type='date' id='receiveDate' min='<?php echo $dateOfOrder; ?>'class='form-control' style='float:right; margin-right:5px; width:auto;'>
         </div>
       </form>
     </div>

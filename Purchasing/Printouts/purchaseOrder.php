@@ -40,6 +40,10 @@ $supplierSql = "SELECT supplier_name, supplier_address, supplier_phone, supplier
                 WHERE supplier_ID = '$supplier_ID';";
 $supplierResult = mysqli_query($link, $supplierSql);
 $supplierRow = mysqli_fetch_array($supplierResult);
+$supplier_address = $supplierRow[1];
+
+// Split the address so we can print it in multiple lines.
+$addressArray = explode(',', $supplier_address);
 
 ?>
 <html>
@@ -122,8 +126,12 @@ $supplierRow = mysqli_fetch_array($supplierResult);
       <?
       if($supplierRow[4] != ""){
         echo"<span class='col-xs-12'>Attn: ".$supplierRow[4]."</span>";
-      }?>
-      <span class='col-xs-12'><?php echo $supplierRow[1]; ?></span>
+      }
+      for($i = 0; $i < count($addressArray); $i++){
+        echo"
+        <span class='col-xs-12'>".$addressArray[$i]."</span>";
+      }
+      ?>
       <span class='col-xs-12'>Phone: <?php echo $supplierRow[2]; ?></span>
       <p class='col-xs-12'>Email: <?php echo $supplierRow[3]; ?></p>
       <span class='col-xs-12' style='margin-left: 15px; border:1px solid black; width:auto; background-color: #127705;'><strong>Purchase Order Number: <?php echo $order_name; ?></strong></span>

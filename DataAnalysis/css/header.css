@@ -1,10 +1,23 @@
-.headerbutton{
-	color: white;
-	margin-top: 10px;
+.username{
+    font-weight: bold;
+    margin-left: 5px;
 }
 
-.username{
-	margin-top:15px;
-	padding-left:10px;
-	color:black;
+.header_btn{
+
+    margin-top: 10px;
+}
+
+ul.navbar-brand{
+    margin-bottom: 0px;
+}
+.nav_bar_lower.col-md-12, .nav_bar_lower.container, .navbar-collapse.nav_bar_lower{
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 10px;
+}
+
+#nav_overview_btn_group{
+	padding-left:0px;
+	padding-right:0px;
 }
