@@ -132,18 +132,19 @@ $supplierResult = mysqli_query($link, $supplierSql);
         </div>
         <div class='col-md-12 form-group'>
           <div class='col-md-8' style='padding:0px;'>
-            <label>Comment: </label>
+            <label>Request note: </label><p class='text-muted' style='margin-left: 10px; display:inline;'>Message to the person who processes the request.</p>
             <textarea id='request_description' class='form-control' rows='2'></textarea>
+            
           </div>
         </div>
         <hr  id='request_hr'/>
         <div class="h-line"></div>
         <div class='col-md-4 form-group'>
-          <label>Part #: </label>
+          <label>Part #: * </label>
           <input type="text" id='part_number' class='form-control'>
         </div>
         <div class='col-md-2 form-group'>
-          <label>Quantity: </label>
+          <label>Quantity: * </label>
           <input type="number" id='quantity' class='form-control'>
         </div>
         <div class='col-md-2 form-group'>

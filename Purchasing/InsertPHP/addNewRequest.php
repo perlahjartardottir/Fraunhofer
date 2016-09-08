@@ -42,7 +42,7 @@ if($timeframeDate !== ""){
 	$today = date("Y-m-d");
 	$difference = abs(strtotime($today) - strtotime($timeframeDate));
 	$days = floor(($difference - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-	if($days < 2){
+	if($days < 1){
 
 		$employeeSql = "SELECT employee_name
 		FROM employee
@@ -51,7 +51,7 @@ if($timeframeDate !== ""){
 
 		$purchasingPersonSql = "SELECT employee_email
 		FROM employee
-		WHERE employee_ID = '7';";
+		WHERE employee_ID = '6';";
 		$purchasingPerson = mysqli_fetch_row(mysqli_query($link, $purchasingPersonSql))[0];
 		
 		$subject = "";

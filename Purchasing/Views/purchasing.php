@@ -210,7 +210,7 @@
                 <div class='modal-dialog'>
                   <div class='modal-content col-md-12'>
                     <div class='modal-header'>
-                    <h4>Request: ".$requestRow[0]."</h4>
+                    <h4>Request ".$requestRow[0]."</h4>
                     <h5>By ".$employee_name." on ".$requestRow[1]."</h5>
                    <h5>".$requestRow[4]."</h5>
                     </div>

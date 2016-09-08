@@ -36,7 +36,7 @@ $suppliersResult = mysqli_query($link, $suppliersSql);
         <div class='modal-content col-md-12'>
           <div class='modal-header'>
             <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove' data-dismiss='modal'></button>
-            <h4>Request ID: ".$requestRow[0]."</h4>
+            <h4>Edit Request ".$requestRow[0]."</h4>
             <h5>By ".$employeeRow[0]." on ".$requestRow[2]." for ".$requestRow[1]."</h5>
           </div>
           <div class='modal-body col-md-12'>";
@@ -156,7 +156,7 @@ $suppliersResult = mysqli_query($link, $suppliersSql);
              </form>
           </div>
           <div class='modal-footer'>
-            <button type='button' class='btn btn-success' onclick='editRequest(".$request_ID.")'>Edit</button>
+            <button type='button' class='btn btn-success' onclick='editRequest(".$request_ID.")'>Save</button>
           </div>
       </div>
     </div>";

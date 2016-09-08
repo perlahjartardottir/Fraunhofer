@@ -251,6 +251,12 @@ function orderRequest(redirect, form){
   if(cost_code === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Cost code</div>";
   }
+  if(part_number === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Part#</div>";
+  }
+  if(quantity === ""){
+    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Quantity</div>";
+  }
 
   if(checkIfRecommended(request_supplier) === 'Not Recommended'){
     r = confirm('This supplier is not recommended, are you sure you wish to proceed?');
