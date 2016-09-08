@@ -136,19 +136,20 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
         </div>
         <div class='form-group col-md-6'>
           <?php
-          $requestSql = "SELECT request_description, department, part_number, quantity, cost_code, request_price
+          $requestSql = "SELECT request_description, department, part_number, quantity, cost_code, request_price, unit_price, unit_description
                          FROM order_request
                          WHERE request_ID = '$request_ID';";
           $requestResult = mysqli_query($link, $requestSql);
           $requestRow = mysqli_fetch_array($requestResult);
           if($requestRow > 0){
             echo"<h4>Request ID: ".$request_ID."</h4>
+                 <p><b>Comment:</b> ".$requestRow[0]."</p>
                  <p><b>Department:</b> ".$requestRow[1]."</p>
                  <p><b>Cost code:</b> ".$requestRow[4]."</p>
                  <p><b>Part number:</b> ".$requestRow[2]."</p>
+                 <p><b>Part description:</b> ".$requestRow[7]."</p>
                  <p><b>Quantity:</b> ".$requestRow[3]."</p>
-                 <p><b>Price:</b> $".$requestRow[5]."</p>
-                 <p><b>Description:</b> ".$requestRow[0]."</p>";
+                 <p><b>Unit price:</b> ".$requestRow[6]."</p>";
           }
           $quoteResult = mysqli_query($link, $quoteSql);
           while($quoteRow = mysqli_fetch_array($quoteResult)){
@@ -279,7 +280,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
             //                 </div>
             //                 <div class='col-md-6'>
             //                   <select id='req_department' class='form-control' onchange='updateCostCode()'>
-            //                     <option value=''>All departments</option>";
+            //                     <option value=' '>All departments</option>";
             //                     $departmentResultModal = mysqli_query($link, $departmentSql);
             //                   while($departmentRowModal = mysqli_fetch_array($departmentResultModal)){
             //                     echo "<option value='".$departmentRowModal[0]."'>".$departmentRowModal[0]."</option>";
@@ -333,7 +334,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
         <div class='form-group col-md-6'>
           <label>Department: </label>
           <select id='department' class='form-control' onchange='updateCostCode()'>
-            <option value=''>All departments</option>
+            <option value=' '>All departments</option>
             <?php
             while($departmentRow = mysqli_fetch_array($departmentResult)){
               echo "<option value='".$departmentRow[0]."'>".$departmentRow[0]."</option>";
@@ -349,7 +350,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
           <input type='text' id='unit_price' class='form-control'>
         </div>
         <div class='form-group col-md-6'>
-          <label>Description: </label>
+          <label>Part description: </label>
           <textarea id='description' class='form-control'></textarea>
         </div>
         <div class='form-group col-md-12'>
@@ -393,8 +394,7 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
           var order_ID = <?php echo $order_ID; ?>;
           showPOInfo(order_ID);
           showOrderItems(order_ID);
-          updateCostCode();
-          console.log(order_ID);
+          // updateCostCode();
       });
 
       // For the modal window to edit analysis results.

@@ -53,7 +53,15 @@ WHERE sample_set_ID = '$sampleSetID';";
   <?php
 
 ?>
-
+  <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
   <div class='container'>
     <div class='row well well-lg'>
       <h5>The set name has the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>

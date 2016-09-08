@@ -104,9 +104,9 @@ $departmentSql2 = "SELECT department_name
                         <label>Department</label>";
                         $noCostCode = "noCostCode";
                         echo"
-                        <input type='hidden' id='edit_modal' value='yes'>
+                        <input type='hidden' id='request_modal' value='yes'>
                         <select id='department' class='form-control' onchange='updateModalCostCode(this)'>
-                          <option value=''>All departments</option>";
+                          <option value=' '>All departments</option>";
                           $departmentResult2 = mysqli_query($link, $departmentSql2);
                           while($departmentRow2 = mysqli_fetch_array($departmentResult2)){
                             if($departmentRow[0] == $departmentRow2[0]){

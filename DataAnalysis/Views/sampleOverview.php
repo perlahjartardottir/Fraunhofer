@@ -58,6 +58,15 @@ WHERE sample_set_ID = '$sampleSetID';";
 <!-- 	<link href='../css/bootstrap.min.css' rel='stylesheet'> -->
 </head>
 <body>
+  <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
 	<?php include '../header.php';?>
 	<div class="container">
 		<div class='row well well-lg'>

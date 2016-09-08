@@ -11,15 +11,16 @@ $employee_ID          = mysqli_real_escape_string($link, $_POST['employee_ID']);
 $part_number          = mysqli_real_escape_string($link, $_POST['part_number']);
 $quantity             = mysqli_real_escape_string($link, $_POST['quantity']);
 $request_price        = mysqli_real_escape_string($link, $_POST['request_price']);
-$unit_price        = mysqli_real_escape_string($link, $_POST['unit_price']);
+$unit_price          	= mysqli_real_escape_string($link, $_POST['unit_price']);
+$unit_description       = mysqli_real_escape_string($link, $_POST['unit_description']);
 
 // If the user has chosen a specific date, add that but not the text "specific date".
 if($timeframe === "Specific date"){
 	$timeframe = $timeframeDate;
 }
 // Insert all the fields to the request, no matter if they are empty or not
-$sql = "INSERT INTO order_request (employee_ID, timeframe, department, cost_code, request_description, request_date, active, request_supplier, part_number, quantity, request_price, unit_price)
-        VALUES ('$employee_ID', '$timeframe', '$department', '$cost_code', '$request_description', CURDATE(), 1, '$request_supplier', '$part_number', '$quantity', '$request_price','$unit_price');";
+$sql = "INSERT INTO order_request (employee_ID, timeframe, department, cost_code, request_description, request_date, active, request_supplier, part_number, quantity, request_price, unit_price, unit_description)
+        VALUES ('$employee_ID', '$timeframe', '$department', '$cost_code', '$request_description', CURDATE(), 1, '$request_supplier', '$part_number', '$quantity', '$request_price','$unit_price','$unit_description');";
 $result = mysqli_query($link, $sql);
 
 // mysqli_insert_id fetches the last inserted row

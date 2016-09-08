@@ -43,7 +43,7 @@
   }
 
   // Query to find all active requests
-  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code, request_price
+  $requestSql = "SELECT request_ID, request_date, request_supplier, approved_by_employee, request_description, employee_ID, department, timeframe, part_number, quantity, cost_code, request_price, unit_description, unit_price
                  FROM order_request
                  WHERE active = 1 AND order_ID IS NULL
                  ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
@@ -79,6 +79,15 @@
 <title id='title'>Fraunhofer CCD</title>
 <body>
   <?php include '../header.php'; ?>
+    <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
   <div class="container">
     <div class="row well well-lg">
       <div class='col-md-12 col-md-offset-1'>
@@ -137,7 +146,7 @@
             <th>Request</th>
             <th>By</th>
             <th>Supplier</th>
-            <th>Required by</th>
+            <th>Order by</th>
           </tr>
         </thead>
         <tbody>
@@ -201,19 +210,20 @@
                 <div class='modal-dialog'>
                   <div class='modal-content col-md-12'>
                     <div class='modal-header'>
-                      <h4>Request: ".$requestRow[0]."</h4>
+                    <h4>Request: ".$requestRow[0]."</h4>
+                    <h5>By ".$employee_name." on ".$requestRow[1]."</h5>
+                   <h5>".$requestRow[4]."</h5>
                     </div>
                     <div class='modal-body col-md-12'>
-                      <p>Requested by: ".$employee_name."</p>
-                      <p>Date: ".$requestRow[1]."</p>
-                      <p>Order timeframe: ".$requestRow[7]."</p>
-                      <p>Part number: ".$requestRow[8]."</p>
-                      <p>Quantity: ".$requestRow[9]."</p>
-                      <p>Total price: $".$requestRow[11]."</p>
-                      <p>Supplier: ".$requestRow[2]."</p>
-                      <p>Department: ".$requestRow[6]."</p>
-                      <p>Cost code: ".$requestRow[10]."</p>
-                      <p>Description: ".$requestRow[4]."</p>
+                      <p><strong>Supplier: </strong>".$requestRow[2]."</p>
+                      <p><strong>Order timeframe: </strong>".$requestRow[7]."</p>
+                      <p><strong>Department: </strong>".$requestRow[6]."</p>
+                      <p><strong>Cost code: </strong>".$requestRow[10]."</p>
+                      <p><strong>Part number: </strong>".$requestRow[8]."</p>
+                       <p><strong>Part description: </strong>".$requestRow[12]."</p>
+                      <p><strong>Quantity: </strong>".$requestRow[9]."</p>
+                      <p><strong>Unit price: </strong>$".$requestRow[13]."</p>
+                       <p><strong>Total price: </strong>$".$requestRow[11]."</p>
                     </div>
                     <div class='modal-footer'>
                       <button type='button' class='btn btn-primary' data-dismiss='modal'> Close</button>

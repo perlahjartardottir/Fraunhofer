@@ -237,16 +237,13 @@ function orderRequest(redirect, form){
   var employee_ID          = $('#employee_ID').val();
   var part_number          = $('#part_number').val();
   var quantity             = $('#quantity').val();
-  var unitPrice             = $('#unit_price').val();
+  var unit_price             = $('#unit_price').val();
   var request_price        = $('#request_price').val();
-  var unit_price          = $('#unit_price').val();
+  var unit_description        = $('#unit_description').val();
   var errorMessage = "";
   
   if(orderTimeframe === "Specific date" && orderTimeframeDate === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Date</div>";
-  }
-  if(quantity === ""){
-    errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Quantity</div>";
   }
   if(department === ""){
     errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Missing information: Department</div>";
@@ -279,7 +276,8 @@ function orderRequest(redirect, form){
         part_number          : part_number,
         request_price        : request_price,
         unit_price           : unit_price,
-        quantity             : quantity
+        quantity             : quantity,
+        unit_description     : unit_description
       },
       success: function(data, status, xhr){
         if(redirect === "yes"){
@@ -291,16 +289,25 @@ function orderRequest(redirect, form){
           $("#invalidRequest").html("");
           $("#requestSent").html("");
           $("#requestSent").html(infoMessage);
+          // Clear these values on request. 
+          $('#part_number').val("");
+          $('#quantity').val("");
+          $('#unit_price').val("");
+          $('#request_price').val("");
+          $('#unit_description').val("");
+
           // Reset form except a few inputs.
-          $('#requestForm')[0].reset();
-          $("input[name='supplierList']").val(request_supplier);
-          $('#orderTimeframe').val(orderTimeframe);
-          displayDate();
-          if(orderTimeframeDate != ""){
-            $('#orderTimeframeDate').val(orderTimeframeDate);
-          }
-          // To clear cost code drop down.
-          updateCostCode();
+          // $('#requestForm')[0].reset();
+          // $("input[name='supplierList']").val(request_supplier);
+          // $('#orderTimeframe').val(orderTimeframe);
+          // displayDate();
+          // if(orderTimeframeDate != ""){
+          //   $('#orderTimeframeDate').val(orderTimeframeDate);
+          // }
+          // // To clear cost code drop down.
+          // updateCostCode();
+          
+
           if(data){
             emailMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>It sounds like your last request was urgent, "+data+" has been notified.</div>";
              $("#emailSent").html(emailMessage);
@@ -625,6 +632,9 @@ function editRequest(request_ID){
   var department  = $('#req_department').val();
   var cost_code  = $('#req_cost_code').val();
   var request_price = $("#req_price").val();
+  var part_description = $('#req_part_description').val();
+  var orderTimeframe       = $('#orderTimeframe').val();
+  var orderTimeframeDate    = $('#orderTimeframeDate').val();
 
   $.ajax({
     url: '../UpdatePHP/editRequest.php',
@@ -638,11 +648,14 @@ function editRequest(request_ID){
       department       : department,
       cost_code        : cost_code,
       description      : description,
-      request_price    : request_price 
+      request_price    : request_price,
+      part_description : part_description,
+      orderTimeframe   : orderTimeframe,
+      orderTimeframeDate : orderTimeframeDate
     },
     success: function(data, status, xhr){
+      console.log(data);
       window.location.reload();
-      //console.log(data);
     }
   });
 }
@@ -855,12 +868,10 @@ function updateCostCode(cost_code, departmentName){
     department_name = $('#department').val();
   }
   console.log(department_name);
-
   var group_by_select = $('#group_by_select').val();
   var request_modal = $('#request_modal').val();
-  var edit_modal = $('#edit_modal').val();
+  console.log("request_modal " + request_modal);
 
-  console.log(edit_modal);
 
   $.ajax({
     url: "../UpdatePHP/costCode.php",
@@ -869,7 +880,6 @@ function updateCostCode(cost_code, departmentName){
       department_name : department_name,
       group_by_select : group_by_select,
       request_modal   : request_modal,
-      edit_modal      : edit_modal,
       cost_code       : cost_code
     },
     success: function(data, status, xhr) {
@@ -892,12 +902,15 @@ function updateCostCodeOnClick(){
 }
 function updateModalCostCode(element){
   var department_name = $(element).parent().find('#department').val();
-  console.log(department_name);
+      var request_modal = $('#request_modal').val();
+  console.log("request_modal " + request_modal);
+
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
     data: {
-      department_name : department_name
+      department_name : department_name,
+      request_modal : request_modal
     },
     success: function(data, status, xhr) {
       $('.result').html(data);
@@ -1160,10 +1173,11 @@ function editOrderItem(order_item_ID, element){
   var quantity    = $(element).parent().prev().find("#quantity").val();
   var part_number = $(element).parent().prev().find('#part_number').val();
   var department  = $(element).parent().prev().find('#department').val();
-  var cost_code   = $('#edit_cost_code').val();
-  if(cost_code == undefined){
-      cost_code   = $('#cost_code').val();
-  }
+  var cost_code   = $('#req_cost_code').val();
+  console.log("cst code: " + cost_code);
+  // if(cost_code === undefined){
+  //     cost_code   = $('#cost_code').val();
+  // }
   var unit_price  = $(element).parent().prev().find('#unit_price').val();
   var description = $(element).parent().prev().find('#description').val();
 
@@ -1187,11 +1201,14 @@ function editOrderItem(order_item_ID, element){
 
 function updateCostCodeModal(element){
   var department_name = $(element).parent().find('#department').val();
+    var request_modal = $('#request_modal').val();
+  console.log("request_modal " + request_modal);
   $.ajax({
     url: "../UpdatePHP/costCode.php",
     type: "POST",
     data: {
-      department_name : department_name
+      department_name : department_name,
+      request_modal : request_modal
     },
     success: function(data, status, xhr) {
       $('.result').html(data);

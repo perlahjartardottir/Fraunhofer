@@ -12,7 +12,7 @@ $supplierRow = mysqli_fetch_array($getSupplierNameResult);
 $supplier_name = $supplierRow[0];
 
 // Find all active requests that have the same supplier and are not the current request
-$requestSql = "SELECT request_ID, request_supplier, request_date, employee_ID, request_description, part_number, quantity, unit_price, department, cost_code
+$requestSql = "SELECT request_ID, request_supplier, request_date, employee_ID, request_description, part_number, quantity, unit_price, department, cost_code, unit_description
                           FROM order_request
                           WHERE active = 1
                           AND request_ID = '$request_ID';";
@@ -39,37 +39,14 @@ $employeeRow = mysqli_fetch_array($employeeResult);
           <div class='modal-header'>
             <h4>Request ID: ".$requestRow[0]."</h4>
             <h5>By ".$employeeRow[0]." on ".$requestRow[2]." for ".$requestRow[1]."</h5>
+            <h5>".$requestRow[4]."</h5>
           </div>
           <div class='modal-body col-md-12'>";
           echo"
             <form class='form-horizontal'>
               <div class='form-group'>
                 <div class='col-md-3'>
-                  <label class='control-label'>Part number:</label>
-                </div>
-                <div class='col-md-6'>
-                  <input type='text' id='req_part_number' class='form-control' value='".$requestRow[5]."'>
-                </div>
-              </div>
-              <div class='form-group'>
-                <div class='col-md-3'>
-                  <label class='control-label'>Quantity:</label>
-                </div>
-                <div class='col-md-6'>
-                  <input type='number' id='req_quantity' class='form-control' value='".$requestRow[6]."'>
-                </div>
-              </div>
-              <div class='form-group'>
-                <div class='col-md-3'>
-                  <label class='control-label'>Unit price:</label>
-                </div>
-                <div class='col-md-6'>
-                  <input type='number' id='req_unit_price' class='form-control' value='".$requestRow[7]."'>
-                </div>
-              </div>
-              <div class='form-group'>
-                <div class='col-md-3'>
-                  <label>Department: *</label>
+                  <label>Department: </label>
                 </div>
                 <div class='col-md-6'>
                 	<input type='hidden' id='request_modal' value='yes'>
@@ -98,10 +75,34 @@ $employeeRow = mysqli_fetch_array($employeeResult);
               </div>
               <div class='form-group'>
                 <div class='col-md-3'>
-                  <label class='control-label'>Description:</label>
+                  <label class='control-label'>Part number:</label>
                 </div>
                 <div class='col-md-6'>
-                  <textarea id='req_description' class='form-control'>".$requestRow[4]."</textarea>
+                  <input type='text' id='req_part_number' class='form-control' value='".$requestRow[5]."'>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='col-md-3'>
+                  <label class='control-label'>Part description:</label>
+                </div>
+                <div class='col-md-6'>
+                  <input type='text' id='req_description' class='form-control' value='".$requestRow[10]."'>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='col-md-3'>
+                  <label class='control-label'>Quantity:</label>
+                </div>
+                <div class='col-md-6'>
+                  <input type='number' id='req_quantity' class='form-control' value='".$requestRow[6]."'>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='col-md-3'>
+                  <label class='control-label'>Unit price:</label>
+                </div>
+                <div class='col-md-6'>
+                  <input type='number' id='req_unit_price' class='form-control' value='".$requestRow[7]."'>
                 </div>
               </div>
              </form>
