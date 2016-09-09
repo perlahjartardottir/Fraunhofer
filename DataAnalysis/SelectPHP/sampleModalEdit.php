@@ -35,14 +35,13 @@ echo"
         <div id='error_message'></div>
         <div class='form-group'>
           <label>Material: </label>
-          <input list='materials_edit' id='material_edit' class='form-control' value='".$sampleRow[2]."'>
-          <datalist id='materials_edit'>";
+          <input type='text' list='edit_materials' name='edit_material' class='form-control' value='".$sampleRow[2]."'>
+          <datalist id='edit_materials'>";
             while($row = mysqli_fetch_array($materialsResult)){
-              echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
+              echo"<option value='".$row[0]."'>".$row[0]."</option>";
             }
             echo"
           </datalist>
-          <input type='hidden' name='material_edit' id='material_edit-hidden'>
         </div>
         <div class='form-group'>
           <label>Comment:</label>
@@ -89,30 +88,11 @@ echo"
 ?>
 <script>
 
-$('#material_edit-hidden').val(document.getElementById('material_edit').value);
+// $('#material_edit-hidden').val(document.getElementById('material_edit').value);
 
   document.getElementById('close_modal').onclick = function(){
     modal.style.display = 'none';
     }
-
-  //Material: So user can both choose from datalist and enter text. 
-  $('input[list]').on('input', function(e) {
-    var input = $(e.target),
-    options = $('#' + input.attr('list') + ' option'),
-    hiddenInput = $('#' + input.attr('id') + '-hidden'),
-    label = input.val();
-
-    hiddenInput.val(label);
-
-    for(var i = 0; i < options.length; i++) {
-      var option = options.eq(i);
-
-      if(option.text() === label) {
-        hiddenInput.val( option.attr('data-value') );
-        break;
-      }
-    }
-  });
 
   // Picture validation. User can choose to ignore the message, but then the picture will not be uploaded.
 $('#sample_picture_edit').bind('change', function() {

@@ -64,11 +64,9 @@ WHERE sample_set_ID = '$sampleSetID';";
   </script>
   <div class='container'>
     <div class='row well well-lg'>
-      <h5>The set name has the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
+          <h5>The set name has the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
       <h5>To edit a sample, choose it's set then click it's name in the overview table at the bottom of the page.</h5>
-    </div>
-    <div class='row well well-lg'>
-      <h3 class='custom_heading'>Add a sample to a new set or an existing set.</h3>
+      <h3 class='custom_heading'>Add a sample to a new set or an existing set</h3>
       <form role='form' action='../InsertPHP/addSample.php' method="post" enctype="multipart/form-data">
     <div class='col-md-6'>
       <div class='col-md-12 form-group'>
@@ -90,7 +88,6 @@ WHERE sample_set_ID = '$sampleSetID';";
         <div class='col-md-12 form-group'>
           <label>When was the sample initialized? </label>
           <div>
-            <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
             <input type='date' id='sample_set_date' name='sample_set_date' class='sample_set_name custom_date form-control' value='".date("Y-m-d")."' data-date='' data-date-format='YYYY-MM-DD'>
           </div>
         </div>
@@ -131,16 +128,18 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div> <!-- Sample -->
     <div class='col-md-6'>
       <div class='col-md-12 form-group'>
-        <label for='material' >Substrate/Base material: </label>
-        <input list="materials" id='material' class='col-md-12 form-control'>
-        <datalist id="materials">
-          <?
-          while($row = mysqli_fetch_array($materialsResult)){
-            echo"<option data-value='".$row[0]."'>".$row[0]."</option>";
-          }
-          ?>
-        </datalist>
-        <input type='hidden' name='material' id='material-hidden'>
+        <label for='material'>Substrate/Base material: </label>
+         <?
+         echo"
+          <input type='text' list='materials_new' name='material_new' class='form-control' value='".$sampleRow[2]."'>
+          <datalist id='materials_new'>";
+            while($row = mysqli_fetch_array($materialsResult)){
+              echo"<option value='".$row[0]."'>".$row[0]."</option>";
+            }
+            echo"
+          </datalist>";
+        ?>
+
       </div>
       <div class='col-md-12 form-group'>
         <label for='sample_comment'>Comment: </label>
@@ -185,28 +184,7 @@ $("#sample_set_date").on("change", function(){
     );
     sampleSetDate = $("#sample_set_date").val().replace(/-/g,"").substring(2,8);
     getNewSampleSetName(sampleSetDate);
-
 }).trigger("change")
-
-// So user can input text as well as choose from a datalist. 
-// http://stackoverflow.com/a/29882539
-$('input[list]').on('input', function(e) {
-  var input = $(e.target),
-  options = $('#' + input.attr('list') + ' option'),
-  hiddenInput = $('#' + input.attr('id') + '-hidden'),
-  label = input.val();
-
-  hiddenInput.val(label);
-
-  for(var i = 0; i < options.length; i++) {
-    var option = options.eq(i);
-
-    if(option.text() === label) {
-      hiddenInput.val( option.attr('data-value') );
-      break;
-    }
-  }
-});
 
 // Picture validation. User can choose to ignore the message, but then the picture will not be uploaded.
 $('#sample_picture').bind('change', function() {

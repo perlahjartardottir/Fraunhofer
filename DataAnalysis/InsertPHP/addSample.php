@@ -5,7 +5,7 @@ session_start();
 $sampleSetID = $_POST['sample_set_ID'];
 $sampleSetDate = $_POST['sample_set_date'];
 $sampleSetNumber = $_POST['sample_set_number'];
-$sampleMaterial = $_POST['material'];
+$sampleMaterial = $_POST['material_new'];
 $sampleComment = $_POST['sample_comment'];
 $sampleSetName = $_POST["sample_set_name"];
 $sampleName = $_POST['sample_name'];

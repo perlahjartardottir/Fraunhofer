@@ -87,7 +87,7 @@ echo"
               }
               echo"
             </label>
-            <input type='number' id='anlys_res_result' name='res_res_edit' step='any' value='".$resultRow['result']."' class='form-control'>
+            <input type='number' id='anlys_res_result' name='res_res_edit' step='any' value='".$resultRow['result']."' class='form-control' style='width:100%;'>
           </div>";
         }
         // Display parameters if any
@@ -105,7 +105,7 @@ echo"
                 echo"
               </label>
               <!-- Param ids from 1-3 -->
-              <input type='number' id='anlys_res_param_".($i-2)."' name='res_param_".($i-2)."_edit'value='".$resultRow[$i]."' class='form-control'>
+              <input type='number' id='anlys_res_param_".($i-2)."' name='res_param_".($i-2)."_edit'value='".$resultRow[$i]."' class='form-control' style='width:100%'>
             </div>";
           }
         }

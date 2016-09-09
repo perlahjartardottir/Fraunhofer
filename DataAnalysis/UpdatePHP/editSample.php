@@ -4,7 +4,7 @@ session_start();
 
 $sampleSetID = $_SESSION["sampleSetID"];
 $sampleID = $_POST["sample_ID"];
-$material = $_POST["material_edit"];
+$material = $_POST["edit_material"];
 $comment = $_POST["sample_comment"];
 // For samplePicture
 $action = "edit";
