@@ -23,7 +23,7 @@ $supplier_name = "%" . $supplier_name . "%";
 $supplier_contact = mysqli_real_escape_string($link, $_POST['supplier_contact']);
 $supplier_contact = "%" . $supplier_contact . "%";
 $supplier_phone = mysqli_real_escape_string($link, $_POST['supplier_phone']);
-$supplier_phone .= "%";
+$supplier_phone = "%". $supplier_phone ."%";
 $supplier_email = mysqli_real_escape_string($link, $_POST['supplier_email']);
 $supplier_email = "%" . $supplier_email . "%";
 $supplier_address = mysqli_real_escape_string($link, $_POST['supplier_address']);
@@ -56,7 +56,11 @@ $supplier_address = "%" . $supplier_address . "%";
       <?php
       $sql = "SELECT s.supplier_ID, s.supplier_name, s.supplier_phone, s.supplier_email, s.supplier_address, s.supplier_fax, s.supplier_contact, s.supplier_website, s.supplier_login, s.supplier_password, s.supplier_accountNr, s.supplier_notes, s.net_terms, s.supplier_name, ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2) as aveg, credit_card
               FROM supplier s, order_rating r, purchase_order o
-              WHERE o.order_ID = r.order_ID AND o.supplier_ID = s.supplier_ID
+              WHERE o.order_ID = r.order_ID AND o.supplier_ID = s.supplier_ID AND s.supplier_name LIKE '$supplier_name'
+              AND s.supplier_contact LIKE '$supplier_contact'
+              AND s.supplier_phone LIKE '$supplier_phone'
+              AND s.supplier_email LIKE '$supplier_email'
+              AND s.supplier_address LIKE '$supplier_address'
               GROUP BY s.supplier_ID
               ORDER BY aveg DESC, supplier_name;";
       $result = mysqli_query($link, $sql);
