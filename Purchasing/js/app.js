@@ -12,7 +12,6 @@ $(document).ready(function () {
     });
   }
 });
-
 function logout() {
   $.ajax({
     url: "../../Login/logout.php",
@@ -75,7 +74,6 @@ function setSessionIDSearch(order_ID){
         data : {order_ID : order_ID},
     });
 }
-
 function supplierSuggestions() {
   $('#output').html();
   var supplier_name = $('#supplier_name').val();
@@ -97,7 +95,6 @@ function supplierSuggestions() {
     }
   });
 }
-
 function overview(){
   var department = $('#department').val();
   var cost_code = $('#cost_code').val();
@@ -117,7 +114,6 @@ function overview(){
     }
   });
 }
-
 function forecast(){
   var supplier_name = $('#supplier_name').val();
   var order_name = $('#order_name').val();
@@ -135,7 +131,6 @@ function forecast(){
     }
   });
 }
-
 function purchaseSuggestions() {
   $('#output').html();
   var order_name = $('#order_name').val();
@@ -1179,8 +1174,8 @@ function editOrderItem(order_item_ID, element){
   var quantity    = $(element).parent().prev().find("#quantity").val();
   var part_number = $(element).parent().prev().find('#part_number').val();
   var department  = $(element).parent().prev().find('#department').val();
-  var cost_code   = $('#req_cost_code').val();
-  console.log("cst code: " + cost_code);
+  var cost_code   = $(element).parent().prev().find('#req_cost_code').val();
+
   // if(cost_code === undefined){
   //     cost_code   = $('#cost_code').val();
   // }

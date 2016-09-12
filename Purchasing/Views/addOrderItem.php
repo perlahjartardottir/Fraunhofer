@@ -374,7 +374,6 @@ $totalValueSql = "SELECT SUM(oi.quantity * oi.unit_price)
                       <option value='1'>Thomas Schuelke</option>
                       <option value='5'>Lars Haubold</option>
                       <option value='8'>Michael Becker</option>
-                      <option value='7'>Perla (for testing)</option>
                     </select>
                   </div>
                   <div class='col-md-3'>
