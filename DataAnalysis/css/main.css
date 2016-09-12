@@ -185,6 +185,10 @@ ul
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */*/
 }
+.modal .modal-body {
+    max-height: 650px;
+    overflow-y: auto;
+}
 .modal-content {
     background-color: #fefefe;
     margin: auto;

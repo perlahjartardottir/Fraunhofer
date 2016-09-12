@@ -52,7 +52,7 @@ else{
 	mysqli_error($link);
 }
 
-//Upload photo and connect to sample.
+// Upload photo and connect to sample.
 include 'samplePicture.php';
 
 // There can be no echo before this call, otherwise the redirect will not work. 
