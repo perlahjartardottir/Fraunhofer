@@ -286,7 +286,7 @@ function orderRequest(redirect, form){
         }
         else{
           infoMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>Your request has been sent.</div>";
-          // Too imitade a reload and to keep information from form. 
+          // Too imitate a reload and to keep information from form. 
           $("#invalidRequest").html("");
           $("#requestSent").html("");
           $("#requestSent").html(infoMessage);
@@ -295,20 +295,8 @@ function orderRequest(redirect, form){
           $('#quantity').val("");
           $('#unit_price').val("");
           $('#request_price').val("");
-          $('#unit_description').val("");
-
-          // Reset form except a few inputs.
-          // $('#requestForm')[0].reset();
-          // $("input[name='supplierList']").val(request_supplier);
-          // $('#orderTimeframe').val(orderTimeframe);
-          // displayDate();
-          // if(orderTimeframeDate != ""){
-          //   $('#orderTimeframeDate').val(orderTimeframeDate);
-          // }
-          // // To clear cost code drop down.
-          // updateCostCode();
-          
-
+          $('#unit_description').val("");          
+          // If adding the request was successfull. 
           if(data){
             emailMessage = "<div class='alert alert-success fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>It sounds like your last request was urgent, "+data+" has been notified.</div>";
              $("#emailSent").html(emailMessage);
@@ -868,11 +856,8 @@ function updateCostCode(cost_code, departmentName){
   else if($('#department').val() !== undefined){
     department_name = $('#department').val();
   }
-  console.log(department_name);
   var group_by_select = $('#group_by_select').val();
   var request_modal = $('#request_modal').val();
-  console.log("request_modal " + request_modal);
-
 
   $.ajax({
     url: "../UpdatePHP/costCode.php",
@@ -903,8 +888,7 @@ function updateCostCodeOnClick(){
 }
 function updateModalCostCode(element){
   var department_name = $(element).parent().find('#department').val();
-      var request_modal = $('#request_modal').val();
-  console.log("request_modal " + request_modal);
+  var request_modal = $('#request_modal').val();
 
   $.ajax({
     url: "../UpdatePHP/costCode.php",

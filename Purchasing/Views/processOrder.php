@@ -88,7 +88,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <th>Requests</th>
             <th>Employee</th>
             <th>Supplier</th>
-            <th>Date</th>
+            <th>Order By</th>
           </tr>
         </thead>
         <tbody>
@@ -98,7 +98,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
             <td></td>
           </tr> -->
           <?php
-          $sql = "SELECT request_ID, employee_ID, request_date, request_description, request_supplier
+          $sql = "SELECT request_ID, employee_ID, request_date, request_description, request_supplier, timeframe
                   FROM order_request
                   WHERE active = 1 AND order_ID IS NULL
                   ORDER BY CASE WHEN timeframe = 'Today' then 1 else 2 end,
@@ -115,7 +115,7 @@ $supplierResult = mysqli_query($link, $supplierSql);
                     <td onclick='activeRequest(this);' id='request_ID'><a href='#' onclick='return false;'>".$row[0]."</a><span class='glyphicon glyphicon-remove' style='color: #C52F2B; float:left; margin-right:8px;' onclick='finishRequest(".$row[0].")' aria-hidden='true'></span></td>
                     <td id='employee_name'>".$employee[0]."</td>
                     <td id='request_supplier'>".$row[4]."</td>
-                    <td>".$row[2]."</td>
+                    <td>".$row[5]."</td>
                   </tr>";
           }
           ?>

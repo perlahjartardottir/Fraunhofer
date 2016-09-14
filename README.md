@@ -1,18 +1,21 @@
-[Fraunhofer product tracking system](http://eysteinn.local:8888/Login/login.php)
+ [Fraunhofer Database & Website](http://35.9.146.121:8888/Fraunhofer/)(#Fraunhofer)
 ==================================
 
 <img src="images for markdown/fraunhoferlogo.jpg" alt="Fraunhofer Logo" width='300px' align='right' style='padding-left:15px;'/>
 
-This file is a guide for anyone who means to make changes to the website for the Fraunhofer product tracking system, big or small.
+This file is a guide for anyone who means to make changes to the Fraunhofer Software, big or small.
 
-The system was made for storing and tracking products for Fraunhofer CCD.
-The system was written using the following programming languages:
+This software includes three programs:
+ - Tooling: for product tracking.
+ - Purchasing: processing purchase orders.
+ - Data Analysis: gathering and searching sample information.
+ 
+ The following programming languages were used in the making of this system:
 
 - [PHP](http://php.net/)
 - HTML
 - JavaScript
 	- [Good resource for JS](http://www.w3schools.com/js/)
-- jQuery
 - CSS
 	- [Online tutorials for all of the above](http://www.codecademy.com/learn)
 - [MySQL](https://www.mysql.com/)
@@ -43,7 +46,7 @@ Table of contents
 
 <a name='install'>Install</a>
 =======
-Below is a list of the programs that need to be installed on a new computer to start working on the system. More thorough guide on how to get the programs working can be found at the end of this documentation.
+Below is a list of the programs that needs to be installed on a new computer to start working on the system. More thorough guide on how to get the programs working can be found at the end of this documentation.
 Note that the server computer should have all of this already installed and you can make changes to the live database without having to download anything.
 
 <a name='mysql-workbench'>MySQL workbench</a>
@@ -80,14 +83,14 @@ JSHint was used to detect errors and potential problems in the JavaScript code. 
 
 <a name='accessing-the-code'>Accessing the code</a>
 ------------------
-The source code is stored on the shared folder under Freyr Friðfinnsson and is called Fraunhofer. A source code management system called GitHub was used during development of this project.
+The source code is stored on the shared folder under Perla Osk Hjartardottir and is called Fraunhofer. A source code management system called GitHub was used during development of this project.
 It is not necessary that you continue using it but I found it very helpful to look through my changes and it also serves as a backup for the code.
-At the time writing this file the code is stored <a name='github' href='https://github.com/freyr12/Fraunhofer'>here</a>. If you want to continue using GitHub just make a new project on your account and push the code from the shared folder on to it.
+At the time writing this file the code is stored <a name='github' href='https://github.com/perlahj/Fraunhofer'>here</a>. If you want to continue using GitHub just make a new project on your account and push the code from the shared folder on to it.
 
 <a name='database-architecture'>Database architecture</a>
 ----------------------
 
-The entity relation diagram for the database was designed using [draw.io](https://www.draw.io/) and can be found on the shared folder under Eysteinn Gunnlaugsson. I recommend changing the ER-diagram right after you make changes to the database. To change the ER-diagram just go to [draw.io](https://www.draw.io/) and open ```FraunhoferERNew.xml``` that is stored on Eystein's shared folder. If you are not sure how to read a a ER-diagram [this documentation](http://docs.sqlalchemy.org/en/latest/orm/basic_relationships.html) is a pretty good source on relationship patterns in SQL. There are many ways to show relations in a ER-diagram, I decided to use the following :
+The entity relation diagram for the database was designed using [draw.io](https://www.draw.io/) and can be found on the shared folder under Perla Osk Hjartardottir. To change the ER-diagram just go to [draw.io](https://www.draw.io/) and open ```FraunhoferERNew.xml``` that is stored on Perla's shared folder. If you are not sure how to read a a ER-diagram [this documentation](http://docs.sqlalchemy.org/en/latest/orm/basic_relationships.html) is a pretty good source on relationship patterns in SQL. There are many ways to show relations in a ER-diagram, we decided to use the following:
 
 - ---------- is a zero-to-many relationship.
 
@@ -105,7 +108,7 @@ To fix minor things like spelling errors, incorrect grammar etc. Follow these st
 
 1. Go to the server computer
 2. Open Sublime Text 2
-3. Find the source code. At the time writing the code is stored on ```CCL/Shared/Freyr Friðfinnsson```
+3. Find the source code. At the time writing the code is stored on ```CCL/Shared/Perla Osk Hjartardottir```
 4. Drag the folder called ```Fraunhofer``` in to Sublime Text 2
 	- <strong>Now you should have access to every single line of code in the project so make sure to not change anything else!</strong>
 5. Press <code>&#8984;-Shift-f</code> to search all the files for the text you want to change
@@ -132,16 +135,15 @@ Step 8 </br>
 ----------------------------------------
 Interacting directly with MySQL should only be needed if you need to do any of the following
 
-1. Add a new table to the database
-2. Add a new field to a table
-3. Adding/changing procedures, triggers or functions
-4. Testing queries before adding the to the website
+1. Add a new table to the database.
+2. Add a new field to a table.
+3. Adding/changing procedures, triggers or functions.
+4. Testing queries before adding them to the website.
 
-To make changes to the database tables, procedures, triggers or functions it is required to have some background on databases so this guide will focus on explaining how and where the code is stored.
-The folder containing all MySQL code, at the time writing this, is stored in the shared folder under ```Eysteinn Gunnlaugsson/SQL/WebPageDB/```. The file names are  descriptive. The file containing SQL functions is functions.sql and procedures are stored in procedures.sql etc.
+To make changes to the database tables, procedures, triggers or functions it is required to have some background knowledge on databases so this guide will focus on explaining how and where the code is stored.
 To make changes to the live database you have to go to the server computer, open MySQL workbench and connect to the server called ```Live Fraunhofer Database```. When a page called ```Query 1``` opens type in ```Use Fraunhofer;``` in the editor and you are ready to start making changes.
 
-I highly recommend trying all changes first on a mock database! A guide to set up a mock database can be found [here](#new-database).
+We highly recommend trying all changes first on a mock database! A guide to set up a mock database can be found [here](#new-database).
 
 To change SQL code for other things like inserting, deleting, updateing or selecting this code is stored in the PHP files in the project folder and can be changed from there, but again, you should test the changes on a test website before making changes to the source code.
 
@@ -149,7 +151,7 @@ To change SQL code for other things like inserting, deleting, updateing or selec
 
 <a name='uglify-guide'>Changing Javascript or jQuery functions</a>
 ---------------------------------------
-### ___Currently only tooling database uses npm and grunt, so these directions only apply to the tooling database. You need to be located in the tooling directory before you run the 'grunt' command___
+### ___Currently only Tooling and Data Analysis databases use NPM and Grunt, so these directions only apply to the these  database. You need to be located in either program directory before you run the 'grunt' command___
 
 To edit the js files you need to run a 'grunt' task after you change the files. You do that by navigating to the project folder location in the computers terminal and typing in ```grunt```.
 
@@ -178,6 +180,7 @@ Originally this database was just hosted locally on the developers computer. As 
 <a href="images for markdown/gif_guides/UploadChanges.gif" target="blank"><img src="images for markdown/gif_guides/UploadChanges.gif" alt="General overview" width='700px'/></a>
 
 The PHP/JavaScript/HTML files are all hosted on the Database guest account on the server. However, the MySQL code is all hosted on the Admin account so if you need to manipulate the database directly you will have to talk to Robert about that.
+Update 09/14/2016: All code is now hosted on the Admin account on the server. To upload your changes copy your local Fraunhofer folder to a usb stick and bring it to Robert. The parent folder is called Fraunhofer which includes two folders, one called Fraunhofer and another one called Fraunhoder Uploads. The former contains all the source code for the website the second all uploaded files by users of the Data Analysis Database. 
 
 I recommend exporting the MySQL code from the server Admin account regularly and import to your local SQL, so that your test database remains similar to the public database.
 
@@ -187,9 +190,10 @@ I recommend exporting the MySQL code from the server Admin account regularly and
 <a name='mysql-guide'>MySQL setup guide</a>
 -------------------------------------------
 After both the MySQL community server and MySQL workbench have been installed you can set up a connection to a new database.<br> To allow MySQL connections on OSX, go to system preferences and search for MySQL. From there it is possible to start a connection.
-To fill this database with the same data as is on the real running Fraunhofer database take the newest database dump (at the time writing it is stored on the shared drive under Eysteinn Gunnlaugsson. File name 'Dump + date created') and import it to a new server.
+To fill this database with the same data as is on the real running Fraunhofer database take the newest database dump (at the time writing it is stored on the shared drive under Perla Osk Hjartardottir. File name 'Dump + date created') and import it to a new server.
 You might need to add ```USE Fraunhofer;``` to the top of the file if you get an error saying that this database does not exists (see picture 5).
 You can now play around with this database to get to know the system without it having any effect on the real running database.
+If you want to start a new database with only the structure and without any data you can use the structure dump file 'StructureOnlyDump + date created'.
 
 <strong>While developing I highly recommend testing everything on a mock database before saving the changes to the source code for the project.</strong>
 

@@ -49,7 +49,7 @@ $suppliersResult = mysqli_query($link, $suppliersSql);
                 <div class='col-md-6'>
               <input type='text' list='suppliers' name='supplierList' id='supplierList' class='col-md-12 form-control' value='".$requestRow[1]."'>
           <datalist id='suppliers'>";
-            while($row = mysqli_fetch_array($supplierResult)){
+            while($row = mysqli_fetch_array($suppliersResult)){
                  echo"<option value='".$row[0]."'>".$row[0]."</option>";
             }
           echo"
@@ -185,12 +185,12 @@ $suppliersResult = mysqli_query($link, $suppliersSql);
         /\d/.test(
         myString));
     }
+    // For checking if the timeframe is a date.
     if(hasNumber(timeframe)){
       // Need to use .prop for Safari
       $("select option[value='Specific date']").prop('selected', true);
       $(".orderTimeframeDate").show();
       $("#orderTimeframeDate").val(timeframe);
-      console.log(timeframe);
     }
 
 	})
