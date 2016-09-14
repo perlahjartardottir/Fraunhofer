@@ -1,4 +1,4 @@
- [Fraunhofer Database & Website](http://35.9.146.121:8888/Fraunhofer/)(#Fraunhofer)
+ [Fraunhofer Database & Website](http://35.9.146.121:8888/Fraunhofer/)
 ==================================
 
 <img src="images for markdown/fraunhoferlogo.jpg" alt="Fraunhofer Logo" width='300px' align='right' style='padding-left:15px;'/>
@@ -10,7 +10,7 @@ This software includes three programs:
  - Purchasing: processing purchase orders.
  - Data Analysis: gathering and searching sample information.
  
- The following programming languages were used in the making of this system:
+The following programming languages were used in the making of this system:
 
 - [PHP](http://php.net/)
 - HTML
@@ -76,7 +76,7 @@ the ```30 11 * * *``` means that this happens 11:30 AM every day. To change the 
 
 <a name='jshint-uglify'>Jshint and Uglify</a>
 --------------
-JSHint was used to detect errors and potential problems in the JavaScript code. Uglify was used in this project to minify all JavaScript files. This is done so that the website is as quick as it can possibly be, since the computer in the lab is outdated and the internet connection might get slow this is very important. While developing it is better to include the JavaScript file you are making changes on in the HTML/PHP views, since compiling with uglify takes a few seconds and if you are making a lot of small changes and testing them those seconds add up quickly. A more detailed guide on how to make changes on JavaScript code can be found [here](#uglify-guide). To run those tools we used Grunt.
+JSHint was used to detect errors and potential problems in the JavaScript code. Uglify was used in this project to minify all JavaScript files. This is done so that the website is as quick as it can possibly be, since the computer in the lab is outdated and the internet connection might get slow this is very important. While developing it is better to include the JavaScript file you are making changes to in the HTML/PHP views, since compiling with uglify takes a few seconds and if you are making a lot of small changes and testing them those seconds add up quickly. A more detailed guide on how to make changes on JavaScript code can be found [here](#uglify-guide). To run those tools we used Grunt.
 
 <a name='getting-started'>Getting started</a>
 ===============
@@ -84,13 +84,13 @@ JSHint was used to detect errors and potential problems in the JavaScript code. 
 <a name='accessing-the-code'>Accessing the code</a>
 ------------------
 The source code is stored on the shared folder under Perla Osk Hjartardottir and is called Fraunhofer. A source code management system called GitHub was used during development of this project.
-It is not necessary that you continue using it but I found it very helpful to look through my changes and it also serves as a backup for the code.
+It is not necessary that you continue using it but we found it very helpful to look through my changes and it also serves as a backup for the code.
 At the time writing this file the code is stored <a name='github' href='https://github.com/perlahj/Fraunhofer'>here</a>. If you want to continue using GitHub just make a new project on your account and push the code from the shared folder on to it.
 
 <a name='database-architecture'>Database architecture</a>
 ----------------------
 
-The entity relation diagram for the database was designed using [draw.io](https://www.draw.io/) and can be found on the shared folder under Perla Osk Hjartardottir. To change the ER-diagram just go to [draw.io](https://www.draw.io/) and open ```FraunhoferERNew.xml``` that is stored on Perla's shared folder. If you are not sure how to read a a ER-diagram [this documentation](http://docs.sqlalchemy.org/en/latest/orm/basic_relationships.html) is a pretty good source on relationship patterns in SQL. There are many ways to show relations in a ER-diagram, we decided to use the following:
+The entity relation diagrams for this system were designed using [draw.io](https://www.draw.io/) and can be found on the shared folder under Perla Osk Hjartardottir. To change the ER-diagram just go to [draw.io](https://www.draw.io/) and open the ```.xml``` files that are stored in Perla's shared folder. If you are not sure how to read a a ER-diagram [this documentation](http://docs.sqlalchemy.org/en/latest/orm/basic_relationships.html) is a pretty good source on relationship patterns in SQL. There are many ways to show relations in a ER-diagram, we decided to use the following:
 
 - ---------- is a zero-to-many relationship.
 
