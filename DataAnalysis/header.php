@@ -43,14 +43,28 @@ $_SESSION["fileValidation"]["maxSize"] = 5000000;
 <link href='../css/bootstrap.min.css' rel='stylesheet'>
 <link href='../css/bootstrap.css.map' rel='stylesheet'>
 
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script> -->
+<!-- For formating input date -->
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script> -->
+<!-- Datatables -->
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>
+<script type='text/javascript' src='https://code.jquery.com/jquery-1.12.3.js'></script>
+<script type='text/javascript' src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script> -->
+
+<link href='../css/jquery-ui.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
+<script src='../js/jquery-ui.js'></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- Datatables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js"></script>
 <!-- For formating input date -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
-<!-- Datatables -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>
-<script type='text/javascript' src='https://code.jquery.com/jquery-1.12.3.js'></script>
-<script type='text/javascript' src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+
+
 
 <script src='../dest/fraunhofer.min.js'></script>
 <!-- <script src='../js/app.js'></script>
@@ -58,6 +72,19 @@ $_SESSION["fileValidation"]["maxSize"] = 5000000;
 <script src='../js/analysis.js'></script>
 <script src='../js/process.js'></script>
 <script src='../js/bootstrap.js'></script> -->
+
+<!-- For <input type='date'> to work in Safari -->
+  <script type="text/javascript">
+    window.onload = function() {
+      $('input[type=date]').each(function() {
+        if  (this.type != 'date' ) $(this).datepicker({
+          dateFormat: 'yy-mm-dd'
+        });
+      });
+    };
+  </script>
+<body>
+
 <!-- Toolbar -->
 <div class="navbar navbar-default collapse navbar-collapse navHeaderCollapse navbar-static-top">
   <div class="container">

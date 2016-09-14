@@ -22,10 +22,6 @@ $numberOfSetsToDisplay = $_SESSION['numberOfSetsToDisplayInDD'];
 $maxPictureSize = $_SESSION["pictureValidation"]["maxSize"];
 $pictureFormats = $_SESSION["pictureValidation"]["formats"];
 
-// $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
-// FROM sample_set
-// ORDER BY MID(sample_set_name, 5, 6) DESC LIMIT $numberOfSetsToDisplay;";
-
 $recentSampleSetsSql = "SELECT q.*
 FROM(
 SELECT sample_set_ID, sample_set_name
@@ -47,7 +43,6 @@ WHERE sample_set_ID = '$sampleSetID';";
 <head>
   <title>Data Analysis</title>
 </head>
-<body>
   <?php include '../header.php'; ?>
   <?php echo "<input type='hidden' id='employee_ID' value='".$employee_ID."'>"; ?>
   <?php
@@ -70,7 +65,6 @@ WHERE sample_set_ID = '$sampleSetID';";
           }
           ?>
         </select>
-
       </div> 
       <?php
     // Adding to a new set.
@@ -91,14 +85,6 @@ WHERE sample_set_ID = '$sampleSetID';";
         $sampleSetName = $sampleSetNameRow[0];
 
     // Format: CCD-YYMMDD-XX-NN
-    // Get the number for the sample. 
-        // $latestSampleNumberSql = "SELECT COUNT(sample_id)
-        // FROM sample
-        // WHERE sample_set_ID = '$sampleSetID';";
-        // $latestSampleNumber = mysqli_fetch_row(mysqli_query($link, $latestSampleNumberSql))[0];
-        // $sampleNumber = str_pad(((int)$latestSampleNumber + 1), 2, '0', STR_PAD_LEFT);
-        // $sampleName = $sampleSetName."-".$sampleNumber;
-
         $latestSampleNumberSql = "SELECT MAX(MID(sample_name, 15,2))
         FROM sample
         WHERE sample_set_ID = '$sampleSetID';";
@@ -122,15 +108,16 @@ WHERE sample_set_ID = '$sampleSetID';";
         <label for='material'>Substrate/Base material: </label>
          <?
          echo"
-          <input type='text' list='materials_new' name='material_new' class='form-control' value='".$sampleRow[2]."'>
+          <input type='text' list='materials_new' name='material_new' id='material_new' class='form-control'>
           <datalist id='materials_new'>";
             while($row = mysqli_fetch_array($materialsResult)){
-              echo"<option value='".$row[0]."'>".$row[0]."</option>";
+              if($row[0] !== ""){
+                echo"<option value='".$row[0]."'>".$row[0]."</option>";
+              }
+              
             }
-            echo"
-          </datalist>";
-        ?>
-
+            ?>
+          </datalist>
       </div>
       <div class='col-md-12 form-group'>
         <label for='sample_comment'>Comment: </label>
@@ -186,7 +173,6 @@ $('#sample_picture').bind('change', function() {
     $('#error_message_picture').html(errorMessage);
   }
 });
-
 
 
 // Check if the user enters with a set that exists in the dropd down. 
