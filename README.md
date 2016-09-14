@@ -220,7 +220,7 @@ After you download MAMP and setup MySQL there are a few settings that need to be
 - Set MySQL port to the same port as your mock database
 - Set PHP version to 5.6.2
 - Set Web Server to Apache
-- Set the document root to the folder that your code is stored in
+- Set the document root to the project folder
 
 The URL needed to access the webserver is a combination of three things:
 
@@ -230,6 +230,6 @@ The URL needed to access the webserver is a combination of three things:
 - The port number you picked for MAMP, not the MySQL port number
 - The filepath from the project root folder to the file you want to open
 
-The URL should look something like this ```http://35.9.146.192:8888/Login/login.php``` or ```http://eysteinn.local:8888/Login/login.php```.
+The URL should look something like this ```http://35.9.146.192:8888/Fraunhofer```, ```http://eysteinn.local:8888/Fraunhofer``` or ```http://localhost:8887/Fraunhofer/```.
 
-You should now have a connection to the database you just made through google chrome. You can only have one active web server running per computer so do not change this if you are working on the server computer since it will remove access for other computers to the main database!
+You should now have a connection to the database you just made through Google Chrome. You can only have one active web server running per computer so do not change this if you are working on the server computer since it will remove access for other computers to the main database!
