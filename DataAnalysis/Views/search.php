@@ -8,8 +8,6 @@ if($securityLevel< 2){
   die("You don't have the privileges to view this site.");
 }
 
-// $allSamplesSql = "SELECT sample_ID as ID, sample_name as name, sample_set_ID as setID
-// FROM sample;";
 $allSamplesSql = "SELECT s.sample_ID as ID, s.sample_name as name, s.sample_set_ID as setID, p.prcs_coating as coating, p.prcs_ID as prcsID
 FROM sample s RIGHT JOIN process p ON (s.sample_ID = p.sample_ID)
 WHERE s.sample_ID = p.sample_ID

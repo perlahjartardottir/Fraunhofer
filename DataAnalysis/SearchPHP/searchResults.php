@@ -1,57 +1,6 @@
 <?php
 include '../../connection.php';
 
-// $sampleName = mysqli_escape_string($link, $_POST["sampleName"]);
-// $beginDate = mysqli_real_escape_string($link, $_POST["beginDate"]);
-// $endDate = mysqli_real_escape_string($link, $_POST["endDate"]);
-// $minThickness = mysqli_real_escape_string($link, $_POST["minThickness"]);
-// $maxThickness = mysqli_real_escape_string($link, $_POST["maxThickness"]);
-// $coating = mysqli_real_escape_string($link, $_POST["coating"]);
-// $sampleName = "%".$sampleName."%";
-// $sql = "SELECT s.sample_ID, s.sample_name, s.sample_set_ID
-// FROM sample s
-// WHERE s.sample_name LIKE '$sampleName'";
-// // The name of the sample contains its date E.g. CCD-160725-01.
-// if(!empty($beginDate)){
-//         $sql .= "AND MID(s.sample_name, 5,6) >= '$beginDate'";
-// }
-// if(!empty($endDate)){
-//         $sql .= "AND MID(s.sample_name, 5,6) <= '$endDate'";
-// }
-// if(!empty($minThickness)){
-//   $sql .= "AND sample_ID IN(
-// SELECT  s.sample_ID
-// FROM sample s, anlys_result r
-// WHERE s.sample_ID = r.sample_ID AND r.anlys_res_result >= '$minThickness' AND anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
-//               FROM anlys_eq_prop
-//               WHERE anlys_prop_ID = (SELECT anlys_prop_ID
-//                                     FROM anlys_property
-//                                     WHERE anlys_prop_name LIKE 'Thickness')))";
-// }
-// if(!empty($maxThickness)){
-//   $sql .= "AND sample_ID IN(
-// SELECT  s.sample_ID
-// FROM sample s, anlys_result r
-// WHERE s.sample_ID = r.sample_ID AND r.anlys_res_result <= '$maxThickness' AND anlys_eq_prop_ID IN (SELECT anlys_eq_prop_ID
-//               FROM anlys_eq_prop
-//               WHERE anlys_prop_ID = (SELECT anlys_prop_ID
-//                                     FROM anlys_property
-//                                     WHERE anlys_prop_name LIKE 'Thickness')))";
-// }
-// if(!empty($coating)){
-//   $coating = "%".$coating."%";
-//   $sql .= "AND sample_ID IN(
-//   SELECT  s.sample_ID
-//   FROM sample s, anlys_result r
-//   WHERE s.sample_ID = r.sample_ID AND r.prcs_ID IN(
-//               SELECT p.prcs_ID
-//               FROM process p
-//               WHERE p.prcs_coating LIKE '%%'))";
-// }
-// $sql .= "
-// ORDER BY s.sample_ID DESC;";
-// $allSampleResult = mysqli_query($link, $sql);
-
 $allSamplesSql = "SELECT sample_ID as ID, sample_name as name, sample_set_ID as setID
 FROM sample;";
 $allSamplesResult = mysqli_query($link, $allSamplesSql);

@@ -88,8 +88,6 @@ echo"
 ?>
 <script>
 
-// $('#material_edit-hidden').val(document.getElementById('material_edit').value);
-
   document.getElementById('close_modal').onclick = function(){
     modal.style.display = 'none';
     }

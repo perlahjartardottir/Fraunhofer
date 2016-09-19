@@ -18,6 +18,7 @@ if(!$sampleSetID){
   $sampleSetID = "-1";
 }
 
+// How many sets we want to display in drop downs.
 $numberOfSetsToDisplay = $_SESSION['numberOfSetsToDisplayInDD'];
 $maxPictureSize = $_SESSION["pictureValidation"]["maxSize"];
 $pictureFormats = $_SESSION["pictureValidation"]["formats"];
@@ -48,6 +49,7 @@ WHERE sample_set_ID = '$sampleSetID';";
   <?php
 
 ?>
+<body>
   <div class='container'>
     <div class='row well well-lg'>
           <h5>The set name has the format "CCD-YYMMDD-XX".  XX is a running number from 01 and is reset every day.</h5>
@@ -134,7 +136,6 @@ WHERE sample_set_ID = '$sampleSetID';";
     </div> <!-- Details -->
     <div class='col-md-12'>
       <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add sample</button>
-<!--       <a href="../DownloadPHP/download.php?id=../readme.pdf">Download the cool PDF.</a> -->
     </div>
 
   </form>
@@ -151,6 +152,7 @@ $(document).ready(function(){
  var sampleSetID = <?php echo $sampleSetID; ?>;
  showSamplesInSet(sampleSetID);
  $("#nav_sample").button("toggle");
+ mockDatalist();
 
 });
 
@@ -195,6 +197,9 @@ if(!exists){
 
 // Make the dropdown list select the currently chosen sample set on refresh.
 $("#sample_set_ID").val(<?php echo $sampleSetID; ?>)
+
+
+
 
   </script>
 </body>

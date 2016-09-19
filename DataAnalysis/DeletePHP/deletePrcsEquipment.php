@@ -18,8 +18,6 @@ if(!$tryDeleteResult){
 	}
 }
 
-
-
 mysqli_close($link);
 
 ?>

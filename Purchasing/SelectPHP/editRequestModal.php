@@ -192,7 +192,6 @@ $suppliersResult = mysqli_query($link, $suppliersSql);
       $(".orderTimeframeDate").show();
       $("#orderTimeframeDate").val(timeframe);
     }
-
 	})
 
   function displayDate() {

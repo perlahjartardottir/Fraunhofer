@@ -6,11 +6,6 @@ $sampleSetName = "%".$sampleSetName."%";
 
 $numberOfSetsToDisplay = 20;
 
-// $recentSampleSetsSql = "SELECT sample_set_ID, sample_set_name
-// FROM sample_set
-// WHERE sample_set_name LIKE '$sampleSetName'
-// ORDER BY MID(sample_set_name,5,6) DESC LIMIT $numberOfSetsToDisplay;";
-
 // Get the latest samples ordered by sample_set_ID then order those by date.
 $recentSampleSetsSql = "SELECT q.*
 FROM(
