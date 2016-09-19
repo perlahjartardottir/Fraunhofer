@@ -95,7 +95,7 @@ $prcsAllEqResult = mysqli_query($link, $prcsAllEqSql);
    if($securityLevel >= 4){
     echo"
       <div class='row well well-lg'>
-        <button type='button' href='#' data-toggle='modal' data-target='#new_eq' class='btn btn-primary form-control' style='padding:0px;'>Add new processing equipment</button>
+        <button type='button' href='#' data-toggle='modal' data-target='#new_eq' class='btn btn-primary form-control' style='padding:0px;'>Add new process equipment</button>
       </div>";
     }
     echo"

@@ -126,14 +126,6 @@ WHERE sample_set_ID = '$sampleSetID';";
                   <tr>
                     <td><a id='".$equipmentRow[0].$propertyRow[0]."' onclick='showAnlysResultForm(".$propertyRow[0].",".$equipmentRow[0].",".$sampleID.",this.form)'>".$equipmentRow[1]."</a></td>
                   </tr>";
-                  // Color the eq that has analysis results for the chosen sample. 
-                  // if(in_array($equipmentRow[0].$propertyRow[0], $eqWithAnlysResults)){
-                  //   echo"
-                  //     <script>
-                  //         console.log('coloring eq with results');
-                  //         $('#".$equipmentRow[0].$propertyRow[0]."').css('color', bootstrapPurple);
-                  //     </script>";
-                  // }
                 }
                 echo"
               </tbody>
@@ -144,12 +136,9 @@ WHERE sample_set_ID = '$sampleSetID';";
         ?>
       </div>
       <div class='col-md-12'>
-        <h4 class='custom_heading'>3. Enter results (Under construction)</h4>
+        <h4 class='custom_heading'>3. Enter results</h4>
         <div id='res_div'></div>
       </div>
-<!--       <div class='col-md-12'>
-        <button type='button' class='btn btn-primary col-md-2' style='float:right;'onclick='location.href="sampleOverview.php"'>Sample Overview</button>
-      </div> -->
   </form>
 </div>
 </div>
@@ -202,8 +191,6 @@ WHERE sample_set_ID = '$sampleSetID';";
         showAnlysResultForm(<?php echo $propID; ?>,<?php echo $eqID; ?>);
       }
     }
-
-
-
+    
   </script>
 </body>

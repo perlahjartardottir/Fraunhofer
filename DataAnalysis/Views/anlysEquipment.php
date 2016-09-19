@@ -11,8 +11,8 @@
   }
 
   $analysisEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID, p.anlys_prop_name
-  FROM anlys_equipment e, anlys_eq_prop a, anlys_property p
-  WHERE e.anlys_eq_ID = a.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID AND e.anlys_eq_active = TRUE
+ FROM anlys_equipment e LEFT JOIN anlys_eq_prop a ON e.anlys_eq_ID = a.anlys_eq_ID LEFT JOIN  anlys_property p ON a.anlys_prop_ID = p.anlys_prop_ID
+  WHERE e.anlys_eq_active = TRUE
   GROUP BY e.anlys_eq_ID
   ORDER BY e.anlys_eq_name;";
   $analysisEqResult = mysqli_query($link, $analysisEqSql);
@@ -21,8 +21,8 @@
  }
 
  $analysisInactiveEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID, p.anlys_prop_name
- FROM anlys_equipment e, anlys_eq_prop a, anlys_property p
- WHERE e.anlys_eq_ID = a.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID AND e.anlys_eq_active = FALSE
+ FROM anlys_equipment e LEFT JOIN anlys_eq_prop a ON e.anlys_eq_ID = a.anlys_eq_ID LEFT JOIN  anlys_property p ON a.anlys_prop_ID = p.anlys_prop_ID
+ WHERE e.anlys_eq_active = FALSE
  GROUP BY e.anlys_eq_ID
  ORDER BY e.anlys_eq_name;";
  $analysisInactiveEqResult = mysqli_query($link, $analysisInactiveEqSql);
@@ -31,14 +31,18 @@
  }
 
  $allEqSql = "SELECT e.anlys_eq_ID, e.anlys_eq_name, e.anlys_eq_comment, a.anlys_prop_ID, e.anlys_eq_active
- FROM anlys_equipment e, anlys_eq_prop a, anlys_property p
- WHERE e.anlys_eq_ID = a.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
+ FROM anlys_equipment e LEFT JOIN anlys_eq_prop a ON e.anlys_eq_ID = a.anlys_eq_ID LEFT JOIN  anlys_property p ON a.anlys_prop_ID = p.anlys_prop_ID
  GROUP BY e.anlys_eq_ID
  ORDER BY e.anlys_eq_name;";
  $allEqResult = mysqli_query($link, $allEqSql);
  if (!$allEqResult){
    die("Database query failed: " . mysql_error());
  }
+
+ $allActivePropertiesSql = "SELECT anlys_prop_ID, anlys_prop_name
+ FROM anlys_property
+ WHERE anlys_prop_active = TRUE
+ ORDER BY anlys_prop_name;";
 
  ?>
 
@@ -56,7 +60,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Coating property</th>
+                <th>Coating Property</th>
                 <th>Comment</th>
               </tr>
             </thead>
@@ -85,7 +89,66 @@
         </table>
       </div>
     </div>
-
+    <?
+    // Add new analysis equipment
+   if($securityLevel >= 4){
+    echo"
+      <div class='row well well-lg'>
+        <button type='button' href='#' data-toggle='modal' data-target='#new_eq' class='btn btn-primary form-control' style='padding:0px;'>Add new analysis equipment</button>
+      </div>
+      <div class='row well well-lg'>
+        <button type='button' onclick='location.href=\"anlysProperties.php\"' class='btn btn-primary form-control' style='padding:0px;'>Edit coating properties</button>
+      </div>";
+    }
+    // Add new equipment modal
+    echo"
+    <div class='modal fade' id='new_eq' tabindex='-1' role='dialog' aria-labelledby='new_eq' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content col-md-12'>
+          <form id='new_eq_form' role='form'>
+            <div class='modal-header'>
+              <div class='col-md-12'>
+                <button type='button' id='close_modal' class='btn close glyphicon glyphicon-remove'data-dismiss='modal'></button>
+              </div>
+              <h3 class='center_heading'>New Equipment</h3>
+              </div>
+            <div class='modal-body'>
+              <div id='new_error_message'></div>
+              <div class='form-group'>
+                <label>Name:</label>
+                <input type='text' id='new_eq_name' name='new_eq_name' class='form-control'>
+              </div>
+              <div class='form-group'>
+                <label>Comment:</label>
+                <textarea id='new_eq_comment' name='new_eq_comment' class='form-control'></textarea> 
+              </div>
+              <div class='form-group'>
+                <div class='form-group row col-md-12'>
+                  <label>Coating property:</label>
+                </div>
+                <div class='form-group row col-md-10'>
+                <select id='new_eq_prop' class='form-control'>";
+                $allActivePropertiesResultNew = mysqli_query($link, $allActivePropertiesSql);
+                while($row = mysqli_fetch_row($allActivePropertiesResultNew)){
+                  echo"
+                    <option value='".$row[0]."'>".$row[1]."</option>";
+                }
+                echo"
+                </select>
+                </div>
+                <div class='form-group row col-md-2'>
+                      <input type='text' id='new_eq_prop_unit' class='form-control' placeholder='Unit'>
+                </div>
+              </div>
+              </div>
+              <div class='modal-footer col-md-12'>
+                <button type='button' class='btn btn-primary' onclick='addNewAnlysEquipment(this.form)'>Add</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>";
+    ?>
     <!-- Inactive equipment-->
     <div class='row well well-lg'>
       <div class='col-md-12'>
@@ -159,7 +222,7 @@
                 <div class='col-md-12'>
                 <h3 class='center_heading'>Properties</h3>";
                 $propCounter = 1;
-                $analysisPropertySql = "SELECT p.anlys_prop_ID, p.anlys_prop_name, a.anlys_eq_prop_unit
+                $analysisPropertySql = "SELECT p.anlys_prop_ID, p.anlys_prop_name, a.anlys_eq_prop_unit, a.anlys_eq_prop_ID
                 FROM anlys_property p, anlys_eq_prop a
                 WHERE p.anlys_prop_ID = a.anlys_prop_ID AND a.anlys_eq_id = '$row[0]';";
                 $analysisPropertyResult = mysqli_query($link, $analysisPropertySql);
@@ -169,8 +232,21 @@
                       <label>Coating property".$propCounter.":</label>
                     </div>
                     <div class='form-group row col-md-8'>
-                      <input type='hidden' name='prop_ID' value='".$propRow[0]."'>
-                      <input type='text' name='prop_name' class='form-control' value='".$propRow[1]."' >
+                      <input type='hidden' name='eq_prop_ID' value='".$propRow[3]."'>
+                      <select name='prop_ID' class='form-control'>";
+                      $allActivePropertiesResultEdit = mysqli_query($link, $allActivePropertiesSql);
+                      while($allPropRow = mysqli_fetch_row($allActivePropertiesResultEdit)){
+                        if($allPropRow[0] === $propRow[0]){
+                          echo"
+                          <option selected value='".$allPropRow[0]."'>".$allPropRow[1]."</option>";
+                        }
+                        else{
+                          echo"
+                          <option value='".$allPropRow[0]."'>".$allPropRow[1]."</option>";
+                        }
+                      }
+                      echo"
+                      </select>
                     </div>
                     <div class='form-group row col-md-2'>
                       <input type='text' name='prop_unit' class='form-control' value='".$propRow[2]."' placeholder='Unit'>
@@ -228,23 +304,10 @@
  $(document).ready(function(){
   $("#nav_overview").button("toggle");
 });
- var divCounter = 1;
- function addProp(elem){  
-  newProp = "<div id='new_prop_"+divCounter+"' class='form-group'>"+
-  " <div class='col-md-12 custom_padding no_left_padding'>"+
-    "<label>New coating property:</label>"+
-  "</div>"+
-  "<div class='form-group row col-md-8'>"+
-  "<input type='hidden' name='prop_ID' value='-1'>"+
-  "<input type='text' id='new_prop_name' name='prop_name' class='form-control' placeholder='Name'>"+
-  "</div>"+
-  "<div class='form-group row col-md-2'>"+
-  "<input type='text' name='prop_unit' value='' class='form-control' placeholder='Unit'>"+
-  "</div>"+
-  "</div>";
 
-  $(elem).parent().prev().append(newProp);
-  divCounter++;
+
+function addProp(elem){  
+  editAnalysisEqNewProperty($(elem).parent().prev());
 }
 
 function hideDiv(elem){

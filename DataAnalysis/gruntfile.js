@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 		  }
 		},
 		jshint: {
-			src: ['js/*.js', '!js/bootstrap.js', '!js/Chart.js'],
+			src: ['js/*.js', '!js/bootstrap.js', '!js/jquery-ui.js'],
 			options: {
 				curly: true,
 				undef: true,

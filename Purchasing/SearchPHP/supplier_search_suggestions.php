@@ -54,9 +54,10 @@ $supplier_address = "%" . $supplier_address . "%";
     </thead>
     <tbody>
       <?php
+      // Use left join because we want to display all suppliers. 
       $sql = "SELECT s.supplier_ID, s.supplier_name, s.supplier_phone, s.supplier_email, s.supplier_address, s.supplier_fax, s.supplier_contact, s.supplier_website, s.supplier_login, s.supplier_password, s.supplier_accountNr, s.supplier_notes, s.net_terms, s.supplier_name, ROUND((ROUND((AVG(rating_timeliness) + AVG(rating_price) + AVG(rating_quality) + AVG(customer_service)) / 4, 2) / 2) * 5, 2) as aveg, credit_card
-              FROM supplier s, order_rating r, purchase_order o
-              WHERE o.order_ID = r.order_ID AND o.supplier_ID = s.supplier_ID AND s.supplier_name LIKE '$supplier_name'
+              FROM supplier s LEFT JOIN  purchase_order o ON s.supplier_ID = o.supplier_ID LEFT JOIN order_rating r ON r.order_ID = o.order_ID
+              WHERE s.supplier_name LIKE '$supplier_name'
               AND s.supplier_contact LIKE '$supplier_contact'
               AND s.supplier_phone LIKE '$supplier_phone'
               AND s.supplier_email LIKE '$supplier_email'
