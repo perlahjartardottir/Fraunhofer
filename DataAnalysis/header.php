@@ -85,7 +85,8 @@ $_SESSION["fileValidation"]["maxSize"] = 5000000;
       <a href='../../Views/editProfile.php' class='username'><?php echo $_SESSION["username"];?></a>
     </ul>
     <ul class='navbar-right btn-group' data-toggle='buttons' >
-      <button type='button' id='nav_comment' onclick="location.href='feedback.php'"class='btn btn-primary header_btn ' role='button'>Comment</button>
+      <button type='button' id='nav_comment' onclick='location.href="feedback.php"' class='btn btn-primary header_btn ' role='button'>Comment</button>
+      <button type='button' class='btn btn-primary header_btn' onclick='location.href="help.php"'>?</button>
       <button type='button' class='btn btn-danger header_btn' onclick='logout()'>Logout</button>
     </ul>
   </div>

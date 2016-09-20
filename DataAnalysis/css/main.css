@@ -7,7 +7,10 @@
 }
 .custom_heading{
     margin: 20px 0px;
-    /*text-align: center;*/
+}
+.custom_help_heading{
+    margin-top: 60px;
+    margin-bottom:20px;
 }
 #sample_overview_heading{
     margin-bottom: 50px;
