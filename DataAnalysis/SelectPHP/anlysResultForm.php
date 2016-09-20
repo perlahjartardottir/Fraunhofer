@@ -9,7 +9,6 @@ $eqID = mysqli_real_escape_string($link, $_POST["eqID"]);
 $_SESSION["eqID"] = $eqID;
 $eqPropID = "-1";
 $maxFileSize = $_SESSION["fileValidation"]["maxSize"];
-$noPropResult = [];
 $propsWithAnlysResults = [];
 $prcsID = $_SESSION["prcsID"];
 if(!$prcsID){
@@ -19,7 +18,7 @@ if(!$prcsID){
 // Don't display the form unless user has chosen equipment.
 if($propID !== "-1" && $eqID !== "-1"){
 
-  $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit
+  $propertySql = "SELECT a.anlys_eq_prop_ID, p.anlys_prop_name, e.anlys_eq_name, a.anlys_param_1, a.anlys_param_2, a.anlys_param_3, a.anlys_eq_prop_unit, a.anlys_aveg
   FROM anlys_property p, anlys_equipment e, anlys_eq_prop a
   WHERE a.anlys_eq_ID = e.anlys_eq_ID AND a.anlys_prop_ID = p.anlys_prop_ID
   AND p.anlys_prop_ID = '$propID' AND e.anlys_eq_ID = '$eqID';";
@@ -32,15 +31,6 @@ if($propID !== "-1" && $eqID !== "-1"){
   WHERE sample_ID = '$sampleID' AND anlys_eq_prop_ID = '$propertyRow[0]'
   ORDER BY anlys_res_ID;";
   $resultsResult = mysqli_query($link, $resultsSql);
-
-// Find the ID of properties where we don't need a number input field for anlys_result.
-  $noPropResultSql = "SELECT anlys_prop_ID
-  FROM anlys_property
-  WHERE anlys_prop_name LIKE 'Overview' OR anlys_prop_name LIKE 'Roughness' OR anlys_prop_name LIKE 'Reflectance' OR anlys_prop_name LIKE 'Transparency' OR anlys_prop_name LIKE 'Atomic composition';";
-  $noPropResultResult= (mysqli_query($link, $noPropResultSql));
-  while ($row = mysqli_fetch_row($noPropResultResult)){
-    array_push($noPropResult, $row[0]);
-  }
 
 $employeeInitialsSql = "SELECT employee_ID, employee_name,
   CONCAT_WS('',
@@ -143,7 +133,7 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
   echo"
   <div class='form-group row'>";
 // Only couple of properties have res_res field. 
-  if(!in_array($propID, $noPropResult)){
+  if($propertyRow[7]){
     echo"
       <label id='property_name' class='col-md-2 col-form-label'>".$propertyRow[1];
       // If the property has units display it.
@@ -173,8 +163,16 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
     if($propID === '2'){
       $commentValue = "Scan speed: \nScan mode: \nTip size: \nForce (N): \n";
     }
-    if($propID === '8'){
+    // Coefficient of friction
+    else if($propID === '8'){
       $commentValue = "Humidity (%): \nTemperature (°C): \nMax speed (cm/s): \nForce (N): \nDistance (m): \nStatic partner: ";
+    }
+    // UV VIS
+    else if($eqID === '6'){
+      $commentValue = "Range (nm): 2500 - 190 \nSlit width: double 20 \nMeasurement speed: very slow \nDetector: ISR ";
+    }
+    else if($eqID === '12'){
+      $commentValue = "Fit description: ";
     }
     echo"
     <div class='form-group row'>

@@ -1046,6 +1046,20 @@ function editQuoteSupplier(quote_ID, element){
   })
 }
 
+// Edit description for this quote
+function editQuoteDescription(quote_ID, element){
+  var description = $(element).parent().find("#quoteDescription").val();
+  console.log("desc: " + description);
+  $.ajax({
+    url: '../UpdatePHP/editQuoteDescription.php',
+    type: 'POST',
+    data: {
+      description : description,
+      quote_ID : quote_ID
+    }
+  })
+}
+
 // Delete quote from database
 function deleteQuote(quote_ID){
   var r = confirm("Are you sure you want to delete this quote?");

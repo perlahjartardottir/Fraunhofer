@@ -138,7 +138,9 @@ $supplierResultTwo = mysqli_query($link, $supplierSqlTwo);
                 </datalist><button class='btn btn-primary' onclick='editQuoteSupplier(".$row[0].", this);'>Edit supplier</button>
               <p><strong>Quote issued: </strong>".$row[2]."</p>
               <p><strong>Purchase order: </strong>".$orderName[0]."</p>
-              <p><strong>Description: </strong>".$row[3]."</p>
+              <label>Description: </label> 
+              <input type='text' id='quoteDescription' class='form-control' style='width:auto; display:inline;' value='".$row[3]."'>
+              <button class='btn btn-primary' onclick='editQuoteDescription(".$row[0].", this);'>Edit Description</button>
             </form>
             <input type='image' src='../Scan/getQuoteImage.php?id=".$row[0]."' style='margin-top:5px;' width='100' height='90' onerror=\"this.src='../images/noimage.jpg'\" onclick=\"window.open('../Printouts/quotePrintout.php?id=".$row[0]."')\">
           </div>
