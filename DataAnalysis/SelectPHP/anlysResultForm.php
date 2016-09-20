@@ -103,9 +103,9 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
       </div>
     </div>";
 
-// If Thickness & Calotte Grinder.
+    // If Thickness & Calotte Grinder.
     if($propID === '1' && $eqID === '7'){
-  // h=(sqrt(r2-d2)-sqrt(r2-D2))
+      // h=(sqrt(r2-d2)-sqrt(r2-D2))
       echo"
       <div class='form-group row'>
         <label class='col-md-2 col-form-label'>Inner diameter (&#181;m): </label>
@@ -140,10 +140,11 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
     </div>";
   }
 
+  echo"
+  <div class='form-group row'>";
 // Only couple of properties have res_res field. 
   if(!in_array($propID, $noPropResult)){
     echo"
-    <div class='form-group row'>
       <label id='property_name' class='col-md-2 col-form-label'>".$propertyRow[1];
       // If the property has units display it.
         if($propertyRow[6]){
@@ -152,25 +153,38 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
         echo":</label>
         <div class='col-md-2'>
           <input type='number' id='res_res' name='res_res' class='form-control' step='any' onclick='calcCGThickness()'>
+        </div>";
+    }
+  echo"
+      <label class='col-md-2 col-form-label'>Files:</label>
+      <div class='col-md-4'>
+        <input type='file' id='anlys_file' name='anlys_file[]' multiple accept='media_type' style='display:none' onchange='handleFiles(this.files)''>
+        <a href='#' id='file_select' class='btn btn-default btn-file'>Browse</a> 
+        <div id='file_list'>
+          <p>No files selected.</p>
         </div>
-      </div>";
+      </div>
+    </div>";
+
+    // Set default value for comment based on coating property.
+    // The request to include these values came late, so this is a quick fix. 
+    $commentValue = "";
+    // If Roughness
+    if($propID === '2'){
+      $commentValue = "Scan speed: \nScan mode: \nTip size: \nForce (N): \n";
+    }
+    if($propID === '8'){
+      $commentValue = "Humidity (%): \nTemperature (°C): \nMax speed (cm/s): \nForce (N): \nDistance (m): \nStatic partner: ";
     }
     echo"
     <div class='form-group row'>
       <label class='col-md-2 col-form-label'>Comment:</label>
-      <div class='col-md-2'>
-        <textarea id='res_comment' name='res_comment' class='form-control custom_comment' value=''></textarea>
-      </div>
-      <label class='col-md-2 col-form-label'>Files:</label>
       <div class='col-md-4'>
-      <input type='file' id='anlys_file' name='anlys_file[]' multiple accept='media_type' style='display:none' onchange='handleFiles(this.files)''>
-      <a href='#' id='file_select' class='btn btn-default btn-file'>Browse</a> 
-      <div id='file_list'>
-        <p>No files selected.</p>
+        <textarea id='res_comment' name='res_comment' rows='4' class='form-control'>".$commentValue."</textarea>
       </div>
     </div>
       <div class='form-group row col-md-12'>
-      <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add</button>
+        <button type='submit' class='btn btn-primary col-md-2' style='float:right'>Add</button>
       </div>
   </form>";
    ?>
