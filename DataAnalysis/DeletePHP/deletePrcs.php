@@ -8,7 +8,7 @@ WHERE prcs_ID = '$prcsID';";
 $result = mysqli_query($link, $sql);
 
 if(!$result){
-	die("Could not delete process: ".mysqli_error($link));
+	die("Error: ".mysqli_error($link));
 }
 
 mysqli_close($link);

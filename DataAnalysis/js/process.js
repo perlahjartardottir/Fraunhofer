@@ -131,7 +131,7 @@ function editPrcs(prcsID, form){
   }
 }
 
-function deletePrcs(prcsID){
+function deletePrcs(prcsID, element){
   $.ajax({
     url: "../DeletePHP/deletePrcs.php",
     type: "POST",
@@ -140,7 +140,15 @@ function deletePrcs(prcsID){
     },
     success: function(data, status, xhr){
       console.log(data);
-      window.location.reload(true);
+      if(data.substring(0,5) === "Error"){
+        var errorMessage = "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+        "This coating has been analysed and therefor cannot be deleted.\n(Psst... if you delete all analysis data relating to this coating you can delete it)</div>";
+        $(element).parent().parent().find("#error_message_edit").html(errorMessage);
+      }
+      else{
+        window.location.reload(true);
+      }
+      
     }
   });
 }

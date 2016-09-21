@@ -58,7 +58,7 @@ function deleteSample(sampleID, element){
 			success: function(data, status, xhr){
        if(data.substring(0,5) === "Error"){
         errorMessage += "<div class='alert alert-danger fade in'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-        "Samples that have been analysed or processed cannot be deleted.</div>";
+        "Samples that have been analysed or processed cannot be deleted.\n(Psst... if you delete all coatings and analysis data related to this sample you can delete it)</div>";
         $(element).parent().parent().find("#error_message").html(errorMessage);
       }
       else{

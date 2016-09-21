@@ -152,8 +152,6 @@ $(document).ready(function(){
  var sampleSetID = <?php echo $sampleSetID; ?>;
  showSamplesInSet(sampleSetID);
  $("#nav_sample").button("toggle");
- mockDatalist();
-
 });
 
 // Format the date input.

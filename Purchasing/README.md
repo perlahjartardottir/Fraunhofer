@@ -26,3 +26,10 @@
 - Finally you rate the purchase order, based on timeliness, quality and price
 - Those ratings will affect the supplier rating
 - Then you click "package received" and if you don't specify a date, the database assumes it was received on current day
+
+## Security levels
+---------------------------
+
+- 2: General usage.
+- 3: Process an order. Edit supplier.
+- 4: View forecast and overview. Approve orders over $1000. Delete supplier.

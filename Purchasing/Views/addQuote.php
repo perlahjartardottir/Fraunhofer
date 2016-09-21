@@ -36,6 +36,8 @@ $result = mysqli_query($link, $sql);
 </head>
 <body>
   <?php include '../header.php'; ?>
+  <!-- Polyfill for the attribute 'required' in Safari -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/webshim/1.15.10/dev/polyfiller.js'></script>
   <script>
 		$(document).ready(function() {
       $('input[type=date]').each(function() {
@@ -44,6 +46,10 @@ $result = mysqli_query($link, $sql);
         });
       });
 		});
+
+  webshim.activeLang('en');
+  webshims.polyfill('forms');
+  webshims.cfg.no$Switch = true;
 	</script>
   <div class='container'>
     <div class='row well'>

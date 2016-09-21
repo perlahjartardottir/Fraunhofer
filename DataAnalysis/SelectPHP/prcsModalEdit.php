@@ -96,7 +96,7 @@ echo"
           <textarea id='prcs_comment' class='form-control'>".$row['comment']."</textarea> 
         </div>
         <div class='modal-footer'>
-          <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deletePrcs(".$prcsID.")'></button>
+          <button type='button' class='btn btn-danger glyphicon glyphicon-trash' onclick='deletePrcs(".$prcsID.", this)'></button>
           <button type='button' class='btn btn-success' onclick='editPrcs(".$prcsID.",this.form)'>Save</button> 
         </div>
       </form>

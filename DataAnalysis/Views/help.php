@@ -65,7 +65,6 @@ $userID = mysqli_fetch_row(mysqli_query($link, $userIDSql))[0];
 			<h3 class='custom_help_heading'>Security levels</h3>
 			<h5></h5>
 			<ul style="list-style-type:none">
-				<li>1: Edit profile. Data Analysis button visible.</li>
 				<li>2: General usage.</li>
 				<li>4: Add, edit & delete equipment. Add,edit & delete analysis properties.</li>
 			</ul>

@@ -112,7 +112,7 @@ echo"
         echo"
         <div class='form-group'>
           <label>Comment</label>
-          <textarea id='anlys_res_comment' name='res_comment_edit' class='form-control'>".$resultRow['comment']."</textarea> 
+          <textarea id='anlys_res_comment' rows='4' name='res_comment_edit' class='form-control'>".$resultRow['comment']."</textarea> 
         </div>";
 
         $fileCounter = 1;

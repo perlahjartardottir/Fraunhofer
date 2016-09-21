@@ -132,7 +132,7 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
 
   echo"
   <div class='form-group row'>";
-// Only couple of properties have res_res field. 
+// Only couple of properties have res_res field (a single value result). 
   if($propertyRow[7]){
     echo"
       <label id='property_name' class='col-md-2 col-form-label'>".$propertyRow[1];
@@ -159,7 +159,7 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
     // Set default value for comment based on coating property.
     // The request to include these values came late, so this is a quick fix. 
     $commentValue = "";
-    // If Roughness
+    // Roughness
     if($propID === '2'){
       $commentValue = "Scan speed: \nScan mode: \nTip size: \nForce (N): \n";
     }
@@ -167,12 +167,16 @@ $coatingsResult = mysqli_query($link, $coatingsSql);
     else if($propID === '8'){
       $commentValue = "Humidity (%): \nTemperature (°C): \nMax speed (cm/s): \nForce (N): \nDistance (m): \nStatic partner: ";
     }
+    // Calotte Grinder
+    else if($eqID === '7'){
+      $commentValue = "Size of calotte (microns): ";
+    }
     // UV VIS
     else if($eqID === '6'){
       $commentValue = "Range (nm): 2500 - 190 \nSlit width: double 20 \nMeasurement speed: very slow \nDetector: ISR ";
     }
     else if($eqID === '12'){
-      $commentValue = "Fit description: ";
+      $commentValue = "Type (High resolution/Survey): Survey \nRegion: \nMeasurement settings\n\tPass energy: 187.85\n\teV/step: 1.600\n\tTime/Step: 50\nFit description: ";
     }
     echo"
     <div class='form-group row'>
