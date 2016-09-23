@@ -124,7 +124,7 @@
               </div>
               <div class='form-group'>
                 <div class='form-group row col-md-12'>
-                  <label>Coating property:</label>
+                  <label>Coating property: </label>
                 </div>
                 <div class='form-group row col-md-10'>
                 <select id='new_eq_prop' class='form-control'>";
